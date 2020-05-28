@@ -1018,6 +1018,13 @@ $wgCategoryMagicGallery = true;
 $wgCategoryPagingLimit = 200;
 
 /**
+ * Points to ucp-internal-test-community.fandom.com.
+ * Should be switched to ucp.fandom.com for initial rollout and to community.fandom.com after
+ * Community Central has been migrated to UCP.
+ */
+$wgCentralWikiId = 2182188;
+
+/**
  * Chat server API address. Normally it is resolved by consul, but for
  * development and testing purposes you can specify it here.
  * @see ChatConfig::getApiServer()
@@ -1647,6 +1654,7 @@ $wgDefaultUserOptions = [
 	'showtoolbar' => 1,
 	'skin' => 'oasis',
 	'stubthreshold' => 0,
+	'timecorrection' => 'System|0',
 	'thumbsize' => 2,
 	'underline' => 2,
 	'uselivepreview' => 0,
@@ -2234,6 +2242,11 @@ $wgEnableAPI = true;
 $wgEnableArticleCommentsExt = false;
 
 /**
+ * Used to put article comments extension in readonly mode
+ */
+$wgArticleCommentsReadOnlyMode = false;
+
+/**
  * Enable ArticleVideo extension.
  * @see extensions/wikia/ArticleVideo
  * @see extensions/wikia/SiteWideMessages
@@ -2711,6 +2724,11 @@ $wgEnableFlagClosedAccountsExt = true;
 $wgEnableForumExt = false;
 
 /**
+ * @var  $wgArchiveWikiForums
+ */
+$wgArchiveWikiForums = null;
+
+/**
  * Disallow anonymous editing of Forum:Index.
  * @see extensions/wikia/ForumIndexProtector
  * @var bool $wgEnableForumIndexProtector
@@ -2779,6 +2797,13 @@ $wgEnableGoogleDocsExt = true;
  * @var bool $wgEnableGoogleFormTagExt
  */
 $wgEnableGoogleFormTagExt = true;
+
+/**
+ * Enables Google Tag Manager by default
+ * @see /extensions/wikia/GoogleTagManager
+ * @var bool $wgEnableGoogleTagManagerExt
+ */
+$wgEnableGoogleTagManagerExt = true;
 
 /**
  * Enable Gracenote extension for Lyrics. Defaults to false, toggled in
@@ -2919,13 +2944,6 @@ $wgEnableJavaScriptTest = false;
  * @var bool $wgEnableJSVariablesExt
  */
 $wgEnableJSVariablesExt = true;
-
-/**
- * Enable Krux ad targeting.
- * @see extensions/wikia/AnalyticsEngine/AnalyticsProviderKrux.php
- * @var bool $wgEnableKruxTargeting
- */
-$wgEnableKruxTargeting = true;
 
 /**
  * Enable Lightbox extension.
@@ -6218,12 +6236,6 @@ $wgPageShareServices = [
 $wgPageShowWatchingUsers = false;
 
 /**
- * Base URL used for Parsely API calls
- * @var string $wgParselyApiUrl
- */
-$wgParselyApiUrl = 'https://api.parsely.com/v2/';
-
-/**
  * The expiry time for the parser cache, in seconds.
  * @var int $wgParserCacheExpireTime
  */
@@ -6663,6 +6675,9 @@ $wgRateLimits = [
 		'ip' => [ 10, 3600 ],
 		'user' => [ 4, 86400 ],
 	],
+	'share-email' => [
+		'user' => [ 10, 3600 ], // 10 emails/hour
+	],
 ];
 
 /**
@@ -6834,12 +6849,6 @@ $wgRightsUrl = null;
  */
 $wgReadOnlyFile = false;
 
-/**
- * Whether or not to redirect all file pages to the first page they are used on for
- * anonymous users.
- * @var boolean
- */
-$wgRedirectFilePagesForAnons = false;
 
 /**
  * Allow redirection to another page when a user logs in.
@@ -9354,3 +9363,10 @@ $wgOverrideUcfirstCharacters = [
  * @var string
  */
 $wgTimelineRenderHashAppend = 'v2';
+
+$wgIsTestWiki = false;
+
+/**
+ * Variable storing country codes where Video Bridge can appear
+ */
+$wgVideoBridgeCountries = [];

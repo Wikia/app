@@ -1,29 +1,18 @@
 define('wikia.articleVideo.featuredVideo.autoplay', [
-	'wikia.abTest',
 	'wikia.articleVideo.featuredVideo.cookies',
-	require.optional('ext.wikia.adEngine3.api')
-], function (abTest, featuredVideoCookieService, adsApi) {
+], function (featuredVideoCookieService) {
 	'use strict';
-	var inFeaturedVideoClickToPlayABTest = abTest.inGroup('FV_CLICK_TO_PLAY', 'CLICK_TO_PLAY');
-
-	function isDisabledByQueenOfHearts() {
-		return adsApi && adsApi.isAutoPlayDisabled();
-	}
 
 	return {
-		isAutoplayEnabled: function () {
+		isAutoplayEnabled: function (adEngineAutoplayDisabled) {
 			return featuredVideoCookieService.getAutoplay() !== '0' &&
-				!isDisabledByQueenOfHearts() &&
-				!inFeaturedVideoClickToPlayABTest;
+				!adEngineAutoplayDisabled;
 		},
 		inNextVideoAutoplayEnabled: function () {
 			return true;
 		},
-		isAutoplayToggleShown: function () {
-			return !(
-				isDisabledByQueenOfHearts() ||
-				inFeaturedVideoClickToPlayABTest
-			);
+		isAutoplayToggleShown: function (adEngineAutoplayDisabled) {
+			return !adEngineAutoplayDisabled;
 		}
 	};
 });

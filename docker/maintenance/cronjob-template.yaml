@@ -7,6 +7,7 @@ spec:
   schedule: ${schedule}
   successfulJobsHistoryLimit: 1
   failedJobsHistoryLimit: 1
+  concurrencyPolicy: ${concurrency}
   jobTemplate:
     spec:
       template:
@@ -35,7 +36,7 @@ spec:
                 cpu: "6"
                 memory: 1200Mi
               requests:
-                cpu: "3"
+                cpu: "2"
                 memory: 800Mi
             args:
 ${args}

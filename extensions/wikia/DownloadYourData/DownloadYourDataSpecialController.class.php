@@ -2,6 +2,7 @@
 
 namespace DownloadYourData;
 
+use PermissionsError;
 use \Wikia\Logger\WikiaLogger;
 
 class DownloadYourDataSpecialController extends \WikiaSpecialPageController {
@@ -13,11 +14,11 @@ class DownloadYourDataSpecialController extends \WikiaSpecialPageController {
 		parent::__construct( 'DownloadYourData' );
 	}
 
+
 	public function index() {
 		$user = $this->getUser();
 		if ( !$user->isLoggedIn() ) {
-			$this->getOutput()->redirect( \SpecialPage::getTitleFor( 'Contact', 'data-access' )->getFullURL() );
-			return false;
+			throw new PermissionsError( null, [ [ 'downloadyourdata-anon-error' ] ] );
 		}
 
 		if ( $this->request->wasPosted() && $user->matchEditToken( $this->getVal( 'token' ) ) ) {

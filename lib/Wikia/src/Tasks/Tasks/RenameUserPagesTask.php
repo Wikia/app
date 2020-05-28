@@ -79,6 +79,10 @@ class RenameUserPagesTask extends BaseTask {
 					->text();
 
 			$title->moveTo( $newTitle, false, $editSummary, true, $robot );
+			$title->invalidateCache();
 		}
+
+		$user = User::newFromName( $newUserName );
+		$user->deleteCache();
 	}
 }

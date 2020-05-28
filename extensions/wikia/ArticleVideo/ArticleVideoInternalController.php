@@ -41,22 +41,19 @@ class ArticleVideoInternalController extends \WikiaController {
 
 	/**
 	 * Purge video mappings cache, media details cache and CDN cache for the given article.
-	 * @throws \NotFoundException if the given article does not exist
 	 */
 	public function purgeVideoInfo() {
 		global $wgCityId;
 
 		$this->response->setFormat( \WikiaResponse::FORMAT_JSON );
 
+		ArticleVideoService::purgeVideoMemCache( $wgCityId );
+
 		$pageId = $this->request->getInt( 'pageId' );
 		$title = \Title::newFromID( $pageId );
 
-		if ( !$title ) {
-			throw new \NotFoundException( 'Title does not exist.' );
+		if ( $title ) {
+			$title->purgeSquid();
 		}
-
-		ArticleVideoService::purgeVideoMemCache( $wgCityId );
-
-		$title->purgeSquid();
 	}
 }

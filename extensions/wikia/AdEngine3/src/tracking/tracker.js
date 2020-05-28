@@ -1,4 +1,9 @@
 import {
+	bidderTracker,
+	bidderTrackingMiddleware,
+
+	GAMOrigins,
+
 	slotBiddersTrackingMiddleware,
 	slotBillTheLizardStatusTrackingMiddleware,
 	slotPropertiesTrackingMiddleware,
@@ -43,6 +48,16 @@ export const registerViewabilityTracker = () => {
 		}));
 };
 
+export const registerBidderTracker = () => {
+	bidderTracker
+		.add(bidderTrackingMiddleware)
+		.register(({ data }) => track({
+			...data,
+			eventName: 'adengbidders',
+			trackingMethod: 'internal',
+		}));
+};
+
 export const registerPostmessageTrackingTracker = () => {
 	const postmessageTracker = new PostmessageTracker(
 		['payload', 'target'],
@@ -72,5 +87,6 @@ export const registerPostmessageTrackingTracker = () => {
 						break;
 				}
 			},
+			[window.origin, ...GAMOrigins],
 		);
 };

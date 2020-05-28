@@ -48,9 +48,14 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 	} else {
 		$vars['wgUserName'] = $user->getName();
 		$vars['wgUserId'] = $user->getId();
+		$vars['wgUserIsSubjectToCcpa'] = $user->isSubjectToCcpa();
 	}
 	if ($out->isArticle()) {
 		$vars['wgArticleId'] = $out->getWikiPage()->getId();
+		$vars['wgVideoBridgeCountries'] = WikiFactory::getVarValueByName(
+			'wgVideoBridgeCountries',
+			WikiFactory::COMMUNITY_CENTRAL
+		);
 	}
 	$vars['wgCategories'] = $out->getCategories();
 	$vars['wgPageName'] = $title->getPrefixedDBKey();
@@ -78,10 +83,6 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 	$vars['wgTransactionContext'] = Transaction::getAttributes();
 
 	$scripts .= Html::inlineScript("var wgNow = new Date();") . "\n";
-
-	// ADEN-6676
-	$instantGlobalsModule = new InstantGlobalsModule();
-	$scripts .= Html::inlineScript( JavaScriptMinifier::minify( $instantGlobalsModule->getScript() ) ) . "\n";
 
 	return true;
 }

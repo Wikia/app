@@ -130,6 +130,9 @@ class PortableInfoboxParserTagController extends WikiaController {
 			return $this->handleError( wfMessage( 'portable-infobox-xml-parse-error-infobox-tag-attribute-unsupported', [ $e->getMessage() ] )->escaped() );
 		}
 
+		// Convert text to language variant
+		$renderedValue = $parser->getTargetLanguage()->convert( $renderedValue );
+
 		$marker = $parser->uniqPrefix() . "-" . self::PARSER_TAG_NAME . "-{$this->markerNumber}" . Parser::MARKER_SUFFIX;
 		$this->markers[$marker] = $renderedValue;
 

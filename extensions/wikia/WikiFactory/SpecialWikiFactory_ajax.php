@@ -521,16 +521,25 @@ function axWFactoryDomainQuery() {
 		);
 
 		while( $domain = $dbr->fetchObject( $sth ) ) {
-			$domain->city_domain = strtolower( $domain->city_domain );
-			$rxp_query = preg_quote( $query, '/' );
+			$row = $dbr->selectRow(
+				'city_list',
+				'city_path',
+				[ 'city_id' => $domain->city_id ]
+			);
+			if ( $row ) {
+				if ( !WikiFactory::isUCPPath( $row->city_path ) ) {
+					$domain->city_domain = strtolower( $domain->city_domain );
+					$rxp_query = preg_quote( $query, '/' );
 
-		    if( preg_match( "/^$rxp_query/", $domain->city_domain ) ) {
-				$exact[ "suggestions" ][] = $domain->city_domain;
-				$exact[ "data" ][] = $domain->city_id;
-		    }
-			elseif( preg_match( "/$rxp_query/", $domain->city_domain ) ){
-				$match[ "suggestions" ][] = $domain->city_domain;
-				$match[ "data" ][] = $domain->city_id;
+					if( preg_match( "/^$rxp_query/", $domain->city_domain ) ) {
+						$exact[ "suggestions" ][] = $domain->city_domain;
+						$exact[ "data" ][] = $domain->city_id;
+					}
+					elseif( preg_match( "/$rxp_query/", $domain->city_domain ) ){
+						$match[ "suggestions" ][] = $domain->city_domain;
+						$match[ "data" ][] = $domain->city_id;
+					}
+				}
 			}
 		}
 		$return[ "suggestions" ] = array_merge( $exact[ "suggestions" ], $match[ "suggestions" ] );

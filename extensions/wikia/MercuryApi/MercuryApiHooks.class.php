@@ -102,17 +102,6 @@ class MercuryApiHooks {
 		return true;
 	}
 
-	/**
-	 * @desc Add instant global for disabling ads on Mercury
-	 *
-	 * @param array $vars
-	 * @return bool
-	 */
-	static public function onInstantGlobalsGetVariables( array &$vars ) {
-		$vars[] = 'wgSitewideDisableAdsOnMercury';
-		return true;
-	}
-
 	static public function onCuratedContentSave( $sections ) {
 		// Purge main page cache, so Mercury gets fresh data.
 		Title::newMainPage()->purgeSquid();

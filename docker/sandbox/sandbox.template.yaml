@@ -101,8 +101,8 @@ spec:
               cpu: 5
               memory: 5Gi  # 5 fpm workers x 512 MB PHP memory limit
             requests:
-              cpu: 2.5
-              memory: 3Gi
+              cpu: 1
+              memory: 1.4Gi
         - name: fpm-prometheus-exporter
           image: hipages/php-fpm_exporter:1.0.0
           ports:
@@ -113,6 +113,9 @@ spec:
             requests:
               cpu: 50m
               memory: 50Mi
+          securityContext:
+            runAsNonRoot: true
+            runAsUser: 65534
 ---
 apiVersion: monitoring.coreos.com/v1
 kind: ServiceMonitor
@@ -132,10 +135,10 @@ spec:
   endpoints:
   - port: main
     path: /metrics.php
-    interval: 10s
+    interval: 30s
   - port: vtsmetrics
     path: /metrics
-    interval: 10s
+    interval: 30s
 ---
 apiVersion: v1
 kind: Service

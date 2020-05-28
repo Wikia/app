@@ -34,6 +34,7 @@ class HeliosClient {
 
 	protected $baseUri;
 	protected $status;
+	protected $responseHeaders;
 	protected $schwartzToken;
 
 	/** @var ServiceCircuitBreaker */
@@ -59,6 +60,24 @@ class HeliosClient {
 	}
 
 	/**
+	 * Returns one of the response headers with a default values as a fallback
+	 *
+	 * Because some headers can appear more than once the, this method returns
+	 * an array of the values.
+	 *
+	 * @param $header Header name
+	 * @param string $default value returned in case of missing header
+	 * @return array
+	 */
+	public function getResponseHeader( $header, $default = [''] ) {
+		$header = strtolower( $header );
+		if ( is_array( $this->responseHeaders ) && array_key_exists( $header, $this->responseHeaders ) ) {
+			return $this->responseHeaders[$header];
+		}
+		return $default;
+	}
+
+	/**
 	 * The general method for handling the communication with the service.
 	 *
 	 * @param       $resourceName
@@ -73,6 +92,9 @@ class HeliosClient {
 	public function request( $resourceName, $getParams = [], $postData = [], $extraRequestOptions = [] ) {
 		// Crash if we cannot make HTTP requests.
 		Assert::true( \MWHttpRequest::canMakeRequests() );
+		// reset the response data as client can be used to make multiple requests
+		$this->status = null;
+		$this->responseHeaders = null;
 
 		if ( !$this->circuitBreaker->operationAllowed() ) {
 			throw new ClientException( "circuit breaker open" );
@@ -153,8 +175,8 @@ class HeliosClient {
 			$retryCnt += 1;
 			sleep( self::HELIOS_REQUEST_RETRY_DELAY_SEC );
 		}
-
 		$this->status = $request->getStatus();
+		$this->responseHeaders = $request->getResponseHeaders();
 		$this->circuitBreaker->setOperationStatus( $this->status < 500 );
 
 		return $this->processResponseOutput( $request );
@@ -233,17 +255,70 @@ class HeliosClient {
 	 * A shortcut method for info requests
 	 *
 	 * @param $token
-	 *
 	 * @return mixed|null
 	 */
-	public function info( $token ) {
+	private function _info( $token ) {
+		// @todo - rename to info once PLATFORM-4490 is resolved, remove $request param from the caller
 		return $this->request(
 			'info',
 			[
-				'code'         => $token,
+				'code' => $token,
 				'noblockcheck' => 1,
 			]
 		);
+	}
+
+	/**
+	 * A shortcut method for info requests
+	 *
+	 * PLATFORM-4490 - validate Helios responses and retry in case of mismatches
+	 * this method is a wrapper for the _info call, remove it once the issue is resolved
+	 *
+	 * @param $token
+	 * @param WebRequest $request The HTTP request data as an object
+	 * @return mixed|null
+	 */
+	public function info( $token, $request ) {
+		$tries = 3;
+		$currentCtx = \Wikia\Tracer\WikiaTracer::instance()->getContext();
+		$sessionUserId = $request->getSessionData( 'helios_user_id' );
+		while ( true ) {
+			$tokenInfo = $this->_info( $token );
+			if ( empty( $tokenInfo->user_id ) ) {
+				return $tokenInfo;
+			}
+			$responseBeacon = $this->getResponseHeader( 'x-client-beacon-id' )[0];
+
+			// check if Helios returned non-matching user_id. Sometimes it means user logged into a different account
+			// so we compare beacons as well just to be sure there was a mismatch
+			if ( ( empty( $sessionUserId ) || $sessionUserId != $tokenInfo->user_id ) &&
+				 $currentCtx['client_beacon_id'] != $responseBeacon ) {
+				// report an issue with the token mismatch
+				\Wikia\Logger\WikiaLogger::instance()->error(
+					'Helios beacon mismatch',
+					[
+						'sessionUserId' => $sessionUserId,
+						'heliosResponse' => [
+							'userId' => $tokenInfo->user_id,
+							'accessToken' => $tokenInfo->access_token,
+							'beacon' => $responseBeacon,
+							'servedBy' => $this->getResponseHeader( 'x-served-by' )[0],
+							'timestamp' => $this->getResponseHeader( 'x-backend-timestamp' )[0],
+						],
+					]
+				);
+
+				$tries--;
+				if ( !$tries ) {
+					// something is seriously wrong
+					throw new ClientException( "Persistent Helios beacon mismatch" );
+				}
+			} else {
+				// correct Helios response, store user id for future checks
+				$request->setSessionData( 'helios_user_id', $tokenInfo->user_id );
+				return $tokenInfo;
+			}
+		}
 	}
 
 	/**

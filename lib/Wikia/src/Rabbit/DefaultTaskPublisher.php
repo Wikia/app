@@ -115,13 +115,15 @@ class DefaultTaskPublisher implements TaskPublisher {
 	}
 
 	private function logPublish( string $queue, array $payload ) {
-		$argsJson = json_encode( $payload['args'] );
+		$argsJson = json_encode( $payload['args'] ?? null );
 
-		$this->info( 'Publishing task of type: ' . $payload['task'], [
+		$kwargs = $payload['kwargs']?? [];
+		$task =  $payload['task'] ?? null;
+		$this->info( 'Publishing task of type: ' . $task, [
 			'exception' => new \Exception(),
-			'spawn_task_id' => $payload['id'],
-			'spawn_task_type' => $payload['task'],
-			'spawn_task_work_id' => $payload['kwargs']['work_id'],
+			'spawn_task_id' => $payload['id'] ?? null,
+			'spawn_task_type' => $payload['task'] ?? null,
+			'spawn_task_work_id' => $kwargs ?? null,
 			'spawn_task_args' => substr( $argsJson, 0, 3000 ) . ( strlen( $argsJson ) > 3000 ? '...' : '' ),
 			'spawn_task_queue' => $queue,
 		] );

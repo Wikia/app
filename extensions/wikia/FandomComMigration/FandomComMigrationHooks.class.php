@@ -31,7 +31,7 @@ class FandomComMigrationHooks {
 						$wgFandomComMigrationCustomMessageBefore, new Title(), new ParserOptions() )->getText();
 				} else {
 					$wikiVariables['fandomComMigrationNotificationBefore'] =
-						wfMessage( 'fandom-com-migration-before' )
+						wfMessage( 'fandom-ucp-migration-before' )
 							->parse();
 				}
 			}

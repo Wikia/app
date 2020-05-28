@@ -332,6 +332,15 @@ class DesignSystemGlobalFooterModelV2 extends WikiaModel {
 						'href' => $this->getHref( 'privacy-policy' ),
 						'tracking_label' => 'site-overview.privacy-policy',
 					],
+					[
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'translatable-text',
+							'key' => 'global-footer-community-usp-do-not-sell'
+						],
+						'href' => $this->getProdHref( 'usp-do-not-sell-wikiaorg' ),
+						'tracking_label' => 'community.usp-do-not-sell',
+					],
 				]
 			],
 			'mobile_site_button' => [
@@ -533,6 +542,16 @@ class DesignSystemGlobalFooterModelV2 extends WikiaModel {
 			];
 		}
 
+		$data['links'][] = [
+			'type' => 'link-text',
+			'title' => [
+				'type' => 'translatable-text',
+				'key' => 'global-footer-community-usp-do-not-sell'
+			],
+			'href' => $this->getProdHref( 'usp-do-not-sell-fandom' ),
+			'tracking_label' => 'community.usp-do-not-sell',
+		];
+
 		return $data;
 	}
 
@@ -593,6 +612,10 @@ class DesignSystemGlobalFooterModelV2 extends WikiaModel {
 
 	private function getHref( $hrefKey ) {
 		return DesignSystemSharedLinks::getInstance()->getHref( $hrefKey, $this->lang );
+	}
+
+	private function getProdHref( $hrefKey ) {
+		return DesignSystemSharedLinks::getInstance()->getProdHref( $hrefKey , $this->lang );
 	}
 
 	private function getSocialHrefs() {

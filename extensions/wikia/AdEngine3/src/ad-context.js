@@ -126,10 +126,6 @@ export default {
 					}
 				}
 			},
-			audienceNetwork: {
-				enabled: false,
-				slots: {}
-			},
 			beachfront: {
 				enabled: false,
 				debugAppId: '2e55f7ad-3558-49eb-a3e1-056ccd0e74e2',
@@ -170,6 +166,9 @@ export default {
 							[970, 250]
 						],
 						siteId: '209250'
+					},
+					featured: {
+						siteId: '437502'
 					}
 				},
 				recPlacements: {
@@ -183,22 +182,54 @@ export default {
 				enabled: false,
 				slots: {}
 			},
-			lkqd: {
+			nobid: {
 				enabled: false,
 				slots: {
-					featured: {
-						placementId: '523',
-						siteId: '890798'
+					top_leaderboard: {
+						sizes: [
+							[728, 90],
+							[970, 250]
+						],
+						siteId: 21872987104
 					},
-					incontent_player: {
-						placementId: '523',
-						siteId: '892126'
+					top_boxad: {
+						sizes: [
+							[300, 250],
+							[300, 600]
+						],
+						siteId: 21872987104
+					},
+					incontent_boxad_1: {
+						sizes: [
+							[300, 250],
+							[300, 600],
+							[160, 600]
+						],
+						siteId: 21872987104
+					},
+					bottom_leaderboard: {
+						sizes: [
+							[728, 90],
+							[970, 250]
+						],
+						siteId: 21872987104
 					}
 				}
 			},
 			onemobile: {
 				enabled: false,
 				slots: {}
+			},
+			oneVideo: {
+				enabled: false,
+				slots: {
+					featured: {
+						pubId: 'FandomIS'
+					},
+					incontent_player: {
+						pubId: 'FandomOS'
+					}
+				}
 			},
 			openx: {
 				enabled: false,
@@ -368,6 +399,15 @@ export default {
 					}
 				}
 			},
+			telaria: {
+				enabled: false,
+				slots: {
+					featured: {
+						adCode: '2ciy2-doix6',
+						supplyCode: '2ciy2-9kbup',
+					}
+				}
+			},
 			triplelift: {
 				enabled: false,
 				slots: {
@@ -415,16 +455,6 @@ export default {
 					}
 				}
 			},
-			vmg: {
-				enabled: false,
-				slots: {
-					top_leaderboard: {
-						sizes: [
-							[3, 3]
-						]
-					}
-				}
-			},
 			wikia: {
 				enabled: false,
 				slots: {
@@ -455,11 +485,11 @@ export default {
 				slots: {
 					featured: {
 						videoAdUnitId: '/5441/wka.life/_project43//article/test/outstream',
-						customParams: 's1=_project43&artid=402&src=test&pos=outstream&passback=wikiaVideo'
+						customParams: 's1=_project43&artid=402&src=test&pos=outstream'
 					},
 					incontent_player: {
 						videoAdUnitId: '/5441/wka.life/_project43//article/test/outstream',
-						customParams: 's1=_project43&artid=402&src=test&pos=outstream&passback=wikiaVideo'
+						customParams: 's1=_project43&artid=402&src=test&pos=outstream'
 					}
 				}
 			}
@@ -470,7 +500,6 @@ export default {
 		beachfrontDfp: false,
 		dbNameForAdUnit: '_not_a_top1k_wiki',
 		dfpId: '5441',
-		lkqdDfp: false,
 		pubmaticDfp: false,
 		rubiconDfp: true,
 		serverPrefix: 'wka1b',
@@ -489,7 +518,6 @@ export default {
 	},
 	targeting: {
 		ae3: '1',
-		outstream: 'none',
 		skin: 'oasis',
 		uap: 'none',
 		uap_c: 'none'
@@ -511,18 +539,22 @@ export default {
 			enabled: false,
 			siteId: '1167',
 		},
+		externalLogger: {
+			endpoint: '/wikia.php?controller=AdEngine&method=postLog',
+		},
+		iasPublisherOptimization: {
+			pubId: '930616',
+			slots: [
+				'hivi_leaderboard',
+				'top_leaderboard',
+				'top_boxad',
+				'incontent_boxad_1',
+				'bottom_leaderboard',
+			],
+		},
 		instantConfig: {
 			endpoint: 'https://services.wikia.com/icbm/api/config?app=oasis',
 			fallbackConfigKey: 'fallbackInstantConfig',
-		},
-		krux: {
-			account: 'ns:wikia',
-			enabled: false,
-			id: 'JU3_GW1b',
-		},
-		moatYi: {
-			enabled: false,
-			partnerCode: 'wikiaprebidheader490634422386',
 		},
 		nielsen: {
 			enabled: false,
@@ -560,6 +592,7 @@ export default {
 		wad: {
 			enabled: false,
 			blocking: false,
+			blockingSrc: 'rec',
 			btRec: {
 				enabled: false,
 				placementsMap: {

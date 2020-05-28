@@ -6,7 +6,6 @@ $wgAutoloadClasses['ArticleVideoController'] = __DIR__ . '/ArticleVideoControlle
 $wgAutoloadClasses['ArticleVideoInternalController'] = __DIR__ . '/ArticleVideoInternalController.php';
 
 $wgHooks['BeforePageDisplay'][] = 'ArticleVideoHooks::onBeforePageDisplay';
-$wgHooks['InstantGlobalsGetVariables'][] = 'ArticleVideoHooks::onInstantGlobalsGetVariables';
 $wgHooks['GetPreferences'][] = '\ArticleVideoHooks::onGetPreferences';
 
 $wgResourceModules['ext.ArticleVideo.jw'] = [
@@ -14,6 +13,7 @@ $wgResourceModules['ext.ArticleVideo.jw'] = [
 		'skins/oasis/js/jwplayer/node_modules/jwplayer-fandom/dist/wikiajwplayer.js',
 		'extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.autoplay.js',
 		'extensions/wikia/ArticleVideo/scripts/featured-video.cookies.js',
+		'extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.session.js',
 		'extensions/wikia/ArticleVideo/scripts/featured-video.jwplayer.instant.js',
 	],
 ];

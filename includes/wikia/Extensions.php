@@ -558,6 +558,10 @@ if( !empty( $wgEnableGoogleDocsExt ) ) {
 	include( "$IP/extensions/wikia/GoogleDocs/GoogleDocs.php" );
 }
 
+if( !empty( $wgEnableGoogleTagManagerExt ) ) {
+	include( "$IP/extensions/wikia/GoogleTagManager/GoogleTagManager.setup.php" );
+}
+
 if( !empty( $wgEnableJSVariablesExt ) ) {
 	include( "$IP/extensions/wikia/JSVariables/JSVariables.php" );
 }
@@ -796,8 +800,10 @@ if( !empty( $wgEnableWallEngine ) ) {
 
 // Enable new style forums (/wiki/Special:Forum)
 if ( !empty( $wgEnableForumExt ) ) {
-	$wgArchiveWikiForums = true;
 	include( "{$IP}/extensions/wikia/Forum/Forum.setup.php" );
+	if ( is_null( $wgArchiveWikiForums ) ) {
+		$wgArchiveWikiForums = true;
+	}
 } else {
 	include( "{$IP}/extensions/wikia/Forum/ForumDisabled.setup.php" );
 }
@@ -1274,8 +1280,7 @@ if ( !empty( $wgEnableVisualEditorExt ) ) {
 		case WIKIA_ENV_PREVIEW:
 		case WIKIA_ENV_VERIFY:
 		case WIKIA_ENV_SANDBOX:
-			$wgVisualEditorParsoidHTTPProxy = 'http://prod.icache.service.consul:80';
-			$wgVisualEditorParsoidURL = 'http://prod.parsoid-cache';
+			$wgVisualEditorParsoidURL = 'http://parsoid';
 			break;
 		case WIKIA_ENV_DEV:
 			// Note: This must NOT end with a slash due to Parsoid bug (wtf?)
@@ -1403,7 +1408,7 @@ if ( !empty( $wgEnableAbuseFilterBypass ) ) {
 	include( "{$IP}/extensions/wikia/AbuseFilterBypass/AbuseFilterBypass.php" );
 }
 
-if ( !empty( $wgEnableQualarooExt ) ) {
+if ( !empty( $wgEnableQualarooExt ) && empty( $wgIsTestWiki ) ) {
 	include "$IP/extensions/wikia/Qualaroo/Qualaroo.setup.php";
 }
 
@@ -1433,10 +1438,6 @@ if( !empty( $wgEnableLyricsApi ) ) {
 
 if ( !empty( $wgEnableEditorPreferenceExt ) ) {
 	include "$IP/extensions/wikia/EditorPreference/EditorPreference.php";
-}
-
-if( !empty( $wgEnableVisualEditorUI ) ) {
-	include "$IP/extensions/wikia/Parsoid/Parsoid.php";
 }
 
 if( !empty( $wgEnableEditorSyntaxHighlighting ) ) {
@@ -1796,6 +1797,8 @@ if ( !empty( $wgEnableTriviaQuizzesExt ) ) {
     include "$IP/extensions/wikia/TriviaQuizzes/TriviaQuizzes.setup.php";
 }
 
+include_once "$IP/extensions/wikia/AffiliateService/AffiliateService.setup.php";
+
 // LORE-519
 if ( !empty ( $wgEnableArticleExporterHooks ) ) {
     include "$IP/extensions/wikia/ArticleExporter/ArticleExporterHooks.setup.php";
@@ -1812,3 +1815,5 @@ if ( !empty ( $wgEnableHydralyticsExt ) ) {
 }
 
 include_once "$IP/extensions/wikia/WikiDescription/WikiDescription.setup.php";
+
+$wgUCPCommunityCNWAddress = 'https://ucp.fandom.com/wiki/Special:CreateNewWiki';

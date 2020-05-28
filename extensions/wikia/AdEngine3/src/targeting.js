@@ -1,4 +1,4 @@
-import { utils, likhoService, bidders } from '@wikia/ad-engine';
+import { bidders, context, utils } from '@wikia/ad-engine';
 
 const MAX_NUMBER_OF_CATEGORIES = 3;
 
@@ -21,15 +21,33 @@ function decodeLegacyDartParams(dartString) {
 	return params;
 }
 
-function getAdLayout(adsContext) {
-	let layout = adsContext.targeting.pageType || 'article';
+function getVideoStatus() {
+	if (context.get('wiki.targeting.hasFeaturedVideo')) {
+		// Comparing with false in order to make sure that API already responds with "isDedicatedForArticle" flag
+		const isDedicatedForArticle = context.get('wiki.targeting.featuredVideo.isDedicatedForArticle') !== false;
+		const bridgeVideoPlayed = !isDedicatedForArticle && window.canPlayVideo && window.canPlayVideo();
+
+		return {
+			isDedicatedForArticle,
+			hasVideoOnPage: isDedicatedForArticle || bridgeVideoPlayed,
+		};
+	}
+
+	return {};
+}
+
+function getAdLayout(targeting) {
+	let layout = targeting.pageType || 'article';
 
 	if (layout === 'article') {
-		if (adsContext.targeting.hasFeaturedVideo) {
-			layout = `fv-${layout}`;
+		const videoStatus = getVideoStatus();
+		if (!!videoStatus.hasVideoOnPage) {
+			const videoPrefix = videoStatus.isDedicatedForArticle ? 'fv' : 'wv';
+
+			layout = `${videoPrefix}-${layout}`;
 		}
 
-		if (adsContext.targeting.hasIncontentPlayer) {
+		if (context.get('custom.hasIncontentPlayer')) {
 			layout = `${layout}-ic`;
 		}
 	}
@@ -166,15 +184,15 @@ function getZone(adsContext) {
 	return {
 		site: adsContext.targeting.mappedVerticalName,
 		name: getRawDbName(adsContext),
-		pageType: getAdLayout(adsContext),
+		pageType: getAdLayout(adsContext.targeting),
 	};
 }
 
 export default {
+	getVideoStatus,
 	getPageLevelTargeting(adsContext = {}) {
 		const zone = getZone(adsContext);
 		const legacyParams = decodeLegacyDartParams(adsContext.targeting.wikiCustomKeyValues);
-		const likho = likhoService.refresh();
 
 		const targeting = {
 			s0: zone.site,
@@ -188,12 +206,12 @@ export default {
 			cat: getPageCategories(adsContext),
 			dmn: getDomain(),
 			hostpre: getHostnamePrefix(),
+			kid_wiki: adsContext.targeting.directedAtChildren ? '1' : '0',
 			lang: adsContext.targeting.wikiLanguage || 'unknown',
 			wpage: adsContext.targeting.pageName && adsContext.targeting.pageName.toLowerCase(),
 			ref: getRefParam(),
 			esrb: adsContext.targeting.esrbRating,
-			geo: utils.geoService.getCountryCode() || 'none',
-			likho,
+			geo: utils.geoService.getCountryCode() || 'none'
 		};
 
 		if (window.pvNumber) {
@@ -242,7 +260,6 @@ export default {
 			bidder_1: transformBidderPrice('indexExchange'),
 			bidder_2: transformBidderPrice('appnexus'),
 			bidder_4: transformBidderPrice('rubicon'),
-			bidder_5: transformBidderPrice('vmg'),
 			bidder_6: transformBidderPrice('aol'),
 			bidder_8: transformBidderPrice('wikiaVideo'),
 			bidder_9: transformBidderPrice('openx'),
@@ -253,10 +270,12 @@ export default {
 			bidder_14: transformBidderPrice('pubmatic'),
 			bidder_15: transformBidderPrice('beachfront'),
 			bidder_17: transformBidderPrice('kargo'),
-			bidder_18: transformBidderPrice('lkqd'),
 			bidder_19: transformBidderPrice('gumgum'),
 			bidder_20: transformBidderPrice('33across'),
 			bidder_21: transformBidderPrice('triplelift'),
+			bidder_23: transformBidderPrice('oneVideo'),
+			bidder_25: transformBidderPrice('nobid'),
+			bidder_26: transformBidderPrice('telaria'),
 		};
 	},
 };

@@ -10,6 +10,7 @@
  * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
  */
 
+use Swagger\Client\ApiException;
 use Swagger\Client\Discussion\Api\SitesApi;
 use Wikia\Factory\ServiceFactory;
 
@@ -25,9 +26,12 @@ class CloseWikiMaintenance extends Maintenance {
 	// delete wikis after X days when we marked them to be deleted
 	const CLOSE_WIKI_DELAY = 30;
 
+	const IMAGE_ARCHIVE_SIZE_LIMIT_BYTES = 50 * 1024 * 1024 * 1024;
+
 	public function __construct() {
 		parent::__construct();
 		$this->addOption( 'first', 'Run only once for first wiki in queue' );
+		$this->addOption( 'from', 'Starting offset for wiki to be closed' );
 		$this->addOption( 'dry-run', 'List wikis that will be removed and quit' );
 		$this->addOption( 'limit', 'Limit how many wikis will be processed', false, true );
 		$this->addOption( 'sleep', 'How long to wait before processing the next wiki', false, true );
@@ -45,6 +49,7 @@ class CloseWikiMaintenance extends Maintenance {
 	 * 4. remove images
 	 *
 	 * @access public
+	 * @throws DBUnexpectedError
 	 */
 	public function execute() {
 		global $IP;
@@ -53,12 +58,14 @@ class CloseWikiMaintenance extends Maintenance {
 		$first = $this->hasOption( 'first' );
 		$sleep = $this->getOption( 'sleep', 15 );
 		$limit = $this->getOption( 'limit', false );
+		$from = $this->getOption( 'from', 0 );
 		$cluster = $this->getOption( 'cluster', false ); // eg. c6
 
 		$this->info( 'start', [
 			'cluster' => $cluster,
 			'first' => $first,
 			'limit' => $limit,
+			'from' => $from,
 		] );
 
 		// build database query
@@ -71,7 +78,10 @@ class CloseWikiMaintenance extends Maintenance {
 		 */
 		if ( !$first ) {
 			if ( is_numeric( $limit ) ) {
-				$opts["LIMIT"] = $limit;
+				$opts['LIMIT'] = $limit;
+			}
+			if ( is_numeric( $from ) && $from > 0 ) {
+				$opts['OFFSET'] = $from;
 			}
 		}
 
@@ -149,33 +159,37 @@ class CloseWikiMaintenance extends Maintenance {
 				if ( $dbname && $folder ) {
 					$this->info( "Dumping images on remote host" );
 					try {
-						$source = $this->tarFiles( $dbname, $cityid );
+						foreach( $this->tarFiles( $dbname, $cityid ) as $source ) {
+							if ( is_string( $source ) ) {
+								try {
+									DumpsOnDemand::putToAmazonS3( $source, !$hide,
+										MimeMagic::singleton()->guessMimeType( $source ) );
+								}
+								catch ( S3Exception $ex ) {
+									$this->error( "putToAmazonS3 command failed - Can't copy images to remote host. Please, fix that and rerun",
+										[
+											'exception' => $ex->getMessage(),
+											'dump_size_bytes' => filesize( $source ),
+										] );
+									unlink( $source );
 
-						if ( is_string( $source ) ) {
-							try {
-								DumpsOnDemand::putToAmazonS3( $source, !$hide,
-									MimeMagic::singleton()->guessMimeType( $source ) );
-							}
-							catch ( S3Exception $ex ) {
-								$this->error( "putToAmazonS3 command failed - Can't copy images to remote host. Please, fix that and rerun",
-									[
-										'exception' => $ex->getMessage(),
-										'dump_size_bytes' => filesize( $source ),
-									] );
+									// SUS-6077 | move to a next wiki instead of failing the entire process
+									continue 2;
+								}
+
+								$this->info( "{$source} copied to S3 Amazon" );
 								unlink( $source );
-
-								// SUS-6077 | move to a next wiki instead of failing the entire process
-								continue;
 							}
-
-							$this->info( "{$source} copied to S3 Amazon" );
-							unlink( $source );
 						}
 
 						$newFlags =
 							$newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE | WikiFactory::FLAG_HIDE_DB_IMAGES;
-					}
-					catch ( Exception $e ) {
+					} catch ( ConfigException $e ) {
+						$this->info( 'Skipping image archive creation', [
+							'exception' => $e->getMessage(),
+							'city_id' => $cityid,
+						] );
+					} catch ( Exception $e ) {
 						$this->error( "Can't create tar archive with images", [
 							'exception' => $e->getMessage(),
 							'city_id' => $cityid,
@@ -300,6 +314,39 @@ class CloseWikiMaintenance extends Maintenance {
 		$this->info( 'Done' );
 	}
 
+	private function createTarFile( string $sourceDir, string $targetFile ) {
+		$tar = new Archive_Tar( $targetFile );
+
+		if ( !$tar ) {
+			$this->error( "Cannot open {$targetFile}" );
+			echo "Cannot open {$targetFile}";
+			die( 1 );
+		}
+
+		$files = $this->getDirTree( $sourceDir );
+
+		if ( is_array( $files ) && count( $files ) ) {
+			$this->info( sprintf( "Packing %d files from {$sourceDir} to {$targetFile}", count( $files ) ) );
+			$res = $tar->create( $files );
+
+			if ( $res !== true ) {
+				throw new WikiaException( "Archive_Tar::create failed" );
+			}
+		} else {
+			$this->info( "List of files in {$sourceDir} is empty" );
+
+			// SUS-6077 | sub-bucket is empty, e.g. foo bucket is not empty,
+			// but bucket/<lang>  can be
+			return false;
+		}
+
+		// SUS-4325 | CloseWikiMaintenance should remove directories with images after tar file is created
+		$this->info( "Removing '{$sourceDir}' directory" );
+		wfRecursiveRemoveDir( $sourceDir );
+
+		return true;
+	}
+
 	/**
 	 * pack all images, use PEAR Archive_Tar for archive.
 	 *
@@ -308,8 +355,12 @@ class CloseWikiMaintenance extends Maintenance {
 	 * @param string $dbname database name
 	 * @param int $cityId city ID
 	 *
-	 * @return string path to created archive or false if there are no files to backup (S3 bucket does not exist / is empty)
-	 * @throws Exception thrown on failed backups
+	 * @return Generator list of paths to created archive or false if there are no files to backup (S3 bucket does not
+	 * exist /
+	 * is empty)
+	 * @throws ConfigException
+	 * @throws MWException
+	 * @throws WikiaException
 	 */
 	private function tarFiles( $dbname, $cityId ) {
 		$wgUploadPath = WikiFactory::getVarValueByName( 'wgUploadPath', $cityId );
@@ -317,7 +368,7 @@ class CloseWikiMaintenance extends Maintenance {
 		if ( empty( $wgUploadPath ) ) {
 			$this->info( sprintf( "Upload path is empty for city %s, leave early", $cityId ) );
 
-			return false;
+			throw new ConfigException( "upload path is empty for city {$cityId}" );
 		}
 
 		/** @var GcsFileBackend $backend */
@@ -340,11 +391,13 @@ class CloseWikiMaintenance extends Maintenance {
 		if ( count( $objects ) === 0 ) {
 			$this->info( sprintf( "'%s' path is empty, leave early\n", $path ) );
 
-			return false;
+			throw new ConfigException( "no files to copy" );
 		}
 
 		$this->info( sprintf( 'Copying images from "%s" to "%s"...', $path, $directory ) );
 
+		$partSize = 0;
+		$fileCount = 0;
 		foreach ( $objects as $object ) {
 			$this->output( sprintf( "Copying file %s", $object ) );
 			// do not backup thumbnails and temporary files
@@ -361,47 +414,35 @@ class CloseWikiMaintenance extends Maintenance {
 			$backend->bucket()->object( $object )->downloadToFile( $targetPath );
 
 			$this->output( sprintf( "Copied %s to %s", $object, $targetPath ) );
+
+			$partSize += filesize( $targetPath );
+
+			if ( $partSize > self::IMAGE_ARCHIVE_SIZE_LIMIT_BYTES ) {
+				$tarfile = sprintf( "/tmp/{$dbname}_images_%d.tar", ++$fileCount );
+				if ( file_exists( $tarfile ) ) {
+					@unlink( $tarfile );
+				}
+
+				$res = $this->createTarFile( $directory, $tarfile );
+				if ( $res ) {
+					$partSize = 0;
+					yield $tarfile;
+				}
+			}
 		}
 
 		$time = Wikia::timeDuration( wfTime() - $time );
-		$this->debug( "Copyied from {$path} to {$directory} in time: {$time}" );
+		$this->debug( "Copied from {$path} to {$directory} in time: {$time}" );
 
-		$tarfile = sprintf( "/tmp/{$dbname}_images.tar" );
+		$tarfile = sprintf( "/tmp/{$dbname}_images_%d.tar", ++$fileCount );
 		if ( file_exists( $tarfile ) ) {
 			@unlink( $tarfile );
 		}
 
-		$tar = new Archive_Tar( $tarfile );
-
-		if ( !$tar ) {
-			$this->error( "Cannot open {$tarfile}" );
-			echo "Cannot open {$tarfile}";
-			die( 1 );
+		$res = $this->createTarFile( $directory, $tarfile );
+		if ( $res ) {
+			yield $tarfile;
 		}
-		$files = $this->getDirTree( $directory );
-
-		if ( is_array( $files ) && count( $files ) ) {
-			$this->info( sprintf( "Packing %d files from {$directory} to {$tarfile}", count( $files ) ) );
-			$res = $tar->create( $files );
-
-			if ( $res !== true ) {
-				throw new WikiaException( "Archive_Tar::create failed" );
-			}
-
-			$result = $tarfile;
-		} else {
-			$this->info( "List of files in {$directory} is empty" );
-
-			// SUS-6077 | sub-bucket is empty, e.g. foo bucket is not empty,
-			// but bucket/<lang>  can be
-			return false;
-		}
-
-		// SUS-4325 | CloseWikiMaintenance should remove directories with images after tar file is created
-		$this->info( "Removing '{$directory}' directory" );
-		wfRecursiveRemoveDir( $directory );
-
-		return $result;
 	}
 
 	/**
@@ -437,6 +478,8 @@ class CloseWikiMaintenance extends Maintenance {
 	 * Clean up the shared data for a given wiki ID
 	 *
 	 * @param int $city_id
+	 * @throws DBUnexpectedError
+	 * @throws MWException
 	 * @see PLATFORM-1204
 	 * @see PLATFORM-1849
 	 *
@@ -487,7 +530,7 @@ class CloseWikiMaintenance extends Maintenance {
 		try {
 			$this->getSitesApi()->hardDeleteSite( $cityId, $wgTheSchwartzSecretToken );
 		}
-		catch ( \Swagger\Client\ApiException $e ) {
+		catch ( ApiException $e ) {
 			$this->error( "Failed to hard delete Discussion site", [
 				'exception' => $e,
 				'city_id' => $cityId,

@@ -44,6 +44,8 @@ class UserApiController extends WikiaApiController {
 
 		$items = array();
 
+		$currentUser = $this->getContext()->getUser();
+
 		foreach ( $users as $user ) {
 			$userName = $user->getName();
 
@@ -52,7 +54,10 @@ class UserApiController extends WikiaApiController {
 				'title' => $user->getTitleKey(),
 				'name' => $userName,
 				'url' => AvatarService::getUrl( $userName ),
-				'numberofedits' => (int) $user->getEditCount()
+				'numberofedits' => (int) $user->getEditCount(),
+				'is_subject_to_ccpa' => (
+					$currentUser->equals( $user ) ? $currentUser->isSubjectToCcpa() : null
+				),
 			);
 
 			//add avatar url if size !== 0

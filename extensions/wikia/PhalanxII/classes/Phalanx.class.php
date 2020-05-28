@@ -334,17 +334,22 @@ class Phalanx extends WikiaModel implements ArrayAccess {
 	}
 
 	/**
-	 * If this is an user filter, check if it is not a trusted network IP address
-	 * If it's an IP address, format it correctly
-	 * @return bool true if this user filter is valid, false if it would block trusted host
+	 * If this is an user filter, check if it is not a trusted network IP address or a private IP address
+	 * @return bool true if this user filter is valid, false if it would block trusted host or a private IP address
 	 */
 	private function validateUserFilter(): bool {
 		if ( ( $this->data['type'] & self::TYPE_USER ) && User::isIP( $this->data['text'] ) ) {
-			if ( wfIsTrustedProxy( $this->data['text'] ) ) {
+			$ip = $this->data['text'];
+			if ( wfIsTrustedProxy( $ip ) ) {
 				// Don't allow to set blocks for trusted proxies or Wikia network hosts
 				return false;
 			}
+			if ( !filter_var( $ip, FILTER_VALIDATE_IP, FILTER_FLAG_NO_PRIV_RANGE | FILTER_FLAG_NO_RES_RANGE ) ) {
+				// SER-3295: Don't allow to set blocks for local IPs
+				return false;
+			}
 		}
+
 		return true;
 	}
 

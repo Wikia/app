@@ -1,10 +1,6 @@
 FROM xcgd/nginx-vts:stable
 
-RUN chown -R nginx:nginx /etc/nginx && \
-    chown nginx:nginx /var/cache/nginx && \
-    chown -R nginx:nginx /var/log/nginx && \
-    mkdir /var/run/nginx && \
-    chown nginx:nginx /var/run/nginx
+RUN mkdir /run/nginx && chown -R 65534:65534 /run /var/cache /etc/nginx
 
 ADD docker/base/base.inc /etc/nginx/conf.d/base.inc
 ADD docker/base/nginx.conf /etc/nginx/nginx.conf
@@ -18,7 +14,7 @@ ADD skins /usr/wikia/slot1/current/src/skins
 ADD resources /usr/wikia/slot1/current/src/resources
 ADD extensions /usr/wikia/slot1/current/src/extensions
 
-USER nginx
+USER 65534
 
 # validate configuration files for syntax errors
 RUN nginx -c /etc/nginx/nginx.conf -t

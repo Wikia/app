@@ -51,7 +51,7 @@ class WAMServiceTest extends WikiaBaseTest {
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(100000)',
-					'fw1.vertical_id' => [0,1,2,3,4,5,6,7],
+					'fw1.vertical_id' => [0,1,2,3,4,5,6,7,8],
 					'fw1.wiki_id NOT IN (100, 200, 300)',
 					'(dw.url IS NOT NULL AND dw.title IS NOT NULL)',
 				),
@@ -68,7 +68,7 @@ class WAMServiceTest extends WikiaBaseTest {
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(1000000)',
-					'fw1.vertical_id' => [0,1,2,3,4,5,6,7],
+					'fw1.vertical_id' => [0,1,2,3,4,5,6,7,8],
 					'(dw.url IS NOT NULL AND dw.title IS NOT NULL)',
 				)
 			),
@@ -84,7 +84,7 @@ class WAMServiceTest extends WikiaBaseTest {
 				array(
 					'fw1.time_id = FROM_UNIXTIME(1000000)',
 					'fw1.wiki_id' => 2233,
-					'fw1.vertical_id' => [0,1,2,3,4,5,6,7],
+					'fw1.vertical_id' => [0,1,2,3,4,5,6,7,8],
 					'(dw.url IS NOT NULL AND dw.title IS NOT NULL)',
 				)
 			),
@@ -119,7 +119,7 @@ class WAMServiceTest extends WikiaBaseTest {
 				array(
 					'fw1.time_id = FROM_UNIXTIME(1000000)',
 					"dw.url like '%testWord%' OR dw.title like '%testWord%'",
-					'fw1.vertical_id' => [0,1,2,3,4,5,6,7],
+					'fw1.vertical_id' => [0,1,2,3,4,5,6,7,8],
 					'(dw.url IS NOT NULL AND dw.title IS NOT NULL)',
 				)
 			),
@@ -134,7 +134,7 @@ class WAMServiceTest extends WikiaBaseTest {
 				),
 				array(
 					'fw1.time_id = FROM_UNIXTIME(100000)',
-					'fw1.vertical_id' => [0,1,2,3,4,5,6,7],
+					'fw1.vertical_id' => [0,1,2,3,4,5,6,7,8],
 					'dw.lang' => 'testLang',
 					'(dw.url IS NOT NULL AND dw.title IS NOT NULL)',
 				)
@@ -232,7 +232,7 @@ class WAMServiceTest extends WikiaBaseTest {
 					'limit' => 20
 				),
 				array(
-					'ORDER BY' => 'wam ASC',
+					'ORDER BY' => 'wam_rank ASC',
 					'OFFSET' => 0,
 					'LIMIT' => 20
 				),

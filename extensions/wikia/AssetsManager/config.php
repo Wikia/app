@@ -83,7 +83,6 @@ $config['adengine3_top_js'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/AdEngine3/dist/ads.js',
-		'//extensions/wikia/AdEngine3/dist/vendors/prebid.js',
 		'//extensions/wikia/AdEngine3/module.js'
 	],
 ];
@@ -92,7 +91,6 @@ $config['adengine3_dev_top_js'] = [
 	'skin' => [ 'oasis' ],
 	'assets' => [
 		'//extensions/wikia/AdEngine3/dist-dev/ads.js',
-		'//extensions/wikia/AdEngine3/dist-dev/vendors/prebid.js',
 		'//extensions/wikia/AdEngine3/alert.js',
 		'//extensions/wikia/AdEngine3/module.js'
 	],
@@ -440,7 +438,6 @@ $config['wikiamobile_js_body_minimal'] = [
 		'//resources/wikia/modules/log.js',
 		'//resources/wikia/modules/abTest.js',
 		'//resources/wikia/modules/geo.js',
-		'//resources/wikia/modules/instantGlobals.js',
 
 		//feature detection
 		'//extensions/wikia/WikiaMobile/js/features.js',
@@ -596,7 +593,6 @@ $config['mercury_ads_js'] = [
 		'//resources/wikia/modules/history.js',
 		'//resources/wikia/modules/cookies.js',
 		'//resources/wikia/modules/geo.js',
-		'//resources/wikia/modules/instantGlobals.js',
 
 		'#group_mobile_base_ads_js',
 		'//resources/wikia/modules/cache.js',
@@ -605,7 +601,6 @@ $config['mercury_ads_js'] = [
 		'//extensions/wikia/AbTesting/js/AbTest.js',
 		'//resources/wikia/modules/abTest.js',
 		'#group_jwplayer_mobile_featured_video_ads_js',
-		'//extensions/wikia/TrackingOptIn/js/trackingOptInProxy.js',
 	],
 ];
 

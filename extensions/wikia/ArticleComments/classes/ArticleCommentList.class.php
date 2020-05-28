@@ -457,7 +457,7 @@ class ArticleCommentList {
 
 		$block = $wgUser->mBlock;
 
-		list( $blockerName, $reason, $ip, $blockid, $blockTimestamp, $blockExpiry, $intended, $isGlobal ) = [
+		list( $blockerName, $reason, $ip, $blockid, $blockTimestamp, $blockExpiry, $intended ) = [
 			$wgUser->blockedBy(),
 			$wgUser->blockedFor() ? $wgUser->blockedFor() : wfMessage( 'blockednoreason' )->text(),
 			$wgRequest->getIP(),
@@ -465,7 +465,6 @@ class ArticleCommentList {
 			$wgLang->timeanddate( wfTimestamp( TS_MW, $block->mTimestamp ), true ),
 			$block->mExpiry,
 			$block->mAddress,
-			$wgUser->mBlockedGlobally
 		];
 
 		// Hide username of blocker if this is a global block (see lines 2112-2129 of includes/Title.php)
@@ -495,7 +494,7 @@ class ArticleCommentList {
 			$msg = 'blockedtext';
 		}
 
-		return wfMessage( $msg, $blockerLink, $reason, $ip, $blockid, $blockExpiry, $intended, $blockTimestamp )->parse();
+		return wfMessage( $msg, [$blockerLink, $reason, $ip, $blockerName, $blockid, $blockExpiry, $intended, $blockTimestamp] )->parse();
 	}
 
 	/**

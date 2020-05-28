@@ -12,7 +12,7 @@ $wgAutoloadClasses['DiscussionsDataService'] =  __DIR__ . '/services/Discussions
 $wgAutoloadClasses['PopularPagesService'] = __DIR__. '/services/PopularPagesService.php';
 $wgAutoloadClasses['FandomArticleService'] = __DIR__. '/services/FandomArticleService.php';
 $wgAutoloadClasses['CachedFandomArticleService'] = __DIR__. '/services/CachedFandomArticleService.php';
-$wgAutoloadClasses['ParselyService'] = __DIR__. '/services/ParselyService.php';
+$wgAutoloadClasses['CurationCmsArticleService'] = __DIR__. '/services/CurationCmsArticleService.php';
 
 $wgAutoloadClasses['RecirculationController'] =  __DIR__ . '/RecirculationController.class.php';
 $wgAutoloadClasses['RecirculationApiController'] =  __DIR__ . '/RecirculationApiController.class.php';

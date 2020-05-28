@@ -3589,7 +3589,7 @@ Die Datenbank meldete den Fehler „<tt>$3: $4</tt>“.',
 	'dberrortextcl' => 'Es gab einen Syntaxfehler in der Datenbankabfrage.
 Die letzte Datenbankabfrage lautete: „$1“ aus der Funktion „<tt>$2</tt>“.
 Die Datenbank meldete den Fehler: „<tt>$3: $4</tt>“.',
-	'directorycreateerror' => 'Das Verzeichnis „$1“ konnte nicht angelegt werden.',
+	'directorycreateerror' => 'Das Verzeichnis „$1“ konnte nicht angelegt werden. Bitte melde den angezeigten Fehler an unsere [[Spezial:Kontakt|Support]].',
 	'deletedhist' => 'Gelöschte Versionen',
 	'difference' => '(Unterschied zwischen Versionen)',
 	'difference-multipage' => '(Unterschied zwischen Seiten)',
@@ -3602,7 +3602,7 @@ Die Datenbank meldete den Fehler: „<tt>$3: $4</tt>“.',
 	'destfilename' => 'Zielname:',
 	'duplicatesoffile' => 'Die {{PLURAL:$1|folgende Datei ist ein Duplikat|folgenden $1 Dateien sind Duplikate}} dieser Datei ([[Special:FileDuplicateSearch/$2|weitere Details]]):',
 	'download' => 'Herunterladen',
-	'disambiguations' => 'Seiten die auf Begriffsklärungsseiten verlinken',
+	'disambiguations' => 'Seiten, die auf Begriffsklärungsseiten verlinken',
 	'disambiguationspage' => 'Template:Begriffsklärung',
 	'disambiguations-text' => 'Die folgenden Seiten verlinken auf eine Seite zur Begriffsklärung. Sie sollten statt dessen auf die eigentlich gemeinte Seite verlinken.
 
@@ -3619,7 +3619,7 @@ Jede Zeile enthält Links zur ersten und zweiten Weiterleitung sowie dem Ziel de
 	'deadendpagestext' => 'Die folgenden Seiten verweisen nicht auf andere Seiten von {{SITENAME}}.',
 	'deletedcontributions' => 'Gelöschte Beiträge',
 	'deletedcontributions-title' => 'Gelöschte Beiträge',
-	'defemailsubject' => '[{{SITENAME}}-E-Mail]',
+	'defemailsubject' => 'Du hast eine neue E-Mail von einem Nutzer auf {{SITENAME}}.',
 	'deletepage' => 'Seite löschen',
 	'delete-confirm' => 'Löschen von „$1“',
 	'delete-legend' => 'Löschen',
@@ -3627,7 +3627,7 @@ Jede Zeile enthält Links zur ersten und zweiten Weiterleitung sowie dem Ziel de
 
 Je nach Grund für die Löschung ist es vielleicht auch sinnvoll, alle [[Special:WhatLinksHere/$1|Links auf diese Seite]] zu entfernen. Achte auch darauf ob die gelöschte Seite eine dazugehörige Diskussionsseite hatte.',
 	'dellogpage' => 'Lösch-Logbuch',
-	'dellogpagetext' => 'Dies ist das Logbuch der gelöschten Seiten und Dateien.',
+	'dellogpagetext' => 'Dies ist das Logbuch der gelöschten Seiten und Dateien. Wenn du mit einer Löschung nicht einverstanden bist oder der Meinung bist, diese Seite oder Datei sollte nicht gelöscht werden, kontaktiere den [[Spezial:Administratoren|Administrator]], der sie gelöscht hat.',
 	'deletionlog' => 'Lösch-Logbuch',
 	'deletecomment' => 'Grund:',
 	'deleteotherreason' => 'Anderer/ergänzender Grund:',
@@ -3646,7 +3646,7 @@ Je nach Grund für die Löschung ist es vielleicht auch sinnvoll, alle [[Special
 ** Falsche Schreibweise',
 	'delete-edit-reasonlist' => 'Löschgründe bearbeiten',
 	'delete-toobig' => 'Diese Seite hat mit mehr als $1 {{PLURAL:$1|Version|Versionen}} eine sehr lange Versionsgeschichte. Das Löschen solcher Seiten wurde eingeschränkt, um eine versehentliche Überlastung der Server zu verhindern.',
-	'delete-warning-toobig' => 'Diese Seite hat mit mehr als $1 {{PLURAL:$1|Version|Versionen}} eine sehr lange Versionsgeschichte. Das Löschen kann zu Störungen im Datenbankbetrieb führen.',
+	'delete-warning-toobig' => 'Diese Seite hat mit mehr als $1 {{PLURAL:$1|Version|Versionen}} eine sehr lange Versionsgeschichte. Das Löschen kann zu Störungen im Datenbankbetrieb von {{SITENAME}} führen. Fahre mit Bedacht fort.',
 	'databasenotlocked' => 'Die Datenbank ist nicht gesperrt.',
 	'delete_and_move' => 'Löschen und Verschieben',
 	'delete_and_move_text' => '== Löschung erforderlich ==

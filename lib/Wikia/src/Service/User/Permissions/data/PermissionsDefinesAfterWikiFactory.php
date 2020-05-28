@@ -72,6 +72,8 @@ if (!empty($wgEnableNukeExt)) {
 	$wgGroupPermissions['staff']['nuke'] = true;
 	$wgGroupPermissions['helper']['nuke'] = true;
 	$wgGroupPermissions['vstf']['nuke'] = true;
+	$wgGroupPermissions['content-team-member']['nuke'] = true;
+	$wgGroupPermissions['wiki-manager']['nuke'] = true;
 	$wgGroupPermissions['sysop']['nuke'] = false;
 	if( !empty($wgWikiaNukeLocal) ){
 		$wgGroupPermissions['sysop']['nuke'] = true;
@@ -106,11 +108,12 @@ $wgGroupPermissions['checkuser']['checkuser-log'] = true;
  * By default, sysops and registered bot accounts will be
  * able to skip, while others have to go through it.
  */
-$wgGroupPermissions['*'            ]['skipcaptcha'] = false;
-$wgGroupPermissions['user'         ]['skipcaptcha'] = false;
-$wgGroupPermissions['autoconfirmed']['skipcaptcha'] = false;
-$wgGroupPermissions['bot'          ]['skipcaptcha'] = true; // registered bots
-$wgGroupPermissions['sysop'        ]['skipcaptcha'] = true;
+$wgGroupPermissions['*'                  ]['skipcaptcha'] = false;
+$wgGroupPermissions['user'               ]['skipcaptcha'] = false;
+$wgGroupPermissions['autoconfirmed'      ]['skipcaptcha'] = false;
+$wgGroupPermissions['bot'                ]['skipcaptcha'] = true; // registered bots
+$wgGroupPermissions['sysop'              ]['skipcaptcha'] = true;
+$wgGroupPermissions['content-team-member']['skipcaptcha'] = true;
 
 if ( !empty( $wgEnableCaptchaExt ) ) {
 	$wgGroupPermissions['staff']['skipcaptcha'] = true;
@@ -130,6 +133,7 @@ $wgGroupPermissions['*']['viewedittab'] = true;
 # Permission to edit form fields defined as 'restricted'
 # ##
 $wgGroupPermissions['sysop']['editrestrictedfields'] = true;
+$wgGroupPermissions['wiki-manager']['editrestrictedfields'] = true;
 
 # ##
 # Permission to view, and create pages with, Special:CreateClass
@@ -154,6 +158,7 @@ $wgGroupPermissions[ 'content-team-member' ]['abusefilter-bypass'] = true;
 $wgGroupPermissions['*']['platinum'] = false;
 $wgGroupPermissions['staff']['platinum'] = true;
 $wgGroupPermissions['helper']['platinum'] = true;
+$wgGroupPermissions['wiki-manager']['platinum'] = true;
 
 $wgGroupPermissions['*']['sponsored-achievements'] = false;
 $wgGroupPermissions['staff']['sponsored-achievements'] = true;
@@ -249,6 +254,7 @@ $wgGroupPermissions['wiki-manager']['chatmoderator'] = true;
 
 $wgGroupPermissions['*']['chatstaff'] = false;
 $wgGroupPermissions['staff']['chatstaff'] = true;
+$wgGroupPermissions['wiki-manager']['chatstaff'] = true;
 
 $wgGroupPermissions['*']['chatadmin'] = false;
 $wgGroupPermissions['sysop']['chatadmin'] = true;
@@ -278,11 +284,14 @@ $wgGroupPermissions['*']['createnewwiki'] = true;
 $wgGroupPermissions['staff']['createnewwiki'] = true;
 
 $wgGroupPermissions['staff']['createwikilimitsexempt'] = true;
+$wgGroupPermissions['wiki-manager']['createwikilimitsexempt'] = true;
 
 $wgGroupPermissions['*']['curatedcontent'] = false;
 $wgGroupPermissions['staff']['curatedcontent'] = true;
 $wgGroupPermissions['helper']['curatedcontent'] = true;
 $wgGroupPermissions['sysop']['curatedcontent'] = true;
+$wgGroupPermissions['content-team-member']['curatedcontent'] = true;
+$wgGroupPermissions['wiki-manager']['curatedcontent'] = true;
 
 
 $wgGroupPermissions['*']['curatedcontent-switchforadmins'] = false;
@@ -298,18 +307,21 @@ $wgGroupPermissions['*']['access-sendemail'] = false;
 $wgGroupPermissions['staff']['access-sendemail'] = true;
 $wgGroupPermissions['helper']['access-sendemail'] = true;
 $wgGroupPermissions['translator']['access-sendemail'] = true;
+$wgGroupPermissions['wiki-manager']['access-sendemail'] = true;
 
 $wgGroupPermissions['staff']['emailsstorage'] = true;
 
 $wgGroupPermissions['*']['flags-administration'] = false;
 $wgGroupPermissions['sysop']['flags-administration'] = true;
 $wgGroupPermissions['staff']['flags-administration'] = true;
+$wgGroupPermissions['wiki-manager']['flags-administration'] = true;
 
 
 $wgGroupPermissions['*']['forum'] = false;
 $wgGroupPermissions['staff']['forum'] = true;
 $wgGroupPermissions['sysop']['forum'] = true;
 $wgGroupPermissions['helper']['forum'] = true;
+$wgGroupPermissions['wiki-manager']['forum'] = true;
 
 $wgGroupPermissions['*']['boardedit'] = false;
 $wgGroupPermissions['staff']['boardedit'] = true;
@@ -331,10 +343,12 @@ $wgGroupPermissions['content-team-member']['forumadmin'] = true;
 $wgGroupPermissions['*']['gameguidespreview'] = false;
 $wgGroupPermissions['staff']['gameguidespreview'] = true;
 $wgGroupPermissions['sysop']['gameguidespreview'] = true;
+$wgGroupPermissions['wiki-manager']['gameguidespreview'] = true;
 
 $wgGroupPermissions['*']['gameguidescontent'] = false;
 $wgGroupPermissions['staff']['gameguidescontent'] = true;
 $wgGroupPermissions['helper']['gameguidescontent'] = true;
+$wgGroupPermissions['wiki-manager']['gameguidescontent'] = true;
 
 if ( $wgGameGuidesContentForAdmins ) {
 	$wgGroupPermissions['sysop']['gameguidescontent'] = true;
@@ -395,13 +409,16 @@ $wgGroupPermissions['staff']['minieditor-specialpage'] = true;
 $wgGroupPermissions['staff']['multidelete'] = true;
 $wgGroupPermissions['helper']['multidelete'] = true;
 $wgGroupPermissions['vstf']['multidelete'] = true;
+$wgGroupPermissions['wiki-manager']['multidelete'] = true;
 
 $wgGroupPermissions['staff']['multiwikiedit'] = true;
 $wgGroupPermissions['helper']['multiwikiedit'] = true;
+$wgGroupPermissions['wiki-manager']['multiwikiedit'] = true;
 
 $wgGroupPermissions['staff']['multiwikifinder'] = true;
 $wgGroupPermissions['helper']['multiwikifinder'] = true;
 $wgGroupPermissions['vstf']['multiwikifinder'] = true;
+$wgGroupPermissions['wiki-manager']['multiwikifinder'] = true;
 
 $wgGroupPermissions['util']['piggyback'] = true;
 
@@ -421,6 +438,7 @@ $wgGroupPermissions['util']['restrictsession'] = true;
 $wgGroupPermissions['*']['performancestats'] = false;
 $wgGroupPermissions['staff']['performancestats'] = true;
 $wgGroupPermissions['helper']['performancestats'] = true; // BugId:5497
+$wgGroupPermissions['wiki-manager']['performancestats'] = true;
 
 //Allow group STAFF to use this extension.
 $wgGroupPermissions['*']['messagetool'] = false;
@@ -438,6 +456,7 @@ $wgGroupPermissions['staff']['forceview'] = true;
 $wgGroupPermissions['*']['edithub'] = false;
 $wgGroupPermissions['staff']['edithub'] = true;
 $wgGroupPermissions['helper']['edithub'] = true;
+$wgGroupPermissions['wiki-manager']['edithub'] = true;
 
 $wgGroupPermissions ['staff']['InterwikiEdit'] = true;
 $wgGroupPermissions ['wiki-manager']['InterwikiEdit'] = true;
@@ -457,6 +476,7 @@ $wgGroupPermissions['*']['restricted_promote'] = false;
 $wgGroupPermissions['staff']['restricted_promote'] = true;
 $wgGroupPermissions['helper']['restricted_promote'] = true;
 $wgGroupPermissions['sysop']['restricted_promote'] = false;
+$wgGroupPermissions['wiki-manager']['restricted_promote'] = true;
 
 $wgGroupPermissions['*']['specialvideosdelete'] = false;
 $wgGroupPermissions['staff']['specialvideosdelete'] = true;
@@ -466,6 +486,7 @@ $wgGroupPermissions['vstf']['specialvideosdelete'] = true;
 
 $wgGroupPermissions['staff']['stafflog'] = true;
 $wgGroupPermissions['helper']['stafflog'] = true;
+$wgGroupPermissions['wiki-manager']['stafflog'] = true;
 
 $wgGroupPermissions['staff']['unblockable'] = true;
 $wgGroupPermissions['helper']['unblockable'] = true;
@@ -478,6 +499,7 @@ $wgGroupPermissions['*']['tagsreport'] = true;
 $wgGroupPermissions['vstf']['taskmanager'] = true;
 $wgGroupPermissions['helper']['taskmanager'] = true;
 $wgGroupPermissions['staff']['taskmanager'] = true;
+$wgGroupPermissions['wiki-manager']['taskmanager'] = true;
 
 $wgGroupPermissions['util']['taskmanager'] = true;
 $wgGroupPermissions['util']['taskmanager-action'] = true;
@@ -486,6 +508,7 @@ $wgGroupPermissions['vstf']['tasks-user'] = true;
 $wgGroupPermissions['helper']['tasks-user'] = true;
 $wgGroupPermissions['staff']['tasks-user'] = true;
 $wgGroupPermissions['util']['tasks-user'] = true;
+$wgGroupPermissions['wiki-manager']['tasks-user'] = true;
 
 $wgGroupPermissions['*']['template-bulk-classification'] = false;
 $wgGroupPermissions['helper']['template-bulk-classification'] = true;
@@ -500,6 +523,8 @@ $wgGroupPermissions['helper']['templatedraft'] = true;
 $wgGroupPermissions['vstf']['templatedraft'] = true;
 $wgGroupPermissions['voldev']['templatedraft'] = true;
 $wgGroupPermissions['user']['templatedraft'] = true;
+$wgGroupPermissions['content-team-member']['templatedraft'] = true;
+$wgGroupPermissions['wiki-manager']['templatedraft'] = true;
 
 $wgGroupPermissions['staff']['textregex'] = true;
 
@@ -535,6 +560,7 @@ $wgGroupPermissions['wiki-manager']['deleteprofilev3'] = true;
 $wgGroupPermissions['staff']['editprofilev3'] = true;
 $wgGroupPermissions['vstf']['editprofilev3'] = true;
 $wgGroupPermissions['helper']['editprofilev3'] = true;
+$wgGroupPermissions['wiki-manager']['editprofilev3'] = true;
 
 $wgGroupPermissions['*']['renameuser'] = true;
 $wgGroupPermissions['*']['renameanotheruser'] = false;
@@ -560,6 +586,7 @@ $wgGroupPermissions['vstf']['wallarchive'] = true;
 $wgGroupPermissions['helper']['wallarchive'] = true;
 $wgGroupPermissions['sysop']['wallarchive'] = true;
 $wgGroupPermissions['threadmoderator']['wallarchive'] = true;
+$wgGroupPermissions['wiki-manager']['wallarchive'] = true;
 
 $wgGroupPermissions['*']['wallremove'] = false;
 $wgGroupPermissions['staff']['wallremove'] = true;
@@ -617,6 +644,7 @@ $wgGroupPermissions['*']['canremovemap'] = false;
 $wgGroupPermissions['sysop']['canremovemap'] = true;
 $wgGroupPermissions['staff']['canremovemap'] = true;
 $wgGroupPermissions['helper']['canremovemap'] = true;
+$wgGroupPermissions['wiki-manager']['canremovemap'] = true;
 
 $wgGroupPermissions['user']['upload_by_url']   = true;
 
