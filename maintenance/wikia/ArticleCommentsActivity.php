@@ -11,7 +11,7 @@ ini_set( 'error_reporting', E_NOTICE );
 require_once( dirname( __FILE__ ) . '/../Maintenance.php' );
 
 // SERVER_ID=1308778 php maintenance/wikia/GenerateWikiIdsList.php
-// cat wikis.txt | while read line ; do SERVER_ID=$line php maintenance/wikia/ArticleCommentsActivity.php ; done | grep --line-buffered -Eo ^Result.+$ > results_raw.txt
+// cat wikis.txt | while read line ; do SERVER_ID=$line php maintenance/wikia/ArticleCommentsActivity.php ; done | grep --line-buffered -Eo ^Result.+$ > results.csv
 
 
 class ArticleCommentsActivity extends Maintenance {
@@ -32,7 +32,7 @@ class ArticleCommentsActivity extends Maintenance {
 		// select count(*) from page where page_title like '%/@comment-%' and page_namespace in
 		// $comments namespaces;
 		if ( !empty( $wgEnableArticleCommentsExt ) ) {
-			global $wgCityId, $wgSitename, $wgArticleCommentsNamespaces, $wgContentNamespaces;
+			global $wgCityId, $wgDBname, $wgArticleCommentsNamespaces, $wgContentNamespaces;
 
 			$dbr = wfGetDB( DB_SLAVE );
 
@@ -40,57 +40,27 @@ class ArticleCommentsActivity extends Maintenance {
 				return MWNamespace::getTalk($ns);
 			}, empty($wgArticleCommentsNamespaces) ? $wgContentNamespaces : $wgArticleCommentsNamespaces);
 
-//			$commentsCount = $dbr->selectField( 'page', 'count(*) as cnt', [
-//				'page_title like \'%/@comment-%\'',
-//				'page_namespace' => $namespaces,
-//			] );
-//
+			$commentsCount = $dbr->selectField( 'page', 'count(*) as cnt', [
+				'page_title like \'%/@comment-%\'',
+				'page_namespace' => $namespaces,
+			] );
+
 //			$namespacesStr = implode(',', $namespaces);
 //			// Select count(*) from ( select DISTINCT SUBSTRING_INDEX(page_title, "/@comment-", 1) as db_key, page_namespace from page where page_namespace in (1, 501, 15) and page_title like '%@comment-%') as initial_query;
 //			$pagesWithComments = $dbr->query(
 //				"select count(*) as cnt from (select DISTINCT SUBSTRING_INDEX(page_title, \"/@comment-\", 1) as db_key, page_namespace from page where page_namespace in (${namespacesStr}) and page_title like '%@comment-%') as initial_query"
 //			)->fetchRow()['cnt'];
-//
-//			echo("Result;${wgCityId};${wgSitename};${commentsCount};${pagesWithComments}\n");
 
 			// deleted comments stats
-			$deletedCommentsCountArchive = $dbr->selectField( 'archive', 'count(*) as cnt', [
+			$deletedCommentsCount = $dbr->selectField( 'archive', 'count(*) as cnt', [
 				'ar_title like \'%/@comment-%\'',
 				'ar_namespace' => $namespaces,
 			] );
 
-			$deletionsCount = $dbr->selectField( 'logging', 'count(*) as cnt', [
-				'log_title like \'%/@comment-%\'',
-				'log_namespace' => $namespaces,
-				'log_type' => 'delete',
-				'log_action' => 'delete',
-			] );
+			$sum = $commentsCount + $deletedCommentsCount;
 
-			$restoresCount = $dbr->selectField( 'logging', 'count(*) as cnt', [
-				'log_title like \'%/@comment-%\'',
-				'log_namespace' => $namespaces,
-				'log_type' => 'delete',
-				'log_action' => 'restore',
-			] );
-
-			$deletions3M = $dbr->selectField( 'logging', 'count(*) as cnt', [
-				'log_title like \'%/@comment-%\'',
-				'log_namespace' => $namespaces,
-				'log_type' => 'delete',
-				'log_action' => 'delete',
-				'log_timestamp > 20200122000000'
-			] );
-
-			$restores3M = $dbr->selectField( 'logging', 'count(*) as cnt', [
-				'log_title like \'%/@comment-%\'',
-				'log_namespace' => $namespaces,
-				'log_type' => 'delete',
-				'log_action' => 'restore',
-				'log_timestamp > 20200122000000'
-			] );
-
-			if ( $deletedCommentsCountArchive > 0 || $deletionsCount > 0 || $restoresCount > 0 || $deletions3M > 0 || $restores3M > 0) {
-				echo("Result;${wgCityId};${wgSitename};${deletedCommentsCountArchive};${deletionsCount};${restoresCount};${deletions3M};${restores3M}\n");
+			if ( $commentsCount > 0 || $deletedCommentsCount > 0 ) {
+				echo("Result;${wgCityId};${wgDBname};${commentsCount};${deletedCommentsCount};${sum}\n");
 			}
 		}
 	}
