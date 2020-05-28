@@ -35,7 +35,7 @@ class XmlDocument
 		$stack = Array();
 		$nameStack = Array();
 		$result = Array();
-		$tagData = "";
+		$tagData = [];
 
 		array_push($stack,$result);
 		array_push($nameStack,null);
@@ -69,7 +69,7 @@ class XmlDocument
 				$m = $parser->accept_upto(">");
 				$parser->accept(">");
 				$tagname = trim($m[0]);
-				
+
 				if( $tagname != $nameStack[0] )
 				{
 					$parser->dumpState();
@@ -77,7 +77,7 @@ class XmlDocument
 					$this->error = "Tag mismatch: expecting `$nameStack[0]' got `$tagname'\n";
 					return false;
 				};
-				
+
 				$curr = $stack[0];
 				array_shift($stack);
 				$stack[0][strtoupper($nameStack[0])][] = $curr;
@@ -152,7 +152,7 @@ class XmlDocument
 	function getItem( $path )
 	{
 		$parts = explode( "/", $path );
-		
+
 		$curr = $this->items;
 		foreach( $parts as $part )
 		{
@@ -175,12 +175,12 @@ class XmlDocument
 					{
 						return null;
 					}
-						
+
 					if( !( is_array( $curr[$tag] ) && array_key_exists( $idx, $curr[$tag] ) ) )
 					{
 						return null;
 					}
-						
+
 					$array = $curr[$tag];
 					$curr = $array[$idx];
 				}
