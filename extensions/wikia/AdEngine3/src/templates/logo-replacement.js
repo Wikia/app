@@ -28,7 +28,6 @@ export class LogoReplacement {
 		if (parentElement && fandomLogo) {
 			const newLogoAnchorElement = document.createElement('a');
 			newLogoAnchorElement.href = this.config.clickThroughUrl || 'https://www.fandom.com/';
-			newLogoAnchorElement.classList.add('wds-global-navigation__logo');
 
 			const newLogo = document.createElement('img');
 			newLogo.src = this.config.logoImage;
