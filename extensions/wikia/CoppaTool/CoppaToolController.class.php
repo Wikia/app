@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Rabbit\ConnectionBase;
+
 class CoppaToolController extends WikiaController {
 
 	public function disableUserAccount() {
@@ -143,6 +145,13 @@ class CoppaToolController extends WikiaController {
 			->setQueue( \Wikia\Tasks\Queues\PriorityQueue::NAME );
 		$task->call('renameIP', $wikiIDs, $taskParams);
 		$taskID = $task->queue();
+
+		// Notify any interested services via Rabbit message
+		$publisher = new ConnectionBase( [
+			'vhost' => '/',
+			'exchange' => 'amq.topic',
+		] );
+		$publisher->publish( 'coppa-anonymize', [ 'targetAddress' => $ipAddr ] );
 
 		$this->response->setVal( 'success', true );
 		$this->response->setVal( 'resultMsg', wfMessage( 'coppatool-rename-ip-success', $taskID )->plain() );
