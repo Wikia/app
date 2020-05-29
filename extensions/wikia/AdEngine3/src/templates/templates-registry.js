@@ -15,7 +15,7 @@ import { getConfig as getPorvataConfig } from './porvata-config';
 import { getConfig as getRoadblockConfig } from './roadblock-config';
 import { getConfig as getStickyTLBConfig } from './sticky-tlb-config';
 import { Skin } from './skin';
-import {LogoReplacement} from "./logo-replacement";
+import { LogoReplacement } from "./logo-replacement";
 
 export const templateRegistry = {
 	registerTemplates() {
