@@ -706,6 +706,35 @@ class WikiFactoryLoader {
 			wfProfileOut( __METHOD__."-varsdb" );
 		}
 
+		#Fix shared uploads to UCP wikis
+		if (
+			!empty( $this->mVariables['wgUseSharedUploads'] ) &&
+			!empty( $this->mVariables['wgSharedUploadDBname'] )
+		) {
+			$partnerWikiData = $dbr->selectRow(
+				array( "city_list" ),
+				array(
+					"city_id",
+					"city_url",
+					"city_dbname",
+					"city_path",
+				),
+				array( "city_list.city_dbname" => $this->mVariables[ 'wgSharedUploadDBname' ] )
+			);
+
+			if ( !empty( $partnerWikiData ) && !( $partnerWikiData->city_path === 'slot1' ) ) {
+				unset( $this->mVariables[ 'wgSharedUploadDBname' ] );
+
+				$this->mVariables['wgForeignFileRepos'][] = [
+					'name' => 'sharedUploadHack',
+					'class' => 'ForeignAPIRepo',
+					'apibase' => $partnerWikiData->city_url . 'api.php',
+					'hashLevels' => 2,
+				];
+			}
+
+		}
+
 		# take some WF variables values from city_list
 		$this->mVariables['wgDBname'] = $this->mCityDB;
 		$this->mVariables['wgDBcluster'] = $this->mCityCluster;
