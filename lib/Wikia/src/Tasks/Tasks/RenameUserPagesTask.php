@@ -82,7 +82,72 @@ class RenameUserPagesTask extends BaseTask {
 			$title->invalidateCache();
 		}
 
+		global $wgEnableAbuseFilterExtension;
+		if ( $wgEnableAbuseFilterExtension ) {
+			$this->renameAbuseFilterMentions( $oldUserName, $newUserName );
+		}
+
+		$this->renameCheckUserMentions( $oldUserName, $newUserName );
+
 		$user = User::newFromName( $newUserName );
 		$user->deleteCache();
+	}
+
+	private function renameCheckUserMentions( string $oldUsername, string $newUsername ): void {
+		$this->changeUsernameReference(
+			'cu_log',
+			'cul_target_text',
+			$oldUsername,
+			$newUsername
+		);
+		$this->changeUsernameReference(
+			'cu_log',
+			'cul_user_text',
+			$oldUsername,
+			$newUsername
+		);
+		$this->changeUsernameReference(
+			'cu_changes',
+			'cuc_user_text',
+			$oldUsername,
+			$newUsername
+		);
+	}
+
+	private function renameAbuseFilterMentions( string $oldUsername, string $newUsername ): void {
+		$this->changeUsernameReference(
+			'abuse_filter',
+			'af_user_text',
+			$oldUsername,
+			$newUsername
+		);
+		$this->changeUsernameReference(
+			'abuse_filter_history',
+			'afh_user_text',
+			$oldUsername,
+			$newUsername
+		);
+		$this->changeUsernameReference(
+			'abuse_filter_log',
+			'afl_user_text',
+			$oldUsername,
+			$newUsername
+		);
+	}
+
+	private function changeUsernameReference(
+		string $table,
+		string $usernameColumn,
+		string $oldUsername,
+		string $newUsername
+	): void {
+		$dbw = wfGetDB( DB_MASTER );
+		if ( $dbw->fieldExists( $table, $usernameColumn ) ) {
+			$dbw->update(
+				$table,
+				[$usernameColumn => $newUsername],
+				[$usernameColumn => $oldUsername]
+			);
+		}
 	}
 }
