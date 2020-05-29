@@ -1,4 +1,4 @@
-import { AdSlot, context, events, utils } from '@wikia/ad-engine'
+import { context, events, utils } from '@wikia/ad-engine'
 
 export class LogoReplacement {
 	static getName() {
@@ -9,8 +9,8 @@ export class LogoReplacement {
 		return {};
 	}
 
-	constructor() {
-		this.adSlot = AdSlot;
+	constructor(adSlot) {
+		this.adSlot = adSlot;
 		this.config = context.get('templates.logoReplacement') || {};
 	}
 
