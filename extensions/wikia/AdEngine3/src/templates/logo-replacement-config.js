@@ -9,6 +9,7 @@ export const getConfig = () => ({
 
 				const newLogo = document.createElement('img');
 				newLogo.src = logoImage;
+				newLogo.style.maxHeight = '55px';
 
 				const trackingPixel = document.createElement('img');
 				trackingPixel.src = pixelUrl;
