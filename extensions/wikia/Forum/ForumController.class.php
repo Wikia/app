@@ -104,6 +104,12 @@ class ForumController extends WallBaseController {
 	}
 
 	public function boardNewThread() {
+
+		if ( $this->wg->HideForumForms ) {
+			//skip rendering
+			return false;
+		}
+
 		parent::newMessage();
 		$isTopicPage = $this->getVal( 'isTopicPage', false );
 		$this->response->setVal( 'isTopicPage', $isTopicPage );
