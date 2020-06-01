@@ -44,7 +44,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 
 		$action = $this->getVal( 'action', '' );
 
-		if ( 'editmode' == $action ) {
+		if ( 'editmode' == $action && !$this->wg->HideForumForms ) {
 			$this->forward( 'ForumSpecial', 'editMode' );
 		}
 

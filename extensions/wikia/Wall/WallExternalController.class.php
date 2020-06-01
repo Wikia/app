@@ -97,6 +97,11 @@ class WallExternalController extends WikiaController {
 			// skip rendering
 		}
 
+		if ( self::shouldBlockAccessForForum() ) {
+			//forum read-only mode edit protection
+			return false;
+		}
+
 		$this->status = 'error';
 
 		$destinationId = $this->getVal( 'destinationBoardId', '' );
@@ -193,6 +198,11 @@ class WallExternalController extends WikiaController {
 			return false;
 		}
 
+		if ( self::shouldBlockAccessForForum() ) {
+			//forum read-only mode edit protection
+			return false;
+		}
+
 		$this->response->setVal( 'status', false );
 		$isWatched = $this->request->getVal( 'isWatched' );
 		/**
@@ -235,6 +245,11 @@ class WallExternalController extends WikiaController {
 			$this->checkWriteRequest();
 		} catch ( \BadRequestException $bre ) {
 			$this->setTokenMismatchError();
+			return;
+		}
+
+		if ( self::shouldBlockAccessForForum() ) {
+			//forum read-only mode edit protection
 			return;
 		}
 
@@ -300,6 +315,11 @@ class WallExternalController extends WikiaController {
 			$this->checkWriteRequest();
 		} catch ( BadRequestException $e ) {
 			$this->setTokenMismatchError();
+			return false;
+		}
+
+		if ( self::shouldBlockAccessForForum() ) {
+			//forum read-only mode edit protection
 			return false;
 		}
 
@@ -404,6 +424,11 @@ class WallExternalController extends WikiaController {
 			return false;
 		}
 
+		if ( self::shouldBlockAccessForForum() ) {
+			//forum read-only mode edit protection
+			return false;
+		}
+
 		$result = false;
 		$newState = $this->request->getVal( 'newState', false );
 		/**
@@ -467,6 +492,11 @@ class WallExternalController extends WikiaController {
 			return false;
 		}
 
+		if ( self::shouldBlockAccessForForum() ) {
+			//forum read-only mode edit protection
+			return false;
+		}
+
 		/**
 		 * @var $mw WallMessage
 		 */
@@ -504,6 +534,11 @@ class WallExternalController extends WikiaController {
 			$this->checkWriteRequest();
 		} catch ( BadRequestException $e ) {
 			$this->setTokenMismatchError();
+			return false;
+		}
+
+		if ( self::shouldBlockAccessForForum() ) {
+			//forum read-only mode edit protection
 			return false;
 		}
 
@@ -546,6 +581,11 @@ class WallExternalController extends WikiaController {
 			return false;
 		}
 
+		if ( self::shouldBlockAccessForForum() ) {
+			//forum read-only mode edit protection
+			return false;
+		}
+
 		$id = $this->request->getVal( 'id' );
 		$dir  = $this->request->getVal( 'dir' );
 
@@ -571,6 +611,11 @@ class WallExternalController extends WikiaController {
 		$msgid = $this->request->getVal( 'msgid' );
 		/** @var $mw WallMessage */
 		$mw =  WallMessage::newFromId( $msgid );
+
+		if ( self::shouldBlockAccessForForum() ) {
+			//forum read-only mode edit protection
+			return;
+		}
 
 		if ( empty( $mw ) ) {
 			// most likely scenario - can't create AC, because message was already
@@ -602,6 +647,11 @@ class WallExternalController extends WikiaController {
 			$this->checkWriteRequest();
 		} catch ( \BadRequestException $bre ) {
 			$this->setTokenMismatchError();
+			return;
+		}
+
+		if ( self::shouldBlockAccessForForum() ) {
+			//forum read-only mode edit protection
 			return;
 		}
 
@@ -679,6 +729,11 @@ class WallExternalController extends WikiaController {
 			$this->checkWriteRequest();
 		} catch ( \BadRequestException $bre ) {
 			$this->setTokenMismatchError();
+			return;
+		}
+
+		if ( self::shouldBlockAccessForForum() ) {
+			//forum read-only mode edit protection
 			return;
 		}
 
@@ -852,6 +907,11 @@ class WallExternalController extends WikiaController {
 			return false;
 		}
 
+		if ( self::shouldBlockAccessForForum() ) {
+			//forum read-only mode edit protection
+			return false;
+		}
+
 		$messageId = $this->request->getVal( 'msgid', '' );
 		$relatedTopics = $this->request->getVal( 'relatedTopics', [ ] );
 			// place holder data, replace this with magic
@@ -903,5 +963,9 @@ class WallExternalController extends WikiaController {
 	 */
 	protected static function sanitizeMetaTitle( $title ) {
 		return substr( trim( strip_tags( $title ) ), 0, 200 );
+	}
+
+	private function shouldBlockAccessForForum() {
+		return $this->wg->HideForumForms && ForumHelper::isForum();
 	}
 }
