@@ -82,8 +82,15 @@ class LocalUserDataRemover {
 			$db = wfGetDB( DB_MASTER );
 			// remove check user data
 			$db->delete( 'cu_changes', ['cuc_user' => $userId], __METHOD__ );
-			$db->delete( 'cu_log', ['cul_target_id' => $userId], __METHOD__ );
-			$this->info( "Removed CheckUser data" );
+			$db->delete(
+				'cu_log',
+				[
+					'cul_target_id = ' . $db->addQuotes( $userId ) . ' OR ' .
+					'cul_user = ' . $db->addQuotes( $userId ),
+				],
+				__METHOD__
+			);
+			$this->info( 'Removed CheckUser data' );
 
 			return true;
 		} catch( DBError $error ) {
