@@ -152,6 +152,7 @@ class ForumController extends WallBaseController {
 		$this->response->setVal( 'feedtitle', htmlspecialchars( $wallMessage->getMetaTitle() ) );
 		$isWatched = $wallMessage->isWatched( $this->wg->User ) || $this->request->getVal( 'new', false );
 		$this->response->setVal( 'isWatched', $isWatched );
+		$this->response->setVal( 'showFollowing', !$this->wg->HideForumForms );
 		$this->response->setVal( 'fullpageurl', $wallMessage->getMessagePageUrl() );
 		$this->response->setVal( 'kudosNumber', $wallMessage->getVoteCount() );
 
