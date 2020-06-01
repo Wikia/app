@@ -1,4 +1,7 @@
 @import '~@wikia/ad-engine/src/ad-products/styles/styles.scss';
+@import '~@wikia/ad-engine/src/ad-products/styles/_mixin.scss';
+
+@include logo-replacement(55px);
 
 .has-bfaa {
   &.body {
@@ -32,10 +35,3 @@
   position: absolute !important;
 }
 
-.new-logo {
-	max-height: 55px;
-}
-
-.tracking-pixel {
-	display: none;
-}
