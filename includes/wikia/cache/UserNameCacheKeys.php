@@ -12,7 +12,7 @@ class UserNameCacheKeys {
 	private $username;
 
 	public function __construct( string $username ) {
-		$this->username = urlencode( $username );
+		$this->username = $username;
 	}
 
 	public function getAllKeys(int $wikiId): array {
