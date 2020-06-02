@@ -36,6 +36,11 @@ class ForumExternalController extends WallExternalController {
 			return false;
 		}
 
+		if ( $this->wg->HideForumForms ) {
+			//read-only mode edit protection
+			return false;
+		}
+
 		$boardId1 = $this->getVal( 'boardId1', 0 );
 		$boardId2 = $this->getVal( 'boardId2', 0 );
 
@@ -60,6 +65,11 @@ class ForumExternalController extends WallExternalController {
 	public function createNewBoard() {
 		$this->status = self::checkAdminAccess();
 		if ( !empty( $this->status ) ) {
+			return;
+		}
+
+		if ( $this->wg->HideForumForms ) {
+			//read-only mode edit protection
 			return;
 		}
 
@@ -111,6 +121,11 @@ class ForumExternalController extends WallExternalController {
 		$this->status = self::checkAdminAccess();
 
 		if ( !empty( $this->status ) ) {
+			return;
+		}
+
+		if ( $this->wg->HideForumForms ) {
+			//read-only mode edit protection
 			return;
 		}
 
@@ -177,6 +192,11 @@ class ForumExternalController extends WallExternalController {
 	public function removeBoard() {
 		$this->status = self::checkAdminAccess();
 		if ( !empty( $this->status ) ) {
+			return;
+		}
+
+		if ( $this->wg->HideForumForms ) {
+			//read-only mode edit protection
 			return;
 		}
 
@@ -267,5 +287,4 @@ class ForumExternalController extends WallExternalController {
 	protected function replyToMessageBuildResponse( $context, $reply ) {
 		$context->response->setVal( 'message', $this->app->renderView( 'ForumController', 'threadReply', [ 'comment' => $reply, 'isreply' => true ] ) );
 	}
-
 }
