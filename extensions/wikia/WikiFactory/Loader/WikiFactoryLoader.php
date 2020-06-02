@@ -719,10 +719,10 @@ class WikiFactoryLoader {
 					"city_dbname",
 					"city_path",
 				),
-				array( "city_list.city_dbname" => $this->mVariables[ 'wgSharedUploadDBname' ] )
+				array( "city_dbname" => $this->mVariables[ 'wgSharedUploadDBname' ] )
 			);
 
-			if ( !empty( $partnerWikiData ) && !( $partnerWikiData->city_path === 'slot1' ) ) {
+			if ( !empty( $partnerWikiData ) && $partnerWikiData->city_path !== 'slot1' ) {
 				unset( $this->mVariables[ 'wgSharedUploadDBname' ] );
 
 				$this->mVariables['wgForeignFileRepos'][] = [
