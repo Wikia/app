@@ -13,6 +13,7 @@ import {
 	facebookPixel,
 	iasPublisherOptimization,
 	identityLibrary,
+	identityLibraryLoadedEvent,
 	InstantConfigCacheStorage,
 	JWPlayerManager,
 	likhoService,
@@ -109,6 +110,12 @@ function startAdEngine(inhibitors) {
 		});
 
 		eventService.communicator.actions$.pipe(
+			ofType(identityLibraryLoadedEvent)
+		).subscribe((props) => {
+			pageTracker.trackProp('identity_library_load_time', props.loadTime.toString());
+		});
+
+		eventService.communicator.actions$.pipe(
 			ofType(recirculationDisabledEvent)
 		).subscribe(() => {
 			pageTracker.trackProp('hidden_popular_pages', '1');
@@ -158,7 +165,6 @@ function callExternals() {
 
 	facebookPixel.call();
 	permutive.call();
-	identityLibrary.call();
 	iasPublisherOptimization.call();
 	confiant.call();
 	durationMedia.call();
