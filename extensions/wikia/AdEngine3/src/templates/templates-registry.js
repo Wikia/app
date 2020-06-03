@@ -7,6 +7,7 @@ import {
 	HideOnViewability,
 	PorvataTemplate,
 	Roadblock,
+	SafeFanTakeoverElement,
 	StickyTLB
 } from '@wikia/ad-engine';
 import { getConfig as getBfaaConfig } from './big-fancy-ad-above-config';
@@ -27,6 +28,7 @@ export const templateRegistry = {
 		templateService.register(LogoReplacement);
 		templateService.register(PorvataTemplate, getPorvataConfig());
 		templateService.register(Roadblock, getRoadblockConfig());
+		templateService.register(SafeFanTakeoverElement);
 		templateService.register(Skin);
 		templateService.register(StickyTLB, getStickyTLBConfig());
 	},
