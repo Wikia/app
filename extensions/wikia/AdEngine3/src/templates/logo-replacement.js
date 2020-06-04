@@ -18,7 +18,9 @@ export class LogoReplacement {
 		utils.logger(LogoReplacement.getName(), 'init');
 		this.config = { ...this.config, ...params };
 
-		this.replaceLogo();
+		setTimeout(() => {
+			this.replaceLogo();
+		}, 2000);
 	}
 
 	replaceLogo() {
