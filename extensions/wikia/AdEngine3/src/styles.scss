@@ -1,5 +1,7 @@
 @import '~@wikia/ad-engine/src/ad-products/styles/styles.scss';
 
+@include logo-replacement(55px);
+
 .has-bfaa {
   &.body {
     padding-top: 25.7732%;
@@ -31,3 +33,4 @@
 .gpt-ad.slot-responsive > div.replay-overlay {
   position: absolute !important;
 }
+

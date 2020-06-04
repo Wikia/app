@@ -61,6 +61,19 @@ class EnableDiscussionsController extends \WikiaController {
 		] ) );
 	}
 
+	public function toggleReadOnlyForum() {
+		$cityId = $this->request->getInt( 'siteId', $this->wg->CityId );
+		$isRollback = $this->request->getBool( 'rollback', false );
+
+		$success = WikiFactory::setVarByName( 'wgHideForumForms', $cityId, !$isRollback);
+
+		if ( $success ) {
+			$this->response->setCode( 200 );
+		} else {
+			$this->response->setCode( 500 );
+		}
+	}
+
 	/**
 	 * Make sure to only allow authorized POST methods.
 	 * @throws WikiaHttpException

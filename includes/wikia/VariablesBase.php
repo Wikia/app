@@ -2729,6 +2729,12 @@ $wgEnableForumExt = false;
 $wgArchiveWikiForums = null;
 
 /**
+ * Hide all forum forms (make forum read-only)
+ * @var bool $wgHideForumForms
+ */
+$wgHideForumForms = false;
+
+/**
  * Disallow anonymous editing of Forum:Index.
  * @see extensions/wikia/ForumIndexProtector
  * @var bool $wgEnableForumIndexProtector
