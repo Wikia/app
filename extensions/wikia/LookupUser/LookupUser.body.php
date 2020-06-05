@@ -16,6 +16,17 @@ class LookupUserPage extends SpecialPage {
 		parent::__construct( 'LookupUser'/*class*/, 'lookupuser'/*restriction*/ );
 	}
 
+	/**
+	 * @param string $userName
+	 * @param int $wikiId
+	 * @return string
+	 */
+	private static function getLookupUserNameKey( string $userName, int $wikiId ): string {
+		$cacheKeys = new UserNameCacheKeys( $userName );
+		$key = $cacheKeys->forLookupUser( $wikiId );
+		return $key;
+	}
+
 	function getDescription() {
 		return wfMessage( 'lookupuser' )->text();
 	}
@@ -327,8 +338,7 @@ EOT
 
 		global $wgMemc, $wgStylePath;
 
-		$cacheKeys = new UserNameCacheKeys( $userName );
-		$cachedData = $wgMemc->get( $cacheKeys->forLookupUserLegacy( $wikiId ) );
+		$cachedData = $wgMemc->get( self::getLookupUserNameKey( $userName, $wikiId ) );
 		if ( !empty( $cachedData ) ) {
 			if ( $checkingBlocks === false ) {
 				if ( $cachedData['groups'] === false ) {
@@ -377,8 +387,8 @@ EOT
 
 		$apiUrl = $wiki->city_url . 'api.php?action=query&list=users&ususers=' . urlencode( $userName ) . '&usprop=localblockinfo|groups|editcount&format=json';
 
-		$cacheKeys = new UserNameCacheKeys( $userName );
-		$cachedData = $wgMemc->get( $cacheKeys->forLookupUserLegacy( $wikiId ) );
+		$key = $wgMemc->get( self::getLookupUserNameKey( $userName, $wikiId ) );
+		$cachedData = $key;
 		if ( !empty( $cachedData ) ) {
 			$result = array( 'success' => true, 'data' => $cachedData );
 		} else {
@@ -409,7 +419,6 @@ EOT
 					$result = array( 'success' => true, 'data' => $userData );
 					$cacheKeys = new UserNameCacheKeys( $userName );
 					$wgMemc->set( $cacheKeys->forLookupUser( $wikiId ), $userData, 3600 ); // 1h
-					$wgMemc->set( $cacheKeys->forLookupUserLegacy( $wikiId ), $userData, 3600 ); // 1h
 				} else {
 					$result = array( 'success' => false );
 				}
