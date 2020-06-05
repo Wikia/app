@@ -378,18 +378,15 @@ class User implements JsonSerializable {
 		global $wgMemc;
 		$wgMemc->set( $this->getCacheKey(), $data, WikiaResponse::CACHE_LONG );
 		// SUS-2945
-		$wgMemc->set( self::getCacheKeyByName( $this->getName() ), (int) $this->getId(), WikiaResponse::CACHE_LONG );
+		$key = new UserNameCacheKeys( $this->getName() );
+		$wgMemc->set( $key->forUserId(), (int) $this->getId(), WikiaResponse::CACHE_LONG );
+		$wgMemc->set( $key->forUserIdLegacy(), (int) $this->getId(), WikiaResponse::CACHE_LONG );
 
 		wfDebug( "User: user {$this->mId} stored in cache\n" );
 	}
 
 	private function getCacheKey(): string {
 		$cacheKey = new UserIdCacheKeys($this->getId());
-		return $cacheKey->forUser();
-	}
-
-	private static function getCacheKeyByName( string $username ) : string {
-		$cacheKey = new UserNameCacheKeys( $username );
 		return $cacheKey->forUser();
 	}
 
@@ -650,8 +647,8 @@ class User implements JsonSerializable {
 		// worth caching given the fact that (user ID, user name) pairs do not change very often
 		global $wgMemc;
 
-		$key = self::getCacheKeyByName( $name );
-		$cachedId = $wgMemc->get( $key );
+		$cacheKey = new UserNameCacheKeys( $name );
+		$cachedId = $wgMemc->get( $cacheKey->forUserIdLegacy() );
 
 		if ( is_numeric( $cachedId ) ) {
 			// SUS-2981 - return NULL when a user is not found
@@ -675,7 +672,8 @@ class User implements JsonSerializable {
 		}
 
 		// SUS-2981 - cache even when a given user is not found (set cache entry to 0)
-		$wgMemc->set( $key, $result, WikiaResponse::CACHE_LONG );
+		$wgMemc->set( $cacheKey->forUserId(), $result, WikiaResponse::CACHE_LONG );
+		$wgMemc->set( $cacheKey->forUserIdLegacy(), $result, WikiaResponse::CACHE_LONG );
 
 		self::$idCacheByName[$name] = $result;
 
