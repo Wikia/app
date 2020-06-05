@@ -28,7 +28,7 @@ class ForumAnonStats extends Maintenance {
 			__METHOD__,
 			[],
 			[
-				'page' => array( 'INNER JOIN', array( 'revision.rev_page = page.page_id' ) )
+				'page' => [ 'INNER JOIN', [ 'revision.rev_page = page.page_id' ] ]
 			]
 		)->fetchObject()->cnt;
 
@@ -46,7 +46,40 @@ class ForumAnonStats extends Maintenance {
 			]
 		)->fetchObject()->cnt;
 
-		echo("Result;${wgCityId};${wgDBname};${totalPostCount};${anonPostCount};\n");
+		$dateFrom = $dbr->timestamp('2020-05-05T00:30:06Z');
+
+		$anonPostCount30days = $dbr->select(
+			[ 'revision', 'page' ],
+			[ 'count(*) as cnt' ],
+			[
+				'page_namespace' => $namespaces,
+				'revision.rev_user' => 0,
+				'revision.rev_parent_id' => 0,
+				'rev_timestamp > ' . $dateFrom
+			],
+			__METHOD__,
+			[],
+			[
+				'page' => [ 'INNER JOIN', [ 'revision.rev_page = page.page_id' ] ]
+			]
+		)->fetchObject()->cnt;
+
+		$totalPostCount30days = $dbr->select(
+			[ 'revision', 'page' ],
+			[ 'count(*) as cnt' ],
+			[
+				'page_namespace' => $namespaces,
+				'revision.rev_parent_id' => 0,
+				'rev_timestamp > ' . $dateFrom
+			],
+			__METHOD__,
+			[],
+			[
+				'page' => [ 'INNER JOIN', [ 'revision.rev_page = page.page_id' ] ]
+			]
+		)->fetchObject()->cnt;
+
+		echo("Result;${wgCityId};${wgDBname};${totalPostCount};${anonPostCount};${totalPostCount30days};${anonPostCount30days};\n");
 	}
 }
 $maintClass = "ForumAnonStats";
