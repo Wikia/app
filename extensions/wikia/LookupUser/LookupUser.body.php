@@ -23,8 +23,7 @@ class LookupUserPage extends SpecialPage {
 	 */
 	private static function getLookupUserNameKey( string $userName, int $wikiId ): string {
 		$cacheKeys = new UserNameCacheKeys( $userName );
-		$key = $cacheKeys->forLookupUser( $wikiId );
-		return $key;
+		return $cacheKeys->forLookupUser( $wikiId );
 	}
 
 	function getDescription() {
@@ -387,8 +386,8 @@ EOT
 
 		$apiUrl = $wiki->city_url . 'api.php?action=query&list=users&ususers=' . urlencode( $userName ) . '&usprop=localblockinfo|groups|editcount&format=json';
 
-		$key = $wgMemc->get( self::getLookupUserNameKey( $userName, $wikiId ) );
-		$cachedData = $key;
+		$cacheKey = self::getLookupUserNameKey( $userName, $wikiId );
+		$cachedData = $wgMemc->get( $cacheKey );
 		if ( !empty( $cachedData ) ) {
 			$result = array( 'success' => true, 'data' => $cachedData );
 		} else {
@@ -417,8 +416,7 @@ EOT
 					}
 
 					$result = array( 'success' => true, 'data' => $userData );
-					$cacheKeys = new UserNameCacheKeys( $userName );
-					$wgMemc->set( $cacheKeys->forLookupUser( $wikiId ), $userData, 3600 ); // 1h
+					$wgMemc->set( $cacheKey, $userData, 3600 ); // 1h
 				} else {
 					$result = array( 'success' => false );
 				}
