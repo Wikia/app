@@ -567,7 +567,7 @@ export default {
 	src: 'gpt',
 	state: {
 		adStack: [],
-		isMobile: true,
+		isMobile: false,
 	},
 	options: {
 		customAdLoader: {
