@@ -244,18 +244,6 @@
             "value": true
         }
     ],
-    "icFloatingMedrecRecirculationDisabled": [
-        {
-            "apps": [
-                "oasis"
-            ],
-            "regions": [
-                "XX"
-            ],
-            "sampling": 10.0,
-            "value": true
-        }
-    ],
     "icPrebidNobid": [
         {
             "apps": [
