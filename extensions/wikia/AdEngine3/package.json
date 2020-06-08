@@ -28,7 +28,7 @@
   },
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.4.4",
-    "@wikia/ad-engine": "git+https://github.com/Wikia/ad-engine.git#545396e50f22c67f1ed1fdeec8a88613277e98a8",
+    "@wikia/ad-engine": "git+https://github.com/Wikia/ad-engine.git#v68.0.1",
     "@wikia/post-quecast": "1.2.0",
     "babel-runtime": "6.26.0",
     "core-decorators": "^0.20.0",
