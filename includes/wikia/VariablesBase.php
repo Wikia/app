@@ -6400,7 +6400,7 @@ $wgPoolCounterConf = null;
  * @see $wgEnablePoolCounter
  * @var Array $wgPoolCounterServers
  */
-$wgPoolCounterServers = [ 'prod.kubernetes-lb-l4.service.consul' ];
+$wgPoolCounterServers = [ 'poolcounter' ];
 
 /**
  * Whether to emit more detailed debug logs for a PoolWorkArticleView
