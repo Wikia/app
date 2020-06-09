@@ -504,6 +504,7 @@
                 "4916913597",
                 "4913869429",
                 "4950039599",
+                "5375017839",
                 "4949392740",
                 "5093231180",
                 "5096621951",
@@ -758,6 +759,24 @@
                 "XX"
             ],
             "value": true
+        }
+    ],
+    "icSafeFanTakeoverLineItemIds": [
+        {
+            "apps": [
+                "f2",
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
+                "oasis"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "value": [
+                "5381590794"
+            ]
         }
     ],
     "icPrebidVersion": [
