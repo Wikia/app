@@ -97,6 +97,11 @@ async function setupAdContext(wikiContext, consents) {
 		context.push(`slots.${context.get('custom.hiviLeaderboard') ? 'hivi_leaderboard' : 'top_leaderboard'}.defaultTemplates`, 'stickyTLB');
 	}
 
+	context.set(
+		'templates.safeFanTakeoverElement.lineItemIds',
+		instantConfig.get('icSafeFanTakeoverLineItemIds'),
+	);
+
 	context.set('state.deviceType', utils.client.getDeviceType());
 
 	context.set('options.billTheLizard.garfield', context.get('services.billTheLizard.enabled'));
