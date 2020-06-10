@@ -31,7 +31,6 @@ import pageTracker from './tracking/page-tracker';
 import slots from './slots';
 import videoTracker from './tracking/video-tracking';
 import { track } from "./tracking/tracker";
-import { communicator } from "./communicator";
 import { ofType } from 'ts-action-operators';
 
 const GPT_LIBRARY_URL = '//www.googletagservices.com/tag/js/gpt.js';
@@ -86,7 +85,7 @@ async function setupJWPlayer(inhibitors = []) {
 }
 
 function dispatchJWPlayerSetupAction(showAds = true) {
-	communicator.dispatch({
+	eventService.communicator.dispatch({
 		type: '[Ad Engine] Setup JWPlayer',
 		showAds,
 		autoplayDisabled: featuredVideoAutoPlayDisabled
