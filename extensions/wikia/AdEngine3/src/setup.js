@@ -97,6 +97,11 @@ async function setupAdContext(wikiContext, consents) {
 		context.push(`slots.${context.get('custom.hiviLeaderboard') ? 'hivi_leaderboard' : 'top_leaderboard'}.defaultTemplates`, 'stickyTLB');
 	}
 
+	context.set(
+		'templates.safeFanTakeoverElement.lineItemIds',
+		instantConfig.get('icSafeFanTakeoverLineItemIds'),
+	);
+
 	context.set('state.deviceType', utils.client.getDeviceType());
 
 	context.set('options.billTheLizard.garfield', context.get('services.billTheLizard.enabled'));
@@ -153,7 +158,6 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('services.nielsen.enabled', instantConfig.get('icNielsen'));
 	context.set('services.permutive.enabled', instantConfig.get('icPermutive') && !context.get('wiki.targeting.directedAtChildren'));
 	context.set('services.iasPublisherOptimization.enabled', instantConfig.get('icIASPublisherOptimization'));
-	context.set('services.ixIdentityLibrary.enabled', instantConfig.get('icIxIdentityLibrary'));
 
 	if (instantConfig.get('icTaxonomyComicsTag')) {
 		context.set('services.taxonomy.comics.enabled', true);
@@ -207,6 +211,7 @@ async function setupAdContext(wikiContext, consents) {
 
 		const priceFloorRule = instantConfig.get('icPrebidSizePriceFloorRule');
 		context.set('bidders.prebid.priceFloor', priceFloorRule || null);
+		context.set('bidders.ixIdentityLibrary.enabled', instantConfig.get('icIxIdentityLibrary'));
 	}
 
 	if (instantConfig.get('icAdditionalVastSize')) {

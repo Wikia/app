@@ -127,6 +127,9 @@ class WallBaseController extends WikiaService {
 	}
 
 	public function reply() {
+		if ( self::shouldHideIfForumReadOnly() ) {
+			$this->request->setVal( 'showReplyForm', false );
+		}
 		$this->response->setVal( 'username', $this->wg->User->getName() );
 		$this->response->setVal( 'showReplyForm', $this->request->getVal( 'showReplyForm', true ) );
 		$this->checkAndSetUserBlockedStatus( $this->helper->getUser() );
@@ -134,19 +137,31 @@ class WallBaseController extends WikiaService {
 
 	public function messageButtons() {
 		$wallMessage = $this->getWallMessage();
-		$this->response->setVal( 'canEdit', $wallMessage->canEdit( $this->wg->User, false ) );
-		$this->response->setVal( 'canDelete', $wallMessage->canDelete( $this->wg->User, false ) );
-		$this->response->setVal( 'canAdminDelete', $wallMessage->canAdminDelete( $this->wg->User, false ) && $wallMessage->isRemove() );
-		$this->response->setVal( 'canFastAdminDelete', $wallMessage->canFastAdminDelete( $this->wg->User, false ) );
-		$this->response->setVal( 'canRemove', $wallMessage->canRemove( $this->wg->User, false ) && !$wallMessage->isRemove() );
-		$this->response->setVal( 'canClose', $wallMessage->canArchive( $this->wg->User, false ) );
-		$this->response->setVal( 'canReopen', $wallMessage->canReopen( $this->wg->User, false ) );
+		$showIfForum = !self::shouldHideIfForumReadOnly();
+		$canEdit = $showIfForum && $wallMessage->canEdit( $this->wg->User, false );
+		$canDelete = $showIfForum && $wallMessage->canDelete( $this->wg->User, false );
+		$canAdminDelete = $showIfForum && $wallMessage->canAdminDelete( $this->wg->User, false ) && $wallMessage->isRemove();
+		$canFastAdminDelete = $showIfForum && $wallMessage->canFastAdminDelete( $this->wg->User, false );
+		$canRemove = $showIfForum && $wallMessage->canRemove( $this->wg->User, false ) && !$wallMessage->isRemove();
+		$canArchive = $showIfForum && $wallMessage->canArchive( $this->wg->User, false );
+		$canReopen = $showIfForum && $wallMessage->canReopen( $this->wg->User, false );
+		$canMove = $showIfForum && $wallMessage->canMove( $this->wg->User, false );
+		$canQuote = $showIfForum;
+
+		$this->response->setVal( 'canEdit', $canEdit );
+		$this->response->setVal( 'canDelete', $canDelete );
+		$this->response->setVal( 'canAdminDelete', $canAdminDelete );
+		$this->response->setVal( 'canFastAdminDelete', $canFastAdminDelete );
+		$this->response->setVal( 'canRemove', $canRemove );
+		$this->response->setVal( 'canClose', $canArchive );
+		$this->response->setVal( 'canReopen', $canReopen );
 		$this->response->setVal( 'showViewSource', $this->wg->User->getGlobalPreference( 'wallshowsource', false ) );
 		$this->response->setVal( 'threadHistoryLink', $wallMessage->getMessagePageUrl( true ) . '?action=history' );
 		$this->response->setVal( 'wgBlankImgUrl', $this->wg->BlankImgUrl );
 		$this->response->setVal( 'isRemoved', $wallMessage->isRemove() );
 		$this->response->setVal( 'isAnon', $this->wg->User->isAnon() );
-		$this->response->setVal( 'canMove', $wallMessage->canMove( $this->wg->User, false ) );
+		$this->response->setVal( 'canMove', $canMove );
+		$this->response->setVal( 'canQuote', $canQuote );
 
 		$wallThread = $wallMessage;
 		if ( !$wallMessage->isMain() ) {
@@ -274,7 +289,7 @@ class WallBaseController extends WikiaService {
 		$this->response->setVal( 'id', $wallMessage->getId() );
 
 		if ( $this->wg->User->getId() > 0 && !$wallMessage->isWallOwner( $this->wg->User ) ) {
-			$this->response->setVal( 'showFollowButton', true );
+			$this->response->setVal( 'showFollowButton', !self::shouldHideIfForumReadOnly() );
 		} else {
 			$this->response->setVal( 'showFollowButton', false );
 		}
@@ -305,12 +320,15 @@ class WallBaseController extends WikiaService {
 			$this->response->setVal( 'showVotes', true );
 			$this->response->setVal( 'votes', $wallMessage->getVoteCount() );
 			$this->response->setVal( 'isVoted', $wallMessage->isVoted() );
-			$this->response->setVal( 'canVotes', $wallMessage->canVotes( $this->wg->User ) || !$this->wg->User->isLoggedIn() );
+			$canVotes = !self::shouldHideIfForumReadOnly() && ( $wallMessage->canVotes( $this->wg->User ) ||
+																!$this->wg->User->isLoggedIn() );
+			$this->response->setVal( 'canVotes', $canVotes );
 		} else {
 			$this->response->setVal( 'showVotes', false );
 		}
 
 		$this->response->setVal( 'showTopics', $wallMessage->showTopics() );
+		$this->response->setVal( 'showEditTopics', !self::shouldHideIfForumReadOnly() );
 
 		$this->response->setVal( 'user_author_url', $url );
 
@@ -611,4 +629,7 @@ class WallBaseController extends WikiaService {
 		return $greetingText;
 	}
 
+	private function shouldHideIfForumReadOnly() {
+		return $this->wg->HideForumForms && ForumHelper::isForum();
+	}
 } // end class Wall

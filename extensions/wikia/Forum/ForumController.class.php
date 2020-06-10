@@ -104,6 +104,12 @@ class ForumController extends WallBaseController {
 	}
 
 	public function boardNewThread() {
+
+		if ( $this->wg->HideForumForms ) {
+			//skip rendering
+			return false;
+		}
+
 		parent::newMessage();
 		$isTopicPage = $this->getVal( 'isTopicPage', false );
 		$this->response->setVal( 'isTopicPage', $isTopicPage );
@@ -146,6 +152,7 @@ class ForumController extends WallBaseController {
 		$this->response->setVal( 'feedtitle', htmlspecialchars( $wallMessage->getMetaTitle() ) );
 		$isWatched = $wallMessage->isWatched( $this->wg->User ) || $this->request->getVal( 'new', false );
 		$this->response->setVal( 'isWatched', $isWatched );
+		$this->response->setVal( 'showFollowing', !$this->wg->HideForumForms );
 		$this->response->setVal( 'fullpageurl', $wallMessage->getMessagePageUrl() );
 		$this->response->setVal( 'kudosNumber', $wallMessage->getVoteCount() );
 

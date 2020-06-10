@@ -20,45 +20,35 @@ class LocalUserDataRemover {
 	 * Removes all wiki data related to the given user.
 	 *
 	 * @param $auditLogId - audit log id (rtbf_log)
-	 * @param $userId
-	 * @param null $renameUserId - optional is of the user's rename record
+	 * @param int[] $userIds
 	 * @return bool|mixed - true if removal was successful, otherwise false
 	 */
-	public function removeLocalUserDataOnThisWiki( $auditLogId, $userId, $renameUserId = null ) {
+	public function removeLocalUserDataOnThisWiki( $auditLogId, array $userIds ) {
 		global $wgUser;
 		$wgUser = User::newFromName( Wikia::BOT_USER );
 
 		$this->logContext = [
 			'right_to_be_forgotten' => 1,
 			'rtbf_log_id' => $auditLogId,
-			'user_id' => $userId,
-			'rename_user_id' => $renameUserId,
+			'user_id' => $userIds[0],
 		];
 
 		try {
-			$user = User::newFromId( $userId );
-			$oldUser = User::newFromId( $renameUserId );
-
 			// gather results of all removal operations
 			// if something fails, we still want to continue the process
 			$results = [];
+			foreach ($userIds as $userId) {
+				$user = User::newFromId( $userId );
+				$results[] = $this->removeCheckUserData( $userId );
+				$results[] = $this->removeAbuseFilterData( $userId );
+				$results[] = $this->removeIpFromRecentChanges( $userId );
+				$results[] = $this->removeWatchlist( $userId );
 
-			$results[] = $this->removeCheckUserData( $userId );
-			$results[] = $this->removeAbuseFilterData( $userId );
-			$results[] = $this->removeIpFromRecentChanges( $userId );
-			$results[] = $this->removeWatchlist( $userId );
-
-			$userDbKey = Title::newFromText( $user->getName() )->getDBkey();
-			$results[] = $this->removeUserPages( $userDbKey );
-			$results[] = $this->removeUserPagesFromRecentChanges( $userDbKey );
-			$results[] = $this->removeActionLogs( $userDbKey );
-			if( !empty( $renameUserId ) ) {
-				$oldUserDbKey = Title::newFromText( $oldUser->getName() )->getDBkey();
-				$results[] = $this->removeUserPages( $oldUserDbKey );
-				$results[] = $this->removeUserPagesFromRecentChanges( $oldUserDbKey );
-				$results[] = $this->removeActionLogs( $oldUserDbKey );
+				$userDbKey = Title::newFromText( $user->getName() )->getDBkey();
+				$results[] = $this->removeUserPages( $userDbKey );
+				$results[] = $this->removeUserPagesFromRecentChanges( $userDbKey );
+				$results[] = $this->removeActionLogs( $userDbKey );
 			}
-
 			return array_reduce( $results, function( $acc, $res ) {
 				return $acc && $res;
 			}, true );
@@ -82,8 +72,15 @@ class LocalUserDataRemover {
 			$db = wfGetDB( DB_MASTER );
 			// remove check user data
 			$db->delete( 'cu_changes', ['cuc_user' => $userId], __METHOD__ );
-			$db->delete( 'cu_log', ['cul_target_id' => $userId], __METHOD__ );
-			$this->info( "Removed CheckUser data" );
+			$db->delete(
+				'cu_log',
+				[
+					'cul_target_id = ' . $db->addQuotes( $userId ) . ' OR ' .
+					'cul_user = ' . $db->addQuotes( $userId ),
+				],
+				__METHOD__
+			);
+			$this->info( 'Removed CheckUser data' );
 
 			return true;
 		} catch( DBError $error ) {

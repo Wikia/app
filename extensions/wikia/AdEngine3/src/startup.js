@@ -13,6 +13,7 @@ import {
 	facebookPixel,
 	iasPublisherOptimization,
 	identityLibrary,
+	identityLibraryLoadedEvent,
 	InstantConfigCacheStorage,
 	JWPlayerManager,
 	likhoService,
@@ -30,7 +31,6 @@ import pageTracker from './tracking/page-tracker';
 import slots from './slots';
 import videoTracker from './tracking/video-tracking';
 import { track } from "./tracking/tracker";
-import { communicator } from "./communicator";
 import { ofType } from 'ts-action-operators';
 
 const GPT_LIBRARY_URL = '//www.googletagservices.com/tag/js/gpt.js';
@@ -85,7 +85,7 @@ async function setupJWPlayer(inhibitors = []) {
 }
 
 function dispatchJWPlayerSetupAction(showAds = true) {
-	communicator.dispatch({
+	eventService.communicator.dispatch({
 		type: '[Ad Engine] Setup JWPlayer',
 		showAds,
 		autoplayDisabled: featuredVideoAutoPlayDisabled
@@ -106,6 +106,12 @@ function startAdEngine(inhibitors) {
 
 		eventService.on(AdSlot.SLOT_RENDERED_EVENT, (slot) => {
 			slot.getElement().classList.remove('default-height');
+		});
+
+		eventService.communicator.actions$.pipe(
+			ofType(identityLibraryLoadedEvent)
+		).subscribe((props) => {
+			pageTracker.trackProp('identity_library_load_time', props.loadTime.toString());
 		});
 
 		eventService.communicator.actions$.pipe(
@@ -158,7 +164,6 @@ function callExternals() {
 
 	facebookPixel.call();
 	permutive.call();
-	identityLibrary.call();
 	iasPublisherOptimization.call();
 	confiant.call();
 	durationMedia.call();
