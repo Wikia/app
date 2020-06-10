@@ -127,7 +127,7 @@
 				echo "<div class=message-topic-error >" . wfMessage('wall-message-limit-reached')->numParams( $repliesLimit )->parse() . "</div>";
 			} ?>
 			<?php if($showTopics): ?>
-				<?= F::app()->renderPartial( 'Wall', 'relatedTopics', [ 'relatedTopics' => $relatedTopics ] ) ?>
+				<?= F::app()->renderPartial( 'Wall', 'relatedTopics', [ 'relatedTopics' => $relatedTopics, 'showEditTopics' => $showEditTopics ] ) ?>
 			<?php endif; ?>
 		</ul>
 	<? endif; ?>

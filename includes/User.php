@@ -316,7 +316,7 @@ class User implements JsonSerializable {
 		 */
 		$isExpired = true;
 		if(!empty($data)) {
-			$_key = self::getUserTouchedKey( $this->mId );
+			$_key = $this->getUserTouchedKey();
 			$_touched = $wgMemc->get( $_key );
 			if( empty( $_touched ) ) {
 				$wgMemc->set( $_key, $data['mTouched'] );
@@ -375,24 +375,22 @@ class User implements JsonSerializable {
 		}
 		$data['mVersion'] = MW_USER_VERSION;
 
-		// Wikia
 		global $wgMemc;
 		$wgMemc->set( $this->getCacheKey(), $data, WikiaResponse::CACHE_LONG );
-		$wgMemc->set( self::getCacheKeyByName( $this->getName() ), (int) $this->getId(), WikiaResponse::CACHE_LONG ); // SUS-2945
+		// SUS-2945
+		$wgMemc->set( self::getCacheKeyByName( $this->getName() ), (int) $this->getId(), WikiaResponse::CACHE_LONG );
 
 		wfDebug( "User: user {$this->mId} stored in cache\n" );
 	}
 
-	private function getCacheKey() {
-		return self::getCacheKeyById( $this->mId );
+	private function getCacheKey(): string {
+		$cacheKey = new UserIdCacheKeys($this->getId());
+		return $cacheKey->forUser();
 	}
 
-	private static function getCacheKeyById( int $id ) : string {
-		return wfMemcKey( 'user', 'id', $id );
-	}
-
-	private static function getCacheKeyByName( string $name ) : string {
-		return wfSharedMemcKey( 'user', 'name', $name );
+	private static function getCacheKeyByName( string $username ) : string {
+		$cacheKey = new UserNameCacheKeys( $username );
+		return $cacheKey->forUser();
 	}
 
 	/** @name newFrom*() static factory methods */
@@ -1579,7 +1577,7 @@ class User implements JsonSerializable {
 
 		$triggered = false;
 		foreach( $keys as $key => $limit ) {
-			list( $max, $period ) = $limit;
+			[ $max, $period ] = $limit;
 			$summary = "(limit $max in {$period}s)";
 			$count = $wgMemc->get( $key );
 			// Already pinged?
@@ -2035,8 +2033,7 @@ class User implements JsonSerializable {
 			// Wikia: and save updated user data in the cache to avoid memcache miss and DB query
 			$this->saveToCache();
 
-			$memckey = self::getUserTouchedKey( $this->mId );
-			$wgMemc->set( $memckey, $this->mTouched );
+			$wgMemc->set( $this->getUserTouchedKey(), $this->mTouched );
 			wfDebug( "Shared user: updating shared user_touched\n" );
 		}
 	}
@@ -2056,13 +2053,23 @@ class User implements JsonSerializable {
 		self::permissionsService()->invalidateCache( $this );
 	}
 
+	/**
+	 * This method should be used to clear all cache for the user, not just account data, but also Masthead,
+	 * contributions and others. This should be used when user is renamed, anonymized and so on.
+	 */
 	public function deleteCache() {
-		global $wgMemc;
+		global $wgMemc, $wgCityId;
 
 		$this->load();
-		$wgMemc->delete( $this->getCacheKey() );
-		$wgMemc->delete( self::getCacheKeyByName( $this->getName() ) ); // SUS-2945
-		$this->userPreferences()->deleteFromCache( $this->getId() );
+
+		$userCache = new UserIdCacheKeys( $this->getId() );
+		foreach ( $userCache->getAllKeys() as $key) {
+			$wgMemc->delete( $key);
+		}
+		$usernameCache = new UserNameCacheKeys( $this->getName() );
+		foreach ( $usernameCache->getAllKeys( $wgCityId ) as $key) {
+			$wgMemc->delete($key);
+		}
 	}
 
 	/**
@@ -2125,19 +2132,6 @@ class User implements JsonSerializable {
 		}
 
 		return $this->mTouched;
-	}
-
-	/**
-	 * A function to clear cache with no side effects.  Functions such as clearSharedCache
-	 * or invalidateCache both have side effects like loading things from cache before clearing
-	 * it and writing back to cache after finishing.
-	 *
-	 * @param int $userId
-	 */
-	public static function clearUserCache( $userId ) {
-		global $wgMemc;
-		$memKey = self::getCacheKeyById( $userId );
-		$wgMemc->delete( $memKey );
 	}
 
 	/**
@@ -3700,7 +3694,7 @@ class User implements JsonSerializable {
 		} else {
 			$wantHTML = $this->isAnon() || $this->getGlobalPreference( 'htmlemails' );
 
-			list($body, $bodyHTML) = wfMsgHTMLwithLanguage( $message, $this->getGlobalPreference( 'language' ), array(), $args, $wantHTML );
+			[$body, $bodyHTML] = wfMsgHTMLwithLanguage( $message, $this->getGlobalPreference( 'language' ), array(), $args, $wantHTML );
 
 			if ( !empty($emailTextTemplate) && $wantHTML ) {
 				$emailParams = array(
@@ -4280,16 +4274,11 @@ class User implements JsonSerializable {
 
 	/**
 	 * Return the memcache key for storing cross-wiki "user_touched" value.
-	 *
 	 * It's used to refresh user caches on Wiki B when user changes his setting on Wiki A
-	 *
-	 * @author wikia
-	 *
-	 * @param int $user_id
 	 * @return string memcache key
 	 */
-	public static function getUserTouchedKey( $user_id ) {
-		return wfSharedMemcKey( "user_touched", 'v1', $user_id );
+	public function getUserTouchedKey(): string {
+		return wfSharedMemcKey( "user_touched", 'v1',  $this->mId );
 	}
 
 	/**
@@ -4307,7 +4296,7 @@ class User implements JsonSerializable {
 	public function setGlobalAuthToken( $token ) {
 		$this->globalAuthToken = $token;
 	}
-	
+
 	/**
 	 * Get the list of explicit group memberships this user has.
 	 * The implicit * and user groups are not included.
@@ -4602,6 +4591,31 @@ class User implements JsonSerializable {
 			:
 			// anons - return the second argument - an IP address
 			$name;
+	}
+
+	/**
+	 * Get flag if user is <16 y.o. for CCPA.
+	 *
+	 * @see ADEN-10054
+	 *
+	 * @return Boolean User is below 16 y.o.
+	 */
+	public function isSubjectToCcpa() {
+		if ($this->mBirthDate === null) {
+			return false;
+		}
+		try {
+			$birthDate = new DateTime($this->mBirthDate);
+		} catch (Exception $e) {
+			return false;
+		}
+		if ($birthDate === false) {
+			return false;
+		}
+		$now = new DateTime();
+		$diff = $now->diff($birthDate, true);
+
+		return $diff->y < 16;
 	}
 
 	/**

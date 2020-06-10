@@ -1,4 +1,4 @@
-import { bidders, context, likhoService, utils } from '@wikia/ad-engine';
+import { bidders, context, utils } from '@wikia/ad-engine';
 
 const MAX_NUMBER_OF_CATEGORIES = 3;
 
@@ -193,7 +193,6 @@ export default {
 	getPageLevelTargeting(adsContext = {}) {
 		const zone = getZone(adsContext);
 		const legacyParams = decodeLegacyDartParams(adsContext.targeting.wikiCustomKeyValues);
-		const likho = likhoService.refresh();
 
 		const targeting = {
 			s0: zone.site,
@@ -207,12 +206,12 @@ export default {
 			cat: getPageCategories(adsContext),
 			dmn: getDomain(),
 			hostpre: getHostnamePrefix(),
+			kid_wiki: adsContext.targeting.directedAtChildren ? '1' : '0',
 			lang: adsContext.targeting.wikiLanguage || 'unknown',
 			wpage: adsContext.targeting.pageName && adsContext.targeting.pageName.toLowerCase(),
 			ref: getRefParam(),
 			esrb: adsContext.targeting.esrbRating,
-			geo: utils.geoService.getCountryCode() || 'none',
-			likho,
+			geo: utils.geoService.getCountryCode() || 'none'
 		};
 
 		if (window.pvNumber) {
@@ -261,7 +260,6 @@ export default {
 			bidder_1: transformBidderPrice('indexExchange'),
 			bidder_2: transformBidderPrice('appnexus'),
 			bidder_4: transformBidderPrice('rubicon'),
-			bidder_5: transformBidderPrice('vmg'),
 			bidder_6: transformBidderPrice('aol'),
 			bidder_8: transformBidderPrice('wikiaVideo'),
 			bidder_9: transformBidderPrice('openx'),
@@ -272,13 +270,12 @@ export default {
 			bidder_14: transformBidderPrice('pubmatic'),
 			bidder_15: transformBidderPrice('beachfront'),
 			bidder_17: transformBidderPrice('kargo'),
-			bidder_18: transformBidderPrice('lkqd'),
 			bidder_19: transformBidderPrice('gumgum'),
 			bidder_20: transformBidderPrice('33across'),
 			bidder_21: transformBidderPrice('triplelift'),
 			bidder_23: transformBidderPrice('oneVideo'),
-			bidder_24: transformBidderPrice('criteo'),
 			bidder_25: transformBidderPrice('nobid'),
+			bidder_26: transformBidderPrice('telaria'),
 		};
 	},
 };

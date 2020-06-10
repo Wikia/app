@@ -158,45 +158,44 @@ class RemoveUserDataController extends WikiaController {
 		}
 
 		$auditLogId = $this->getVal( 'auditLogId' );
-		$userId = $this->getVal( 'userId' );
-		$renameUserId = $this->getVal( 'renameUserId' );
 
-		if ( empty( $userId ) || empty( $auditLogId ) ) {
+		$userIds = $this->getVal( 'userIds' );
+		if ( empty( $userIds ) ) {
+			$userIds = array_filter( [
+				$this->getVal( 'userId' ),
+				$this->getVal( 'renameUserId' ),
+			]);
+		}
+
+		if ( empty( $userIds ) ) {
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
 			return;
 		}
 
-		$this->info( "Removing local user data", [
-			'user_id' => $userId,
-			'rename_user_id' => $renameUserId,
+		$marker = [
+			'user_id' => $userIds[0],
+			'rename_user_id' => $userIds[1] ?? null,
 			'rtbf_log_id' => $auditLogId
-		] );
+		];
+
+		$this->info( "Removing local user data", $marker );
 
 		$localDataRemover = new LocalUserDataRemover();
-		$dataWasRemoved = $localDataRemover->removeLocalUserDataOnThisWiki( $auditLogId, $userId, $renameUserId );
+		$dataWasRemoved = $localDataRemover->removeLocalUserDataOnThisWiki( $auditLogId, $userIds );
 
 		if ( !$dataWasRemoved ) {
-			$this->error( "User's local data was not removed correctly", [
-				'user_id' => $userId,
-				'rename_user_id' => $renameUserId,
-				'rtbf_log_id' => $auditLogId
-			] );
+			$this->error( "User's local data was not removed correctly", $marker );
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
 		}
 
-		$this->info( "Deleting user cache", [
-			'user_id' => $userId,
-			'rename_user_id' => $renameUserId,
-			'rtbf_log_id' => $auditLogId
-		] );
+		$this->info( "Deleting user cache", $marker );
 
-		User::newFromId( $userId )->deleteCache();
+		foreach ($userIds as $userId) {
+			$user = User::newFromId( $userId );
+			$user->deleteCache();
+		}
 
-		$this->info( "User's local data was removed", [
-			'user_id' => $userId,
-			'rename_user_id' => $renameUserId,
-			'rtbf_log_id' => $auditLogId
-		] );
+		$this->info( "User's local data was removed", $marker );
 	}
 
 	private function getUserWikis( int $userId ) {

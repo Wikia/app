@@ -10,7 +10,7 @@ class WikiDetailsService extends WikiService {
 	const DEFAULT_WIDTH = 250;
 	const DEFAULT_HEIGHT = null;
 	const DEFAULT_SNIPPET_LENGTH = null;
-	const CACHE_VERSION = 3;
+	const CACHE_VERSION = 4;
 	const WORDMARK_URL_SETTING = 'wordmark-image-url';
 	private static $flagsBlacklist = [ 'blocked', 'promoted' ];
 
@@ -39,6 +39,13 @@ class WikiDetailsService extends WikiService {
 					$this->getFromWAMService( $wikiId ),
 					$this->getFromCommunityData( $wikiId )
 				);
+
+				//post process thumbnails
+				$wikiInfo = array_merge(
+					$wikiInfo,
+					$this->getImageData( $wikiInfo, $width, $height )
+				);
+
 			} else {
 				$wikiInfo = [
 					'id' => (int)$wikiId,
@@ -51,11 +58,7 @@ class WikiDetailsService extends WikiService {
 		if ( isset( $wikiInfo['exists'] ) ) {
 			return [];
 		}
-		//post process thumbnails
-		$wikiInfo = array_merge(
-			$wikiInfo,
-			$this->getImageData( $wikiInfo, $width, $height )
-		);
+
 		//set snippet
 		if ( isset( $wikiInfo['desc'] ) ) {
 			$length = ( $snippet !== null ) ? $snippet : static::DEFAULT_SNIPPET_LENGTH;

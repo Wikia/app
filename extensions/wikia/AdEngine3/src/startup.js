@@ -5,19 +5,22 @@ import {
 	AdSlot,
 	bidders,
 	billTheLizard,
-	btRec,
 	confiant,
 	context,
 	durationMedia,
 	events,
 	eventService,
+	facebookPixel,
+	iasPublisherOptimization,
+	identityLibrary,
+	identityLibraryLoadedEvent,
 	InstantConfigCacheStorage,
 	JWPlayerManager,
-	moatYi,
-	moatYiEvents,
+	likhoService,
 	permutive,
 	Runner,
 	nielsen,
+	recirculationDisabledEvent,
 	SlotTweaker,
 	taxonomyService,
 	utils
@@ -28,7 +31,7 @@ import pageTracker from './tracking/page-tracker';
 import slots from './slots';
 import videoTracker from './tracking/video-tracking';
 import { track } from "./tracking/tracker";
-import { communicator } from "./communicator";
+import { ofType } from 'ts-action-operators';
 
 const GPT_LIBRARY_URL = '//www.googletagservices.com/tag/js/gpt.js';
 
@@ -48,9 +51,6 @@ export async function setupAdEngine(
 	eventService.on(events.AD_SLOT_CREATED, (slot) => {
 		console.info(`Created ad slot ${slot.getSlotName()}`);
 		bidders.updateSlotTargeting(slot.getSlotName());
-	});
-	eventService.on(moatYiEvents.MOAT_YI_READY, (data) => {
-		pageTracker.trackProp('moat_yi', data);
 	});
 
 	await billTheLizardConfigurator.configure();
@@ -85,7 +85,7 @@ async function setupJWPlayer(inhibitors = []) {
 }
 
 function dispatchJWPlayerSetupAction(showAds = true) {
-	communicator.dispatch({
+	eventService.communicator.dispatch({
 		type: '[Ad Engine] Setup JWPlayer',
 		showAds,
 		autoplayDisabled: featuredVideoAutoPlayDisabled
@@ -107,6 +107,18 @@ function startAdEngine(inhibitors) {
 		eventService.on(AdSlot.SLOT_RENDERED_EVENT, (slot) => {
 			slot.getElement().classList.remove('default-height');
 		});
+
+		eventService.communicator.actions$.pipe(
+			ofType(identityLibraryLoadedEvent)
+		).subscribe((props) => {
+			pageTracker.trackProp('identity_library_load_time', props.loadTime.toString());
+		});
+
+		eventService.communicator.actions$.pipe(
+			ofType(recirculationDisabledEvent)
+		).subscribe(() => {
+			pageTracker.trackProp('hidden_popular_pages', '1');
+		})
 	}
 }
 
@@ -123,7 +135,7 @@ function trackLabradorValues() {
  * @private
  */
 function trackLikhoToDW() {
-	const likhoPropValue = context.get('targeting.likho') || [];
+	const likhoPropValue = likhoService.getTypes();
 
 	if (likhoPropValue.length) {
 		pageTracker.trackProp('likho', likhoPropValue.join(';'));
@@ -150,10 +162,11 @@ function callExternals() {
 	inhibitors.push(bidders.requestBids());
 	inhibitors.push(wadRunner.call());
 
+	facebookPixel.call();
 	permutive.call();
+	iasPublisherOptimization.call();
 	confiant.call();
 	durationMedia.call();
-	moatYi.call();
 	billTheLizard.call(['queen_of_hearts', 'vcr']);
 	nielsen.call({
 		type: 'static',

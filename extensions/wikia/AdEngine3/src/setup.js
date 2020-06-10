@@ -6,6 +6,7 @@ import {
 	fillerService,
 	InstantConfigCacheStorage,
 	InstantConfigService,
+	likhoService,
 	PorvataFiller,
 	setupNpaContext,
 	setupRdpContext,
@@ -96,6 +97,11 @@ async function setupAdContext(wikiContext, consents) {
 		context.push(`slots.${context.get('custom.hiviLeaderboard') ? 'hivi_leaderboard' : 'top_leaderboard'}.defaultTemplates`, 'stickyTLB');
 	}
 
+	context.set(
+		'templates.safeFanTakeoverElement.lineItemIds',
+		instantConfig.get('icSafeFanTakeoverLineItemIds'),
+	);
+
 	context.set('state.deviceType', utils.client.getDeviceType());
 
 	context.set('options.billTheLizard.garfield', context.get('services.billTheLizard.enabled'));
@@ -122,8 +128,10 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('options.geoRequiresConsent', consents.geoRequiresConsent);
 	context.set('options.optOutSale', consents.isSaleOptOut);
 	context.set('options.geoRequiresSignal', consents.geoRequiresSignal);
+	context.set('options.isSubjectToCcpa', !!window.wgUserIsSubjectToCcpa);
 
 	context.set('options.floatingMedrecDestroyable', instantConfig.get('icFloatingMedrecDestroyable'));
+	context.set('options.floatingMedrecRecirculationDisabled', instantConfig.get('icFloatingMedrecRecirculationDisabled'));
 
 	if (instantConfig.get('icHiViLeaderboardUnstickTimeout')) {
 		context.set(
@@ -146,9 +154,10 @@ async function setupAdContext(wikiContext, consents) {
 
 	context.set('services.confiant.enabled', instantConfig.get('icConfiant'));
 	context.set('services.durationMedia.enabled', instantConfig.get('icDurationMedia'));
-	context.set('services.moatYi.enabled', instantConfig.get('icMoatYieldIntelligence'));
+	context.set('services.facebookPixel.enabled', instantConfig.get('icFacebookPixel'));
 	context.set('services.nielsen.enabled', instantConfig.get('icNielsen'));
 	context.set('services.permutive.enabled', instantConfig.get('icPermutive') && !context.get('wiki.targeting.directedAtChildren'));
+	context.set('services.iasPublisherOptimization.enabled', instantConfig.get('icIASPublisherOptimization'));
 
 	if (instantConfig.get('icTaxonomyComicsTag')) {
 		context.set('services.taxonomy.comics.enabled', true);
@@ -159,6 +168,12 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('options.video.moatTracking.enabledForArticleVideos', instantConfig.get('icFeaturedVideoMoatTracking'));
 	context.set('options.video.iasTracking.enabled', instantConfig.get('icIASVideoTracking'));
 
+	context.set(
+		'options.jwplayerA9LoggerErrorCodes',
+		instantConfig.get('icA9LoggerErrorCodes'),
+	);
+
+	likhoService.refresh();
 	setupPageLevelTargeting(context.get('wiki'));
 
 	if (context.get('wiki.targeting.wikiIsTop1000')) {
@@ -170,7 +185,6 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('custom.pageType', context.get('wiki.targeting.pageType') || null);
 	context.set('custom.isAuthenticated', !!context.get('wiki.user.isAuthenticated'));
 	context.set('custom.isIncontentPlayerDisabled', context.get('wiki.opts.isIncontentPlayerDisabled'));
-	context.set('custom.fmrRotatorDelay', instantConfig.get('icFMRRotatorDelay', 10000));
 
 	context.set('templates.stickyTLB.enabled', !context.get('custom.hasFeaturedVideo'));
 
@@ -187,10 +201,6 @@ async function setupAdContext(wikiContext, consents) {
 			lang: [context.get('targeting.wikiLanguage') || 'en'],
 		});
 
-		if (!instantConfig.get('icPrebidLkqdOutstream')) {
-			context.remove('bidders.prebid.lkqd.slots.INCONTENT_PLAYER');
-		}
-
 		if (!instantConfig.get('icPrebidPubmaticOutstream')) {
 			context.remove('bidders.prebid.pubmatic.slots.INCONTENT_PLAYER');
 		}
@@ -201,6 +211,7 @@ async function setupAdContext(wikiContext, consents) {
 
 		const priceFloorRule = instantConfig.get('icPrebidSizePriceFloorRule');
 		context.set('bidders.prebid.priceFloor', priceFloorRule || null);
+		context.set('bidders.ixIdentityLibrary.enabled', instantConfig.get('icIxIdentityLibrary'));
 	}
 
 	if (instantConfig.get('icAdditionalVastSize')) {

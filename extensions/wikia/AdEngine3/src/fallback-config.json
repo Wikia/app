@@ -95,7 +95,8 @@
             ],
             "regions": [
                 "CA",
-                "PL"
+                "PL",
+                "US"
             ],
             "value": true
         }
@@ -138,16 +139,15 @@
                 "oasis"
             ],
             "regions": [
-                "XX-AS",
-                "XX-EU",
-                "XX-OC"
+                "XX"
             ],
             "value": true
         }
     ],
-    "icPrebidCriteo": [
+    "icIASPublisherOptimization": [
         {
             "apps": [
+                "f2",
                 "futhead",
                 "gamepedia",
                 "mobile-wiki",
@@ -155,18 +155,16 @@
                 "oasis"
             ],
             "regions": [
-                "XX"
+                "AU",
+                "CA",
+                "DE",
+                "GB",
+                "NZ",
+                "PL",
+                "UK",
+                "US"
             ],
             "value": true
-        }
-    ],
-    "icPrebidLkqd": [
-        {
-            "apps": [
-                "mobile-wiki",
-                "oasis"
-            ],
-            "value": false
         }
     ],
     "icPrebidPubmatic": [
@@ -223,13 +221,25 @@
             ]
         }
     ],
+    "icPrebidIndexExchangeFeatured": [
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "value": true
+        }
+    ],
     "icFloatingMedrecDestroyable": [
         {
             "apps": [
                 "oasis"
             ],
             "regions": [
-                "PL"
+                "XX"
             ],
             "value": true
         }
@@ -253,7 +263,10 @@
         {
             "apps": [
                 "f2",
+                "futhead",
+                "gamepedia",
                 "mobile-wiki",
+                "muthead",
                 "oasis"
             ],
             "regions": [
@@ -274,11 +287,30 @@
             "value": true
         }
     ],
+    "icTcf1Disabled": [
+        {
+            "apps": [
+                "f2",
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
+                "oasis"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "value": true
+        }
+    ],
     "icViewabilityTracking": [
         {
             "apps": [
                 "f2",
+                "futhead",
+                "gamepedia",
                 "mobile-wiki",
+                "muthead",
                 "oasis"
             ],
             "regions": [
@@ -290,6 +322,7 @@
     "icTabIdTracking": [
         {
             "apps": [
+                "gamepedia",
                 "mobile-wiki",
                 "oasis"
             ],
@@ -316,6 +349,21 @@
             ],
             "regions": [
                 "XX"
+            ],
+            "value": true
+        }
+    ],
+    "icA9BidRefreshing": [
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "CA",
+                "ES",
+                "GB",
+                "UK"
             ],
             "value": true
         }
@@ -371,11 +419,29 @@
             "value": true
         }
     ],
+    "icA9LoggerErrorCodes": [
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "CA",
+                "PL"
+            ],
+            "value": [
+                303
+            ]
+        }
+    ],
     "icPlayerTracking": [
         {
             "apps": [
                 "f2",
+                "futhead",
+                "gamepedia",
                 "mobile-wiki",
+                "muthead",
                 "oasis"
             ],
             "regions": [
@@ -409,7 +475,16 @@
                 "oasis"
             ],
             "regions": [
-                "XX"
+                "AU",
+                "CA",
+                "DE",
+                "ES",
+                "FR",
+                "GB",
+                "JP",
+                "UK",
+                "XX-NA",
+                "XX-SA"
             ],
             "value": true
         }
@@ -429,6 +504,7 @@
                 "4916913597",
                 "4913869429",
                 "4950039599",
+                "5375017839",
                 "4949392740",
                 "5093231180",
                 "5096621951",
@@ -486,14 +562,46 @@
                 "5311481412",
                 "5312401627",
                 "5312726345",
-                "5312208469"
+                "5312208469",
+                "5323165810",
+                "5339874465",
+                "5344168056",
+                "5344988584",
+                "5345336345",
+                "5345336348",
+                "5348167401",
+                "5339327016",
+                "5339327022",
+                "5340108841",
+                "5340108844",
+                "5355041410",
+                "5361162186",
+                "5361509998",
+                "5363972065",
+                "5363972611",
+                "5371996289",
+                "5363972614",
+                "5366657920",
+                "5368489917",
+                "5369583245",
+                "5368490040",
+                "5368490043",
+                "5370873744",
+                "5366503822",
+                "5353864975",
+                "5366503822",
+                "5387091760",
+                "5367643428"
             ]
         }
     ],
     "icLABradorGamKeyValues": [
         {
             "apps": [
+                "futhead",
+                "gamepedia",
                 "mobile-wiki",
+                "muthead",
                 "oasis"
             ],
             "regions": [
@@ -501,8 +609,25 @@
             ],
             "value": [
                 "icPrebidSendAllBids_A_95:send_all_bids_a",
-                "icPrebidSendAllBids_B_5:send_all_bids_b"
+                "icPrebidSendAllBids_B_5:send_all_bids_b",
+                "icFloatingMedrecRecirculationDisabled_A_90:fmr_50_50_a",
+                "icFloatingMedrecRecirculationDisabled_B_10:fmr_50_50_b",
+                "icIxIdentityLibrary_A_50:ix_library_a",
+                "icIxIdentityLibrary_B_50:ix_library_b"
             ]
+        }
+    ],
+    "icA9VideoBidsCleaning": [
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "XX",
+                "non-US"
+            ],
+            "value": true
         }
     ],
     "icPrebidIndexExchange": [
@@ -516,6 +641,20 @@
             ],
             "regions": [
                 "XX"
+            ],
+            "value": true
+        }
+    ],
+    "icFacebookPixel": [
+        {
+            "apps": [
+                "f2",
+                "gamepedia",
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "US"
             ],
             "value": true
         }
@@ -584,7 +723,8 @@
                     "countries": [
                         "DK/100",
                         "MY/100",
-                        "CA/100"
+                        "CA/100",
+                        "US/100"
                     ],
                     "dfp_targeting": true
                 }
@@ -609,14 +749,34 @@
         {
             "apps": [
                 "f2",
+                "futhead",
                 "gamepedia",
                 "mobile-wiki",
+                "muthead",
                 "oasis"
             ],
             "regions": [
                 "XX"
             ],
             "value": true
+        }
+    ],
+    "icSafeFanTakeoverLineItemIds": [
+        {
+            "apps": [
+                "f2",
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
+                "oasis"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "value": [
+                5381590794
+            ]
         }
     ],
     "icPrebidVersion": [
@@ -631,7 +791,20 @@
             "regions": [
                 "XX"
             ],
-            "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v3.2.0/20200114.min.js"
+            "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v3.2.0/20200414.min.js"
+        },
+        {
+            "apps": [
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
+                "oasis"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "value": "//static.wikia.nocookie.net/fandom-ae-assets/prebid.js/v3.2.0/20200414.min.js"
         }
     ],
     "icA9Bidder": [
@@ -649,6 +822,23 @@
             "value": true
         }
     ],
+    "icA9BidRefreshingSlots": [
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "CA",
+                "ES",
+                "GB",
+                "UK"
+            ],
+            "value": [
+                "featured"
+            ]
+        }
+    ],
     "icPorvataDirect": [
         {
             "apps": [
@@ -661,6 +851,22 @@
             "value": true
         }
     ],
+    "icIxIdentityLibrary": [
+        {
+            "apps": [
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
+                "oasis"
+            ],
+            "regions": [
+                "HK"
+            ],
+            "sampling": 50.0,
+            "value": true
+        }
+    ],
     "icIASVideoTracking": [
         {
             "apps": [
@@ -669,9 +875,11 @@
                 "oasis"
             ],
             "regions": [
+                "AU",
                 "GB",
                 "ID",
                 "MY",
+                "NZ",
                 "PH",
                 "SG",
                 "UK",
@@ -733,9 +941,22 @@
             "value": true
         }
     ],
-    "icPrebid": [
+    "icPrebidTelaria": [
         {
             "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "value": true
+        }
+    ],
+    "icTcf2Enabled": [
+        {
+            "apps": [
+                "f2",
                 "futhead",
                 "gamepedia",
                 "mobile-wiki",
@@ -748,17 +969,17 @@
             "value": true
         }
     ],
-    "icMoatYieldIntelligence": [
+    "icPrebid": [
         {
             "apps": [
-                "f2",
+                "futhead",
+                "gamepedia",
                 "mobile-wiki",
+                "muthead",
                 "oasis"
             ],
             "regions": [
-                "GB",
-                "ID",
-                "UK"
+                "XX"
             ],
             "value": true
         }

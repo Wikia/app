@@ -22,6 +22,7 @@ define('wikia.trackingOptIn', [
 		log('Using tracking opt in modal', log.levels.info, logGroup);
 
 		var instances = trackingOptInModal.init({
+			isSubjectToCcpa: !!window.wgUserIsSubjectToCcpa,
 			enableCCPAinit: true,
 			onAcceptTracking: function () {
 				optIn = true;

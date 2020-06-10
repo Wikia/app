@@ -48,9 +48,14 @@ function wfJSVariablesTopScripts(Array &$vars, &$scripts) {
 	} else {
 		$vars['wgUserName'] = $user->getName();
 		$vars['wgUserId'] = $user->getId();
+		$vars['wgUserIsSubjectToCcpa'] = $user->isSubjectToCcpa();
 	}
 	if ($out->isArticle()) {
 		$vars['wgArticleId'] = $out->getWikiPage()->getId();
+		$vars['wgVideoBridgeCountries'] = WikiFactory::getVarValueByName(
+			'wgVideoBridgeCountries',
+			WikiFactory::COMMUNITY_CENTRAL
+		);
 	}
 	$vars['wgCategories'] = $out->getCategories();
 	$vars['wgPageName'] = $title->getPrefixedDBKey();
