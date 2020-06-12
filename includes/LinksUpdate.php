@@ -270,23 +270,23 @@ class LinksUpdate {
 	}
 
 	function queueRecursiveJobs() {
-		global $wgUpdateRowsPerJob;
-		wfProfileIn( __METHOD__ );
-
 		$cache = $this->mTitle->getBacklinkCache();
-		$batches = $cache->partition( 'templatelinks', $wgUpdateRowsPerJob );
+		$batches = $cache->partition( 'templatelinks', BatchRefreshLinksForTemplate::TITLES_PER_TASK );
 		if ( !$batches ) {
-			wfProfileOut( __METHOD__ );
 			return;
 		}
 
 		$this->queueRefreshTasks( $batches );
-
-		wfProfileOut( __METHOD__ );
 	}
 
-	private function queueRefreshTasks( $batches ) {
+	/**
+	 * Queue a BatchRefreshLinksForTemplate task for each batch in the given set of backlinks
+	 * @param array $batches
+	 */
+	private function queueRefreshTasks( array $batches ): void {
 		global $wgCityId;
+
+		$tasks = [];
 
 		foreach ( $batches as $batch ) {
 			list( $start, $end ) = $batch;
@@ -294,7 +294,8 @@ class LinksUpdate {
 			$task->title( $this->mTitle );
 			$task->wikiId( $wgCityId );
 			$task->call( 'refreshTemplateLinks', $start, $end, wfTimestampNow() );
-			$task->queue();
+
+			$tasks[] = $task;
 
 			Wikia\Logger\WikiaLogger::instance()->info( 'LinksUpdate::queueRefreshTasks', [
 				'title' => $this->mTitle->getPrefixedDBkey(),
@@ -303,6 +304,7 @@ class LinksUpdate {
 			] );
 		}
 
+		BatchRefreshLinksForTemplate::batch( $tasks );
 	}
 
 
@@ -380,7 +382,7 @@ class LinksUpdate {
 	 *
 	 * method changed by Wikia CE-677
 	 * @author Kamil Koterba kamil@wikia-inc.com
-	 * 
+	 *
 	 * @param Array $cats array of strings - categories names
 	 */
 	function queueCategoriesInvalidation( $cats ) {
@@ -401,10 +403,10 @@ class LinksUpdate {
 
 	/**
 	 * Queues flies pages for update
-	 * 
+	 *
 	 * method changed by Wikia CE-677
 	 * @author Kamil Koterba kamil@wikia-inc.com
-	 * 
+	 *
 	 * @param Array $images array of strings - files names
 	 */
 	function queueImageDescriptionsInvalidation( $images ) {

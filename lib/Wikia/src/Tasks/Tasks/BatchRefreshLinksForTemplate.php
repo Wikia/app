@@ -9,6 +9,11 @@ namespace Wikia\Tasks\Tasks;
 
 class BatchRefreshLinksForTemplate extends BaseTask {
 
+	/**
+	 * The maximum number of titles to refresh in a single task execution.
+	 */
+	public const TITLES_PER_TASK = 50;
+
 	const BACKLINK_CACHE_TABLE = 'templatelinks';
 
 	/** @var integer|false $start */
