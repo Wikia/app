@@ -9,7 +9,7 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 			var query = queryparams.get('search') || queryparams.get('query');
 
 			var payload = {
-				searchPhrase: query,
+				searchPhrase: query || '',
 				filters: filters,
 				clicked: {
 					type: type,
@@ -166,14 +166,14 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 		),
 		trackSearchResultsImpression: function() {
 			var queryparams = new URL(window.location).searchParams;
-			var query = queryparams.get('search') || queryparams.get('query') || '';
+			var query = queryparams.get('search') || queryparams.get('query');
 
 			var results = this.getSearchResults();
 			var searchUID = getUniqueSearchId();
 			this.appendSearchUidToPaginationLinks(searchUID);
 
 			var payload = {
-				searchPhrase: query,
+				searchPhrase: query  || '',
 				filters: {
 					searchType: currentScope
 				},
