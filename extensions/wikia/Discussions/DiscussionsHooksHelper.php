@@ -76,11 +76,15 @@ class DiscussionsHooksHelper {
 	public static function onBeforePageDisplay( \OutputPage $out ): bool {
 		global $wgEnableForumMigrationMessage, $wgEnableForumMigrationMessageGlobal, $wgEnableForumExt;
 
+		if ( !$wgEnableForumExt || !$wgEnableForumMigrationMessage ) {
+			return true;
+		}
+
 		$enabledGlobally =
 			WikiFactory::getVarValueByName( 'wgEnableForumMigrationMessageGlobal', WikiFactory::COMMUNITY_CENTRAL )
 				?: $wgEnableForumMigrationMessageGlobal;
 
-		if ( $wgEnableForumMigrationMessage && $enabledGlobally && $wgEnableForumExt ) {
+		if ( $enabledGlobally ) {
 			$out->addModules( [ 'ext.wikia.Disucssions.migration' ] );
 		}
 
