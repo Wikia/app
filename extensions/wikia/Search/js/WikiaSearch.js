@@ -166,7 +166,7 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 		),
 		trackSearchResultsImpression: function() {
 			var queryparams = new URL(window.location).searchParams;
-			var query = queryparams.get('search') || queryparams.get('query');
+			var query = queryparams.get('search') || queryparams.get('query') || '';
 
 			var results = this.getSearchResults();
 			var searchUID = getUniqueSearchId();
