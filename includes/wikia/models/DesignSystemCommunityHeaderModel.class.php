@@ -17,7 +17,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	private $wikiLocalNavigation = null;
 
 	public function __construct( string $langCode ) {
-		global $wgCityId;
+		global $wgCityId, $wgServer, $wgScriptPath;
 
 		parent::__construct();
 
@@ -25,9 +25,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		$this->langCode = $langCode;
 		$this->themeSettings = new ThemeSettings( $wgCityId );
 		$this->settings = $this->themeSettings->getSettings();
-		$domain = WikiFactory::cityIDtoDomain( $wgCityId );
-		$this->homePageUrl =
-			wfProtocolUrlToRelative( $domain . WikiFactory::cityIdToLanguagePath( $wgCityId ) );
+		$this->homePageUrl = wfProtocolUrlToRelative( $wgServer . $wgScriptPath );
 	}
 
 	public function getData(): array {
@@ -286,28 +284,10 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	}
 
 	public function getWikiLocalNavigation( $wikitext = null ): array {
-		global $wgCityId;
-
 		if ( $this->wikiLocalNavigation === null ) {
-			if ( empty( $wikitext ) ) {
-				$navigationMessage = GlobalTitle::newFromText( NavigationModel::WIKI_LOCAL_MESSAGE, NS_MEDIAWIKI, $this->productInstanceId );
 
-				$wikitext = $navigationMessage->getContent();
-			}
-
-			//No need for foreignCall if we're getting data for the same wiki
-			if ( $this->productInstanceId == $wgCityId ) {
-				$localNavData = ( new NavigationModel() )->getFormattedWiki( NavigationModel::WIKI_LOCAL_MESSAGE, $wikitext )[ 'wiki' ];
-
-			} else {
-				//Navigation is created by parsing a message to do that properly
-				//we need full context of a wiki that we generate navigation for
-				$localNavData = ApiService::foreignCall( WikiFactory::getWikiByID( $this->productInstanceId )->city_dbname, [
-					'controller' => 'NavigationApi',
-					'method' => 'getData',
-					'uselang' => $this->langCode
-				], ApiService::WIKIA )[ 'navigation' ][ 'wiki' ];
-			}
+			$model = new NavigationModel();
+			$localNavData = $model->getFormattedWiki( NavigationModel::WIKI_LOCAL_MESSAGE, $wikitext )[ 'wiki' ];
 
 			$this->wikiLocalNavigation = $this->formatLocalNavData( $localNavData, 1 );
 		}
