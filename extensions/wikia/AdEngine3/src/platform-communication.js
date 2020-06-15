@@ -1,11 +1,10 @@
-import { jwpReady, utils, universalAdPackage } from "@wikia/ad-engine";
-import { take } from "rxjs/operators";
-import { ofType as ofActionType } from "ts-action-operators";
-import { ofType } from "@wikia/post-quecast";
-import { communicator } from "./communicator";
+import { eventService, jwpReady, utils, universalAdPackage } from '@wikia/ad-engine';
+import { take } from 'rxjs/operators';
+import { ofType as ofActionType } from 'ts-action-operators';
+import { ofType } from '@wikia/post-quecast';
 
 export function listenSetupJWPlayer(callback) {
-	communicator.actions$
+	eventService.communicator.actions$
 		.pipe(
 			ofType('[Ad Engine] Setup JWPlayer'),
 			take(1)
@@ -14,11 +13,11 @@ export function listenSetupJWPlayer(callback) {
 }
 
 export function dispatchRailReady() {
-	communicator.dispatch({ type: '[Rail] Ready' });
+	eventService.communicator.dispatch({ type: '[Rail] Ready' });
 }
 
 export function dispatchPlayerReady(options, targeting, playerKey) {
-	communicator.dispatch(jwpReady({options, targeting, playerKey}));
+	eventService.communicator.dispatch(jwpReady({options, targeting, playerKey}));
 }
 
 /**
@@ -28,7 +27,7 @@ export function dispatchPlayerReady(options, targeting, playerKey) {
  */
 export function isUapLoaded() {
 	return new Promise((res) => {
-		communicator.actions$
+		eventService.communicator.actions$
 		.pipe(
 			ofActionType(universalAdPackage.uapLoadStatus),
 			take(1)
