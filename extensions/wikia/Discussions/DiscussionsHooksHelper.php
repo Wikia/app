@@ -73,6 +73,20 @@ class DiscussionsHooksHelper {
 		return true;
 	}
 
+	public static function onBeforePageDisplay( \OutputPage $out ): bool {
+		global $wgEnableForumMigrationMessage, $wgEnableForumMigrationMessageGlobal, $wgEnableForumExt;
+
+		$enabledGlobally =
+			WikiFactory::getVarValueByName( 'wgEnableForumMigrationMessageGlobal', WikiFactory::COMMUNITY_CENTRAL )
+				?: $wgEnableForumMigrationMessageGlobal;
+
+		if ( $wgEnableForumMigrationMessage && $enabledGlobally && $wgEnableForumExt ) {
+			$out->addModules( [ 'ext.wikia.Disucssions.migration' ] );
+		}
+
+		return true;
+	}
+
 	private static function isWallNamespace( $ns ) {
 		global $wgWallNS;
 

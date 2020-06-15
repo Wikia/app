@@ -12,6 +12,7 @@ $messages['en'] = array(
 	'discussions-activate-error' => 'Discussions feature was not activated due to an error. Error was recorded. Please try again later.',
 	'action-specialdiscussions' => 'Special:Discussions',
 	'right-specialdiscussions' => 'Allows access to Special:Discussions',
+	'forum-to-discussions-migration-message' => 'Attention: In the next few weeks, we will be transitioning remaining content from Forums to Discussions as part of the decommissioning of Forums. This transition will be accompanied by our first round of enhancements to Discussions. <a href="https://community.fandom.com/wiki/User_blog:MisterWoodhouse/The_first_migrations_to_the_Unified_Community_Platform" target="_blank">Click here for more info on those changes</a>.'
 );
 
 $messages['qqq'] = array(
@@ -24,6 +25,7 @@ $messages['qqq'] = array(
 	'discussions-navigate' => 'A caption for a hyperlink going to the Discussions.',
 	'discussions-activate-error' => 'An error message telling user Discussion feature was not deactived and that the error has been recorded and that user should try again later.',
 	'action-specialdiscussions' => 'An action that a user has a forbidden access to when opening Special Page',
+	'forum-to-discussions-migration-message' => 'Message displayed as a Banner Notification when forum migration is going to happen'
 );
 
 $messages['de'] = array(
