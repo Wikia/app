@@ -9,7 +9,7 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 			var query = queryparams.get('search') || queryparams.get('query');
 
 			var payload = {
-				searchPhrase: query,
+				searchPhrase: query || '',
 				filters: filters,
 				clicked: {
 					type: type,
@@ -173,7 +173,7 @@ require(['search-tracking', 'uuid', 'wikia.trackingOptIn'], function(searchTrack
 			this.appendSearchUidToPaginationLinks(searchUID);
 
 			var payload = {
-				searchPhrase: query,
+				searchPhrase: query  || '',
 				filters: {
 					searchType: currentScope
 				},
