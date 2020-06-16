@@ -210,6 +210,16 @@ class User implements JsonSerializable {
 	}
 
 	/**
+	 * @param String $name
+	 * @return string
+	 */
+	private static function getUserIdCacheKey( string $name ): string {
+		$cacheKey = new UserNameCacheKeys( $name );
+		$key = $cacheKey->forUserId();
+		return $key;
+	}
+
+	/**
 	 * @return String
 	 */
 	function __toString(){
@@ -378,18 +388,14 @@ class User implements JsonSerializable {
 		global $wgMemc;
 		$wgMemc->set( $this->getCacheKey(), $data, WikiaResponse::CACHE_LONG );
 		// SUS-2945
-		$wgMemc->set( self::getCacheKeyByName( $this->getName() ), (int) $this->getId(), WikiaResponse::CACHE_LONG );
+		$key = new UserNameCacheKeys( $this->getName() );
+		$wgMemc->set( $key->forUserId(), (int) $this->getId(), WikiaResponse::CACHE_LONG );
 
 		wfDebug( "User: user {$this->mId} stored in cache\n" );
 	}
 
 	private function getCacheKey(): string {
 		$cacheKey = new UserIdCacheKeys($this->getId());
-		return $cacheKey->forUser();
-	}
-
-	private static function getCacheKeyByName( string $username ) : string {
-		$cacheKey = new UserNameCacheKeys( $username );
 		return $cacheKey->forUser();
 	}
 
@@ -650,7 +656,7 @@ class User implements JsonSerializable {
 		// worth caching given the fact that (user ID, user name) pairs do not change very often
 		global $wgMemc;
 
-		$key = self::getCacheKeyByName( $name );
+		$key = self::getUserIdCacheKey( $name );
 		$cachedId = $wgMemc->get( $key );
 
 		if ( is_numeric( $cachedId ) ) {
