@@ -12,8 +12,9 @@ import {
 	getAdProductInfo
 } from '@wikia/ad-engine';
 import { throttle } from 'lodash';
-import { ofType } from '@wikia/post-quecast';
 import { take } from 'rxjs/operators';
+import { communicationService } from "./communication/communication-service";
+import { ofType } from "./communication/of-type";
 
 const PAGE_TYPES = {
 	article: 'a',
@@ -394,7 +395,7 @@ export default {
 	},
 
 	async injectIncontentBoxad() {
-		await eventService.communicator.actions$.pipe(ofType('[Rail] Ready'), take(1)).toPromise();
+		await communicationService.action$.pipe(ofType('[Rail] Ready'), take(1)).toPromise();
 
 		const slotName = 'incontent_boxad_1';
 		const isApplicable = isIncontentBoxadApplicable();

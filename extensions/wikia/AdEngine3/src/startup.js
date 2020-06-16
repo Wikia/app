@@ -12,15 +12,12 @@ import {
 	eventService,
 	facebookPixel,
 	iasPublisherOptimization,
-	identityLibrary,
-	identityLibraryLoadedEvent,
 	InstantConfigCacheStorage,
 	JWPlayerManager,
 	likhoService,
+	nielsen,
 	permutive,
 	Runner,
-	nielsen,
-	recirculationDisabledEvent,
 	SlotTweaker,
 	taxonomyService,
 	utils
@@ -31,7 +28,8 @@ import pageTracker from './tracking/page-tracker';
 import slots from './slots';
 import videoTracker from './tracking/video-tracking';
 import { track } from "./tracking/tracker";
-import { ofType } from 'ts-action-operators';
+import { communicationService } from "./communication/communication-service";
+import { ofType } from "./communication/of-type";
 
 const GPT_LIBRARY_URL = '//www.googletagservices.com/tag/js/gpt.js';
 
@@ -85,7 +83,7 @@ async function setupJWPlayer(inhibitors = []) {
 }
 
 function dispatchJWPlayerSetupAction(showAds = true) {
-	eventService.communicator.dispatch({
+	communicationService.dispatch({
 		type: '[Ad Engine] Setup JWPlayer',
 		showAds,
 		autoplayDisabled: featuredVideoAutoPlayDisabled
@@ -108,14 +106,14 @@ function startAdEngine(inhibitors) {
 			slot.getElement().classList.remove('default-height');
 		});
 
-		eventService.communicator.actions$.pipe(
-			ofType(identityLibraryLoadedEvent)
+		communicationService.action$.pipe(
+			ofType('[AdEngine] Identity library loaded')
 		).subscribe((props) => {
 			pageTracker.trackProp('identity_library_load_time', props.loadTime.toString());
 		});
 
-		eventService.communicator.actions$.pipe(
-			ofType(recirculationDisabledEvent)
+		communicationService.action$.pipe(
+			ofType('[AdEngine] recirculation disabled')
 		).subscribe(() => {
 			pageTracker.trackProp('hidden_popular_pages', '1');
 		})
