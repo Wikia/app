@@ -14,7 +14,7 @@ class CommunicationService {
 	}
 
 	dispatch(action) {
-		this.communicator.dispatch(action);
+		this.communicator.dispatch({ ...action, __global: true });
 	}
 }
 
