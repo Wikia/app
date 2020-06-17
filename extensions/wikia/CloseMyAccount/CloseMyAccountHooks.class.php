@@ -1,26 +1,7 @@
 <?php
 
 class CloseMyAccountHooks {
-
-	/**
-	 * Abort a login if the user has provided a correct username and
-	 * password, but has requested an account closure.
-	 *
-	 * @param  User    $user      The user attempting to log in
-	 * @param  string  $result    The result code of the login attempt
-	 * @param  string  $resultMsg The reason the login was aborted
-	 * @return boolean            True if login should succeed, false otherwise
-	 */
-	public static function onWikiaUserLoginSuccess( $user, &$result, &$resultMsg ) {
-		$closeAccountHelper = new CloseMyAccountHelper();
-		if ( $closeAccountHelper->isScheduledForClosure( $user ) ) {
-			$result = 'closurerequested';
-			$resultMsg = 'Account closure requested';
-			return false;
-		}
-		return true;
-	}
-
+	
 	/**
 	 * Hijack SendConfirmationMail for our purposes, correcting the URL
 	 * to point to the CloseMyAccount reactivation page.
