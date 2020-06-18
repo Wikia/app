@@ -1394,7 +1394,7 @@ $wgFileBackends['gcs-backend'] = [
 // SER-3444 always use GCS
 $wgEnabledFileBackend = 'gcs-backend';
 
-
+include( "{$IP}/extensions/wikia/CoppaTool/legacy/CoppaToolLegacyTasks.setup.php" );
 if ( !empty( $wgEnableCoppaToolExt ) ) {
 	include( "{$IP}/extensions/wikia/CoppaTool/CoppaTool.setup.php" );
 }
