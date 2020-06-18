@@ -14,6 +14,9 @@ class IpAnonymizer {
 		$this->updateTable( $dbw, 'oldimage', 'oi_user_text', $ip );
 		$this->updateTable( $dbw, 'ipblocks', 'ipb_address', $ip );
 		$this->updateTable( $dbw, 'abuse_filter_log', 'afl_user_text', $ip );
+		$this->updateTable( $dbw, 'abuse_filter_log', 'afl_ip', $ip );
+		$this->updateTable( $dbw, 'cu_log', 'cul_target_text', $ip );
+		$this->updateTable( $dbw, 'cu_changes', 'cuc_user_text', $ip );
 		$this->updateTable( $dbw, 'recentchanges', 'rc_title', $ip, [ 'rc_log_type' => [ 'block', 'rights', 'phalanx' ] ] );
 		$this->updateTable( $dbw, 'logging', 'log_title', $ip, [ 'log_type' => [ 'block', 'rights', 'phalanx' ] ] );
 	}
