@@ -8,7 +8,7 @@ final class AnonymizeIpController extends WikiaController {
 	}
 
 	/**
-	 * Introduced for UCP. This method will be triggered by UCP to anonymize ip.
+	 * Introduced for UCP. This method will be triggered by UCP to anonymize IP.
 	 * This should be executed in context of a wiki.
 	 */
 	public function anonymizeIp() {
