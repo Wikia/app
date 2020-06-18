@@ -7,17 +7,16 @@ declare( strict_types=1 );
  * changes, for example when it's anonymized or renamed.
  */
 class UserNameCacheKeys {
-
 	/** @var string */
-	private $username;
+	private $encodedUsername;
 
 	public function __construct( string $username ) {
-		$this->username = $username;
+		$this->encodedUsername = urlencode( $username );
 	}
 
-	public function getAllKeys(int $wikiId): array {
+	public function getAllKeys( int $wikiId ): array {
 		$keys = [
-			$this->forUser(),
+			$this->forUserId(),
 			$this->forLookupUser( $wikiId ),
 		];
 
@@ -33,18 +32,19 @@ class UserNameCacheKeys {
 	 *  SUS-2945
 	 * @return string
 	 */
-	public function forUser(): string {
-		return wfSharedMemcKey( 'user', 'name', $this->username );
+	public function forUserId(): string {
+		return wfSharedMemcKey( 'username-to-id',  $this->encodedUsername );
 	}
 
-	public function forLookupUser( int $wikiId ):string {
-		return 'lookupUser' . 'user' . $this->username . 'on' . $wikiId;
+	public function forLookupUser( int $wikiId ): string {
+		return wfSharedMemcKey( 'LookupUser', 'name', $this->encodedUsername, $wikiId );
 	}
 
 	public function forBlogArticleFeed( int $offset ): string {
-		return wfMemcKey( 'blog', 'feed', 'v' . /* version */ 4, $this->username, $offset );
+		return wfMemcKey( 'blog', 'feed', 'v' . /* version */ 5, $this->encodedUsername, $offset );
 	}
+
 	public function forBlogArticleListing( int $offset ): string {
-		return wfMemcKey( 'blog', 'listing', 'v' . /* version */ 4, $this->username, $offset );
+		return wfMemcKey( 'blog', 'listing', 'v' . /* version */ 5, $this->encodedUsername, $offset );
 	}
 }
