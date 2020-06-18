@@ -112,6 +112,7 @@ function startAdEngine(inhibitors) {
 			ofType(identityLibraryLoadedEvent)
 		).subscribe((props) => {
 			pageTracker.trackProp('identity_library_load_time', props.loadTime.toString());
+			pageTracker.trackProp('identity_library_ids', identityLibrary.getUids());
 		});
 
 		eventService.communicator.actions$.pipe(
