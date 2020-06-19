@@ -722,7 +722,7 @@ class WikiFactoryLoader {
 				array( "city_dbname" => $this->mVariables[ 'wgSharedUploadDBname' ] )
 			);
 
-			if ( !empty( $partnerWikiData ) && $partnerWikiData->city_path !== 'slot1' ) {
+			if ( !empty( $partnerWikiData ) && !WikiFactory::isUCPWiki( $partnerWikiData->city_id ) ) {
 				unset( $this->mVariables[ 'wgSharedUploadDBname' ] );
 
 				$this->mVariables['wgForeignFileRepos'][] = [
@@ -730,6 +730,7 @@ class WikiFactoryLoader {
 					'class' => 'ForeignAPIRepo',
 					'apibase' => $partnerWikiData->city_url . 'api.php',
 					'hashLevels' => 2,
+					'apiThumbCacheExpiry' => 0
 				];
 			}
 
