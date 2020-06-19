@@ -176,6 +176,9 @@ $wgCorporatePageRedirectWiki = "https://community.$wgFandomBaseDomain/wiki/";
 $wgCrossSiteAJAXdomains = [
 	"internal-vstf.$wgWikiaBaseDomain",
 	"internal-vstf.$wgFandomBaseDomain",
+	// so that API is available to auth-pages
+	"www.$wgFandomBaseDomain",
+	"www.$wgWikiaBaseDomain",
 ];
 
 /**
