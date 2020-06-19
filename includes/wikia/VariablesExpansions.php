@@ -179,6 +179,10 @@ $wgCrossSiteAJAXdomains = [
 	// so that API is available to auth-pages
 	"www.$wgFandomBaseDomain",
 	"www.$wgWikiaBaseDomain",
+	"www.servicesmw-p1-ucp.fandom-dev.pl",
+	"www.servicesmw-p1.fandom-dev.pl",
+	"www.servicesmw-s1-ucp.fandom-dev.us",
+	"www.servicesmw-s1.fandom-dev.us",
 ];
 
 /**
