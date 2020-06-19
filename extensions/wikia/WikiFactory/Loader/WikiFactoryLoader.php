@@ -722,7 +722,12 @@ class WikiFactoryLoader {
 				array( "city_dbname" => $this->mVariables[ 'wgSharedUploadDBname' ] )
 			);
 
-			if ( !empty( $partnerWikiData ) && !WikiFactory::isUCPWiki( $partnerWikiData->city_id ) ) {
+
+			if (
+				!empty( $partnerWikiData ) &&
+				WikiFactory::isUCPWiki( $partnerWikiData->city_id ) &&
+				$this->mWikiID !== 177
+			) {
 				unset( $this->mVariables[ 'wgSharedUploadDBname' ] );
 
 				$this->mVariables['wgForeignFileRepos'][] = [
