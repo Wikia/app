@@ -101,6 +101,22 @@
             "value": true
         }
     ],
+    "icSafeFanTakeoverUnstickTimeout": [
+        {
+            "apps": [
+                "f2",
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
+                "oasis"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "value": 4000
+        }
+    ],
     "icTaxonomyComicsTag": [
         {
             "apps": [
@@ -861,6 +877,7 @@
                 "oasis"
             ],
             "regions": [
+                "CA",
                 "HK",
                 "NL"
             ],

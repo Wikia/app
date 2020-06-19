@@ -101,6 +101,10 @@ async function setupAdContext(wikiContext, consents) {
 		'templates.safeFanTakeoverElement.lineItemIds',
 		instantConfig.get('icSafeFanTakeoverLineItemIds'),
 	);
+	context.set(
+		'templates.safeFanTakeoverElement.unstickTimeout',
+		instantConfig.get('icSafeFanTakeoverUnstickTimeout'),
+	);
 
 	context.set('state.deviceType', utils.client.getDeviceType());
 
