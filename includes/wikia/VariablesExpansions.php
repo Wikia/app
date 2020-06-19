@@ -182,6 +182,8 @@ $wgCrossSiteAJAXdomains = [
 	"www.$wgFandomBaseDomain",
 	"www.$wgWikiaBaseDomain",
 	"www.$wgWikiaOrgBaseDomain",
+	// SER-4047 add the domain on which auth pages are hosted on dev
+	// this is not ideal, but for some reason $wgFandomBaseDomain is not dev friendly
 	"www.servicesmw-p1-ucp.fandom-dev.pl",
 	"www.servicesmw-s1-ucp.fandom-dev.us",
 	"www.servicesmw-p1.fandom-dev.pl",
