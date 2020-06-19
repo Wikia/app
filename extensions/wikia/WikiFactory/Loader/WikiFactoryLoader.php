@@ -709,7 +709,8 @@ class WikiFactoryLoader {
 		#Fix shared uploads to UCP wikis
 		if (
 			!empty( $this->mVariables['wgUseSharedUploads'] ) &&
-			!empty( $this->mVariables['wgSharedUploadDBname'] )
+			!empty( $this->mVariables['wgSharedUploadDBname'] ) &&
+			$this->mWikiID !== 177
 		) {
 			$partnerWikiData = $dbr->selectRow(
 				array( "city_list" ),
@@ -723,11 +724,7 @@ class WikiFactoryLoader {
 			);
 
 
-			if (
-				!empty( $partnerWikiData ) &&
-				WikiFactory::isUCPWiki( $partnerWikiData->city_id ) &&
-				$this->mWikiID !== 177
-			) {
+			if ( !empty( $partnerWikiData ) && WikiFactory::isUCPWiki( $partnerWikiData->city_id ) ) {
 				unset( $this->mVariables[ 'wgSharedUploadDBname' ] );
 
 				$this->mVariables['wgForeignFileRepos'][] = [
