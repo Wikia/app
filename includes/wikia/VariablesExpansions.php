@@ -177,12 +177,14 @@ $wgCorporatePageRedirectWiki = "https://community.$wgFandomBaseDomain/wiki/";
 $wgCrossSiteAJAXdomains = [
 	"internal-vstf.$wgWikiaBaseDomain",
 	"internal-vstf.$wgFandomBaseDomain",
+	"internal-vstf.$wgWikiaOrgBaseDomain",
 	// SER-4047 make MW API available so that auth-pages can request user options
 	"www.$wgFandomBaseDomain",
 	"www.$wgWikiaBaseDomain",
+	"www.$wgWikiaOrgBaseDomain",
 	"www.servicesmw-p1-ucp.fandom-dev.pl",
-	"www.servicesmw-p1.fandom-dev.pl",
 	"www.servicesmw-s1-ucp.fandom-dev.us",
+	"www.servicesmw-p1.fandom-dev.pl",
 	"www.servicesmw-s1.fandom-dev.us",
 ];
 
