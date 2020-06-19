@@ -25,7 +25,7 @@ class CloseMyAccountSpecialController extends WikiaSpecialPageController {
 
 	private function redirectToUcp() {
 		global $wgCentralWikiId;
-		$title = GlobalTitle::newFromText( 'CloseMyAccounts', NS_SPECIAL, $wgCentralWikiId );
+		$title = GlobalTitle::newFromText( 'CloseMyAccount', NS_SPECIAL, $wgCentralWikiId );
 		$this->getOutput()->redirect( $title->getFullURL() );
 	}
 }
