@@ -170,13 +170,14 @@ $wgCorporatePageRedirectWiki = "https://community.$wgFandomBaseDomain/wiki/";
  * '?' matches any 1 character.
  * @example  $wgCrossSiteAJAXdomains = [ 'www.wikia.com', '*.wikia.com' ];
  * @see PLATFORM-1719
+ * @see SER-4047
  * @see wfHandleCrossSiteAJAXdomain()
  * @var string $wgCrossSiteAJAXdomains
  */
 $wgCrossSiteAJAXdomains = [
 	"internal-vstf.$wgWikiaBaseDomain",
 	"internal-vstf.$wgFandomBaseDomain",
-	// so that API is available to auth-pages
+	// SER-4047 make MW API available so that auth-pages can request user options
 	"www.$wgFandomBaseDomain",
 	"www.$wgWikiaBaseDomain",
 	"www.servicesmw-p1-ucp.fandom-dev.pl",
