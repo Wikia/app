@@ -72,7 +72,10 @@ $wgHooks['BeforePageDisplay'][] = 'DiscussionsHooksHelper::onBeforePageDisplay';
 
 $wgResourceModules['ext.wikia.Disucssions.migration'] = [
 	'messages' => [
+		// TODO: rename to `before-forum-to-discussions-migration-message` after translations are ready
 		'forum-to-discussions-migration-message',
+		'in-progress-forum-to-discussions-migration-message',
+		'after-forum-to-discussions-migration-message',
 	],
 	'scripts' => [
 		'scripts/forumMigration.js',

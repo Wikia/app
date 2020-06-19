@@ -74,6 +74,33 @@ class EnableDiscussionsController extends \WikiaController {
 		}
 	}
 
+	public function togglePostForumMigrationMessage() {
+		$cityId = $this->request->getInt( 'siteId', $this->wg->CityId );
+		$value = $this->request->getBool( 'value', true );
+
+		$successBool = WikiFactory::setVarByName( 'wgEnablePostForumMigrationMessage', $cityId, $value );
+		$successTimestamp = WikiFactory::setVarByName( 'wgPostForumMigrationMessageExpiration', $cityId, time() );
+
+		if ( $successBool && $successTimestamp ) {
+			$this->response->setCode( 200 );
+		} else {
+			$this->response->setCode( 500 );
+		}
+	}
+
+	public function toggleBeforeForumMigrationMessage() {
+		$cityId = $this->request->getInt( 'siteId', $this->wg->CityId );
+		$value = $this->request->getBool( 'value', false );
+
+		$success = WikiFactory::setVarByName( 'wgEnableForumMigrationMessage', $cityId, $value );
+
+		if ( $success ) {
+			$this->response->setCode( 200 );
+		} else {
+			$this->response->setCode( 500 );
+		}
+	}
+
 	/**
 	 * Make sure to only allow authorized POST methods.
 	 * @throws WikiaHttpException
