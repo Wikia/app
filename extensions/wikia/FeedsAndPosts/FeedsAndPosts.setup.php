@@ -15,6 +15,7 @@ $wgAutoloadClasses['Wikia\FeedsAndPosts\ThemeSettings'] = $dir . 'ThemeSettings.
 $wgAutoloadClasses['Wikia\FeedsAndPosts\WikiVariables'] = $dir . 'WikiVariables.class.php';
 $wgAutoloadClasses['Wikia\FeedsAndPosts\ArticleData'] = $dir . 'ArticleData.class.php';
 $wgAutoloadClasses['Wikia\FeedsAndPosts\WikiDetails'] = $dir . 'WikiDetails.class.php';
+$wgAutoloadClasses['Wikia\FeedsAndPosts\ArticleTags'] = $dir . 'ArticleTags.class.php';
 
 
 // Controllers
