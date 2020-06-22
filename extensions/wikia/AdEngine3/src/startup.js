@@ -112,12 +112,6 @@ function startAdEngine(inhibitors) {
 		).subscribe((props) => {
 			pageTracker.trackProp('identity_library_load_time', props.loadTime.toString());
 		});
-
-		communicationService.action$.pipe(
-			ofType('[AdEngine] recirculation disabled')
-		).subscribe(() => {
-			pageTracker.trackProp('hidden_popular_pages', '1');
-		})
 	}
 }
 
