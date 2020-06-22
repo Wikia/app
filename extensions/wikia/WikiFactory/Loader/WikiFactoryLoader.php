@@ -710,17 +710,17 @@ class WikiFactoryLoader {
 		if (
 			!empty( $this->mVariables['wgUseSharedUploads'] ) &&
 			!empty( $this->mVariables['wgSharedUploadDBname'] ) &&
-			$this->mWikiID !== 177
+			$this->mWikiID !== Wikia::COMMUNITY_WIKI_ID
 		) {
 			$partnerWikiData = $dbr->selectRow(
-				array( "city_list" ),
-				array(
+				[ "city_list" ],
+				[
 					"city_id",
 					"city_url",
 					"city_dbname",
 					"city_path",
-				),
-				array( "city_dbname" => $this->mVariables[ 'wgSharedUploadDBname' ] )
+				],
+				[ "city_dbname" => $this->mVariables[ 'wgSharedUploadDBname' ] ]
 			);
 
 
