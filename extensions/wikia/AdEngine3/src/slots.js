@@ -306,7 +306,14 @@ export default {
 		slotService.setState('invisible_high_impact_2', isHighImpactApplicable());
 
 		slotService.setState('featured', context.get('custom.hasFeaturedVideo'));
-		slotService.setState('incontent_player', context.get('custom.hasIncontentPlayer'));
+
+		if (context.get('services.distroScale.enabled')) {
+			// It is required to *collapse* ICP for DistroScale
+			// TODO: clean up once we finish DS A/B test
+			slotService.setState('incontent_player', false, AdSlot.STATUS_COLLAPSE);
+		} else {
+			slotService.setState('incontent_player', context.get('custom.hasIncontentPlayer'));
+		}
 	},
 
 	setupIdentificators() {

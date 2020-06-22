@@ -539,6 +539,10 @@ export default {
 			enabled: false,
 			siteId: '1167',
 		},
+		distroScale: {
+			enabled: false,
+			id: '22599',
+		},
 		externalLogger: {
 			endpoint: '/wikia.php?controller=AdEngine&method=postLog',
 		},

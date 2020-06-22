@@ -8,6 +8,7 @@ import {
 	confiant,
 	context,
 	durationMedia,
+	distroScale,
 	events,
 	eventService,
 	facebookPixel,
@@ -167,6 +168,7 @@ function callExternals() {
 	iasPublisherOptimization.call();
 	confiant.call();
 	durationMedia.call();
+	distroScale.call();
 	billTheLizard.call(['queen_of_hearts', 'vcr']);
 	nielsen.call({
 		type: 'static',
