@@ -1016,8 +1016,7 @@ class WikiaPhotoGallery extends ImageGallery {
 				if ( $isVideo ) {
 					$imgAttribs['data-video-name'] = htmlspecialchars( $image['fileTitle'] );
 					$imgAttribs['data-video-key'] = urlencode( htmlspecialchars( $image['DBKey'] ) );
-					$imgAttribs['width'] = $image['width'];
-					$imgAttribs['height'] = $image['height'];
+					$imgAttribs['width'] = isset($thumbParams['width']) ? $thumbParams['width'] : $image['width'];
 				} else {
 					$imgAttribs['data-image-name'] = htmlspecialchars( $image['fileTitle'] );
 					$imgAttribs['data-image-key'] = urlencode( htmlspecialchars( $image['DBKey'] ) );
