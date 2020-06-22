@@ -12,6 +12,7 @@ import {
 	eventService,
 	facebookPixel,
 	iasPublisherOptimization,
+	identityLibrary,
 	InstantConfigCacheStorage,
 	JWPlayerManager,
 	likhoService,
