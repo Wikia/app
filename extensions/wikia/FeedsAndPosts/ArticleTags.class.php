@@ -10,7 +10,7 @@ use Title;
 use WebRequest;
 
 class ArticleTags {
-	public function getSuggestedTags() {
+	public function getPopularTags() {
 		global $wgCityId;
 
 		$mainPageId = Title::newMainPage()->getArticleID();

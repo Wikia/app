@@ -52,6 +52,8 @@ class FeedsAndPostsController extends WikiaApiController {
 			return;
 		}
 
+		$popularTags = (new ArticleTags())->getPopularTags();
+
 		if ( $title->exists() ) {
 			$images = ArticleData::getImages( $title->getArticleID() );
 
@@ -62,6 +64,7 @@ class FeedsAndPostsController extends WikiaApiController {
 				'content_images' => count( $images ) > 1 ? array_slice( $images, 1 ) : [],
 				'snippet' => ArticleData::getTextSnippet( $title ),
 				'relativeUrl' => $title->getLocalURL(),
+				'popularTags' => $popularTags
 			] );
 
 			return;
@@ -74,13 +77,14 @@ class FeedsAndPostsController extends WikiaApiController {
 			'content_images' => [],
 			'snippet' => null,
 			'relativeUrl' => $title->getLocalURL(),
+			'popularTags' => $popularTags
 		]);
 	}
 
-	public function getSuggestedTags() {
+	public function getPopularTags() {
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
-		$this->response->setVal( 'tags', ( new ArticleTags() )->getSuggestedTags() );
+		$this->response->setVal( 'tags', ( new ArticleTags() )->getPopularTags() );
 	}
 
 	public function searchForTags() {
