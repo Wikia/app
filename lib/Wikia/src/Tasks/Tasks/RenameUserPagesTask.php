@@ -89,7 +89,7 @@ class RenameUserPagesTask extends BaseTask {
 			$status = $title->moveTo( $newTitle, false, $editSummary, true, $robot );
 			if ( $status !== true ) {
 				$this->error(
-					'UserRename: Failed to move page test',
+					'UserRename: Failed to move page',
 					[
 						'status' => $status,
 						'old_title_db_key' => $title->getDBkey(),
