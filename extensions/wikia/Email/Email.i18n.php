@@ -40,22 +40,22 @@ $messages['qqq'] = array(
 
 $messages['de'] = array(
 	'emailext-desc' => 'Eine Erweiterung, die die Zustellung von E-Mails abwickelt',
-	'emailext-anonymous-editor' => 'Ein FANDOM-Benutzer',
+	'emailext-anonymous-editor' => 'Ein Fandom-Benutzer',
 	'emailext-no-reply-name' => 'Keine Antwort',
 	'emailext-fanverse-tagline' => 'Powered by Wikia',
-	'emailext-recipient-notice' => 'Diese E-Mail wurde von FANDOM an $1 geschickt',
+	'emailext-recipient-notice' => 'Diese E-Mail wurde von Fandom an $1 geschickt',
 	'emailext-update-frequency' => 'Wenn du ändern möchtest, welche E-Mails und wie oft du E-Mails von uns erhältst, besuche bitte deine [{{fullurl:Special:Preferences|#mw-prefsection-emailv2}} Einstellungen].',
-	'emailext-unsubscribe' => 'Klicke [$1 hier], um dich von allen FANDOM-E-Mails abzumelden.',
+	'emailext-unsubscribe' => 'Klicke [$1 hier], um dich von allen Fandom-E-Mails abzumelden.',
 	'emailext-unfollow-text' => 'Du möchtest diese Updates nicht mehr erhalten? Klicke [$1 hier], um $2 auf {{SITENAME}} nicht mehr zu folgen.',
 	'emailext-salutation' => 'Hallo $1,',
 	'group-translator-member' => 'FANDOM-Übersetzer',
-	'group-translator' => 'FANDOM-Übersetzer',
+	'group-translator' => 'Fandom-Übersetzer',
 	'grouppage-translator' => 'w:c:de.c:Hilfe:Benutzer#Andere_Gruppen',
 	'emailext-wikia-home-url' => 'http://de.wikia.com/explore-de',
 	'emailext-forumreply-unfollow-text' => 'Du möchtest diese Updates nicht mehr erhalten? Klicke [$1 hier], um [$2 dieser Diskussion] auf der Seite {[{{SERVERCANONICAL}} {{SITENAME}}] nicht mehr zu folgen.',
 	'right-access-sendemail' => 'Ermöglicht den Zugriff auf Spezial:SendEmail',
 	'emailext-mobile-application-footer-1' => 'So hast du deine Lieblings-Communitys immer dabei und verpasst nie wieder etwas.',
-	'emailext-mobile-application-footer-2' => 'Schau dir unsere FANDOM Community-Apps an!',
+	'emailext-mobile-application-footer-2' => 'Schau dir unsere Fandom-Community-Apps an!',
 );
 
 $messages['es'] = array(

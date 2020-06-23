@@ -1238,7 +1238,7 @@ $messages['pl'] = array(
 	'admindashboard-control-announcements-label' => 'Ogłoszenia',
 	'admindashboard-control-announcements-tooltip' => 'Utwórz ogłoszenie dla swojej społeczności',
 	'admindashboard-control-analytics-tooltip' => 'Dowiedz się co robią fani odwiedzający twoją wiki.',
-	'admindashboard-control-analytics-label' => 'Analytics',
+	'admindashboard-control-analytics-label' => 'Dane analityczne',
 );
 
 $messages['ps'] = array(
@@ -1725,7 +1725,7 @@ $messages['zh-hans'] = array(
 	'admindashboard-control-recent-changes-tooltip' => '“最近更改”显示单一时间轴内本维基上所有的更改。',
 	'admindashboard-control-top-navigation-label' => '顶部导航',
 	'admindashboard-control-top-navigation-tooltip' => '顶部导航允许您自定义维基顶部的导航菜单。',
-	'admindashboard-control-wiki-features-label' => 'Wikia功能',
+	'admindashboard-control-wiki-features-label' => 'Wiki功能',
 	'admindashboard-control-page-layout-builder-label' => '页面布局生成器',
 	'admindashboard-controls-community-header' => '社区',
 	'admindashboard-control-user-list-label' => '用户列表',
@@ -1757,7 +1757,7 @@ $messages['zh-hans'] = array(
 	'admindashboard-control-page-layout-builder-tooltip' => '页面布局生成器让你创建页面的轮廓给创建新页面的用户选择。',
 	'admindashboard-control-special-css-tooltip' => '用CSS自定义你的wiki。',
 	'admindashboard-control-user-list-tooltip' => '查看参与你的wiki的完整用户清单。',
-	'admindashboard-control-wiki-features-tooltip' => 'Wikia功能让你启用wiki上更多的功能',
+	'admindashboard-control-wiki-features-tooltip' => 'Wiki功能让你启用wiki上更多的功能',
 	'admindashboard-loading' => '载入中…',
 	'admindashboard-desc' => 'A dashboard for administrators with easy access to their tools',
 	'admindashboard-control-special-css-label' => 'CSS',
