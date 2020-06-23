@@ -146,4 +146,12 @@ function wikiaJWPlayerEvents(playerInstance, willAutoplay, logger) {
 			playerInstance.trigger('jwplayerClosed')
 		}
 	});
+
+	playerInstance.on('error', function (data) {
+		// Play next video if the user has no rights to play the current one
+		// This code is usually returned when the video is geo restricted
+		if (depth > 0 && data.code === 232403) {
+			playerInstance.next();
+		}
+	});
 }

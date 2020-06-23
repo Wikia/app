@@ -11,7 +11,7 @@ JWPlayer wrapped with Fandom's custom solutions:
 ## Installation
 
 ```
-npm install https://github.com/Wikia/jwplayer-fandom --save
+yarn https://github.com/Wikia/jwplayer-fandom --save
 ```
 
 ## Usage
@@ -145,12 +145,12 @@ in video custom parameter in jwplayer dashboard.
 
 ## Contributing
 * Clone repo
-* run `npm install`
-* run `npm run dev` to watch for file changes and run server
-* we keep built project in dist folder, remember to run `npm run build` to build your changes after your development is finished
+* run `yarn`
+* run `yarn dev` to watch for file changes and run server
+* we keep built project in dist folder, remember to run `yarn build` to build your changes after your development is finished
 * after merging your PR to master:
-	* bump version with `npm version [patch|minor|major]`
+	* bump version with `yarn version [patch|minor|major]`
 	* add tag with the version e.g. `git tag 1.2.0`
 	* if you don't have `~/.npmrc` created, run: `curl -su <ARTIFACTORY_USERNAME>:<ARTIFACTORY_API_KEY> "https://artifactory.wikia-inc.com/artifactory/api/npm/wikia-npm/auth/wikia" | sed 's|http://|https://|g' >> ~/.npmrc`
-	* run `npm publish` to publish new version
+	* run `yarn publish` to publish new version
 
