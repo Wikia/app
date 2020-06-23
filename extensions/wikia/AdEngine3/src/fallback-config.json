@@ -1022,6 +1022,26 @@
             ]
         }
     ],
+    "icDistroScale": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "value": false
+        }
+    ],
+    "icFloorAdhesionDelay": [
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "value": 30000
+        }
+    ],
     "icBabDetection": [
         {
             "apps": [
