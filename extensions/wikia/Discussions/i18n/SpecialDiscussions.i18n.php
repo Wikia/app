@@ -127,7 +127,7 @@ $messages['pl'] = array(
 	'discussions-navigate' => 'Przejdź do Dyskusji',
 	'discussions-activate-error' => 'Wystąpił błąd przy aktywowaniu funkcji Dyskusje. Błąd został zapisany. Spróbuj ponownie później.',
 	'action-specialdiscussions' => 'Specjalna:Dyskusje',
-	'right-specialdiscussions' => 'Allows access to Special:Discussions',
+	'right-specialdiscussions' => 'Umożliwia dostęp do Specjalna:Discussions',
 );
 
 $messages['pt'] = array(
