@@ -438,23 +438,43 @@ class LinksUpdate {
 	 * @param $insertions
 	 */
 	function incrTableUpdate( $table, $prefix, $deletions, $insertions ) {
+		global $wgUpdateRowsPerQuery;
+
 		if ( $table == 'page_props' ) {
 			$fromField = 'pp_page';
 		} else {
 			$fromField = "{$prefix}_from";
 		}
-		$where = array( $fromField => $this->mId );
+		$deleteWheres = [];
 		if ( $table == 'pagelinks' || $table == 'templatelinks' || $table == 'iwlinks' ) {
 			if ( $table == 'iwlinks' ) {
 				$baseKey = 'iwl_prefix';
 			} else {
 				$baseKey = "{$prefix}_namespace";
 			}
-			$clause = $this->mDb->makeWhereFrom2d( $deletions, $baseKey, "{$prefix}_title" );
-			if ( $clause ) {
-				$where[] = $clause;
-			} else {
-				$where = false;
+
+			$curBatchSize = 0;
+			$curDeletionBatch = [];
+			$deletionBatches = [];
+			foreach ( $deletions as $ns => $dbKeys ) {
+				foreach ( $dbKeys as $dbKey => $unused ) {
+					$curDeletionBatch[$ns][$dbKey] = 1;
+					if ( ++$curBatchSize >= $wgUpdateRowsPerQuery ) {
+						$deletionBatches[] = $curDeletionBatch;
+						$curDeletionBatch = [];
+						$curBatchSize = 0;
+					}
+				}
+			}
+			if ( $curDeletionBatch ) {
+				$deletionBatches[] = $curDeletionBatch;
+			}
+
+			foreach ( $deletionBatches as $deletionBatch ) {
+				$deleteWheres[] = [
+					$fromField => $this->mId,
+					$this->mDb->makeWhereFrom2d( $deletionBatch, $baseKey, "{$prefix}_title" )
+				];
 			}
 		} else {
 			if ( $table == 'langlinks' ) {
@@ -464,17 +484,21 @@ class LinksUpdate {
 			} else {
 				$toField = $prefix . '_to';
 			}
-			if ( count( $deletions ) ) {
-				$where[] = "$toField IN (" . $this->mDb->makeList( array_keys( $deletions ) ) . ')';
-			} else {
-				$where = false;
+			$deletionBatches = array_chunk( array_keys( $deletions ), $wgUpdateRowsPerQuery );
+			foreach ( $deletionBatches as $deletionBatch ) {
+				$deleteWheres[] = [ $fromField => $this->mId, $toField => $deletionBatch ];
 			}
 		}
-		if ( $where ) {
-			$this->mDb->delete( $table, $where, __METHOD__ );
+
+		foreach ( $deleteWheres as $deleteWhere ) {
+			$this->mDb->delete( $table, $deleteWhere, __METHOD__ );
+			wfWaitForSlaves();
 		}
-		if ( count( $insertions ) ) {
-			$this->mDb->insert( $table, $insertions, __METHOD__, 'IGNORE' );
+
+		$insertBatches = array_chunk( $insertions, $wgUpdateRowsPerQuery );
+		foreach ( $insertBatches as $insertBatch ) {
+			$this->mDb->insert( $table, $insertBatch, __METHOD__, 'IGNORE' );
+			wfWaitForSlaves();
 		}
 	}
 
