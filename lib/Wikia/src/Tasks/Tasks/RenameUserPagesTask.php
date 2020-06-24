@@ -1,6 +1,7 @@
 <?php
 namespace Wikia\Tasks\Tasks;
 
+use Exception;
 use Title;
 use User;
 use Wikia;
@@ -86,17 +87,26 @@ class RenameUserPagesTask extends BaseTask {
 					->inContentLanguage()
 					->text();
 
+			$this->info(
+				'UserRename: Moving page',
+				[
+					'namespace' => $title->getNsText(),
+					'old_title_db_key' => $title->getDBkey(),
+					'new_title_db_key' => $newTitle->getDBkey(),
+				]
+			);
 			$status = $title->moveTo( $newTitle, false, $editSummary, true, $robot );
 			if ( $status !== true ) {
 				$this->error(
 					'UserRename: Failed to move page',
 					[
 						'status' => $status,
+						'namespace' => $title->getNsText(),
 						'old_title_db_key' => $title->getDBkey(),
 						'new_title_db_key' => $newTitle->getDBkey(),
 					]
 				);
-				throw new \Exception( 'UserRename: Failed to move page' );
+				throw new Exception( 'UserRename: Failed to move page' );
 			}
 			$title->invalidateCache();
 		}
