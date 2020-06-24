@@ -56,13 +56,13 @@ class RenameUserPagesTask extends BaseTask {
 		$wgEnotifUserTalk = false;
 
 		$dbr = wfGetDB( DB_SLAVE );
-		$oldUserName = self::normalizeUserName( $oldUserName );
+		$normalizedOldUsername = self::normalizeUserName( $oldUserName );
 
-		$subPagesLikeQuery = $dbr->buildLike( "$oldUserName/", $dbr->anyString() );
+		$subPagesLikeQuery = $dbr->buildLike( "$normalizedOldUsername/", $dbr->anyString() );
 
 		$resultSet = $dbr->select( 'page', '*', [
 			'page_namespace' => static::NAMESPACES,
-			'page_title = '. $dbr->addQuotes( $oldUserName ) . " OR page_title $subPagesLikeQuery"
+			'page_title = '. $dbr->addQuotes( $normalizedOldUsername ) . " OR page_title $subPagesLikeQuery"
 		], __METHOD__ );
 
 		$robot = $GLOBALS['wgUser'] = User::newFromName( Wikia::BOT_USER );
@@ -70,7 +70,7 @@ class RenameUserPagesTask extends BaseTask {
 		foreach ( $resultSet as $row ) {
 			$title = Title::newFromRow( $row );
 
-			$newTitleText = preg_replace( "/$oldUserName/", $newUserName, $row->page_title );
+			$newTitleText = preg_replace( "/$normalizedOldUsername/", $newUserName, $row->page_title );
 			$newTitle = Title::makeTitleSafe( $row->page_namespace, $newTitleText );
 
 			$editSummary =
@@ -82,7 +82,72 @@ class RenameUserPagesTask extends BaseTask {
 			$title->invalidateCache();
 		}
 
+		global $wgEnableAbuseFilterExtension;
+		if ( $wgEnableAbuseFilterExtension ) {
+			$this->renameAbuseFilterMentions( $oldUserName, $newUserName );
+		}
+
+		$this->renameCheckUserMentions( $oldUserName, $newUserName );
+
 		$user = User::newFromName( $newUserName );
 		$user->deleteCache();
+	}
+
+	private function renameCheckUserMentions( string $oldUsername, string $newUsername ): void {
+		$this->changeUsernameReference(
+			'cu_log',
+			'cul_target_text',
+			$oldUsername,
+			$newUsername
+		);
+		$this->changeUsernameReference(
+			'cu_log',
+			'cul_user_text',
+			$oldUsername,
+			$newUsername
+		);
+		$this->changeUsernameReference(
+			'cu_changes',
+			'cuc_user_text',
+			$oldUsername,
+			$newUsername
+		);
+	}
+
+	private function renameAbuseFilterMentions( string $oldUsername, string $newUsername ): void {
+		$this->changeUsernameReference(
+			'abuse_filter',
+			'af_user_text',
+			$oldUsername,
+			$newUsername
+		);
+		$this->changeUsernameReference(
+			'abuse_filter_history',
+			'afh_user_text',
+			$oldUsername,
+			$newUsername
+		);
+		$this->changeUsernameReference(
+			'abuse_filter_log',
+			'afl_user_text',
+			$oldUsername,
+			$newUsername
+		);
+	}
+
+	private function changeUsernameReference(
+		string $table,
+		string $usernameColumn,
+		string $oldUsername,
+		string $newUsername
+	): void {
+		$dbw = wfGetDB( DB_MASTER );
+		if ( $dbw->fieldExists( $table, $usernameColumn ) ) {
+			$dbw->update(
+				$table,
+				[$usernameColumn => $newUsername],
+				[$usernameColumn => $oldUsername]
+			);
+		}
 	}
 }
