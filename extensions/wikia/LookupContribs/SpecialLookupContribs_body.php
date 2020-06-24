@@ -3,7 +3,6 @@
 class LookupContribsPage extends SpecialPage {
 	private $mTitle, $mUsername, $mMode, $mModeText, $mView, $mModes, $mViewModes, $mNSpace;
 	private $mUserPage, $mUserLink;
-	private $mCore;
 	/**
 	 * constructor
 	 */
@@ -120,29 +119,4 @@ class LookupContribsPage extends SpecialPage {
 		$wgOut->addHTML( $oTmpl->render( "mode-form" ) );
 	}
 
-	function getResults() {
-		global $wgOut;
-
-		/* no list when no user */
-		if ( empty( $this->mUsername ) ) {
-			return false ;
-		}
-
-		/* no list when user does not exist - may be a typo */
-		if ( $this->mCore->checkUser() === false ) {
-			$wgOut->addHTML( wfMessage( 'lookupcontribsinvaliduser', $this->mUsername )->parse() );
-			return false;
-		}
-
-		/* run a check against possible modes */
-		if ( !in_array( $this->mView, $this->mViewModes ) ) {
-			$wgOut->addHTML( wfMessage( 'lookupcontribsinvalidviewmode', $this->mView )->parse() );
-			return false;
-		}
-
-		if ( !in_array( $this->mMode, array_keys( $this->mModes ) ) ) {
-			$wgOut->addHTML( wfMessage( 'lookupcontribsinvalidmode', $this->mMode )->parse() );
-			return false;
-		}
-	}
 }
