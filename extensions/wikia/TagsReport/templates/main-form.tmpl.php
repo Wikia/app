@@ -1,5 +1,6 @@
 <!-- s:<?= __FILE__ ?> -->
 <!-- DISTRIBUTION TABLE -->
+<p>TESTTEST</p>
 <p class='error'><?=$error?></p>
 <form method="get" action="<?=$action?>">
 <div style="padding:3px"><?=wfMsgExt('tagsreportpagesfound', 'parsemag', (!is_array($tagList)) ? 0 : array_sum($tagList))?></div>
