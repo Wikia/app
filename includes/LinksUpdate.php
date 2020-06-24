@@ -490,15 +490,21 @@ class LinksUpdate {
 			}
 		}
 
+		$lb = wfGetLB();
+
 		foreach ( $deleteWheres as $deleteWhere ) {
 			$this->mDb->delete( $table, $deleteWhere, __METHOD__ );
-			wfWaitForSlaves();
+			$pos = $this->mDb->getMasterPos();
+
+			$lb->waitForAll( $pos, false );
 		}
 
 		$insertBatches = array_chunk( $insertions, $wgUpdateRowsPerQuery );
 		foreach ( $insertBatches as $insertBatch ) {
-			$this->mDb->insert( $table, $insertBatch, __METHOD__, 'IGNORE' );
-			wfWaitForSlaves();
+			$this->mDb->insert( $table, $insertBatch, __METHOD__, 'IGNORE' );;
+			$pos = $this->mDb->getMasterPos();
+
+			$lb->waitForAll( $pos, false );
 		}
 	}
 
