@@ -1,16 +1,20 @@
 <?php
 namespace Wikia\Tasks\Tasks;
 
+use Exception;
 use Title;
 use User;
 use Wikia;
+use Wikia\Logger\Loggable;
 
 class RenameUserPagesTask extends BaseTask {
+	use Loggable;
 	const NAMESPACES = [
 		2, // User
 		3, // User talk
 		500, // User blog
 		1200, // Message Wall
+		1201, // Message Wall replies
 		1202, // Message Wall Greeting
 	];
 
@@ -51,7 +55,12 @@ class RenameUserPagesTask extends BaseTask {
 	 */
 	public function renameLocalPages( string $oldUserName, string $newUserName ) {
 		// SUS-3835: suppress watchlist emails triggered by UserRenameTool page renames
-		global $wgEnotifWatchlist, $wgEnotifUserTalk;
+		global $wgEnotifWatchlist, $wgEnotifUserTalk, $wgCommandLineMode;
+		/**
+		 * Run rename as from command line to allow moving wall namespaces.
+		 * @see \WallHooksHelper::onNamespaceIsMovable()
+		 */
+		$wgCommandLineMode = true;
 		$wgEnotifWatchlist = false;
 		$wgEnotifUserTalk = false;
 
@@ -78,7 +87,27 @@ class RenameUserPagesTask extends BaseTask {
 					->inContentLanguage()
 					->text();
 
-			$title->moveTo( $newTitle, false, $editSummary, true, $robot );
+			$this->info(
+				'UserRename: Moving page',
+				[
+					'namespace' => $title->getNsText(),
+					'old_title_db_key' => $title->getDBkey(),
+					'new_title_db_key' => $newTitle->getDBkey(),
+				]
+			);
+			$status = $title->moveTo( $newTitle, false, $editSummary, true, $robot );
+			if ( $status !== true ) {
+				$this->error(
+					'UserRename: Failed to move page',
+					[
+						'status' => $status,
+						'namespace' => $title->getNsText(),
+						'old_title_db_key' => $title->getDBkey(),
+						'new_title_db_key' => $newTitle->getDBkey(),
+					]
+				);
+				throw new Exception( 'UserRename: Failed to move page' );
+			}
 			$title->invalidateCache();
 		}
 
