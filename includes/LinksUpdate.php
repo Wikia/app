@@ -490,21 +490,33 @@ class LinksUpdate {
 			}
 		}
 
+		// If this is a background task running in autocommit mode, wait for replication after each batch update
+		// to reduce the load on replica DBs when processing a large amount of updates from concurrent links refreshes.
+		// Do not wait for replication if DBO_TRX is set, as it's likely to be a user-facing web request wrapped in
+		// a transaction - in this scenario, prefer to skip the wait to preserve transactional integrity rather than
+		// prematurely committing the main transaction round.
+		$waitForReplication = !$this->mDb->getFlag( DBO_TRX );
 		$lb = wfGetLB();
 
 		foreach ( $deleteWheres as $deleteWhere ) {
 			$this->mDb->delete( $table, $deleteWhere, __METHOD__ );
-			$pos = $this->mDb->getMasterPos();
 
-			$lb->waitForAll( $pos, false );
+			if ( $waitForReplication ) {
+				$pos = $this->mDb->getMasterPos();
+
+				$lb->waitForAll($pos, false);
+			}
 		}
 
 		$insertBatches = array_chunk( $insertions, $wgUpdateRowsPerQuery );
 		foreach ( $insertBatches as $insertBatch ) {
 			$this->mDb->insert( $table, $insertBatch, __METHOD__, 'IGNORE' );;
-			$pos = $this->mDb->getMasterPos();
 
-			$lb->waitForAll( $pos, false );
+			if ( $waitForReplication ) {
+				$pos = $this->mDb->getMasterPos();
+
+				$lb->waitForAll($pos, false);
+			}
 		}
 	}
 
