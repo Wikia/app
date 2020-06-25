@@ -12,6 +12,8 @@ final class AnonymizeIpController extends WikiaController {
 	 * This should be executed in context of a wiki.
 	 */
 	public function anonymizeIp() {
+		// Set initial response code to 500. It will be overridden when request is successful
+		$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 		if ( !$this->request->wasPosted() ) {
 			$this->response->setCode( 405 );
@@ -26,5 +28,6 @@ final class AnonymizeIpController extends WikiaController {
 		}
 		$ipAnonymizer = new IpAnonymizer();
 		$ipAnonymizer->anonymizeIp( $ip );
+		$this->response->setCode( WikiaResponse::RESPONSE_CODE_OK );
 	}
 }
