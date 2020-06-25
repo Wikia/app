@@ -124,22 +124,27 @@ class BatchRefreshLinksForTemplate extends BaseTask {
 	): ParserOutput {
 		global $wgParser;
 
+		$title = $wikiPage->getTitle();
 		$parserOptions = $wikiPage->makeParserOptions( 'canonical' );
 		$parserCache = ParserCache::singleton();
 
 		// Page is too stale; re-parse it now.
 		if ( $wikiPage->getTouched() < $skewedTaskScheduledTime ) {
-			return $wgParser->parse( $revision->getText(), $this->title, $parserOptions, true, true, $revision->getId() );
+			return $wgParser->parse( $revision->getText(), $title, $parserOptions, true, true, $revision->getId() );
 		}
 
 		$parserOutput = $parserCache->getDirty( $wikiPage, $parserOptions );
 
 		// If a sufficiently recent parser output exists in the cache, we can re-use it and avoid an uncached parse.
-		if ( $parserOutput && $parserOutput->getCacheTime() >= $skewedTaskScheduledTime ) {
+		if (
+			$parserOutput &&
+			$parserOutput->getTimestamp() === $revision->getTimestamp() &&
+			$parserOutput->getCacheTime() >= $skewedTaskScheduledTime
+		) {
 			return $parserOutput;
 		}
 
 		// no cached parser output found or it is too stale; re-parse the text now
-		return $wgParser->parse( $revision->getText(), $this->title, $parserOptions, true, true, $revision->getId() );
+		return $wgParser->parse( $revision->getText(), $title, $parserOptions, true, true, $revision->getId() );
 	}
 }
