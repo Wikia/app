@@ -1,4 +1,6 @@
 import { Communicator, setupPostQuecast } from "@wikia/post-quecast";
+import { fromEventPattern } from "rxjs";
+import { shareReplay } from "rxjs/operators";
 
 class CommunicationService {
 	action$;
@@ -10,7 +12,10 @@ class CommunicationService {
 	constructor() {
 		setupPostQuecast();
 		this.communicator = new Communicator();
-		this.action$ = this.communicator.actions$;
+		this.action$ = fromEventPattern(
+			(handler) => this.communicator.addListener(handler),
+			(handler) => this.communicator.removeListener(handler),
+		).pipe(shareReplay({ refCount: true }));
 	}
 
 	dispatch(action) {

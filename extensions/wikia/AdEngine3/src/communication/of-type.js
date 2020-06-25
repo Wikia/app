@@ -1,3 +1,7 @@
-import { ofType as originalOfType } from '@wikia/post-quecast';
+import { filter } from 'rxjs/operators';
 
-export const ofType = originalOfType;
+export function ofType(...types) {
+	return (source) => {
+		return source.pipe(filter((action) => types.some((type) => action.type === type)));
+	};
+}
