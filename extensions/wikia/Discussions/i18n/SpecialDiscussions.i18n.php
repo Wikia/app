@@ -60,6 +60,8 @@ $messages['es'] = array(
 	'action-specialdiscussions' => 'Especial:Discusiones',
 	'right-specialdiscussions' => 'Allows access to Special:Discussions',
 	'before-forum-to-discussions-migration-message' => 'Atención: en las próximas semanas realizaremos la transición del contenido restante de los foros a Discusiones como parte del desmantelamiento de los foros. Esta transición irá acompañada de nuestra primera ronda de mejoras en Discusiones. <a href="https://comunidad.fandom.com/wiki/Usuario_Blog:CuBaN_VeRcEttI/Las_primeras_migraciones_hacia_la_Plataforma_Comunitaria_Unificada" target="_blank"> Haz clic aquí para obtener más información sobre estos cambios </a>.',
+	'in-progress-forum-to-discussions-migration-message' => 'Esta comunidad se está migrando actualmente de Especial:Foro a Discusiones. Durante la migración, Especial:Foro estará bloqueado, pero Discusiones estarán habilitadas. Una vez que se haya completado la migración, este mensaje desaparecerá, pero todo el contenido de los Foros será migrado a Discusiones y se podrá continuar la discusión allí.',
+	'after-forum-to-discussions-migration-message' => 'Esta comunidad se ha migrado de Especial:Foro a Discusiones como parte de nuestro plan anunciado para retirar nuestro antiguo sistema de Foros. Todo el contenido existente de Foros se ha trasladado a Discusiones.',
 );
 
 $messages['fr'] = array(
@@ -74,6 +76,8 @@ $messages['fr'] = array(
 	'action-specialdiscussions' => 'Spécial:Discussions',
 	'right-specialdiscussions' => 'Allows access to Special:Discussions',
 	'before-forum-to-discussions-migration-message' => 'Attention : dans le cadre du retrait de Forums, nous allons transférer le contenu restant de Forums à Discussions au cours des prochaines semaines. Cette transition sera accompagnée d\'un premier ensemble d\'améliorations apportées à Discussions. <a href="https://communaute.fandom.com/fr/wiki/Blog_utilisateur:Celdr%C3%B8n/Les_premi%C3%A8res_migrations_vers_la_Plateforme_Communautaire_Unifi%C3%A9e" target="_blank">Cliquez ici pour plus d\'informations sur ces changements</a>.',
+	'in-progress-forum-to-discussions-migration-message' => 'Cette communauté est en cours de migration depuis Special:Forum vers Discussions. Bien que Special:Forum soit verrouillé pendant la migration, Discussions est activé. Une fois la migration effectuée, ce message disparaîtra, et votre contenu qui existait sur Forums sera disponible dans Discussions. Vous pourrez alors poursuivre vos fils à cet endroit.',
+	'after-forum-to-discussions-migration-message' => "Cette communauté a fait l'objet d'une migration de Special:Forum vers Discussions dans le cadre du plan annoncé de retrait de l'ancien système Forums. Votre contenu qui existait sur Forums est désormais disponible dans Discussions.",
 );
 
 $messages['it'] = array(
@@ -104,6 +108,8 @@ $messages['ja'] = array(
 	'action-specialdiscussions' => '特別:ディスカッション',
 	'right-specialdiscussions' => '特別:ディスカッションへのアクセスを許可する',
 	'before-forum-to-discussions-migration-message' => '注意：フォーラム閉鎖の一環として、今後数週間のうちにフォーラムの残りのコンテンツをディスカッションに移行します。この移行と並行して、ディスカッションの改善の第一段階も行います。<a href="https://community.fandom.com/wiki/User_blog:MisterWoodhouse/The_first_migrations_to_the_Unified_Community_Platform" target="_blank">これらの変更に関する詳細は、こちらからご覧ください</a>。',
+	'in-progress-forum-to-discussions-migration-message' => 'このコミュニティは現在、Special:Forumからディスカッションへの移行が進められています。その間、Special:Forumはロックされていますが、ディスカッションは有効になっています。移行が完了したらこのメッセージは削除されますが、フォーラムの既存のコンテンツはすべてディスカッション機能に移動し、そちらでスレッドを継続できます。',
+	'after-forum-to-discussions-migration-message' => 'このコミュニティは、すでにお知らせした従来のフォーラム・システムの廃止計画の一環として、Special:Forumからディスカッションに移行されました。フォーラムの既存のコンテンツはすべて、ディスカッションに移動しました。',
 );
 
 $messages['nl'] = array(
@@ -179,6 +185,8 @@ $messages['zh-hans'] = array(
 	'action-specialdiscussions' => 'Special:讨论版',
 	'right-specialdiscussions' => 'Allows access to Special:Discussions',
 	'before-forum-to-discussions-migration-message' => '注意：在接下来的几周内，作为取消论坛功能工作的一部分，我们将会把论坛上余下的内容迁移到讨论版当中。迁移的同时，我们还将首次对讨论版功能进行强化。<a href="https://community.fandom.com/zh/wiki/%E7%94%A8%E6%88%B7%E5%8D%9A%E5%AE%A2:%E6%9C%BA%E6%99%BA%E7%9A%84%E5%B0%8F%E9%B1%BC%E5%90%9B/%E8%BF%81%E7%A7%BB%E5%88%B0%E7%BB%9F%E4%B8%80%E7%A4%BE%E5%8C%BA%E5%B9%B3%E5%8F%B0%E2%80%94%E2%80%94%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5" target="_blank">点击这里查看具体变化</a>。',
+	'in-progress-forum-to-discussions-migration-message' => '这个社区的论坛已被迁移至讨论版。在迁移过程中，论坛将被锁定，您可以继续使用讨论版发布内容。当迁移完成之后，所有发布在论坛上的内容将不复存在，但是您可以访问讨论版查看之前发布在论坛上的内容。',
+	'after-forum-to-discussions-migration-message' => '作为我们取消论坛系统工作的一部分，这个社区的论坛将被迁移至讨论版。所有论坛上当前的内容都将被迁移至讨论版。',
 );
 
 $messages['zh-hant'] = array(
@@ -193,5 +201,7 @@ $messages['zh-hant'] = array(
 	'action-specialdiscussions' => 'Special:討論版',
 	'right-specialdiscussions' => 'Allows access to Special:Discussions',
 	'before-forum-to-discussions-migration-message' => '提醒：在之後的幾週裡，作為取消論壇功能工作的一部分，我們將把論壇上剩餘的內容遷移到討論版當中。遷移的同時，我們還將首次對討論版功能進行升級。 <a href="https://community.fandom.com/zh/wiki/%E7%94%A8%E6%88%B7%E5%8D%9A%E5%AE%A2:%E6%9C%BA%E6%99%BA%E7%9A%84%E5%B0%8F%E9%B1%BC%E5%90%9B/%E8%BF%81%E7%A7%BB%E5%88%B0%E7%BB%9F%E4%B8%80%E7%A4%BE%E5%8C%BA%E5%B9%B3%E5%8F%B0%E2%80%94%E2%80%94%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5" target="_blank">按這裡瞭解詳細的變更事宜</a>。',
+	'in-progress-forum-to-discussions-migration-message' => '這個社區的論壇已被遷移至討論版。在遷移過程中，論壇將被鎖定，您可以繼續使用討論版發佈內容。在遷移完成之後，所有發佈在論壇上的內容將消失，但是您可以訪問討論版查找之前發佈在論壇上的內容。',
+	'after-forum-to-discussions-migration-message' => '作為我們取消論壇系統工作的一部分，這個社區的論壇將被遷移至討論版。所有論壇上已存在的內容都將被遷移至討論版。',
 );
 
