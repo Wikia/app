@@ -42,8 +42,10 @@ $messages['de'] = array(
 	'discussions-navigate' => 'Weiter zu Diskussionen',
 	'discussions-activate-error' => 'Die Diskussionen-Funktion wurde aufgrund eines Fehlers nicht aktiviert. Der Fehler wurde aufgezeichnet. Bitte versuche es später noch einmal.',
 	'action-specialdiscussions' => 'Spezial:Diskussionen',
-	'right-specialdiscussions' => 'Allows access to Special:Discussions',
+	'right-specialdiscussions' => 'Ermöglicht den Zugriff auf Spezial:Discussions',
 	'before-forum-to-discussions-migration-message' => 'Achtung: In den nächsten Wochen werden wir im Rahmen der Stilllegung der Foren die verbleibenden Inhalte von Foren auf Diskussionen umstellen. Während dieses Übergangsprozesses werden die ersten Verbesserungen an Diskussionen vorgenommen. <a href="https://community.fandom.com/de/wiki/Benutzer_Blog:SpacePucky/Erste_Wikis_ziehen_zur_neuen_Plattform_um" target="_blank">Hier findest du weitere Infos zu diesen Änderungen</a>.',
+	'in-progress-forum-to-discussions-migration-message' => 'In dieser Community wird aktuell das Forum zum Diskussions-Feature übertragen. Während der Migration ist Spezial:Forum gesperrt, das Diskussions-Feature kann wie gewohnt genutzt werden. Sobald die Migration abgeschlossen ist, wird diese Meldung ausgeblendet, eure bestehenden Foren-Inhalte findet ihr jedoch in den Diskussionen und ihr könnt dort eure Diskussionsfaden weiterführen.',
+	'after-forum-to-discussions-migration-message' => 'Im Zuge der von uns angekündigten Stilllegung des alten Forensystems wurden die Inhalte von Spezial:Forum zum Diskussions-Feature migriert.',
 );
 
 $messages['es'] = array(
@@ -86,6 +88,8 @@ $messages['it'] = array(
 	'action-specialdiscussions' => 'Speciale:Discussioni',
 	'right-specialdiscussions' => 'Allows access to Special:Discussions',
 	'before-forum-to-discussions-migration-message' => 'Attenzione: Nelle prossime settimane, trasferiremo i contenuti rimanenti dal Forum a Discussioni come parte del decommissionamento della funzione Forum. Questo trasferimento sarà accompagnato dalla prima serie di miglioramenti a Discussioni. <a href="https://community.fandom.com/it/wiki/Blog_utente:Cresh./La_prima_migrazione_alla_Piattaforma_Unificata_della_Community" target="_blank">Clicca qui per maggiori informazioni su quei miglioramenti</a>.',
+	'in-progress-forum-to-discussions-migration-message' => 'Questa comunità sta procedendo alla migrazione da Speciale:Forum a Discussioni. Durante la migrazione, Speciale:Forum sarà bloccato, ma Discussioni sarà attiva. Una volta che la migrazione sarà completata, questo messaggio scomparirà, ma tutti i contenuti del Forum potranno essere trovati sulla funzione Discussioni e si potranno continuare le discussioni là.',
+	'after-forum-to-discussions-migration-message' => 'Questa comunità ha completato la migrazione da Speciale:Forum a Discussioni come parte del piano già annunciato di ritirare la nostra vecchia funzione Forum. Tutti i contenuti del Forum sono stati spostati in Discussioni.',
 );
 
 $messages['ja'] = array(
@@ -125,8 +129,10 @@ $messages['pl'] = array(
 	'discussions-navigate' => 'Przejdź do Dyskusji',
 	'discussions-activate-error' => 'Wystąpił błąd przy aktywowaniu funkcji Dyskusje. Błąd został zapisany. Spróbuj ponownie później.',
 	'action-specialdiscussions' => 'Specjalna:Dyskusje',
-	'right-specialdiscussions' => 'Allows access to Special:Discussions',
+	'right-specialdiscussions' => 'Umożliwia dostęp do Specjalna:Discussions',
 	'before-forum-to-discussions-migration-message' => 'Uwaga: W ciągu najbliższych tygodni przeniesiemy pozostałą treść z Forum na Dyskusje w ramach likwidacji Forum. Przejściu temu będzie towarzyszyć nasza pierwsza runda usprawnień dla Dyskusji. <a href="https://spolecznosc.fandom.com/wiki/Blog_u%C5%BCytkownika:Rail01/Pierwsze_migracje_do_Unified_Community_Platform" target="_blank">Kliknij tutaj, aby uzyskać więcej informacji na temat tych zmian</a>.',
+	'in-progress-forum-to-discussions-migration-message' => 'Ta społeczność jest obecnie w trakcie przenoszenia Specjalna:Forum do Dyskusji. Podczas przenoszenia Specjalna:Forum jest zablokowana, jednak Dyskusje pozostają włączone. Po zakończeniu przenoszenia ta wiadomość zniknie, a cała istniejąca zawartość Forum zostanie umieszczona w Dyskusjach, w których będzie można kontynuować wątki.',
+	'after-forum-to-discussions-migration-message' => 'Ta społeczność została przeniesiona ze Specjalna:Forum do Dyskusji w ramach ogłoszonego wcześniej planu wycofania starego systemu Forum. Cała istniejąca zawartość Forum została przeniesiona do Dyskusji.',
 );
 
 $messages['pt'] = array(
@@ -139,8 +145,10 @@ $messages['pt'] = array(
 	'discussions-navigate' => 'Vá para Discussões',
 	'discussions-activate-error' => 'A função Discussões não foi ativada por causa de um erro. O erro foi registrado. Por favor, tente novamente mais tarde.',
 	'action-specialdiscussions' => 'Especial:Discussões',
-	'right-specialdiscussions' => 'Allows access to Special:Discussions',
-	'before-forum-to-discussions-migration-message' => 'Atenção: nas próximas semanas estaremos fazendo a transição do conteúdo restante dos Fóruns para Discussões, como parte da desativação dos Fóruns. Esta transição será acompanhada pela primeira etapa de melhorias de Discussões.. <a href="https://comunidade.fandom.com/wiki/Blog_de_usu%C3%A1rio:Eduaddad/As_primeiras_migra%C3%A7%C3%B5es_para_a_Plataforma_da_Comunidade_Unificada" target="_blank">Clique aqui para saver mais sobre essas mudanças</a>.',
+	'right-specialdiscussions' => 'Permitir acesso ao Especial:Discussões',
+	'before-forum-to-discussions-migration-message' => 'Atenção: nas próximas semanas estaremos fazendo a transição do conteúdo restante dos Fóruns para Discussões, como parte da desativação dos Fóruns. Esta transição será acompanhada pela primeira etapa de melhorias de Discussões.. <a > https://community.fandom.com/wiki/User_blog:MisterWoodhouse/The_first_migrations_to_the_Unified_Community_Platform" target=_blank">Clique aqui para saber mais sobre essas mudanças</a>.',
+	'in-progress-forum-to-discussions-migration-message' => 'Esta comunidade está sendo migrada de Especial:Fórum para Discussões. Durante esta migração, o Especial:Fórum estará desabilitado mas Discussões permanece habilitada. Quando a migração for completada, esta mensagem desaparecerá, e todo o conteúdo dos fóruns existentes estarão em Discussões para que você possa continuar seus tópicos.',
+	'after-forum-to-discussions-migration-message' => 'Esta comunidade migrou de Especial:Fórum para Discussões como parte do plano de aposentar o sistema de fóruns antigo. Todo o conteúdo dos Fóruns foi transferido para Discussões.',
 );
 
 $messages['ru'] = array(
@@ -153,8 +161,10 @@ $messages['ru'] = array(
 	'discussions-navigate' => 'Перейти к Обсуждениям',
 	'discussions-activate-error' => 'Не удалось подключить Обсуждения вследствие ошибки. Ошибка была записана. Пожалуйста, повторите попытку позже.',
 	'action-specialdiscussions' => 'Служебная:Discussions',
-	'right-specialdiscussions' => 'Allows access to Special:Discussions',
-	'before-forum-to-discussions-migration-message' => 'Внимание: в течение нескольких недель в рамках отключения Форумов мы будем переносить оставшийся контент с Форумов в Обсуждения. Вместе с переносом мы также добавим первые обновления для Обсуждений. <a href="https://community.fandom.com/ru/wiki/%D0%91%D0%BB%D0%BE%D0%B3_%D1%83%D1%87%D0%B0%D1%81%D1%82%D0%BD%D0%B8%D0%BA%D0%B0:Kuzura/%D0%9D%D0%B0%D1%87%D0%B8%D0%BD%D0%B0%D0%B5%D0%BC_%D0%BF%D0%B5%D1%80%D0%B5%D0%BD%D0%BE%D1%81_%D1%82%D0%B5%D0%BA%D1%83%D1%89%D0%B8%D1%85_%D0%B2%D0%B8%D0%BA%D0%B8%D0%BF%D1%80%D0%BE%D0%B5%D0%BA%D1%82%D0%BE%D0%B2_%D0%BD%D0%B0_%D0%BD%D0%BE%D0%B2%D1%83%D1%8E_%D0%B5%D0%B4%D0%B8%D0%BD%D1%83%D1%8E_%D0%BF%D0%BB%D0%B0%D1%82%D1%84%D0%BE%D1%80%D0%BC%D1%83" target="_blank">Чтобы узнать подробнее об изменениях, нажмите здесь</a>.',
+	'right-specialdiscussions' => 'Доступ к Служебная:Discussions',
+	'before-forum-to-discussions-migration-message' => 'Внимание: в течение следующих недель в связи с отключением Форумов мы будем переносить контент с Форумов в Обсуждения. Вместе с переносом мы также добавим первые обновления для Обсуждений. <a href="https://community.fandom.com/ru/wiki/Блог_участника:Kuzura/Начинаем_перенос_текущих_википроектов_на_новую_единую_платформу" target="_blank">Подробнее об изменениях см. здесь</a>.',
+	'in-progress-forum-to-discussions-migration-message' => 'В настоящий момент мы переносим контент Форума в Обсуждения. Во время переноса страница Служебная:Форум будет заблокирована, однако Обсуждения продолжат работать. Когда мы завершим перенос, данное сообщение исчезнет, а всё содержимое Форума появится в Обсуждениях, где вы сможете продолжить общение.',
+	'after-forum-to-discussions-migration-message' => 'Весь контент из Форума была перенесён в Обсуждения в рамках запланированного отключения форума. Всё содержимое Форума теперь доступно в Обсуждениях.',
 );
 
 $messages['zh-hans'] = array(
