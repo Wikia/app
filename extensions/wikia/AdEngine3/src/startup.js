@@ -13,6 +13,7 @@ import {
 	eventService,
 	facebookPixel,
 	iasPublisherOptimization,
+	identityLibrary,
 	InstantConfigCacheStorage,
 	JWPlayerManager,
 	likhoService,
@@ -111,6 +112,7 @@ function startAdEngine(inhibitors) {
 			ofType('[AdEngine] Identity library loaded')
 		).subscribe((props) => {
 			pageTracker.trackProp('identity_library_load_time', props.loadTime.toString());
+			pageTracker.trackProp('identity_library_ids', identityLibrary.getUids());
 		});
 	}
 }
