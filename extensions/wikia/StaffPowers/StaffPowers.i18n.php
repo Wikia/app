@@ -27,8 +27,8 @@ $messages['cs'] = array(
 
 $messages['de'] = array(
 	'staffpowers-desc' => 'Gibt Mitarbeitern verschiedene Superkräfte wie unsperrbar.',
-	'staffpowers-ipblock-abort' => 'Es ist nicht möglich, FANDOM-Mitarbeiter, FANDOM-Helfer oder Mitglieder unseres Benutzerteams der Volunteer Spam Task Force (VSTF) zu sperren. Bitte verwende das [[Spezial:Kontakt|Kontaktformular]], um Probleme zu melden, die du mit unseren Mitarbeitern hast.',
-	'right-unblockable' => 'Cannot be blocked',
+	'staffpowers-ipblock-abort' => 'Es ist nicht möglich, Fandom-Mitarbeiter, Fandom-Helfer oder Mitglieder unseres Benutzerteams der Volunteer Spam Task Force (VSTF) zu sperren. Bitte verwende das [[Spezial:Kontakt|Kontaktformular]], um Probleme zu melden, die du mit unseren Mitarbeitern hast.',
+	'right-unblockable' => 'Kann nicht gesperrt werden',
 );
 
 $messages['es'] = array(

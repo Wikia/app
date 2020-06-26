@@ -38,11 +38,12 @@ class LookupContribsAjax {
 			return json_encode( $result );
 		}
 
-		$oLC = new LookupContribsCore( $username );
-		if ( !$oLC->checkUser() ) {
+		$user = User::newFromName( $username );
+		if ( !$user instanceof User || $user->isAnon() ) {
 			return json_encode( $result );
 		}
 
+		$oLC = new LookupContribsCore( $user );
 		if ( empty( $mode ) ) {
 			$oLC->setLimit( $limit );
 			$oLC->setOffset( $offset );
@@ -79,7 +80,7 @@ class LookupContribsAjax {
 				if ( isset( $data['data'] ) ) {
 					$loop = 1;
 					foreach ( $data['data'] as $id => $row ) {
-						list ( $link, $diff, $hist, $contrib, $edit, $removed ) = array_values( $oLC->produceLine( $row ) );
+						[ $link, $diff, $hist, $contrib, $edit, $removed ] = array_values( $oLC->produceLine( $row ) );
 						$rows[] = [
 							$loop + $offset, // id
 							$link, // title

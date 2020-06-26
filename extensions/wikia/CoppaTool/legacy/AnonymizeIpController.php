@@ -2,21 +2,16 @@
 
 declare( strict_types=1 );
 
-use Wikia\Logger\Loggable;
-use Wikia\Tasks\Tasks\RenameUserPagesTask;
-
-final class RenameUserController extends WikiaController {
-	use Loggable;
-
+final class AnonymizeIpController extends WikiaController {
 	public function allowsExternalRequests() {
 		return false;
 	}
 
 	/**
-	 * Introduced for UCP. This method will be triggered by UCP to rename all necessary pages after an account rename.
+	 * Introduced for UCP. This method will be triggered by UCP to anonymize IP.
 	 * This should be executed in context of a wiki.
 	 */
-	public function renameUserLocally() {
+	public function anonymizeIp() {
 		// Set initial response code to 500. It will be overridden when request is successful
 		$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
@@ -25,16 +20,14 @@ final class RenameUserController extends WikiaController {
 
 			return;
 		}
-		$newUsername = $this->getVal( 'newUsername' );
-		$oldUsername = $this->getVal( 'oldUsername' );
-		if ( empty( $newUsername ) || empty( $oldUsername ) ) {
+		$ip = $this->getVal( 'ip' );
+		if ( empty( $ip ) ) {
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
 
 			return;
 		}
-
-		$task = new RenameUserPagesTask();
-		$task->renameLocalPages( $oldUsername, $newUsername );
+		$ipAnonymizer = new IpAnonymizer();
+		$ipAnonymizer->anonymizeIp( $ip );
 		$this->response->setCode( WikiaResponse::RESPONSE_CODE_OK );
 	}
 }

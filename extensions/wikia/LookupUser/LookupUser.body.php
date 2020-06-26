@@ -16,6 +16,16 @@ class LookupUserPage extends SpecialPage {
 		parent::__construct( 'LookupUser'/*class*/, 'lookupuser'/*restriction*/ );
 	}
 
+	/**
+	 * @param string $userName
+	 * @param int $wikiId
+	 * @return string
+	 */
+	private static function getLookupUserNameKey( string $userName, int $wikiId ): string {
+		$cacheKeys = new UserNameCacheKeys( $userName );
+		return $cacheKeys->forLookupUser( $wikiId );
+	}
+
 	function getDescription() {
 		return wfMessage( 'lookupuser' )->text();
 	}
@@ -311,21 +321,6 @@ EOT
 	}
 
 	/**
-	 * @brief: Returns memc key
-	 *
-	 * @param string $userName name of a use
-	 * @param integer $wikiId id of a wiki
-	 *
-	 * @author Andrzej 'nAndy' Łukaszewski
-	 *
-	 * @return string
-	 */
-	public static function getUserLookupMemcKey( $userName, $wikiId ) {
-		$cacheKeys = new UserNameCacheKeys( $userName );
-		return $cacheKeys->forLookupUser( $wikiId );
-	}
-
-	/**
 	 * @brief: Returns data for jQuery.table plugin used by ajax call LookupContribsAjax::axData()
 	 *
 	 * @param string $userName name of a use
@@ -342,7 +337,7 @@ EOT
 
 		global $wgMemc, $wgStylePath;
 
-		$cachedData = $wgMemc->get( self::getUserLookupMemcKey( $userName, $wikiId ) );
+		$cachedData = $wgMemc->get( self::getLookupUserNameKey( $userName, $wikiId ) );
 		if ( !empty( $cachedData ) ) {
 			if ( $checkingBlocks === false ) {
 				if ( $cachedData['groups'] === false ) {
@@ -391,7 +386,8 @@ EOT
 
 		$apiUrl = $wiki->city_url . 'api.php?action=query&list=users&ususers=' . urlencode( $userName ) . '&usprop=localblockinfo|groups|editcount&format=json';
 
-		$cachedData = $wgMemc->get( self::getUserLookupMemcKey( $userName, $wikiId ) );
+		$cacheKey = self::getLookupUserNameKey( $userName, $wikiId );
+		$cachedData = $wgMemc->get( $cacheKey );
 		if ( !empty( $cachedData ) ) {
 			$result = array( 'success' => true, 'data' => $cachedData );
 		} else {
@@ -420,7 +416,7 @@ EOT
 					}
 
 					$result = array( 'success' => true, 'data' => $userData );
-					$wgMemc->set( self::getUserLookupMemcKey( $userName, $wikiId ), $userData, 3600 ); // 1h
+					$wgMemc->set( $cacheKey, $userData, 3600 ); // 1h
 				} else {
 					$result = array( 'success' => false );
 				}

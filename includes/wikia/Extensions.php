@@ -1393,8 +1393,8 @@ $wgFileBackends['gcs-backend'] = [
 
 // SER-3444 always use GCS
 $wgEnabledFileBackend = 'gcs-backend';
-
-
+// This is required to be able run CoppaTool tasks on all wikis
+include( "{$IP}/extensions/wikia/CoppaTool/legacy/CoppaToolLegacyTasks.setup.php" );
 if ( !empty( $wgEnableCoppaToolExt ) ) {
 	include( "{$IP}/extensions/wikia/CoppaTool/CoppaTool.setup.php" );
 }

@@ -16,8 +16,10 @@ class LookupContribsHooks {
 	 * @return bool
 	 */
 	static public function ArticleSaveComplete ( $article, User $user ) {
-		$lc = new LookupContribsCore( $user->getName() );
-		$lc->clearUserActivityCache();
+		if ( $user->isLoggedIn() ) {
+			$lc = new LookupContribsCore( $user );
+			$lc->clearUserActivityCache();
+		}
 
 		return true;
 	}
