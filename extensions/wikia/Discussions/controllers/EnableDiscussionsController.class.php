@@ -79,7 +79,8 @@ class EnableDiscussionsController extends \WikiaController {
 		$value = $this->request->getBool( 'value', true );
 
 		$successBool = WikiFactory::setVarByName( 'wgEnablePostForumMigrationMessage', $cityId, $value );
-		$successTimestamp = WikiFactory::setVarByName( 'wgPostForumMigrationMessageExpiration', $cityId, time() );
+		// keep the message displayed for 7 days
+		$successTimestamp = WikiFactory::setVarByName( 'wgPostForumMigrationMessageExpiration', $cityId, time() + 60 * 60 * 24 * 7 );
 
 		if ( $successBool && $successTimestamp ) {
 			$this->response->setCode( 200 );
