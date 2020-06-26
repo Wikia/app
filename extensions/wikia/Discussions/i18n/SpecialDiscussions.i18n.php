@@ -74,7 +74,7 @@ $messages['fr'] = array(
 	'discussions-navigate' => 'Accéder aux discussions',
 	'discussions-activate-error' => "Une erreur s'est produite lors de l'activation de la fonctionnalité Discussions. L'erreur a été enregistrée. Veuillez réessayer ultérieurement.",
 	'action-specialdiscussions' => 'Spécial:Discussions',
-	'right-specialdiscussions' => 'Allows access to Special:Discussions',
+	'right-specialdiscussions' => "Autorise l'accès à Spécial:Discussions",
 	'before-forum-to-discussions-migration-message' => 'Attention : dans le cadre du retrait de Forums, nous allons transférer le contenu restant de Forums à Discussions au cours des prochaines semaines. Cette transition sera accompagnée d\'un premier ensemble d\'améliorations apportées à Discussions. <a href="https://communaute.fandom.com/fr/wiki/Blog_utilisateur:Celdr%C3%B8n/Les_premi%C3%A8res_migrations_vers_la_Plateforme_Communautaire_Unifi%C3%A9e" target="_blank">Cliquez ici pour plus d\'informations sur ces changements</a>.',
 	'in-progress-forum-to-discussions-migration-message' => 'Cette communauté est en cours de migration depuis Special:Forum vers Discussions. Bien que Special:Forum soit verrouillé pendant la migration, Discussions est activé. Une fois la migration effectuée, ce message disparaîtra, et votre contenu qui existait sur Forums sera disponible dans Discussions. Vous pourrez alors poursuivre vos fils à cet endroit.',
 	'after-forum-to-discussions-migration-message' => "Cette communauté a fait l'objet d'une migration de Special:Forum vers Discussions dans le cadre du plan annoncé de retrait de l'ancien système Forums. Votre contenu qui existait sur Forums est désormais disponible dans Discussions.",
