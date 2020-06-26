@@ -101,6 +101,10 @@ async function setupAdContext(wikiContext, consents) {
 		'templates.safeFanTakeoverElement.lineItemIds',
 		instantConfig.get('icSafeFanTakeoverLineItemIds'),
 	);
+	context.set(
+		'templates.safeFanTakeoverElement.unstickTimeout',
+		instantConfig.get('icSafeFanTakeoverUnstickTimeout'),
+	);
 
 	context.set('state.deviceType', utils.client.getDeviceType());
 
@@ -154,6 +158,7 @@ async function setupAdContext(wikiContext, consents) {
 
 	context.set('services.confiant.enabled', instantConfig.get('icConfiant'));
 	context.set('services.durationMedia.enabled', instantConfig.get('icDurationMedia'));
+	context.set('services.distroScale.enabled', instantConfig.get('icDistroScale'));
 	context.set('services.facebookPixel.enabled', instantConfig.get('icFacebookPixel'));
 	context.set('services.nielsen.enabled', instantConfig.get('icNielsen'));
 	context.set('services.permutive.enabled', instantConfig.get('icPermutive') && !context.get('wiki.targeting.directedAtChildren'));

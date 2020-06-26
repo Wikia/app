@@ -607,7 +607,9 @@
                 "5353864975",
                 "5366503822",
                 "5387091760",
-                "5367643428"
+                "5367643428",
+                "5398858722",
+                "5398858302"
             ]
         }
     ],
@@ -882,6 +884,7 @@
                 "NL"
             ],
             "sampling": 50.0,
+            "samplingCache": true,
             "value": true
         }
     ],
@@ -1020,6 +1023,26 @@
                 "mobile-wiki",
                 "oasis"
             ]
+        }
+    ],
+    "icDistroScale": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "value": false
+        }
+    ],
+    "icFloorAdhesionDelay": [
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "value": 30000
         }
     ],
     "icBabDetection": [

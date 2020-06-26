@@ -438,23 +438,43 @@ class LinksUpdate {
 	 * @param $insertions
 	 */
 	function incrTableUpdate( $table, $prefix, $deletions, $insertions ) {
+		global $wgUpdateRowsPerQuery;
+
 		if ( $table == 'page_props' ) {
 			$fromField = 'pp_page';
 		} else {
 			$fromField = "{$prefix}_from";
 		}
-		$where = array( $fromField => $this->mId );
+		$deleteWheres = [];
 		if ( $table == 'pagelinks' || $table == 'templatelinks' || $table == 'iwlinks' ) {
 			if ( $table == 'iwlinks' ) {
 				$baseKey = 'iwl_prefix';
 			} else {
 				$baseKey = "{$prefix}_namespace";
 			}
-			$clause = $this->mDb->makeWhereFrom2d( $deletions, $baseKey, "{$prefix}_title" );
-			if ( $clause ) {
-				$where[] = $clause;
-			} else {
-				$where = false;
+
+			$curBatchSize = 0;
+			$curDeletionBatch = [];
+			$deletionBatches = [];
+			foreach ( $deletions as $ns => $dbKeys ) {
+				foreach ( $dbKeys as $dbKey => $unused ) {
+					$curDeletionBatch[$ns][$dbKey] = 1;
+					if ( ++$curBatchSize >= $wgUpdateRowsPerQuery ) {
+						$deletionBatches[] = $curDeletionBatch;
+						$curDeletionBatch = [];
+						$curBatchSize = 0;
+					}
+				}
+			}
+			if ( $curDeletionBatch ) {
+				$deletionBatches[] = $curDeletionBatch;
+			}
+
+			foreach ( $deletionBatches as $deletionBatch ) {
+				$deleteWheres[] = [
+					$fromField => $this->mId,
+					$this->mDb->makeWhereFrom2d( $deletionBatch, $baseKey, "{$prefix}_title" )
+				];
 			}
 		} else {
 			if ( $table == 'langlinks' ) {
@@ -464,17 +484,39 @@ class LinksUpdate {
 			} else {
 				$toField = $prefix . '_to';
 			}
-			if ( count( $deletions ) ) {
-				$where[] = "$toField IN (" . $this->mDb->makeList( array_keys( $deletions ) ) . ')';
-			} else {
-				$where = false;
+			$deletionBatches = array_chunk( array_keys( $deletions ), $wgUpdateRowsPerQuery );
+			foreach ( $deletionBatches as $deletionBatch ) {
+				$deleteWheres[] = [ $fromField => $this->mId, $toField => $deletionBatch ];
 			}
 		}
-		if ( $where ) {
-			$this->mDb->delete( $table, $where, __METHOD__ );
+
+		// If this is a background task running in autocommit mode, wait for replication after each batch update
+		// to reduce the load on replica DBs when processing a large amount of updates from concurrent links refreshes.
+		// Do not wait for replication if DBO_TRX is set, as it's likely to be a user-facing web request wrapped in
+		// a transaction - in this scenario, prefer to skip the wait to preserve transactional integrity rather than
+		// prematurely committing the main transaction round.
+		$waitForReplication = !$this->mDb->getFlag( DBO_TRX );
+		$lb = wfGetLB();
+
+		foreach ( $deleteWheres as $deleteWhere ) {
+			$this->mDb->delete( $table, $deleteWhere, __METHOD__ );
+
+			if ( $waitForReplication ) {
+				$pos = $this->mDb->getMasterPos();
+
+				$lb->waitForAll($pos, false);
+			}
 		}
-		if ( count( $insertions ) ) {
-			$this->mDb->insert( $table, $insertions, __METHOD__, 'IGNORE' );
+
+		$insertBatches = array_chunk( $insertions, $wgUpdateRowsPerQuery );
+		foreach ( $insertBatches as $insertBatch ) {
+			$this->mDb->insert( $table, $insertBatch, __METHOD__, 'IGNORE' );;
+
+			if ( $waitForReplication ) {
+				$pos = $this->mDb->getMasterPos();
+
+				$lb->waitForAll($pos, false);
+			}
 		}
 	}
 

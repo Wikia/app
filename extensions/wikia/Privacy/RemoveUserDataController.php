@@ -150,6 +150,8 @@ class RemoveUserDataController extends WikiaController {
 	 * Helper method to remove local user data from the current wiki
 	 */
 	public function removeLocalUserData() {
+		// Set initial response code to 500. It will be overridden when request is successful
+		$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 
 		if( !$this->request->wasPosted() ) {
@@ -185,7 +187,6 @@ class RemoveUserDataController extends WikiaController {
 
 		if ( !$dataWasRemoved ) {
 			$this->error( "User's local data was not removed correctly", $marker );
-			$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
 		}
 
 		$this->info( "Deleting user cache", $marker );
@@ -196,6 +197,7 @@ class RemoveUserDataController extends WikiaController {
 		}
 
 		$this->info( "User's local data was removed", $marker );
+		$this->response->setCode( WikiaResponse::RESPONSE_CODE_OK );
 	}
 
 	private function getUserWikis( int $userId ) {
