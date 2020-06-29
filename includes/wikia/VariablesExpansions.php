@@ -163,22 +163,6 @@ $wgCookieDomain = ".$wgWikiaBaseDomain";
 $wgCorporatePageRedirectWiki = "https://community.$wgFandomBaseDomain/wiki/";
 
 /**
- * Settings for incoming cross-site AJAX requests. Newer browsers support
- * cross-site AJAX when the target resource allows requests from the origin
- * domain by the Access-Control-Allow-Origin header. $wgCrossSiteAJAXdomains can
- * be set using a wildcard syntax where '*' matches any number of characters and
- * '?' matches any 1 character.
- * @example  $wgCrossSiteAJAXdomains = [ 'www.wikia.com', '*.wikia.com' ];
- * @see PLATFORM-1719
- * @see wfHandleCrossSiteAJAXdomain()
- * @var string $wgCrossSiteAJAXdomains
- */
-$wgCrossSiteAJAXdomains = [
-	"internal-vstf.$wgWikiaBaseDomain",
-	"internal-vstf.$wgFandomBaseDomain",
-];
-
-/**
  * The datacenter that hosts the starter dumps for CreateNewWiki
  * @see \Wikia\CreateNewWiki\Starters
  * @var string $wgCreateWikiStarterDumpsDatacenter
