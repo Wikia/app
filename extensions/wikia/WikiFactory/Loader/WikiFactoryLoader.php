@@ -723,9 +723,9 @@ class WikiFactoryLoader {
 				[ "city_dbname" => $this->mVariables[ 'wgSharedUploadDBname' ] ]
 			);
 
-
 			if ( !empty( $partnerWikiData ) && WikiFactory::isUCPWiki( $partnerWikiData->city_id ) ) {
 				unset( $this->mVariables[ 'wgSharedUploadDBname' ] );
+				unset( $this->mVariables[ 'wgUseSharedUploads' ] );
 
 				$this->mVariables['wgForeignFileRepos'][] = [
 					'name' => 'sharedUploadHack',
@@ -734,6 +734,7 @@ class WikiFactoryLoader {
 					'hashLevels' => 2,
 					'apiThumbCacheExpiry' => 0
 				];
+
 			}
 
 		}
