@@ -1,6 +1,7 @@
 <?php
 
 use Wikia\FeedsAndPosts\ArticleData;
+use Wikia\FeedsAndPosts\ArticleTags;
 use Wikia\FeedsAndPosts\RecentChanges;
 use Wikia\FeedsAndPosts\ThemeSettings;
 use Wikia\FeedsAndPosts\TopArticles;
@@ -51,6 +52,8 @@ class FeedsAndPostsController extends WikiaApiController {
 			return;
 		}
 
+		$popularTags = (new ArticleTags())->getPopularTags();
+
 		if ( $title->exists() ) {
 			$images = ArticleData::getImages( $title->getArticleID() );
 
@@ -61,6 +64,7 @@ class FeedsAndPostsController extends WikiaApiController {
 				'content_images' => count( $images ) > 1 ? array_slice( $images, 1 ) : [],
 				'snippet' => ArticleData::getTextSnippet( $title ),
 				'relativeUrl' => $title->getLocalURL(),
+				'popularTags' => $popularTags
 			] );
 
 			return;
@@ -73,6 +77,24 @@ class FeedsAndPostsController extends WikiaApiController {
 			'content_images' => [],
 			'snippet' => null,
 			'relativeUrl' => $title->getLocalURL(),
+			'popularTags' => $popularTags
 		]);
+	}
+
+	public function getPopularTags() {
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_STANDARD );
+		$this->response->setVal( 'tags', ( new ArticleTags() )->getPopularTags() );
+	}
+
+	public function searchForTags() {
+		$query = $this->request->getVal( 'query', '' );
+		if ( strlen( $query ) < 3 ) {
+			throw new BadRequestException( 'query param query query must be at least 3 characters' );
+		}
+
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		$this->response->setCacheValidity( WikiaResponse::CACHE_LONG );
+		$this->response->setVal( 'tags', ( new ArticleTags() )->searchTags( $query ) );
 	}
 }
