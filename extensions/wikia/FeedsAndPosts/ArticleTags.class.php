@@ -10,6 +10,8 @@ use Title;
 use WebRequest;
 
 class ArticleTags {
+	const SEARCH_TAGS_LIMIT = 6;
+
 	public function getPopularTags() {
 		global $wgCityId;
 
@@ -53,6 +55,7 @@ class ArticleTags {
 		$request = new WebRequest();
 		$request->setVal( 'format', 'array' );
 		$request->setVal( 'query', $query );
+		$request->setVal( 'limit', 20 );
 
 		$linkSuggestions = LinkSuggest::getLinkSuggest( $request );
 
@@ -64,6 +67,10 @@ class ArticleTags {
 
 		$tags = [];
 		foreach ( $titles as $title ) {
+			if ( $title->isRedirect() ) {
+				continue;
+			}
+
 			$tags[$title->getArticleID()] = [
 				'siteId' => (string)$wgCityId,
 				'articleId' => (string)$title->getArticleID(),
@@ -75,6 +82,10 @@ class ArticleTags {
 		// return items in the order from LinkSuggest
 		$tagsSorted = [];
 		foreach ( array_keys( $linkSuggestions ) as $id ) {
+			if ( count( $tagsSorted ) >= self::SEARCH_TAGS_LIMIT ) {
+				break;
+			}
+
 			if ( array_key_exists( $id, $tags ) ) {
 				$tagsSorted[] = $tags[$id];
 			}
