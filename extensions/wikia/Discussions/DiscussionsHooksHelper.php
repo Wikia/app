@@ -98,7 +98,7 @@ class DiscussionsHooksHelper {
 			WikiFactory::getVarValueByName( 'wgEnableForumMigrationMessageGlobal', WikiFactory::COMMUNITY_CENTRAL )
 				?: $wgEnableForumMigrationMessageGlobal;
 
-		if ( $enabledGlobally ) {
+		if ( $showInProgressForumMigrationMessage || $showAfterForumMigrationMessage || $enabledGlobally ) {
 			$forumMigrationMessageToDisplay = '';
 
 			if ( $showBeforeForumMigrationMessage ) {
