@@ -730,7 +730,7 @@ class WikiFactoryLoader {
 				$this->mVariables['wgForeignFileRepos'][] = [
 					'name' => 'sharedUploadHack',
 					'class' => 'ForeignAPIRepo',
-					'apibase' => $partnerWikiData->city_url . 'api.php',
+					'apibase' => WikiFactory::getLocalEnvURL( $partnerWikiData->city_url ) . 'api.php',
 					'hashLevels' => 2,
 					'apiThumbCacheExpiry' => 0
 				];
