@@ -635,6 +635,17 @@
             ]
         }
     ],
+    "icTaxonomyAdTags": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "regions": [
+                "XX-EU"
+            ],
+            "value": true
+        }
+    ],
     "icA9VideoBidsCleaning": [
         {
             "apps": [
