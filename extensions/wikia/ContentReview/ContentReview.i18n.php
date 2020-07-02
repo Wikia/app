@@ -155,10 +155,10 @@ Die kürzlich eingereichte Änderung dieser JavaScript-Seite (Überprüfung [$2 
 	'content-review-module-header-actions' => 'Aktionen',
 	'content-review-module-jspages' => 'Alle JavaScript-Seiten',
 	'content-review-special-js-description' => 'Auf dieser Seite wird der aktuelle Stand im [[w:c:de:Hilfe:JavaScript-Überprüfungsprozess|Überprüfungsprozess]] von MediaWiki-Namensraum-Skripten dieser Community aufgeführt.',
-	'content-review-special-js-importjs-description' => 'Hinweis: Du kannst lokale und dev.wikia.com-Skriptimporte ohne den Überprüfungsprozess über [[MediaWiki:ImportJS]] hinzufügen und entfernen.',
+	'content-review-special-js-importjs-description' => 'Hinweis: Du kannst lokale Importe und Skripte aus dem Fandom Developers Wiki [[w:c:dev|dev.fandom.com]] ohne den Überprüfungsprozess über [[MediaWiki:ImportJS]] hinzufügen und entfernen.',
 	'content-review-importjs-description' => 'Von hier kannst du ganz einfach Skripte importieren:
 * aus deinem Wiki nach Artikelname - z. B. MeinSkript.js
-* aus dev.wikia.com nach Artikelname mit vorangestelltem "dev:" - z. B. dev:Code.js
+* aus [[w:c:dev|dev.fandom.com]] nach Artikelname mit vorangestelltem "dev:" - z. B. dev:Code.js
 Namen sollten nicht das MediaWiki-Präfix enthalten. Verwende für jedes Skript eine neue Zeile. Weitere Informationen findest du unter [[w:c:de:Hilfe:Einbinden_von_zusätzlichem_CSS_und_JS|Einbinden von zusätzlichem CSS und JS]].
 ----
 ',
@@ -166,7 +166,7 @@ Namen sollten nicht das MediaWiki-Präfix enthalten. Verwende für jedes Skript 
 	'right-content-review-test-mode' => 'Ermöglicht den Zugriff auf Testumgebungen zum Überprüfen von Inhalten',
 	'group-content-reviewer' => 'Inhalts-Überprüfer',
 	'content-review-status-escalated' => 'An zusätzlichen Prüfer weitergeleitet',
-	'content-review-profile-tags-description' => 'Um diese Funktion nutzen zu können, musst du das Skript [[w:c:dev:ProfileTags|ProfileTags.js]] von dev.wikia.com importieren. [[w:c:dev:ProfileTags|Hier erfährst du mehr]].
+	'content-review-profile-tags-description' => 'Um diese Funktion nutzen zu können, musst du das Skript [[w:c:dev:ProfileTags|ProfileTags.js]] von dev.fandom.com importieren. [[w:c:dev:ProfileTags|Hier erfährst du mehr]].
 
 Verwende diese Seite, um die Tags in den Benutzerprofilen anzupassen. Benutzernamen und Tags werden mit einem senkrechten Strich (|) getrennt. Um für einen Benutzer mehrere Tags anzuzeigen, trenne jeden Tag mit einem Komma ab. Schreibe jeden Benutzernamen in eine neue Zeile.
 
