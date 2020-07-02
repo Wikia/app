@@ -448,6 +448,7 @@ class MercuryApiController extends WikiaController {
 		$redirectTargetTitle = $article->getRedirectTarget();
 		$redirectTargetID = $redirectTargetTitle->getArticleID();
 		$data['redirected'] = true;
+		$data['redirectTargetUrl'] = $article->getRedirectTarget()->getLocalURL();
 
 		if ( !empty( $redirectTargetID ) ) {
 			$title = $redirectTargetTitle;
@@ -458,8 +459,6 @@ class MercuryApiController extends WikiaController {
 		} else {
 			$data['redirectEmptyTarget'] = true;
 		}
-
-		$data['redirectTargetUrl'] = $title->getLocalURL();
 
 		return [ $title, $article, $data ];
 	}
