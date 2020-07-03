@@ -4730,6 +4730,7 @@ $wgGlobalUserPreferenceWhiteList = [
 		'usenewrc',
 		'userlandingpage',
 		'variant',
+		'viewmode',
 		'visualeditor-betatempdisable',
 		'visualeditor-enable',
 		'walldelete',
