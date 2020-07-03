@@ -16,7 +16,6 @@ import {
 	identityLibrary,
 	InstantConfigCacheStorage,
 	JWPlayerManager,
-	likhoService,
 	nielsen,
 	permutive,
 	Runner,
@@ -66,7 +65,6 @@ export async function setupAdEngine(
 	}
 
 	trackLabradorValues();
-	trackLikhoToDW();
 	trackTabId();
 	trackXClick();
 	trackVideoPage();
@@ -123,17 +121,6 @@ function trackLabradorValues() {
 
 	if (labradorPropValue) {
 		pageTracker.trackProp('labrador', labradorPropValue);
-	}
-}
-
-/**
- * @private
- */
-function trackLikhoToDW() {
-	const likhoPropValue = likhoService.getTypes();
-
-	if (likhoPropValue.length) {
-		pageTracker.trackProp('likho', likhoPropValue.join(';'));
 	}
 }
 
