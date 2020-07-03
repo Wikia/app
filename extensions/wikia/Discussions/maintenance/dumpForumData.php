@@ -20,24 +20,27 @@ class DumpForumData extends Maintenance {
 	private $fh;
 	private $outputName;
 	private $bulk;
+	private $debug;
 
 	public function __construct() {
 		parent::__construct();
 		$this->mDescription = 'Dumps a set of INSERT statements suitable for importing into Discussion "import" tables';
 		$this->addArg( 'out', "Output file for SQL statements", $required = false );
 		$this->addOption( 'bulk', "Bulk inserts", $required = false );
+		$this->addOption( 'debug', "Debug logs", $required = false );
 	}
 
 	public function execute() {
 		$this->outputName = $this->hasOption( 'out' ) ? $this->getArg() : "php://stdout";
 		$this->bulk = $this->hasOption( 'bulk' );
+		$this->debug = $this->hasOption( 'debug' );
 
 		$this->fh = fopen( $this->outputName, 'w' );
 		if ( $this->fh === false ) {
 			$this->error( "Unable to open file " . $this->outputName, 1 );
 		}
 
-		$this->dumper = new Discussions\ForumDumper( $this->bulk );
+		$this->dumper = new Discussions\ForumDumper( $this->bulk, $this->debug );
 
 		$this->setConnectinoEncoding();
 		$this->clearImportTables();
