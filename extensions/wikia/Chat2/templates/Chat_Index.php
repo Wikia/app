@@ -108,8 +108,8 @@
 					<?= DesignSystemHelper::renderSvg('wds-avatar-badges-discussion-moderator'); ?>
 				<% } else if (groups.indexOf('helper') !== -1) { %>
 					<?= DesignSystemHelper::renderSvg('wds-avatar-badges-helper', 'wds-icon wds-icon-small'); ?>
-				<% } else if (groups.indexOf('soad') !== -1) { %>
-					<?= DesignSystemHelper::renderSvg('wds-avatar-badges-soad', 'wds-icon wds-icon-small'); ?>
+				<% } else if (groups.indexOf('soap') !== -1) { %>
+					<?= DesignSystemHelper::renderSvg('wds-avatar-badges-soap', 'wds-icon wds-icon-small'); ?>
 				<% } %>
 			</span>
 		</span>

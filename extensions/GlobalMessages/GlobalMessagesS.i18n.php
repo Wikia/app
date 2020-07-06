@@ -208,7 +208,7 @@ The latest log entry is provided below for reference:",
 This is probably caused by a blacklisted link or pagename.',
 	'spamprotectionmatch' => "The following link, text or pagename is what triggered our spam filter: '''$1'''
 
-If you think this is wrong, please contact us [[w:c:soad:Report:Spam filter problems|here]]. Please, provide a copy of this message when reporting any problem.",
+If you think this is wrong, please contact us [[w:c:soap:Report:Spam filter problems|here]]. Please, provide a copy of this message when reporting any problem.",
 	'spambot_username' => 'MediaWiki spam cleanup',
 	'spam_reverting' => 'Reverting to last revision not containing links to $1',
 	'spam_blanking' => 'All revisions contained links to $1, blanking',
@@ -9838,7 +9838,7 @@ A continuación se muestra la última entrada de registro para referencia:",
 Esto podría estar causado por un enlace a un sitio externo incluido en la lista negra.',
 	'spamprotectionmatch' => "El siguiente enlace o texto es el que activó nuestro filtro ''anti-spam'' (contra la publicidad no solicitada): '''$1'''
 
-Si crees que está mal, por favor contáctanos haciendo clic [[w:c:soad:Report:Spam filter problems|aquí]] (puedes reportarlo en español). Por favor, provee una copia de este mensaje cuando vayas a reportar algún problema.",
+Si crees que está mal, por favor contáctanos haciendo clic [[w:c:soap:Report:Spam filter problems|aquí]] (puedes reportarlo en español). Por favor, provee una copia de este mensaje cuando vayas a reportar algún problema.",
 	'spambot_username' => 'Limpieza de spam de MediaWiki',
 	'spam_reverting' => 'Revirtiendo a la última versión que no contenga enlaces a $1',
 	'spam_blanking' => 'Todas las revisiones contienen enlaces a $1, blanqueando',
@@ -17259,7 +17259,7 @@ Di seguito è riportato l'ultimo elemento dal registro come riferimento:",
 Ciò è probabilmente dovuto alla presenza di un collegamento a un sito esterno o titolo presente nella blacklist.',
 	'spamprotectionmatch' => "Il filtro anti-spam è stato attivato dal seguente link, testo o titolo: '''$1'''
 
-Se pensi ci sia un errore, contattaci su [[w:c:vstf:Report:Spam filter problems|questa pagina]]. Per favore, fornisci inoltre una copia di questo messaggio nella segnalazione di qualsiasi problema.",
+Se pensi ci sia un errore, contattaci su [[w:c:soap:Report:Spam filter problems|questa pagina]]. Per favore, fornisci inoltre una copia di questo messaggio nella segnalazione di qualsiasi problema.",
 	'spambot_username' => 'MediaWiki - sistema di rimozione spam',
 	'spam_reverting' => "Ripristinata l'ultima revisione priva di collegamenti a $1",
 	'spam_blanking' => 'Pagina svuotata, tutte le versioni contenevano collegamenti a $1',
@@ -32053,7 +32053,7 @@ $messages['ru'] = array(
 Вероятно, это произошло из-за того, что она содержит ссылку на занесённый в чёрный список внешний сайт.',
 	'spamprotectionmatch' => "Следующая ссылка, текст или название страницы вызвали срабатывание нашего спам-фильтра: '''$1'''
 
-Если Вы думаете, что здесь ошибка, то, пожалуйста, сообщите нам [[w:c:vstf:Report:Spam filter problems|здесь]]. Пожалуйста, приводите полный текст сообщения о проблеме.",
+Если Вы думаете, что здесь ошибка, то, пожалуйста, сообщите нам [[w:c:soap:Report:Spam filter problems|здесь]]. Пожалуйста, приводите полный текст сообщения о проблеме.",
 	'spambot_username' => 'Чистка спама',
 	'spam_reverting' => 'Откат к последней версии, не содержащей ссылки на $1',
 	'spam_blanking' => 'Все версии содержат ссылки на $1, очистка',
@@ -42147,7 +42147,7 @@ $messages['zh-hans'] = array(
 这可能是由于一个链往匹配黑名单的外部站点的链接引起的。',
 	'spamprotectionmatch' => "以下文本触发了我们的垃圾链接过滤器：'''$1'''
 
-如果你认为此操作有误，请[[w:c:vstf:Report:Spam filter problems|点击这里]]与我们联系，并在报告问题的时候附上此消息的副本。",
+如果你认为此操作有误，请[[w:c:soap:Report:Spam filter problems|点击这里]]与我们联系，并在报告问题的时候附上此消息的副本。",
 	'spambot_username' => 'MediaWiki垃圾链接清理器',
 	'spam_reverting' => '恢复到不包含链接的最近修订版本$1',
 	'spam_blanking' => '消隐所有包含链接至$1的修订',
@@ -42425,7 +42425,7 @@ $messages['zh-hant'] = array(
 這可能是由於一個連往匹配黑名單的外部站點的連結引起的。',
 	'spamprotectionmatch' => '以下的連結觸發了我們的垃圾訊息過濾器：$1
 
-如果您認為弄錯了，請在[[w:c:vstf:Report:Spam filter problems|這裡]]聯繫我們。在回報問題時請附上這個訊息的副本。',
+如果您認為弄錯了，請在[[w:c:soap:Report:Spam filter problems|這裡]]聯繫我們。在回報問題時請附上這個訊息的副本。',
 	'spambot_username' => 'MediaWiki 廣告清除',
 	'spam_reverting' => '恢復到不包含連結的最近修訂版本 $1',
 	'spam_blanking' => '清空所有包含連結至$1的修訂。',

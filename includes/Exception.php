@@ -454,7 +454,7 @@ class UserBlockedError extends ErrorPageError {
 
 		$blocker = $block->getBlocker();
 		// Wikia change - begin
-		// SUS-288: Hide blocker's username if the block was made by staff/SOAD
+		// SUS-288: Hide blocker's username if the block was made by staff/SOAP
 		if ( $block->shouldHideBlockerName() ) {
 			$link = $block->getGroupNameForHiddenBlocker();
 			// Wikia change - end

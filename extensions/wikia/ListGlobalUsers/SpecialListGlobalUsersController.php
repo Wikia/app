@@ -3,7 +3,7 @@
 use Wikia\Service\User\Permissions\PermissionsServiceAccessor;
 
 class SpecialListGlobalUsersController extends WikiaSpecialPageController {
-	const GROUPS_SELECTED_BY_DEFAULT = [ 'global-discussions-moderator', 'helper', 'staff', 'vanguard', 'soad' ];
+	const GROUPS_SELECTED_BY_DEFAULT = [ 'global-discussions-moderator', 'helper', 'staff', 'vanguard', 'soap' ];
 
 	use PermissionsServiceAccessor;
 

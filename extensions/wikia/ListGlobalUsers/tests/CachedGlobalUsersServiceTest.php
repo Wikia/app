@@ -37,11 +37,11 @@ class CachedGlobalUsersServiceTest extends TestCase {
 
 		$this->globalUsersServiceMock->expects( $this->once() )
 			->method( 'getGroupMembers' )
-			->with( [ 'staff', 'vstf' ] )
+			->with( [ 'staff', 'soap' ] )
 			->willReturn( $example );
 
-		$freshResult = $this->cachedGlobalUsersService->getGroupMembers( [ 'staff', 'vstf' ] );
-		$cachedResult = $this->cachedGlobalUsersService->getGroupMembers( [ 'staff', 'vstf' ] );
+		$freshResult = $this->cachedGlobalUsersService->getGroupMembers( [ 'staff', 'soap' ] );
+		$cachedResult = $this->cachedGlobalUsersService->getGroupMembers( [ 'staff', 'soap' ] );
 
 		$this->assertEquals( $example, $freshResult );
 		$this->assertEquals( $example, $cachedResult );
@@ -59,12 +59,12 @@ class CachedGlobalUsersServiceTest extends TestCase {
 
 		$this->globalUsersServiceMock->expects( $this->once() )
 			->method( 'getGroupMembers' )
-			->with( [ 'staff', 'vstf', 'helper' ] )
+			->with( [ 'staff', 'soap', 'helper' ] )
 			->willReturn( $example );
 
-		$freshResult = $this->cachedGlobalUsersService->getGroupMembers( [ 'staff', 'vstf', 'helper' ] );
-		$cachedResult = $this->cachedGlobalUsersService->getGroupMembers( [ 'helper', 'staff', 'vstf' ] );
-		$secondCachedResult = $this->cachedGlobalUsersService->getGroupMembers( [ 'vstf', 'helper', 'staff' ] );
+		$freshResult = $this->cachedGlobalUsersService->getGroupMembers( [ 'staff', 'soap', 'helper' ] );
+		$cachedResult = $this->cachedGlobalUsersService->getGroupMembers( [ 'helper', 'staff', 'soap' ] );
+		$secondCachedResult = $this->cachedGlobalUsersService->getGroupMembers( [ 'soap', 'helper', 'staff' ] );
 
 		$this->assertEquals( $example, $freshResult );
 		$this->assertEquals( $example, $cachedResult );
