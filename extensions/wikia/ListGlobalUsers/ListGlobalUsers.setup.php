@@ -5,7 +5,7 @@ $GLOBALS['wgAutoloadClasses']['CachedGlobalUsersService'] = __DIR__ . '/CachedGl
 $GLOBALS['wgAutoloadClasses']['DatabaseGlobalUsersService'] = __DIR__ . '/DatabaseGlobalUsersService.php';
 
 $GLOBALS['wgAutoloadClasses']['SpecialListStaff'] = __DIR__ . '/alias/SpecialListStaff.php';
-$GLOBALS['wgAutoloadClasses']['SpecialListVstf'] = __DIR__ . '/alias/SpecialListVstf.php';
+$GLOBALS['wgAutoloadClasses']['SpecialListSoad'] = __DIR__ . '/alias/SpecialListSoad.php';
 $GLOBALS['wgAutoloadClasses']['SpecialListHelpers'] = __DIR__ . '/alias/SpecialListHelpers.php';
 
 $GLOBALS['wgAutoloadClasses']['SpecialListGlobalUsersController'] = __DIR__ . '/SpecialListGlobalUsersController.php';
@@ -15,7 +15,7 @@ $GLOBALS['wgSpecialPageGroups']['ListGlobalUsers'] = 'users';
 
 // aliases
 $GLOBALS['wgSpecialPages']['ListStaff'] = 'SpecialListStaff';
-$GLOBALS['wgSpecialPages']['ListVstf'] = 'SpecialListVstf';
+$GLOBALS['wgSpecialPages']['ListSoad'] = 'SpecialListSoad';
 $GLOBALS['wgSpecialPages']['ListHelpers'] = 'SpecialListHelpers';
 
 $GLOBALS['wgResourceModules']['ext.wikia.ListGlobalUsers'] = [

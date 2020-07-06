@@ -3,7 +3,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'staffpowers-desc' => 'Gives Staff various superpowers like unblockable.',
-	'staffpowers-ipblock-abort' => 'Blocking FANDOM Staff, FANDOM Helpers, or members of our Volunteer Spam Task Force user team (VSTF) is not possible. Please use the [[Special:Contact|contact form]] to report any issues or problems with our staff.',
+	'staffpowers-ipblock-abort' => 'Blocking FANDOM Staff, FANDOM Helpers, or members of our Spam Obliteration and Prevention user team (SOAD) is not possible. Please use the [[Special:Contact|contact form]] to report any issues or problems with our staff.',
 	'right-unblockable' => 'Cannot be blocked',
 );
 
@@ -17,7 +17,7 @@ $messages['ar'] = array(
 );
 
 $messages['ca'] = array(
-	'staffpowers-ipblock-abort' => "No es possible bloquejar l'Staff de Wikia, als Helpers ni als membres del VSTF. Si us plau, utilitza el [[Special:Contact|formulari de contacte]] per informar de qualsevol problema amb el nostre staff.",
+	'staffpowers-ipblock-abort' => "No es possible bloquejar l'Staff de Wikia, als Helpers ni als membres del SOAD. Si us plau, utilitza el [[Special:Contact|formulari de contacte]] per informar de qualsevol problema amb el nostre staff.",
 );
 
 $messages['cs'] = array(

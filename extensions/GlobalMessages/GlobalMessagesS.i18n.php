@@ -208,7 +208,7 @@ The latest log entry is provided below for reference:",
 This is probably caused by a blacklisted link or pagename.',
 	'spamprotectionmatch' => "The following link, text or pagename is what triggered our spam filter: '''$1'''
 
-If you think this is wrong, please contact us [[w:c:vstf:Report:Spam filter problems|here]]. Please, provide a copy of this message when reporting any problem.",
+If you think this is wrong, please contact us [[w:c:soad:Report:Spam filter problems|here]]. Please, provide a copy of this message when reporting any problem.",
 	'spambot_username' => 'MediaWiki spam cleanup',
 	'spam_reverting' => 'Reverting to last revision not containing links to $1',
 	'spam_blanking' => 'All revisions contained links to $1, blanking',
@@ -9838,7 +9838,7 @@ A continuación se muestra la última entrada de registro para referencia:",
 Esto podría estar causado por un enlace a un sitio externo incluido en la lista negra.',
 	'spamprotectionmatch' => "El siguiente enlace o texto es el que activó nuestro filtro ''anti-spam'' (contra la publicidad no solicitada): '''$1'''
 
-Si crees que está mal, por favor contáctanos haciendo clic [[w:c:vstf:Report:Spam filter problems|aquí]] (puedes reportarlo en español). Por favor, provee una copia de este mensaje cuando vayas a reportar algún problema.",
+Si crees que está mal, por favor contáctanos haciendo clic [[w:c:soad:Report:Spam filter problems|aquí]] (puedes reportarlo en español). Por favor, provee una copia de este mensaje cuando vayas a reportar algún problema.",
 	'spambot_username' => 'Limpieza de spam de MediaWiki',
 	'spam_reverting' => 'Revirtiendo a la última versión que no contenga enlaces a $1',
 	'spam_blanking' => 'Todas las revisiones contienen enlaces a $1, blanqueando',

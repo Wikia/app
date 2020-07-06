@@ -35,11 +35,11 @@ if (!empty($wgEnableAbuseFilterExtension)) {
 			$wgGroupPermissions['sysop']['abusefilter-private'] = false;
 		}
 
-		$wgGroupPermissions['vstf']['abusefilter-modify'] = true;
-		$wgGroupPermissions['vstf']['abusefilter-modify-restricted'] = true;
-		$wgGroupPermissions['vstf']['abusefilter-revert'] = true;
-		$wgGroupPermissions['vstf']['abusefilter-log-detail'] = true;
-		$wgGroupPermissions['vstf']['abusefilter-private'] = true;
+		$wgGroupPermissions['soad']['abusefilter-modify'] = true;
+		$wgGroupPermissions['soad']['abusefilter-modify-restricted'] = true;
+		$wgGroupPermissions['soad']['abusefilter-revert'] = true;
+		$wgGroupPermissions['soad']['abusefilter-log-detail'] = true;
+		$wgGroupPermissions['soad']['abusefilter-private'] = true;
 
 		$wgGroupPermissions['helper']['abusefilter-modify'] = true;
 		$wgGroupPermissions['helper']['abusefilter-modify-restricted'] = true;
@@ -71,7 +71,7 @@ if (!empty($wgEnableAbuseFilterExtension)) {
 if (!empty($wgEnableNukeExt)) {
 	$wgGroupPermissions['staff']['nuke'] = true;
 	$wgGroupPermissions['helper']['nuke'] = true;
-	$wgGroupPermissions['vstf']['nuke'] = true;
+	$wgGroupPermissions['soad']['nuke'] = true;
 	$wgGroupPermissions['content-team-member']['nuke'] = true;
 	$wgGroupPermissions['wiki-manager']['nuke'] = true;
 	$wgGroupPermissions['sysop']['nuke'] = false;
@@ -166,7 +166,7 @@ $wgGroupPermissions['staff']['sponsored-achievements'] = true;
 $wgGroupPermissions['*']['achievements-exempt'] = false;
 $wgGroupPermissions['helper']['achievements-exempt'] = true;
 $wgGroupPermissions['staff']['achievements-exempt'] = true;
-$wgGroupPermissions['vstf']['achievements-exempt'] = true;
+$wgGroupPermissions['soad']['achievements-exempt'] = true;
 $wgGroupPermissions['wiki-manager']['achievements-exempt'] = true;
 $wgGroupPermissions['content-team-member']['achievements-exempt'] = true;
 
@@ -180,7 +180,7 @@ $wgGroupPermissions['helper']['admindashboard'] = true;
 $wgGroupPermissions['staff']['admindashboard'] = true;
 $wgGroupPermissions['sysop']['admindashboard'] = true;
 $wgGroupPermissions['threadmoderator']['admindashboard'] = true;
-$wgGroupPermissions['vstf']['admindashboard'] = true;
+$wgGroupPermissions['soad']['admindashboard'] = true;
 
 $wgGroupPermissions['sysop']['commentmove'] = true;
 $wgGroupPermissions['sysop']['commentedit'] = true;
@@ -367,7 +367,7 @@ $wgGroupPermissions['staff']['welcomeexempt'] = true;
 $wgGroupPermissions['util']['coppaimagereview'] = true;
 
 $wgGroupPermissions['util']['imagereview'] = true;
-$wgGroupPermissions['vstf']['imagereview'] = true;
+$wgGroupPermissions['soad']['imagereview'] = true;
 
 $wgGroupPermissions['reviewer']['imagereview'] = true;
 $wgGroupPermissions['reviewer']['deletedhistory'] = true;
@@ -386,7 +386,7 @@ $wgGroupPermissions['staff']['imagereviewstats'] = true;
 
 
 $wgGroupPermissions['util']['promoteimagereview'] = true;
-$wgGroupPermissions['vstf']['promoteimagereview'] = true;
+$wgGroupPermissions['soad']['promoteimagereview'] = true;
 
 $wgGroupPermissions['util']['promoteimagereviewquestionableimagereview'] = true;
 
@@ -408,7 +408,7 @@ $wgGroupPermissions['staff']['minieditor-specialpage'] = true;
 
 $wgGroupPermissions['staff']['multidelete'] = true;
 $wgGroupPermissions['helper']['multidelete'] = true;
-$wgGroupPermissions['vstf']['multidelete'] = true;
+$wgGroupPermissions['soad']['multidelete'] = true;
 $wgGroupPermissions['wiki-manager']['multidelete'] = true;
 
 $wgGroupPermissions['staff']['multiwikiedit'] = true;

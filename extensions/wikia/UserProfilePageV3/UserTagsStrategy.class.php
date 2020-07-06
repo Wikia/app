@@ -18,7 +18,7 @@ class UserTagsStrategy extends WikiaObject {
 		'wiki-manager',
 		'content-team-member',
 		'helper',
-		'vstf',
+		'soad',
 		'global-discussions-moderator',
 		'voldev',
 		'vanguard',
@@ -128,8 +128,8 @@ class UserTagsStrategy extends WikiaObject {
 				case 'helper':
 					$tags[] = wfMessage( 'user-identity-box-group-helper' )->escaped();
 					break;
-				case 'vstf':
-					$tags[] = wfMessage( 'user-identity-box-group-vstf' )->escaped();
+				case 'soad':
+					$tags[] = wfMessage( 'user-identity-box-group-soad' )->escaped();
 					break;
 				case 'voldev':
 					$tags[] = wfMessage( 'user-identity-box-group-voldev' )->escaped();
