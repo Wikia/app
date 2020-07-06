@@ -2,11 +2,8 @@
 
 namespace Discussions;
 
-use ArticleCommentList;
 use DumpUtils;
-use HTMLFileCache;
 use Title;
-use WallThread;
 use \Wikia\Logger\WikiaLogger;
 
 class ForumDumper {
