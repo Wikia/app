@@ -3,6 +3,7 @@ import { billTheLizardConfigurator } from './ml/configuration';
 import { featuredVideoAutoPlayDisabled } from './ml/executor';
 import {
 	AdSlot,
+	audigent,
 	bidders,
 	billTheLizard,
 	confiant,
@@ -112,6 +113,12 @@ function startAdEngine(inhibitors) {
 			pageTracker.trackProp('identity_library_load_time', props.loadTime.toString());
 			pageTracker.trackProp('identity_library_ids', identityLibrary.getUids());
 		});
+
+		communicationService.action$.pipe(
+			ofType('[AdEngine] Audigent loaded')
+		).subscribe((props) => {
+			pageTracker.trackProp('audigent', 'loaded');
+		});
 	}
 }
 
@@ -147,6 +154,7 @@ function callExternals() {
 	facebookPixel.call();
 	permutive.call();
 	iasPublisherOptimization.call();
+	audigent.call();
 	confiant.call();
 	durationMedia.call();
 	distroScale.call();
