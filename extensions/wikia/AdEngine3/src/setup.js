@@ -162,12 +162,6 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('services.permutive.enabled', instantConfig.get('icPermutive') && !context.get('wiki.targeting.directedAtChildren'));
 	context.set('services.iasPublisherOptimization.enabled', instantConfig.get('icIASPublisherOptimization'));
 
-	if (instantConfig.get('icTaxonomyComicsTag')) {
-		context.set('services.taxonomy.comics.enabled', true);
-		context.set('services.taxonomy.communityId', context.get('wiki.targeting.wikiId'));
-		context.set('services.taxonomy.pageArticleId', context.get('wiki.targeting.pageArticleId'));
-	}
-
 	context.set('options.video.moatTracking.enabledForArticleVideos', instantConfig.get('icFeaturedVideoMoatTracking'));
 	context.set('options.video.iasTracking.enabled', instantConfig.get('icIASVideoTracking'));
 
