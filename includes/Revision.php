@@ -1053,17 +1053,17 @@ class Revision implements IDBAccessObject {
 		wfProfileIn( __METHOD__ );
 
 		// Caching may be beneficial for massive use of external storage
-		global $wgRevisionCacheExpiry, $wgMemc;
-		$textId = $this->getTextId();
-		$key = wfMemcKey( 'revisiontext', 'textid', $textId );
-		if( $wgRevisionCacheExpiry ) {
-			$text = $wgMemc->get( $key );
-			if( is_string( $text ) ) {
-				wfDebug( __METHOD__ . ": got id $textId from cache\n" );
-				wfProfileOut( __METHOD__ );
-				return $text;
-			}
-		}
+//		global $wgRevisionCacheExpiry, $wgMemc;
+//		$textId = $this->getTextId();
+//		$key = wfMemcKey( 'revisiontext', 'textid', $textId );
+//		if( $wgRevisionCacheExpiry ) {
+//			$text = $wgMemc->get( $key );
+//			if( is_string( $text ) ) {
+//				wfDebug( __METHOD__ . ": got id $textId from cache\n" );
+//				wfProfileOut( __METHOD__ );
+//				return $text;
+//			}
+//		}
 
 		// If we kept data for lazy extraction, use it now...
 		if ( isset( $this->mTextRow ) ) {
@@ -1094,9 +1094,9 @@ class Revision implements IDBAccessObject {
 		$text = self::getRevisionText( $row );
 
 		# No negative caching -- negative hits on text rows may be due to corrupted slave servers
-		if( $wgRevisionCacheExpiry && $text !== false ) {
-			$wgMemc->set( $key, $text, $wgRevisionCacheExpiry );
-		}
+//		if( $wgRevisionCacheExpiry && $text !== false ) {
+//			$wgMemc->set( $key, $text, $wgRevisionCacheExpiry );
+//		}
 
 		wfProfileOut( __METHOD__ );
 
