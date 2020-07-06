@@ -411,18 +411,24 @@ class ArticleComment {
 		// SUS-1527: {{Special:RecentChanges}} in message on wall breaks page
 		$opts->setAllowSpecialInclusion( false );
 
-		$parser = ParserPool::get();
-		$parser->ac_metadata = [];
+		$data = WikiaDataAccess::cache(
+			wfMemcKey( __METHOD__, md5( $this->mRawtext . $this->mTitle->getPrefixedDBkey() ), $opts->optionsHash( ParserOptions::legacyOptions() ) ),
+			WikiaResponse::CACHE_STANDARD,
+			function() use ( $opts ) {
+				$parser = ParserPool::get();
+				$parser->ac_metadata = [];
 
-		$parserOutput = $parser->parse( $this->mRawtext, $this->mTitle, $opts );
+				$parserOutput = $parser->parse( $this->mRawtext, $this->mTitle, $opts );
 
-		$data = [
-			'text' => wfFixMalformedHTML( $parserOutput->getText() ),
-			'metadata' => isset( $parser->ac_metadata ) ? $parser->ac_metadata : [],
-			'headitems' => $parserOutput->getHeadItems(),
-		];
+				$data = [
+					'text' => wfFixMalformedHTML( $parserOutput->getText() ),
+					'metadata' => isset( $parser->ac_metadata ) ? $parser->ac_metadata : [],
+					'headitems' => $parserOutput->getHeadItems(),
+				];
 
-		ParserPool::release( $parser );
+				ParserPool::release( $parser );
+				return $data;
+			});
 
 		$this->mText = $data['text'];
 		$this->mHeadItems = $data['headitems'];

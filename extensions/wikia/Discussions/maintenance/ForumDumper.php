@@ -367,13 +367,6 @@ class ForumDumper {
 																   $row->rev_id . " in thread: " . $row->rev_page);
 								}
 
-								if ($row->rev_page == 197980 || $row->rev_page == 198018) {
-									WallThread::newFromId( 197980 )->invalidateCache();
-									WikiaLogger::instance()->info( "Purging cache!");
-									$commentList = ArticleCommentList::newFromTitle( $this->titles[$row->rev_page] );
-									$commentList->purge();
-								}
-
 								$rev = \Revision::newFromRow( $row );
 
 								list(
