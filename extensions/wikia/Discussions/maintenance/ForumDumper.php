@@ -6,6 +6,7 @@ use ArticleCommentList;
 use DumpUtils;
 use HTMLFileCache;
 use Title;
+use WallThread;
 use \Wikia\Logger\WikiaLogger;
 
 class ForumDumper {
@@ -367,6 +368,7 @@ class ForumDumper {
 								}
 
 								if ($row->rev_page == 197980 || $row->rev_page == 198018) {
+									WallThread::newFromId( 197980 )->invalidateCache();
 									WikiaLogger::instance()->info( "Purging cache!");
 									$commentList = ArticleCommentList::newFromTitle( $this->titles[$row->rev_page] );
 									$commentList->purge();
