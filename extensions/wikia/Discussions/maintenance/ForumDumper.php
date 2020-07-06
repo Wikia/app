@@ -2,6 +2,7 @@
 
 namespace Discussions;
 
+use ArticleCommentList;
 use DumpUtils;
 use Title;
 use \Wikia\Logger\WikiaLogger;
@@ -364,6 +365,12 @@ class ForumDumper {
 																   $row->rev_id . " in thread: " . $row->rev_page);
 								}
 
+								if ($row->rev_id == 453500) {
+									WikiaLogger::instance()->info( "Purging cache!");
+									$commentList = ArticleCommentList::newFromTitle( $this->titles[$row->rev_page] );
+									$commentList->purge();
+								}
+
 								$rev = \Revision::newFromRow( $row );
 
 								list(
@@ -527,7 +534,6 @@ class ForumDumper {
 		$articleComment = false;
 		do {
 			$articleComment = \ArticleComment::newFromTitle( $this->titles[$textId] );
-
 			if ( $articleComment === false && $tries > 0 ) {
 				WikiaLogger::instance()->info( "Retry used! (article build) - ".( $tries - 1 )." left" );
 			}
