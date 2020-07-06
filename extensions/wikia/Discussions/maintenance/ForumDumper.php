@@ -366,12 +366,10 @@ class ForumDumper {
 																   $row->rev_id . " in thread: " . $row->rev_page);
 								}
 
-								if ($row->rev_id == 453500) {
+								if ($row->rev_page == 197980 || $row->rev_page == 198018) {
 									WikiaLogger::instance()->info( "Purging cache!");
 									$commentList = ArticleCommentList::newFromTitle( $this->titles[$row->rev_page] );
 									$commentList->purge();
-
-									HTMLFileCache::clearFileCache( $this->titles[$row->rev_page] );
 								}
 
 								$rev = \Revision::newFromRow( $row );
