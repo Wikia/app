@@ -31,6 +31,13 @@ class DumpForumData extends Maintenance {
 	}
 
 	public function execute() {
+
+		if(function_exists('xdebug_disable'))
+		{
+			$this->output("Disabling xdebug!");
+			xdebug_disable();
+		}
+
 		$this->outputName = $this->hasOption( 'out' ) ? $this->getArg() : "php://stdout";
 		$this->bulk = $this->hasOption( 'bulk' );
 		$this->debug = $this->hasOption( 'debug' );
