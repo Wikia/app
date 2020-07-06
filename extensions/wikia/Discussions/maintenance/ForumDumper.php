@@ -4,6 +4,7 @@ namespace Discussions;
 
 use ArticleCommentList;
 use DumpUtils;
+use HTMLFileCache;
 use Title;
 use \Wikia\Logger\WikiaLogger;
 
@@ -369,6 +370,8 @@ class ForumDumper {
 									WikiaLogger::instance()->info( "Purging cache!");
 									$commentList = ArticleCommentList::newFromTitle( $this->titles[$row->rev_page] );
 									$commentList->purge();
+
+									HTMLFileCache::clearFileCache( $this->titles[$row->rev_page] );
 								}
 
 								$rev = \Revision::newFromRow( $row );
