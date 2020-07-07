@@ -2,7 +2,7 @@
 /**
  * Dumps the Forum data for the site selected by setting the SERVER_ID variable
  *
- * Run like maintenance script with extra xdebug settings:
+ * Run like maintenance script on docker image without xdebug enabled:
  * php extensions/wikia/Discussions/maintenance/dumpForumData.php --out importData.sql
  *
  * @ingroup Maintenance
