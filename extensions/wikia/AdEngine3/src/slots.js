@@ -7,6 +7,7 @@ import {
 	FmrRotator,
 	scrollListener,
 	slotInjector,
+	slotDataParamsUpdater,
 	slotService,
 	utils,
 	getAdProductInfo
@@ -311,6 +312,9 @@ export default {
 			// It is required to *collapse* ICP for DistroScale
 			// TODO: clean up once we finish DS A/B test
 			slotService.setState('incontent_player', false, AdSlot.STATUS_COLLAPSE);
+			slotService.on('incontent_player', AdSlot.STATUS_COLLAPSE, (adSlot) => {
+				slotDataParamsUpdater.updateOnCreate(adSlot);
+			});
 		} else {
 			slotService.setState('incontent_player', context.get('custom.hasIncontentPlayer'));
 		}
