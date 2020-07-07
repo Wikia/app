@@ -361,7 +361,8 @@ class ForumDumper {
 
 								if ( $this->debug ) {
 									WikiaLogger::instance()->info( "Getting revision info for rev id: " .
-																   $row->rev_id . " in thread: " . $row->rev_page);
+																   $row->rev_id . " in thread: " . $row->rev_page,
+										[$row->rev_id, $row->rev_page] );
 								}
 
 								$rev = \Revision::newFromRow( $row );
