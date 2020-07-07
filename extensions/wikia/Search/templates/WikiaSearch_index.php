@@ -32,7 +32,7 @@
 				<input type="text" name="search" id="search-v2-input" class="search-v2-input" value="<?= $query; ?>"/>
 			</div>
 			<input type="hidden" name="fulltext" value="Search"/>
-			<input type="hidden" id="search-v2-scope" name="scope" value="<?= $scope ?>"/>
+			<input type="hidden" id="search-v2-scope" name="scope" value="<?= Sanitizer::encodeAttribute( $scope ) ?>"/>
 			<button type="submit" class="wikia-button" id="search-v2-button" value="<?= wfMsg( 'searchbutton' ); ?>">
 				<img src="<?= $wg->BlankImgUrl ?>" class="sprite search" height="17" width="21"></button>
 
