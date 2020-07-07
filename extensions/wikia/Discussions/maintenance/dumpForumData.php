@@ -3,7 +3,7 @@
  * Dumps the Forum data for the site selected by setting the SERVER_ID variable
  *
  * Run like maintenance script with extra xdebug settings:
- * php -d xdebug.max_nesting_level=-1 extensions/wikia/Discussions/maintenance/dumpForumData.php --out importData.sql
+ * php extensions/wikia/Discussions/maintenance/dumpForumData.php --out importData.sql
  *
  * @ingroup Maintenance
  */
