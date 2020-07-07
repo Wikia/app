@@ -70,7 +70,7 @@ function wfFounderEmailsInit()
 
 	$wgHooks['RecentChange_save'][] = 'FounderEmailsEditEvent::recentChanges';
 	$wgHooks['CreateWikiLocalJob-complete'][] = 'FounderEmailsDaysPassedEvent::createWikiCompleted';
-
+	$wgHooks['AddNewAccount'][] = 'FounderEmailsRegisterEvent::registerUser';
 	$wgHooks['GetPreferences'][] = 'FounderEmails::onGetPreferences';
 	$wgHooks['UserRights'][] = 'FounderEmails::onUserRightsChange';
 }
