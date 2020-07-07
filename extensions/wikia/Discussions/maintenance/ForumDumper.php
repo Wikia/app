@@ -102,9 +102,11 @@ class ForumDumper {
 	private $titles = [];
 	private $pages = [];
 	private $bulk;
+	private $debug;
 
-	public function __construct($bulk = false) {
+	public function __construct($bulk = false, $debug = false) {
 		$this->bulk = $bulk;
+		$this->debug = $debug;
 	}
 
 	public function addPage( $id, $data ) {
@@ -356,6 +358,13 @@ class ForumDumper {
 						function ( $result ) use ( $dbh, $fh, &$inserts, &$firstRevsData ) {
 
 							while ($row = $result->fetchObject()) {
+
+								if ( $this->debug ) {
+									WikiaLogger::instance()->info( "Getting revision info for rev id: " .
+																   $row->rev_id . " in thread: " . $row->rev_page,
+										[$row->rev_id, $row->rev_page] );
+								}
+
 								$rev = \Revision::newFromRow( $row );
 
 								list(
@@ -519,7 +528,6 @@ class ForumDumper {
 		$articleComment = false;
 		do {
 			$articleComment = \ArticleComment::newFromTitle( $this->titles[$textId] );
-
 			if ( $articleComment === false && $tries > 0 ) {
 				WikiaLogger::instance()->info( "Retry used! (article build) - ".( $tries - 1 )." left" );
 			}
