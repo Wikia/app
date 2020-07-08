@@ -424,8 +424,8 @@ class PermissionsConfiguration {
 		$this->groupsAddableByGroup['content-reviewer'] = [ 'content-reviewer' ];
 		$this->groupsRemovableByGroup['content-reviewer'] = [ 'content-reviewer' ];
 
-		$this->groupsSelfAddableByGroup['soad'] = [ 'rollback', 'bot', 'sysop' ];
-		$this->groupsSelfRemovableByGroup['soad'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat' ];
+		$this->groupsSelfAddableByGroup['soap'] = [ 'rollback', 'bot', 'sysop' ];
+		$this->groupsSelfRemovableByGroup['soap'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat' ];
 
 		$this->groupsSelfRemovableByGroup['chatmoderator'] = [ 'chatmoderator' ];
 		$this->groupsSelfRemovableByGroup['threadmoderator'] = [ 'threadmoderator' ];
