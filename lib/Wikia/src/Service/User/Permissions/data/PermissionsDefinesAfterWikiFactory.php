@@ -367,7 +367,7 @@ $wgGroupPermissions['staff']['welcomeexempt'] = true;
 $wgGroupPermissions['util']['coppaimagereview'] = true;
 
 $wgGroupPermissions['util']['imagereview'] = true;
-$wgGroupPermissions['soad']['imagereview'] = true;
+$wgGroupPermissions['soap']['imagereview'] = true;
 
 $wgGroupPermissions['reviewer']['imagereview'] = true;
 $wgGroupPermissions['reviewer']['deletedhistory'] = true;
