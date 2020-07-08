@@ -20,7 +20,6 @@ import {
 	permutive,
 	Runner,
 	SlotTweaker,
-	taxonomyService,
 	utils
 } from '@wikia/ad-engine';
 import { wadRunner } from './wad/wad-runner';
@@ -68,7 +67,6 @@ export async function setupAdEngine(
 	trackTabId();
 	trackXClick();
 	trackVideoPage();
-	taxonomyService.configureComicsTargeting();
 }
 
 async function setupJWPlayer(inhibitors = []) {
