@@ -2622,7 +2622,7 @@ $messages['pl'] = array(
 	'user-identity-box-group-staff' => 'Staff',
 	'user-identity-box-group-wiki-manager' => 'Menadżer Wiki',
 	'user-identity-box-group-helper' => 'Helper',
-	'user-identity-box-group-soad' => 'SOAD',
+	'user-identity-box-group-soap' => 'SOAP',
 	'user-identity-box-group-authenticated' => 'Autoryzowany',
 	'user-identity-box-group-council' => 'Council',
 	'user-identity-box-zero-state-location' => 'Lokalizacja',
@@ -3857,4 +3857,3 @@ $messages['zh-hant'] = array(
 	'user-identity-box-discord-handle-hint' => '提示：名字#1234',
 	'user-identity-box-group-content-team-member' => '內容團隊人員',
 );
-
