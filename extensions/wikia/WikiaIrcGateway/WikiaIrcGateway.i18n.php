@@ -110,7 +110,7 @@ $messages['es'] = [
 	'ircgate-channellist' => '*group: General
 * #wikia-es
 * ##wikia
-* #wikia-soad
+* #wikia-soap
 *group-end
 *group: Canales hispanos
 * #dragonball-es
@@ -402,4 +402,3 @@ $messages['zh-hans'] = [
 $messages['zh-hant'] = [
 	'ircgate-username' => '使用者名稱：',
 ];
-
