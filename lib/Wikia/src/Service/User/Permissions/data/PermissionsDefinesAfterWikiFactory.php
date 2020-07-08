@@ -408,7 +408,7 @@ $wgGroupPermissions['staff']['minieditor-specialpage'] = true;
 
 $wgGroupPermissions['staff']['multidelete'] = true;
 $wgGroupPermissions['helper']['multidelete'] = true;
-$wgGroupPermissions['soad']['multidelete'] = true;
+$wgGroupPermissions['soap']['multidelete'] = true;
 $wgGroupPermissions['wiki-manager']['multidelete'] = true;
 
 $wgGroupPermissions['staff']['multiwikiedit'] = true;
