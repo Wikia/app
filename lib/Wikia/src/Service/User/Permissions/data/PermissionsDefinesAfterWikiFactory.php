@@ -180,7 +180,7 @@ $wgGroupPermissions['helper']['admindashboard'] = true;
 $wgGroupPermissions['staff']['admindashboard'] = true;
 $wgGroupPermissions['sysop']['admindashboard'] = true;
 $wgGroupPermissions['threadmoderator']['admindashboard'] = true;
-$wgGroupPermissions['soad']['admindashboard'] = true;
+$wgGroupPermissions['soap']['admindashboard'] = true;
 
 $wgGroupPermissions['sysop']['commentmove'] = true;
 $wgGroupPermissions['sysop']['commentedit'] = true;
