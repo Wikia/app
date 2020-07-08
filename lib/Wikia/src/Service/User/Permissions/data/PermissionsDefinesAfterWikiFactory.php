@@ -71,7 +71,7 @@ if (!empty($wgEnableAbuseFilterExtension)) {
 if (!empty($wgEnableNukeExt)) {
 	$wgGroupPermissions['staff']['nuke'] = true;
 	$wgGroupPermissions['helper']['nuke'] = true;
-	$wgGroupPermissions['soad']['nuke'] = true;
+	$wgGroupPermissions['soap']['nuke'] = true;
 	$wgGroupPermissions['content-team-member']['nuke'] = true;
 	$wgGroupPermissions['wiki-manager']['nuke'] = true;
 	$wgGroupPermissions['sysop']['nuke'] = false;
