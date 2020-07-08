@@ -20,7 +20,7 @@ class DatabaseGlobalUsersServiceIntegrationTest extends WikiaDatabaseTest {
 		$this->assertEquals( 'KossuthLajos', $resultMap[1]['name'] );
 		$this->assertEquals( 'FerencJozsef', $resultMap[3]['name'] );
 
-		$this->assertEquals( [ 'staff', 'soap' ], $resultMap[1]['groups'] );
+		$this->assertEquals( [ 'soap', 'staff' ], $resultMap[1]['groups'] );
 		$this->assertEquals( [ 'soap' ], $resultMap[3]['groups'] );
 	}
 
