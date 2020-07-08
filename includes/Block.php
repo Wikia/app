@@ -1229,7 +1229,7 @@ class Block {
 
 	/**
 	 * Wikia change
-	 * SUS-288: Hide blocker name from logs and error pages if the block was made by staff/SOAD
+	 * SUS-288: Hide blocker name from logs and error pages if the block was made by staff/SOAP
 	 * @return bool Whether to hide the blocker's user name
 	 */
 	public function shouldHideBlockerName() {
