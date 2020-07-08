@@ -386,7 +386,7 @@ $wgGroupPermissions['staff']['imagereviewstats'] = true;
 
 
 $wgGroupPermissions['util']['promoteimagereview'] = true;
-$wgGroupPermissions['soad']['promoteimagereview'] = true;
+$wgGroupPermissions['soap']['promoteimagereview'] = true;
 
 $wgGroupPermissions['util']['promoteimagereviewquestionableimagereview'] = true;
 
