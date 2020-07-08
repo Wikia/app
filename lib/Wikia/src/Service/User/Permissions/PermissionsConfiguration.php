@@ -41,7 +41,7 @@ class PermissionsConfiguration {
 		'util',
 		'vanguard',
 		'voldev',
-		'soad',
+		'soap',
 		'fandom-editor',
 		'global-discussions-moderator',
 		'request-to-be-forgotten-admin',
