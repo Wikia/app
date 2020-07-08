@@ -35,11 +35,11 @@ if (!empty($wgEnableAbuseFilterExtension)) {
 			$wgGroupPermissions['sysop']['abusefilter-private'] = false;
 		}
 
-		$wgGroupPermissions['soad']['abusefilter-modify'] = true;
-		$wgGroupPermissions['soad']['abusefilter-modify-restricted'] = true;
-		$wgGroupPermissions['soad']['abusefilter-revert'] = true;
-		$wgGroupPermissions['soad']['abusefilter-log-detail'] = true;
-		$wgGroupPermissions['soad']['abusefilter-private'] = true;
+		$wgGroupPermissions['soap']['abusefilter-modify'] = true;
+		$wgGroupPermissions['soap']['abusefilter-modify-restricted'] = true;
+		$wgGroupPermissions['soap']['abusefilter-revert'] = true;
+		$wgGroupPermissions['soap']['abusefilter-log-detail'] = true;
+		$wgGroupPermissions['soap']['abusefilter-private'] = true;
 
 		$wgGroupPermissions['helper']['abusefilter-modify'] = true;
 		$wgGroupPermissions['helper']['abusefilter-modify-restricted'] = true;
