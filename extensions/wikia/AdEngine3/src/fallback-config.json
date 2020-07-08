@@ -824,6 +824,19 @@
             "regions": [
                 "XX"
             ],
+            "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v3.23.0/20200630.min.js"
+        },
+        {
+            "apps": [
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
+                "oasis"
+            ],
+            "regions": [
+                "XX"
+            ],
             "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v3.2.0/20200414.min.js"
         },
         {

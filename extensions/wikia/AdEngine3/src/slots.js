@@ -7,6 +7,7 @@ import {
 	FmrRotator,
 	scrollListener,
 	slotInjector,
+	slotDataParamsUpdater,
 	slotService,
 	utils,
 	getAdProductInfo
@@ -310,10 +311,19 @@ export default {
 		if (context.get('services.distroScale.enabled')) {
 			// It is required to *collapse* ICP for DistroScale
 			// TODO: clean up once we finish DS A/B test
-			slotService.setState('incontent_player', false, AdSlot.STATUS_COLLAPSE);
+			this.setupIncontentPlayerForDistroScale();
 		} else {
 			slotService.setState('incontent_player', context.get('custom.hasIncontentPlayer'));
 		}
+	},
+
+	setupIncontentPlayerForDistroScale() {
+		const slotName = 'incontent_player';
+
+		slotService.setState(slotName, false, AdSlot.STATUS_COLLAPSE);
+		slotService.on(slotName, AdSlot.STATUS_COLLAPSE, () => {
+			slotDataParamsUpdater.updateOnCreate(slotService.get(slotName));
+		});
 	},
 
 	setupIdentificators() {
