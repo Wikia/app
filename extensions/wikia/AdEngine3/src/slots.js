@@ -324,7 +324,7 @@ export default {
 		slotService.on(slotName, AdSlot.STATUS_COLLAPSE, () => {
 			slotDataParamsUpdater.updateOnCreate(slotService.get(slotName));
 		});
-	}
+	},
 
 	setupIdentificators() {
 		const pageTypeParam = PAGE_TYPES[context.get('wiki.targeting.pageType')] || 'x';
