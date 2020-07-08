@@ -154,6 +154,7 @@ async function setupAdContext(wikiContext, consents) {
 		fillerService.register(new PorvataFiller());
 	}
 
+	context.set('services.audigent.enabled', instantConfig.get('icAudigent'));
 	context.set('services.confiant.enabled', instantConfig.get('icConfiant'));
 	context.set('services.durationMedia.enabled', instantConfig.get('icDurationMedia'));
 	context.set('services.distroScale.enabled', instantConfig.get('icDistroScale'));
