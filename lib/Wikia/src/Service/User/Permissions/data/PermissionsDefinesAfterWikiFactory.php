@@ -166,7 +166,7 @@ $wgGroupPermissions['staff']['sponsored-achievements'] = true;
 $wgGroupPermissions['*']['achievements-exempt'] = false;
 $wgGroupPermissions['helper']['achievements-exempt'] = true;
 $wgGroupPermissions['staff']['achievements-exempt'] = true;
-$wgGroupPermissions['soad']['achievements-exempt'] = true;
+$wgGroupPermissions['soap']['achievements-exempt'] = true;
 $wgGroupPermissions['wiki-manager']['achievements-exempt'] = true;
 $wgGroupPermissions['content-team-member']['achievements-exempt'] = true;
 
