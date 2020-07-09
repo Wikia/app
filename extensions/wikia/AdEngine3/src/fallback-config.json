@@ -117,18 +117,6 @@
             "value": 4000
         }
     ],
-    "icTaxonomyComicsTag": [
-        {
-            "apps": [
-                "mobile-wiki",
-                "oasis"
-            ],
-            "regions": [
-                "US"
-            ],
-            "value": false
-        }
-    ],
     "icPrebidSizePriceFloorRule": [
         {
             "apps": [
@@ -609,6 +597,7 @@
                 "5410506470",
                 "5410506464",
                 "5410506473",
+                "5376167519",
                 "194029992",
                 "194029389",
                 "5406386861",
@@ -642,6 +631,7 @@
         {
             "apps": [
                 "gamepedia",
+                "mobile-wiki",
                 "oasis"
             ],
             "regions": [
