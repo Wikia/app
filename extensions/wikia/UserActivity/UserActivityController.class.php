@@ -30,12 +30,7 @@ class Controller extends \WikiaController {
 			return;
 		}
 
-		$contribs = new \LookupContribsCore( $user->getName() );
-		if ( !$contribs->checkUser() ) {
-			$this->response->setData( $result );
-			return;
-		}
-
+		$contribs = new \LookupContribsCore( $user );
 		$contribs->setLimit( $limit );
 		$contribs->setOffset( $offset );
 		$contribs->setOrder( $order );

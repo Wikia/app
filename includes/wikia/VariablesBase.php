@@ -1018,7 +1018,7 @@ $wgCategoryMagicGallery = true;
 $wgCategoryPagingLimit = 200;
 
 /**
- * Points to ucp-internal-test-community.fandom.com.
+ * Points to ucp.fandom.com.
  * Should be switched to ucp.fandom.com for initial rollout and to community.fandom.com after
  * Community Central has been migrated to UCP.
  */
@@ -4730,6 +4730,7 @@ $wgGlobalUserPreferenceWhiteList = [
 		'usenewrc',
 		'userlandingpage',
 		'variant',
+		'viewmode',
 		'visualeditor-betatempdisable',
 		'visualeditor-enable',
 		'walldelete',
@@ -9376,3 +9377,23 @@ $wgIsTestWiki = false;
  * Variable storing country codes where Video Bridge can appear
  */
 $wgVideoBridgeCountries = [];
+
+/**
+ * Variable for enabling/disabling forum migration message per wiki
+ */
+$wgEnableForumMigrationMessage = true;
+
+/**
+ * Variable for enabling/disabling forum migration message globally (value from Community Central's WikiFactory is used)
+ */
+$wgEnableForumMigrationMessageGlobal = false;
+
+/**
+ * Variable for enabling/disabling message that appears after forum migration
+ */
+$wgEnablePostForumMigrationMessage = false;
+
+/**
+ * Expiration timestamp for post forum migration message
+ */
+$wgPostForumMigrationMessageExpiration = 0;

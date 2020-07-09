@@ -29,13 +29,12 @@
   "dependencies": {
     "@babel/plugin-transform-runtime": "^7.4.4",
     "@wikia/ad-engine": "git+https://github.com/Wikia/ad-engine.git#17e49d8faa31ee29e0a00cfb8b84b86bc03d6db8",
-    "@wikia/post-quecast": "1.2.0",
+    "@wikia/post-quecast": "^2.0.0",
     "babel-runtime": "6.26.0",
     "core-decorators": "^0.20.0",
     "js-cookie": "2.2.0",
     "lodash": "4.17.15",
     "rxjs": "^6.5.3",
-    "ts-action-operators": "^9.1.1",
     "uuid": "^3.3.3"
   }
 }

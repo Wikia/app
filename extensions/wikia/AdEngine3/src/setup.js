@@ -6,7 +6,6 @@ import {
 	fillerService,
 	InstantConfigCacheStorage,
 	InstantConfigService,
-	likhoService,
 	PorvataFiller,
 	setupNpaContext,
 	setupRdpContext,
@@ -101,6 +100,10 @@ async function setupAdContext(wikiContext, consents) {
 		'templates.safeFanTakeoverElement.lineItemIds',
 		instantConfig.get('icSafeFanTakeoverLineItemIds'),
 	);
+	context.set(
+		'templates.safeFanTakeoverElement.unstickTimeout',
+		instantConfig.get('icSafeFanTakeoverUnstickTimeout'),
+	);
 
 	context.set('state.deviceType', utils.client.getDeviceType());
 
@@ -131,7 +134,6 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('options.isSubjectToCcpa', !!window.wgUserIsSubjectToCcpa);
 
 	context.set('options.floatingMedrecDestroyable', instantConfig.get('icFloatingMedrecDestroyable'));
-	context.set('options.floatingMedrecRecirculationDisabled', instantConfig.get('icFloatingMedrecRecirculationDisabled'));
 
 	if (instantConfig.get('icHiViLeaderboardUnstickTimeout')) {
 		context.set(
@@ -152,18 +154,14 @@ async function setupAdContext(wikiContext, consents) {
 		fillerService.register(new PorvataFiller());
 	}
 
+	context.set('services.audigent.enabled', instantConfig.get('icAudigent'));
 	context.set('services.confiant.enabled', instantConfig.get('icConfiant'));
 	context.set('services.durationMedia.enabled', instantConfig.get('icDurationMedia'));
+	context.set('services.distroScale.enabled', instantConfig.get('icDistroScale'));
 	context.set('services.facebookPixel.enabled', instantConfig.get('icFacebookPixel'));
 	context.set('services.nielsen.enabled', instantConfig.get('icNielsen'));
 	context.set('services.permutive.enabled', instantConfig.get('icPermutive') && !context.get('wiki.targeting.directedAtChildren'));
 	context.set('services.iasPublisherOptimization.enabled', instantConfig.get('icIASPublisherOptimization'));
-
-	if (instantConfig.get('icTaxonomyComicsTag')) {
-		context.set('services.taxonomy.comics.enabled', true);
-		context.set('services.taxonomy.communityId', context.get('wiki.targeting.wikiId'));
-		context.set('services.taxonomy.pageArticleId', context.get('wiki.targeting.pageArticleId'));
-	}
 
 	context.set('options.video.moatTracking.enabledForArticleVideos', instantConfig.get('icFeaturedVideoMoatTracking'));
 	context.set('options.video.iasTracking.enabled', instantConfig.get('icIASVideoTracking'));
@@ -173,7 +171,6 @@ async function setupAdContext(wikiContext, consents) {
 		instantConfig.get('icA9LoggerErrorCodes'),
 	);
 
-	likhoService.refresh();
 	setupPageLevelTargeting(context.get('wiki'));
 
 	if (context.get('wiki.targeting.wikiIsTop1000')) {
