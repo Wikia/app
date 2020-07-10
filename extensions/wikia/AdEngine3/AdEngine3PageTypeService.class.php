@@ -45,7 +45,7 @@ class AdEngine3PageTypeService {
 		$title = null;
 		$noAdsReason = $this->adsDecider->getNoAdsReason();
 
-		if (  $noAdsReason !== null && $noAdsReason !== 'no_ads_user' ) {
+		if ( $noAdsReason !== null && $noAdsReason !== 'no_ads_user' ) {
 		// no_ads_users may still get ads on special pages - the logic is below
 			$pageLevel = self::PAGE_TYPE_NO_ADS;
 			return $pageLevel;
@@ -87,6 +87,14 @@ class AdEngine3PageTypeService {
 			in_array( $title->getDBkey(), $this->wg->PagesWithNoAdsForLoggedInUsersOverriden )
 		) {
 			$pageLevel = self::PAGE_TYPE_CORPORATE;
+			return $pageLevel;
+		}
+
+		if ( $title &&
+			!empty( $this->wg->PagesWithoutAds ) &&
+			in_array( $title->getDBkey(), $this->wg->PagesWithoutAds )
+		) {
+			$pageLevel = self::PAGE_TYPE_NO_ADS;
 			return $pageLevel;
 		}
 
