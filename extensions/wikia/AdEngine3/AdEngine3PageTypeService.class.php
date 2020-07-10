@@ -92,7 +92,7 @@ class AdEngine3PageTypeService {
 
 		if ( $title &&
 			!empty( $this->wg->PagesWithoutAds ) &&
-			in_array( $title->getDBkey(), $this->wg->PagesWithoutAds )
+			in_array( $title->getDBkey(), $this->wg->AdDriverPagesWithoutAds )
 		) {
 			$pageLevel = self::PAGE_TYPE_NO_ADS;
 			return $pageLevel;
