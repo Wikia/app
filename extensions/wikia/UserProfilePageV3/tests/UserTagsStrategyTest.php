@@ -116,8 +116,7 @@ class UserTagsStrategyTest extends WikiaBaseTest {
 			],
 			'global rights only' => [ [ 'staff', 'soap' ], [], false, false, false,
 				[
-					wfMessage( 'user-identity-box-group-staff' )->escaped(),
-					wfMessage( 'user-identity-box-group-soap' )->escaped()
+					wfMessage( 'user-identity-box-group-staff' )->escaped()
 				]
 			],
 			'founder with no global and multiple local rights' => [ [], [ 'threadmoderator', 'sysop' ], false, false, true,
