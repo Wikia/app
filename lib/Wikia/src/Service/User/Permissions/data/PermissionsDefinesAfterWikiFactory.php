@@ -35,12 +35,6 @@ if (!empty($wgEnableAbuseFilterExtension)) {
 			$wgGroupPermissions['sysop']['abusefilter-private'] = false;
 		}
 
-		$wgGroupPermissions['vstf']['abusefilter-modify'] = true;
-		$wgGroupPermissions['vstf']['abusefilter-modify-restricted'] = true;
-		$wgGroupPermissions['vstf']['abusefilter-revert'] = true;
-		$wgGroupPermissions['vstf']['abusefilter-log-detail'] = true;
-		$wgGroupPermissions['vstf']['abusefilter-private'] = true;
-
 		$wgGroupPermissions['soap']['abusefilter-modify'] = true;
 		$wgGroupPermissions['soap']['abusefilter-modify-restricted'] = true;
 		$wgGroupPermissions['soap']['abusefilter-revert'] = true;
@@ -77,7 +71,6 @@ if (!empty($wgEnableAbuseFilterExtension)) {
 if (!empty($wgEnableNukeExt)) {
 	$wgGroupPermissions['staff']['nuke'] = true;
 	$wgGroupPermissions['helper']['nuke'] = true;
-	$wgGroupPermissions['vstf']['nuke'] = true;
 	$wgGroupPermissions['soap']['nuke'] = true;
 	$wgGroupPermissions['content-team-member']['nuke'] = true;
 	$wgGroupPermissions['wiki-manager']['nuke'] = true;
@@ -173,7 +166,6 @@ $wgGroupPermissions['staff']['sponsored-achievements'] = true;
 $wgGroupPermissions['*']['achievements-exempt'] = false;
 $wgGroupPermissions['helper']['achievements-exempt'] = true;
 $wgGroupPermissions['staff']['achievements-exempt'] = true;
-$wgGroupPermissions['vstf']['achievements-exempt'] = true;
 $wgGroupPermissions['soap']['achievements-exempt'] = true;
 $wgGroupPermissions['wiki-manager']['achievements-exempt'] = true;
 $wgGroupPermissions['content-team-member']['achievements-exempt'] = true;
@@ -188,7 +180,6 @@ $wgGroupPermissions['helper']['admindashboard'] = true;
 $wgGroupPermissions['staff']['admindashboard'] = true;
 $wgGroupPermissions['sysop']['admindashboard'] = true;
 $wgGroupPermissions['threadmoderator']['admindashboard'] = true;
-$wgGroupPermissions['vstf']['admindashboard'] = true;
 $wgGroupPermissions['soap']['admindashboard'] = true;
 
 $wgGroupPermissions['sysop']['commentmove'] = true;
