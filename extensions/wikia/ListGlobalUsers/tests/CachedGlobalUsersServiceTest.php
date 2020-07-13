@@ -62,9 +62,9 @@ class CachedGlobalUsersServiceTest extends TestCase {
 			->with( [ 'soap', 'staff', 'helper' ] )
 			->willReturn( $example );
 
-		$freshResult = $this->cachedGlobalUsersService->getGroupMembers( [ 'staff', 'vstf', 'helper' ] );
-		$cachedResult = $this->cachedGlobalUsersService->getGroupMembers( [ 'helper', 'staff', 'vstf' ] );
-		$secondCachedResult = $this->cachedGlobalUsersService->getGroupMembers( [ 'vstf', 'helper', 'staff' ] );
+		$freshResult = $this->cachedGlobalUsersService->getGroupMembers( [ 'soap', 'staff', 'helper' ] );
+		$cachedResult = $this->cachedGlobalUsersService->getGroupMembers( [ 'helper', 'soap', 'staff' ] );
+		$secondCachedResult = $this->cachedGlobalUsersService->getGroupMembers( [ 'helper', 'soap', 'staff' ] );
 
 		$this->assertEquals( $example, $freshResult );
 		$this->assertEquals( $example, $cachedResult );

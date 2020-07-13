@@ -15,7 +15,7 @@ $GLOBALS['wgSpecialPageGroups']['ListGlobalUsers'] = 'users';
 
 // aliases
 $GLOBALS['wgSpecialPages']['ListStaff'] = 'SpecialListStaff';
-$GLOBALS['wgSpecialPages']['ListVstf'] = 'SpecialListVstf';
+$GLOBALS['wgSpecialPages']['ListSoap'] = 'SpecialListSoap';
 $GLOBALS['wgSpecialPages']['ListHelpers'] = 'SpecialListHelpers';
 
 $GLOBALS['wgResourceModules']['ext.wikia.ListGlobalUsers'] = [
