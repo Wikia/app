@@ -97,6 +97,7 @@ REPLACE INTO interwiki (iw_prefix,iw_url,iw_local,iw_trans) VALUES
 ('zeldapendium','http://www.zeldapendium.de/wiki/$1','0','0'),
 ('homepage','https://www.fandom.com/$1','1','0'),
 ('vstf','https://vstf.fandom.com/wiki/$1','1','0'),
+('soap','https://soap.fandom.com/wiki/$1','1','0'),
 ('wp','http://en.wikipedia.org/wiki/$1','0','0'),
 ('fandom','https://fandom.com/articles/$1','1','0');
 

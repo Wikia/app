@@ -265,7 +265,7 @@ $messages['qqq'] = array(
 	'wall-message-remove' => 'Menu item to remove a message.
 {{Identical|Remove}}',
 	'wall-message-rev-delete' => 'Dropdown menu for staff, option to revision-delete the message',
-	'wall-message-fast-admin-delete-message' => 'Button for vstf, allow to delete without any confirmation',
+	'wall-message-fast-admin-delete-message' => 'Button for soap, allow to delete without any confirmation',
 	'wall-message-quote-button' => 'Quote button on messages
 {{Identical|Quote}}',
 	'wall-message-elseswall' => "Link to a user's wall. Parameters:

@@ -50,7 +50,7 @@ $specialPageAliases['it'] = array(
 $specialPageAliases['ko'] = array(
 	'Listsoap'	=> array( '스태프' ),
 	'Liststaff'	=> array( '헬퍼' ),
-	'Listhelpers'	=> array( 'VSTF' ),
+	'Listhelpers'	=> array( 'SOAP' ),
 );
 
 /**
