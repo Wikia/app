@@ -86,6 +86,8 @@ $messages['en'] = array(
 	'group-wiki-manager-member' => 'Wiki Manager',
 	'group-content-team-member' => 'Content Team Members',
 	'group-content-team-member-member' => 'Content Team Member',
+	'group-soap' => 'Spam Obliteration and Prevention',
+	'group-soap-member' => 'Spam Obliteration and Prevention Member',
 );
 
 $messages['qqq'] = array(

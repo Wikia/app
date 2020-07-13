@@ -131,6 +131,9 @@ class UserTagsStrategy extends WikiaObject {
 				case 'vstf':
 					$tags[] = wfMessage( 'user-identity-box-group-vstf' )->escaped();
 					break;
+				case 'soap':
+					$tags[] = wfMessage( 'user-identity-box-group-soap' )->escaped();
+					break;
 				case 'voldev':
 					$tags[] = wfMessage( 'user-identity-box-group-voldev' )->escaped();
 					break;
