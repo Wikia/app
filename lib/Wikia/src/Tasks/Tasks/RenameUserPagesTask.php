@@ -5,6 +5,7 @@ use Exception;
 use Title;
 use User;
 use Wikia;
+use Wikia\Factory\ServiceFactory;
 use Wikia\Logger\Loggable;
 
 class RenameUserPagesTask extends BaseTask {
@@ -45,6 +46,22 @@ class RenameUserPagesTask extends BaseTask {
 			'page_namespace' => static::NAMESPACES,
 			'page_title' => self::normalizeUserName( $oldUserName )
 		], __METHOD__ , [ 'DISTINCT' ] );
+	}
+
+	public function renameLocalPagesAndMarkAsDone( int $renameLogId, string $oldUserName, string $newUserName ) {
+		global $wgSpecialsDB, $wgCityId;
+		$this->renameLocalPages($oldUserName, $newUserName );
+		$dbw = wfGetDB( DB_MASTER, [], $wgSpecialsDB );
+		$dbw->update(
+			'rename_log_details',
+			[
+				'finished' => wfTimestamp( TS_DB ),
+				'was_successful' => true,
+			],
+			[ 'rename_log_id' => $renameLogId, 'wiki_id' => $wgCityId ]
+		);
+		ServiceFactory::instance()->ucpTaskFactory()
+			->queue()->attemptToFinishRename( $renameLogId );
 	}
 
 	/**

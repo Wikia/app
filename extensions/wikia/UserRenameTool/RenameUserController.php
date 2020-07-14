@@ -37,4 +37,36 @@ final class RenameUserController extends WikiaController {
 		$task->renameLocalPages( $oldUsername, $newUsername );
 		$this->response->setCode( WikiaResponse::RESPONSE_CODE_OK );
 	}
+
+
+	/**
+	 * Introduced for UCP. This method will be triggered by UCP to schedule renaming all necessary pages after an
+	 * account rename.
+	 * This can be executed in the context of any wiki, preferably Community Central.
+	 */
+	public function scheduleLocalRename() {
+		// Set initial response code to 500. It will be overridden when request is successful
+		$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
+		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
+		if ( !$this->request->wasPosted() ) {
+			$this->response->setCode( 405 );
+
+			return;
+		}
+		$newUsername = $this->getVal( 'newUsername' );
+		$oldUsername = $this->getVal( 'oldUsername' );
+		$targetWikiId = (int)$this->getVal( 'targetWikiId' );
+		$renameLogId = (int)$this->getVal( 'renameLogId' );
+		if ( empty( $newUsername ) || empty( $oldUsername ) ) {
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
+
+			return;
+		}
+
+		$task = new RenameUserPagesTask();
+		$task->call( 'renameLocalPagesAndMarkAsDone', $renameLogId, $oldUsername, $newUsername );
+		$task->wikiId( $targetWikiId )->queue();
+
+		$this->response->setCode( WikiaResponse::RESPONSE_CODE_OK );
+	}
 }
