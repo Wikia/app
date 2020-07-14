@@ -57,7 +57,7 @@ $specialPageAliases['ko'] = array(
  * Dutch (Nederlands)
  */
 $specialPageAliases['nl'] = array(
-	'Listsoap'	=> array( 'Vstflijst' ),
+	'Listsoap'	=> array( 'Soaplijst' ),
 	'Liststaff'	=> array( 'Medewerkerlijst', 'Medewerkerslijst', 'Stafledenlijst' ),
 	'Listhelpers'	=> array( 'Helperlijst', 'Helperslijst' ),
 );
