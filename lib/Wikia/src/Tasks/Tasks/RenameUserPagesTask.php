@@ -51,22 +51,27 @@ class RenameUserPagesTask extends BaseTask {
 	public function renameLocalPagesAndMarkAsDone( int $renameLogId, string $oldUserName, string $newUserName ) {
 		global $wgSpecialsDB, $wgCityId;
 		$marker = [ 'rename_log_id' => $renameLogId ];
-		$this->info( __METHOD__ . 'starting local rename', $marker );
-		$this->renameLocalPages($oldUserName, $newUserName );
-		$this->info( __METHOD__ . 'local rename success', $marker );
-		$dbw = wfGetDB( DB_MASTER, [], $wgSpecialsDB );
-		$dbw->update(
-			'rename_log_details',
-			[
-				'finished' => wfTimestamp( TS_DB ),
-				'was_successful' => true,
-			],
-			[ 'rename_log_id' => $renameLogId, 'wiki_id' => $wgCityId ]
-		);
-		$this->info( __METHOD__ . 'marked local rename success', $marker );
-		ServiceFactory::instance()->ucpTaskFactory()
-			->queue()->attemptToFinishRename( $renameLogId );
-		$this->info( __METHOD__ . 'scheduled attempt to finish rename', $marker );
+		try {
+			$this->info( __METHOD__ . 'starting local rename', $marker );
+			$this->renameLocalPages( $oldUserName, $newUserName );
+			$this->info( __METHOD__ . 'local rename success', $marker );
+			$dbw = wfGetDB( DB_MASTER, [], $wgSpecialsDB );
+			$dbw->update(
+				'rename_log_details',
+				[
+					'finished' => wfTimestamp( TS_DB ),
+					'was_successful' => true,
+				],
+				[ 'rename_log_id' => $renameLogId, 'wiki_id' => $wgCityId ]
+			);
+			$this->info( __METHOD__ . 'marked local rename success', $marker );
+			ServiceFactory::instance()->ucpTaskFactory()
+				->queue()->attemptToFinishRename( $renameLogId );
+			$this->info( __METHOD__ . 'scheduled attempt to finish rename', $marker );
+		} catch (Exception $e) {
+			$this->error( __METHOD__ . 'failed to perform local rename ' . $e->getMessage(), $marker );
+			throw $e;
+		}
 	}
 
 	/**
