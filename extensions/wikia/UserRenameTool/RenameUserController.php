@@ -57,7 +57,7 @@ final class RenameUserController extends WikiaController {
 		$oldUsername = $this->getVal( 'oldUsername' );
 		$targetWikiId = (int)$this->getVal( 'targetWikiId' );
 		$renameLogId = (int)$this->getVal( 'renameLogId' );
-		if ( empty( $newUsername ) || empty( $oldUsername ) ) {
+		if ( empty( $newUsername ) || empty( $oldUsername ) || empty( $renameLogId) ) {
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
 
 			return;
