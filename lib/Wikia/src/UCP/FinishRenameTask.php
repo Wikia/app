@@ -28,7 +28,7 @@ class FinishRenameTask extends AsyncTaskList {
 		return [
 			'type' => 'AttemptToFinishRenameJob',
   			'wikiId' => $wgCentralWikiId,
-			'createdAt' => "2020-07-12T12:29:00Z",
+			'createdAt' => wfTimestamp( TS_ISO_8601 ),
   			'params' => [
 				'renameLogId' => $this->renameLogId,
 			]
