@@ -702,16 +702,7 @@ define('wikia.vet', [
 			// attach handlers - search
 			this.cachedSelectors.searchForm.submit(function (event) {
 				event.preventDefault();
-				var esc_map = {
-					'&': '&amp;',
-					'<': '&lt;',
-					'>': '&gt;',
-					'"': '&quot;',
-					"'": '&#39;'
-				};
-				var keywords = $(this).find('#VET-search-field').val().replace( /[&<>'"]/g, function(c) {
-					return esc_map[c];
-				});
+				var keywords = mw.html.escape($(this).find('#VET-search-field').val());
 
 				if (keywords !== '' && self.searchCachedStuff.currentKeywords !== keywords) {
 
