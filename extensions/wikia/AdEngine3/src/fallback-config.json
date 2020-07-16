@@ -117,18 +117,6 @@
             "value": 4000
         }
     ],
-    "icTaxonomyComicsTag": [
-        {
-            "apps": [
-                "mobile-wiki",
-                "oasis"
-            ],
-            "regions": [
-                "US"
-            ],
-            "value": false
-        }
-    ],
     "icPrebidSizePriceFloorRule": [
         {
             "apps": [
@@ -376,10 +364,7 @@
                 "oasis"
             ],
             "regions": [
-                "CA",
-                "ES",
-                "GB",
-                "UK"
+                "XX"
             ],
             "value": true
         }
@@ -609,10 +594,13 @@
                 "5410506470",
                 "5410506464",
                 "5410506473",
+                "5376167519",
                 "194029992",
                 "194029389",
                 "5406386861",
-                "5406386864"
+                "5406386864",
+                "5419007438",
+                "5411280632"
             ]
         }
     ],
@@ -642,6 +630,7 @@
         {
             "apps": [
                 "gamepedia",
+                "mobile-wiki",
                 "oasis"
             ],
             "regions": [
@@ -657,8 +646,7 @@
                 "oasis"
             ],
             "regions": [
-                "XX",
-                "non-US"
+                "XX"
             ],
             "value": true
         }
@@ -824,33 +812,7 @@
             "regions": [
                 "XX"
             ],
-            "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v3.23.0/20200630.min.js"
-        },
-        {
-            "apps": [
-                "futhead",
-                "gamepedia",
-                "mobile-wiki",
-                "muthead",
-                "oasis"
-            ],
-            "regions": [
-                "XX"
-            ],
-            "value": "https://origin-images.wikia.com/fandom-ae-assets/prebid.js/v3.2.0/20200414.min.js"
-        },
-        {
-            "apps": [
-                "futhead",
-                "gamepedia",
-                "mobile-wiki",
-                "muthead",
-                "oasis"
-            ],
-            "regions": [
-                "XX"
-            ],
-            "value": "//static.wikia.nocookie.net/fandom-ae-assets/prebid.js/v3.2.0/20200414.min.js"
+            "value": "//static.wikia.nocookie.net/fandom-ae-assets/prebid.js/v3.23.0/20200630.min.js"
         }
     ],
     "icA9Bidder": [
@@ -875,10 +837,7 @@
                 "oasis"
             ],
             "regions": [
-                "CA",
-                "ES",
-                "GB",
-                "UK"
+                "XX"
             ],
             "value": [
                 "featured"
