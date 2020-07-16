@@ -81,7 +81,7 @@ class ForumWikiIds extends Maintenance {
 			->IN( array_keys($cities) )
 			->runLoop(
 				$db,
-				function ( &$data, $row ) use ( $fh, &$values ) {
+				function ( &$data, $row ) use ( $fh, &$meta ) {
 					$meta[$row->city_id] = [
 						"url" => $row->city_url,
 						"lang" => $row->city_lang,
