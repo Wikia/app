@@ -32,7 +32,6 @@ class CommunityPageSpecialUsersModel {
 		'content-moderator' => 'wds-avatar-badges-content-moderator',
 		'staff' => 'wds-avatar-badges-staff',
 		'helper' => 'wds-avatar-badges-helper',
-		'soap' => 'wds-avatar-badges-soap',
 	];
 
 	const PERMISSIONS_TO_GROUP_MSG_KEY = [
