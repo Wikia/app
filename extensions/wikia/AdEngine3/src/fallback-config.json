@@ -1017,7 +1017,11 @@
             "apps": [
                 "oasis"
             ],
-            "value": false
+            "regions": [
+                "CA"
+            ],
+            "sampling": 50.0,
+            "value": true
         }
     ],
     "icFloorAdhesionDelay": [
