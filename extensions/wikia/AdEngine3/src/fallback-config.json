@@ -117,6 +117,18 @@
             "value": 4000
         }
     ],
+    "icAudigent": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "sampling": 10.0,
+            "value": true
+        }
+    ],
     "icPrebidSizePriceFloorRule": [
         {
             "apps": [
