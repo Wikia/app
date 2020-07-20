@@ -113,6 +113,12 @@ function startAdEngine(inhibitors) {
 		});
 
 		communicationService.action$.pipe(
+			ofType('[AdEngine] Identity library ids loaded')
+		).subscribe((props) => {
+			pageTracker.trackProp('identity_library_ids_loaded', identityLibrary.getUids());
+		});
+
+		communicationService.action$.pipe(
 			ofType('[AdEngine] Audigent loaded')
 		).subscribe((props) => {
 			pageTracker.trackProp('audigent', 'loaded');
