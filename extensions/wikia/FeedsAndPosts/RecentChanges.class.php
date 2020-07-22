@@ -2,6 +2,8 @@
 
 namespace Wikia\FeedsAndPosts;
 
+use WikiaResponse;
+
 class RecentChanges {
 
 	const LIMIT = 4;
@@ -18,16 +20,19 @@ class RecentChanges {
 	}
 
 	private function getImage( $title, $width, $ratio ) {
-		$response = $this->requestAPI( [
-			'action' => 'imageserving',
-			'wisTitle' => $title,
-		] );
+		return \WikiaDataAccess::cache( wfMemcKey( "feeds-recent-changes-image-$title" ),
+			WikiaResponse::CACHE_STANDARD, function () use ( $title, $width, $ratio ) {
+				$response = $this->requestAPI( [
+					'action' => 'imageserving',
+					'wisTitle' => $title,
+				] );
 
-		if ( isset( $response['image']['imageserving'] ) ) {
-			return Thumbnails::getThumbnailUrl( $response['image']['imageserving'], $width, $ratio );
-		}
+				if ( isset( $response['image']['imageserving'] ) ) {
+					return Thumbnails::getThumbnailUrl( $response['image']['imageserving'], $width, $ratio );
+				}
 
-		return null;
+				return null;
+		});
 	}
 
 	private function filterByDifferenceSize($articles, $mainPageId, &$titlesMap, $onlyMajor) {
