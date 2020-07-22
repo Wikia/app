@@ -206,20 +206,20 @@ class RenameUserPagesTask extends BaseTask {
 					'title' => $title->getDBkey(),
 				]
 			);
-			$article = new Article( $title );
-			$status = $article->doDeleteArticle( $reason, true );
-
-			if ( $status !== true ) {
+			try {
+				\PermanentArticleDelete::deletePage( $title );
+			} catch ( \Exception $exception ) {
 				$this->error(
 					'MassRename: Failed to remove redirect page',
 					[
-						'status' => $status,
+						'exception' => $exception,
 						'namespace' => $title->getNsText(),
 						'title' => $title->getDBkey(),
 					]
 				);
-				throw new Exception( 'MassRename: Failed to remove redirect page' );
+				throw $exception;
 			}
+
 			$title->invalidateCache();
 		}
 	}
