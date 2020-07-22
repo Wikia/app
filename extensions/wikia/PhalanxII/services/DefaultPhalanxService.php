@@ -7,6 +7,7 @@ use Wikia\Service\Gateway\UrlProvider;
  * and immediately throws exception if the request fails.
  */
 class DefaultPhalanxService implements PhalanxService {
+	use \Wikia\Logger\Loggable;
 	const REGEX_VALID_RESPONSE = "ok\n";
 
 	/** @var UrlProvider $urlProvider */
@@ -23,7 +24,7 @@ class DefaultPhalanxService implements PhalanxService {
 	 */
 	public function doMatch( PhalanxMatchParams $phalanxMatchParams ): array {
 		$response = $this->doRequest( 'match', $phalanxMatchParams->buildQueryParams() );
-
+$this->error( "TEST123123123 " . $phalanxMatchParams->buildQueryParams() );
 		if ( $response === false ) {
 			throw new PhalanxServiceException();
 		}
