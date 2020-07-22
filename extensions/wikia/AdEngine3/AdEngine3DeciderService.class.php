@@ -53,7 +53,7 @@ class AdEngine3DeciderService {
 		$title = $this->wg->Title;
 		if ( $title &&
 			!empty( $this->wg->AdDriverPagesWithoutAds ) &&
-			in_array( $title->getDBkey(), $this->wg->AdDriverPagesWithoutAds )
+			in_array( $title->getPrefixedDBKey(), $this->wg->AdDriverPagesWithoutAds )
 		) {
 			return true;
 		}
