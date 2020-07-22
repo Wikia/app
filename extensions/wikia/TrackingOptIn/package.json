@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "dependencies": {
-    "@wikia/tracking-opt-in": "4.0.1"
+    "@wikia/tracking-opt-in": "git@github.com:Wikia/tracking-opt-in.git#ba01ea3e13802fdf8ff9084bfb2fe75166b02890"
   },
   "devDependencies": {
     "babel-loader": "^7.1.2",
