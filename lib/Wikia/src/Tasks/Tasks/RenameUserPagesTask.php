@@ -1,6 +1,7 @@
 <?php
 namespace Wikia\Tasks\Tasks;
 
+use Article;
 use Exception;
 use Title;
 use User;
@@ -158,6 +159,69 @@ class RenameUserPagesTask extends BaseTask {
 
 		$user = User::newFromName( $newUserName );
 		$user->deleteCache();
+	}
+
+	/**
+	 * @param string $oldUserName
+	 */
+	public function removeRedirects( string $oldUserName ) {
+		// SUS-3835: suppress watchlist emails
+		global $wgEnotifWatchlist, $wgEnotifUserTalk, $wgCommandLineMode;
+		$wgCommandLineMode = true;
+		$wgEnotifWatchlist = false;
+		$wgEnotifUserTalk = false;
+		$GLOBALS['wgUser'] = User::newFromName( Wikia::BOT_USER );
+
+		$dbr = wfGetDB( DB_SLAVE );
+		$normalizedOldUsername = self::normalizeUserName( $oldUserName );
+
+		$subPagesLikeQuery = $dbr->buildLike( "$normalizedOldUsername/", $dbr->anyString() );
+
+		$resultSet = $dbr->select( 'page', '*', [
+			'page_is_redirect' => 1,
+			'page_namespace' => [
+				2, // User
+				3, // User talk
+				500, // User blog
+				1200, // Message Wall
+				1202, // Message Wall Greeting
+			],
+			'page_title = '. $dbr->addQuotes( $normalizedOldUsername ) . " OR page_title $subPagesLikeQuery"
+		], __METHOD__ );
+
+		$reason = wfMessage('brokenredirects' )->inContentLanguage()->text();
+
+		foreach ( $resultSet as $row ) {
+			$title = Title::newFromRow( $row );
+
+			// Sanity check
+			if ( !$title->isRedirect() ) {
+				continue;
+			}
+
+			$this->info(
+				'MassRename: Removing redirect page',
+				[
+					'namespace' => $title->getNsText(),
+					'title' => $title->getDBkey(),
+				]
+			);
+			$article = new Article( $title );
+			$status = $article->doDeleteArticle( $reason, true );
+
+			if ( $status !== true ) {
+				$this->error(
+					'MassRename: Failed to remove redirect page',
+					[
+						'status' => $status,
+						'namespace' => $title->getNsText(),
+						'title' => $title->getDBkey(),
+					]
+				);
+				throw new Exception( 'MassRename: Failed to remove redirect page' );
+			}
+			$title->invalidateCache();
+		}
 	}
 
 	private function renameCheckUserMentions( string $oldUsername, string $newUsername ): void {
