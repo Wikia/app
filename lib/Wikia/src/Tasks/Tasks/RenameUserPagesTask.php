@@ -105,6 +105,17 @@ class RenameUserPagesTask extends BaseTask {
 
 		foreach ( $resultSet as $row ) {
 			$title = Title::newFromRow( $row );
+			if ( $title->isRedirect() ) {
+				$this->warning(
+					'UserRename: Page is redirect. Skipping',
+					[
+						'page' => $title->getText(),
+						'new_username' => $newUserName,
+						'old_username' => $oldUserName,
+					]
+				);
+				continue;
+			}
 
 			$newTitleText = preg_replace( "/$normalizedOldUsername/", $newUserName, $row->page_title );
 			$newTitle = Title::makeTitleSafe( $row->page_namespace, $newTitleText );
