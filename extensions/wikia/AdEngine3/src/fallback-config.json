@@ -125,7 +125,6 @@
             "regions": [
                 "XX"
             ],
-            "sampling": 10.0,
             "value": true
         }
     ],
