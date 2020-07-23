@@ -89,13 +89,6 @@ class DataWarehouseEventProducerController {
 			$oEventProducer->sendLog();
 		}
 
-		if ( !empty( $redirect_id ) ) {
-			$oEventProducer = new DataWarehouseEventProducer( 'edit' );
-			if ( $oEventProducer->buildMovePackage( $oOldTitle, $oUser, null, $redirect_id ) ) {
-				$oEventProducer->sendLog();
-			}
-		}
-
 		wfProfileOut( __METHOD__ );
 		return true;
 	}
