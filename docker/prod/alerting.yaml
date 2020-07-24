@@ -68,14 +68,6 @@ spec:
       annotations:
         description: FounderEmailsMaintenance maintenance script did not run in the last 24 hours
         summary: FounderEmailsMaintenance last succeeded {{humanizeDuration $value}} ago
-    # MigratePhalanxUserBlocks should be run every 24h
-    - alert: mediawiki_maintenance_scripts_MigratePhalanxUserBlocks_last_run
-      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="MigratePhalanxUserBlocks"}) > 3600 * 25
-      labels:
-        team: services
-      annotations:
-        description: MigratePhalanxUserBlocks maintenance script did not run in the last 24 hours
-        summary: MigratePhalanxUserBlocks last succeeded {{humanizeDuration $value}} ago
     # PhraseAlerts should be run every 24h
     - alert: mediawiki_maintenance_scripts_PhraseAlerts_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="PhraseAlerts"}) > 3600 * 25
