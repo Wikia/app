@@ -14,7 +14,7 @@ class UserPageDeleter {
 			}
 
 			$error = '';
-			$successfullyDeleted = $page->doDeleteArticle($reason, false, 0, true, $error, $requester);
+			$successfullyDeleted = $page->doDeleteArticle($reason, true, 0, true, $error, $requester);
 
 			if (!$successfullyDeleted) {
 				$this->warning("CoppaTool: Page selected to delete is missing {$pageName}", ['error' => $error]);

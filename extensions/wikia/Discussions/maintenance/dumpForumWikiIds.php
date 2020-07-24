@@ -65,15 +65,39 @@ class ForumWikiIds extends Maintenance {
 				$db,
 				function ( &$data, $row ) use ( $fh, &$values ) {
 					$values[$row->city_id] = [
-						"value" => $row->cv_value
+						"discussionValue" => $row->cv_value
+					];
+				}
+			);
+
+		$meta = [];
+		( new \WikiaSQL() )->SELECT(
+			"city_id, city_url, city_lang, vertical_name"
+		)
+			->FROM( "city_list" )
+			->JOIN( "city_verticals" )
+			->ON( 'city_list.city_vertical', 'city_verticals.vertical_id' )
+			->WHERE( 'city_id' )
+			->IN( array_keys($cities) )
+			->runLoop(
+				$db,
+				function ( &$data, $row ) use ( $fh, &$meta ) {
+					$meta[$row->city_id] = [
+						"url" => $row->city_url,
+						"lang" => $row->city_lang,
+						"vertical" => $row->vertical_name
 					];
 				}
 			);
 
 		foreach ( $cities as $id => $data ) {
-			$discussionValue = array_key_exists($id, $values) ? $values[$id]['value'] : '';
+			$discussionValue = array_key_exists($id, $values) ? $values[$id]['discussionValue'] : '';
 			$discussionEnabled = empty($discussionValue) ? 'no' : (strcmp($discussionValue, 'b:1;') == 0 ? 'yes' : 'no');
-			fwrite( $fh, $id . ';' . $data['isPublic'] . ';' . $discussionEnabled . ";\n" );
+			$url = array_key_exists($id, $meta) ? $meta[$id]['url'] : '';
+			$lang = array_key_exists($id, $meta) ? $meta[$id]['lang'] : '';
+			$vertical = array_key_exists($id, $meta) ? $meta[$id]['vertical'] : '';
+			fwrite( $fh, $id . ';' . $data['isPublic'] . ';' . $discussionEnabled . ";"
+			. $url . ";" . $lang . ";" . $vertical . ";\n");
 		}
 
 		fclose( $fh );

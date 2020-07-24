@@ -117,6 +117,17 @@
             "value": 4000
         }
     ],
+    "icAudigent": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "value": true
+        }
+    ],
     "icPrebidSizePriceFloorRule": [
         {
             "apps": [
@@ -621,8 +632,8 @@
                 "icPrebidSendAllBids_B_5:send_all_bids_b",
                 "icFloatingMedrecRecirculationDisabled_A_90:fmr_50_50_a",
                 "icFloatingMedrecRecirculationDisabled_B_10:fmr_50_50_b",
-                "icIxIdentityLibrary_A_50:ix_library_a",
-                "icIxIdentityLibrary_B_50:ix_library_b"
+                "icIxIdentityLibrary_A_90:ix_library_a",
+                "icIxIdentityLibrary_B_10:ix_library_b"
             ]
         }
     ],
@@ -866,11 +877,9 @@
                 "oasis"
             ],
             "regions": [
-                "CA",
-                "HK",
-                "NL"
+                "XX"
             ],
-            "sampling": 50.0,
+            "sampling": 10.0,
             "samplingCache": true,
             "value": true
         }
@@ -1017,7 +1026,11 @@
             "apps": [
                 "oasis"
             ],
-            "value": false
+            "regions": [
+                "CA"
+            ],
+            "sampling": 50.0,
+            "value": true
         }
     ],
     "icFloorAdhesionDelay": [

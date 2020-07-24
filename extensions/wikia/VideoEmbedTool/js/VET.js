@@ -702,7 +702,8 @@ define('wikia.vet', [
 			// attach handlers - search
 			this.cachedSelectors.searchForm.submit(function (event) {
 				event.preventDefault();
-				var keywords = $(this).find('#VET-search-field').val();
+				var keywords = mw.html.escape($(this).find('#VET-search-field').val());
+
 				if (keywords !== '' && self.searchCachedStuff.currentKeywords !== keywords) {
 
 					// switch fetch more handler to fetch search mode;
