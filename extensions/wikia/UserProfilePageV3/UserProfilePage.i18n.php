@@ -746,7 +746,7 @@ $messages['de'] = array(
 	'user-identity-box-discord-handle-content' => 'Benutzername: $1',
 	'user-identity-box-my-discord-handle' => 'Mein Discord',
 	'user-identity-box-discord-handle-hint' => 'Hinweis: Name#1234',
-	'user-identity-box-group-content-team-member' => 'Redaktionsmitglied',
+	'user-identity-box-group-content-team-member' => 'Fandom-Artikel-Team',
 );
 
 $messages['de-ch'] = array(
@@ -1785,6 +1785,7 @@ $messages['it'] = array(
 	'user-identity-box-my-discord-handle' => 'Il mio Discord',
 	'user-identity-box-discord-handle-hint' => 'Suggerimento: Nome#1234',
 	'user-identity-box-group-content-team-member' => 'Membro del team per i contenuti',
+	'user-identity-box-group-soap' => 'SOAP',
 );
 
 $messages['ja'] = array(
