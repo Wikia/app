@@ -86,6 +86,8 @@ $messages['en'] = array(
 	'group-wiki-manager-member' => 'Wiki Manager',
 	'group-content-team-member' => 'Content Team Members',
 	'group-content-team-member-member' => 'Content Team Member',
+	'group-soap' => 'Spam Obliteration and Prevention',
+	'group-soap-member' => 'Spam Obliteration and Prevention Member',
 );
 
 $messages['qqq'] = array(
@@ -1549,9 +1551,10 @@ $messages['de'] = array(
 	'group-wiki-manager' => 'Wiki-Manager',
 	'group-wiki-manager-member' => 'Wiki-Manager',
 	'grouppage-wiki-manager' => 'Hilfe:Wiki-Manager',
-	'group-content-team-member' => 'Redaktionsmitglieder',
-	'grouppage-content-team-member' => 'Hilfe:Redaktionsmitglieder',
-	'group-content-team-member-member' => 'Redaktionsmitglied',
+	'group-content-team-member' => 'Fandom-Artikel-Team',
+	'grouppage-content-team-member' => 'Hilfe:Fandom-Artikel-Team',
+	'group-content-team-member-member' => 'Fandom-Artikel-Team',
+	'grouppage-soap' => 'w:c:de.community:Hilfe:VSTF',
 );
 
 $messages['de-formal'] = array(
@@ -1820,6 +1823,7 @@ $messages['es'] = array(
 	'group-content-team-member' => 'Content Team Members',
 	'grouppage-content-team-member' => 'Ayuda:Content Team Members',
 	'group-content-team-member-member' => 'Content Team Member',
+	'grouppage-soap' => 'w:c:comunidad:Comunidad Central:SpamTaskForce',
 );
 
 $messages['et'] = array(
@@ -2138,6 +2142,7 @@ $messages['fr'] = array(
 	'group-content-team-member' => "Membres de l'équipe Contenu",
 	'grouppage-content-team-member' => "Aide:Membres de l'équipe Contenu",
 	'group-content-team-member-member' => "Membre de l'équipe Contenu",
+	'grouppage-soap' => "w:c:communaute:Aide:Niveaux d'accès utilisateur#VSTF",
 );
 
 $messages['frc'] = array(
@@ -3192,6 +3197,9 @@ $messages['it'] = array(
 	'group-content-team-member' => 'Membri del team per i contenuti',
 	'grouppage-content-team-member' => 'Aiuto:Membri del team per i contenuti',
 	'group-content-team-member-member' => 'Membro del team per i contenuti',
+	'group-soap' => 'Spam Obliteration and Prevention',
+	'group-soap-member' => 'membro Spam Obliteration and Prevention',
+	'grouppage-soap' => 'w:it:Aiuto:Diritti degli utenti#VSTF',
 );
 
 $messages['iu'] = array(
@@ -3315,6 +3323,7 @@ $messages['ja'] = array(
 	'group-content-team-member' => 'コンテンツ・チーム・メンバー',
 	'grouppage-content-team-member' => 'ヘルプ:コンテンツ・チーム・メンバー',
 	'group-content-team-member-member' => 'コンテンツ・チーム・メンバー',
+	'grouppage-soap' => 'w:c:ja.community:ヘルプ:スパムタスクフォース',
 );
 
 $messages['jam'] = array(
@@ -5328,6 +5337,7 @@ $messages['pl'] = array(
 	'group-content-team-member' => 'Członkowie Zespołu Treści',
 	'grouppage-content-team-member' => 'Help:Członkowie Zespołu Treści',
 	'group-content-team-member-member' => 'Członek Zespołu Treści',
+	'grouppage-soap' => 'w:pl:Pomoc:Volunteer_Spam_Task_Force',
 );
 
 $messages['pms'] = array(
@@ -5553,6 +5563,7 @@ $messages['pt'] = array(
 	'group-content-team-member' => 'Membros da equipe de conteúdo',
 	'grouppage-content-team-member' => 'Ajuda:Membros da equipe de conteúdo',
 	'group-content-team-member-member' => 'Membro da equipe de conteúdo',
+	'grouppage-soap' => 'w:Wikia:SpamTaskForce',
 );
 
 $messages['qu'] = array(
@@ -5804,14 +5815,15 @@ $messages['ru'] = array(
 	'group-global-discussions-moderator-member' => 'Модератор Обсуждений ФЭНДОМА',
 	'group-content-volunteer' => 'Content Volunteers',
 	'group-content-volunteer-member' => 'Content Volunteer',
-	'group-request-to-be-forgotten-admin-member' => 'Администратор инструмента запроса на удаление',
-	'group-request-to-be-forgotten-admin' => 'Администратор инструмента запроса на удаление',
-	'group-wiki-manager' => 'Руководители вики',
-	'group-wiki-manager-member' => 'Руководитель вики',
-	'grouppage-wiki-manager' => 'Справка:Руководители вики',
-	'group-content-team-member' => 'Участники редакции',
-	'grouppage-content-team-member' => 'Справка:Участники редакции',
-	'group-content-team-member-member' => 'Участник редакции',
+	'group-request-to-be-forgotten-admin-member' => 'Сотрудник по RTBF',
+	'group-request-to-be-forgotten-admin' => 'Сотрудники по RTBF',
+	'group-wiki-manager' => 'Менеджеры вики',
+	'group-wiki-manager-member' => 'Менеджер вики',
+	'grouppage-wiki-manager' => 'Help:Wiki Managers',
+	'group-content-team-member' => 'Менеджеры по контенту',
+	'grouppage-content-team-member' => 'Help:Content Team Members',
+	'group-content-team-member-member' => 'Менеджер по контенту',
+	'grouppage-soap' => 'w:Wikia:SpamTaskForce',
 );
 
 $messages['rue'] = array(
@@ -7586,10 +7598,11 @@ $messages['zh-hans'] = array(
 	'group-request-to-be-forgotten-admin' => '被遗忘权工具管理员',
 	'group-wiki-manager' => 'Wiki主管',
 	'group-wiki-manager-member' => 'Wiki主管',
-	'grouppage-wiki-manager' => '帮助: Wiki主管',
+	'grouppage-wiki-manager' => 'w:Help:Wiki Managers',
 	'group-content-team-member' => '内容团队人员',
-	'grouppage-content-team-member' => '帮助:内容团队人员',
+	'grouppage-content-team-member' => 'w:Help:Content Team Members',
 	'group-content-team-member-member' => '内容团队人员',
+	'grouppage-soap' => 'w:Wikia:SpamTaskForce',
 );
 
 $messages['zh-hant'] = array(
@@ -7677,6 +7690,7 @@ $messages['zh-hant'] = array(
 	'group-content-team-member' => '內容團隊人員',
 	'grouppage-content-team-member' => '幫助:內容團隊人員',
 	'group-content-team-member-member' => '內容團隊人員',
+	'grouppage-soap' => 'w:c:zh.community:Help:反破壞小組',
 );
 
 $messages['zu'] = array(

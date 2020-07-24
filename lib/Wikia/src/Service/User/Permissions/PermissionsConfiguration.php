@@ -42,6 +42,7 @@ class PermissionsConfiguration {
 		'vanguard',
 		'voldev',
 		'vstf',
+		'soap',
 		'fandom-editor',
 		'global-discussions-moderator',
 		'request-to-be-forgotten-admin',
@@ -426,6 +427,9 @@ class PermissionsConfiguration {
 
 		$this->groupsSelfAddableByGroup['vstf'] = [ 'rollback', 'bot', 'sysop' ];
 		$this->groupsSelfRemovableByGroup['vstf'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat' ];
+
+		$this->groupsSelfAddableByGroup['soap'] = [ 'rollback', 'bot', 'sysop' ];
+		$this->groupsSelfRemovableByGroup['soap'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat' ];
 
 		$this->groupsSelfRemovableByGroup['chatmoderator'] = [ 'chatmoderator' ];
 		$this->groupsSelfRemovableByGroup['threadmoderator'] = [ 'threadmoderator' ];

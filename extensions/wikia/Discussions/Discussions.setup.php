@@ -63,6 +63,7 @@ $wgAvailableRights[] = 'specialdiscussions';
 $wgGroupPermissions['*']['specialdiscussions'] = false;
 $wgGroupPermissions['user']['specialdiscussions'] = false;
 $wgGroupPermissions['vstf']['specialdiscussions'] = false;
+$wgGroupPermissions['soap']['specialdiscussions'] = false;
 $wgGroupPermissions['helper']['specialdiscussions'] = true;
 $wgGroupPermissions['staff']['specialdiscussions'] = true;
 $wgGroupPermissions['wiki-manager']['specialdiscussions'] = true;

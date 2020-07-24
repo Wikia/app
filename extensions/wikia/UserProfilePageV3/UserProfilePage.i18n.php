@@ -57,6 +57,7 @@ $messages['en'] = array(
 	'user-identity-box-group-content-team-member' => 'Content Team Member',
 	'user-identity-box-group-helper' => 'Helper',
 	'user-identity-box-group-vstf' => 'VSTF',
+	'user-identity-box-group-soap' => 'SOAP',
 	'user-identity-box-group-bot' => 'Bot',
 	'user-identity-box-group-authenticated' => 'Authenticated',
 	'user-identity-box-group-council' => 'Councilor',
@@ -221,6 +222,7 @@ Parameters:
 	'user-identity-box-group-content-team-member' => 'Group name shown on user profile page next to user login for users who are "Content Team Member".',
 	'user-identity-box-group-helper' => 'Group name shown on user profile page next to user login for users who are "Helper".',
 	'user-identity-box-group-vstf' => 'Group name shown on user profile page next to user login for users who are "Volunteer Spam Task Force".',
+	'user-identity-box-group-soap' => 'Group name shown on user profile page next to user login for users who are "Spam Obliteration and Prevention".',
 	'user-identity-box-group-bot' => 'Group name shown on user profile page next to user login for users who are "Bot".',
 	'user-identity-box-group-authenticated' => 'Group name shown on user profile page next to user login for users who are "Authenticated".',
 	'user-identity-box-group-council' => 'Group name shown on user profile page next to user login for users who are "Councilor".',
@@ -658,6 +660,7 @@ $messages['de'] = array(
 	'user-identity-box-group-wiki-manager' => 'Wiki-Manager',
 	'user-identity-box-group-helper' => 'FANDOM-Helfer',
 	'user-identity-box-group-vstf' => 'VSTF',
+	'user-identity-box-group-soap' => 'SOAP',
 	'user-identity-box-group-authenticated' => 'Offiziell',
 	'user-identity-box-group-council' => 'Council',
 	'user-identity-box-zero-state-location' => 'Ort',
@@ -748,7 +751,7 @@ $messages['de'] = array(
 	'user-identity-box-discord-handle-content' => 'Benutzername: $1',
 	'user-identity-box-my-discord-handle' => 'Mein Discord',
 	'user-identity-box-discord-handle-hint' => 'Hinweis: Name#1234',
-	'user-identity-box-group-content-team-member' => 'Redaktionsmitglied',
+	'user-identity-box-group-content-team-member' => 'Fandom-Artikel-Team',
 );
 
 $messages['de-ch'] = array(
@@ -846,6 +849,7 @@ $messages['es'] = array(
 	'user-identity-box-group-wiki-manager' => 'Wiki Managers',
 	'user-identity-box-group-helper' => 'Helper',
 	'user-identity-box-group-vstf' => 'VSTF',
+	'user-identity-box-group-soap' => 'SOAP',
 	'user-identity-box-group-authenticated' => 'Autenticado',
 	'user-identity-box-group-council' => 'Consejero',
 	'user-identity-box-zero-state-location' => 'Ubicación',
@@ -1794,6 +1798,7 @@ $messages['it'] = array(
 	'user-identity-box-my-discord-handle' => 'Il mio Discord',
 	'user-identity-box-discord-handle-hint' => 'Suggerimento: Nome#1234',
 	'user-identity-box-group-content-team-member' => 'Membro del team per i contenuti',
+	'user-identity-box-group-soap' => 'SOAP',
 );
 
 $messages['ja'] = array(
