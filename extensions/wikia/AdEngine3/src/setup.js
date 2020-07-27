@@ -208,7 +208,6 @@ async function setupAdContext(wikiContext, consents) {
 
 		const priceFloorRule = instantConfig.get('icPrebidSizePriceFloorRule');
 		context.set('bidders.prebid.priceFloor', priceFloorRule || null);
-		context.set('bidders.ixIdentityLibrary.enabled', instantConfig.get('icIxIdentityLibrary'));
 	}
 
 	if (instantConfig.get('icAdditionalVastSize')) {
