@@ -132,7 +132,7 @@ class SEOTweaksHooksHelper {
 					if ( !empty( $title ) ) {
 						$file = wfFindFile( $title );
 
-						if ( $file ) {
+						if ( !empty( $file ) ) {
 							$thumb = self::getResizeImageUrlIfLargerThanMax( $file );
 
 							if ( !empty( $thumb ) ) {
