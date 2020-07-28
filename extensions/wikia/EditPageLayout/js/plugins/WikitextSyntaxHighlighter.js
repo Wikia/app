@@ -27,6 +27,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document'], function
 	var attributeObserver;
 	var parentObserver;
 	var syntaxHighlighterConfig;
+	var isInitialized;
 
 	/* Define context-specific regexes, one for every common token that ends the
 	   current context.
@@ -474,7 +475,12 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document'], function
 		});
 
 		wpTextbox0 = document.createElement("div");
-		wpTextbox1 = document.getElementById("wpTextbox1");
+
+		/**
+		 * Fandom change
+		 * - line was added
+		 */
+		wpTextbox1 = textarea;
 
 		var syntaxStyleElement = document.createElement("style");
 		syntaxStyleTextNode = syntaxStyleElement.appendChild(document.createTextNode(""));
@@ -520,11 +526,6 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document'], function
 		wpTextbox0.style.width = "100%";
 		wpTextbox0.style.wordWrap = "normal"; //see below
 
-		/**
-		 * Fandom change
-		 * - line was added
-		 */
-		wpTextbox1 = textarea;
 		wpTextbox1.style.backgroundColor = "transparent";
 		wpTextbox1.style.borderBottomLeftRadius = wpTextbox1Style.borderBottomLeftRadius;
 		wpTextbox1.style.borderBottomRightRadius = wpTextbox1Style.borderBottomRightRadius;
@@ -618,6 +619,16 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document'], function
 		} else {
 			$(window).load(queueSetup(textarea));
 		}
+
+		isInitialized = true;
+	}
+
+	/**
+	 * Fandom change
+	 * - function is exported from this module
+	 */
+	function getIsInitialized() {
+		return isInitialized;
 	}
 
 	/**
@@ -625,7 +636,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document'], function
 	 * - function was added for backward compat
 	 * - function is exported from this module
 	 */
-	function resetHighlightSyntax() {
+	function resetHighlightSyntax(diffTime) {
 		clearInterval(highlightSyntaxIfNeededIntervalID);
 		wpTextbox1.removeEventListener("input", highlightSyntax);
 		wpTextbox1.removeEventListener("scroll", syncScrollX);
@@ -633,6 +644,10 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document'], function
 		attributeObserver.disconnect();
 		parentObserver.disconnect();
 		syntaxStyleTextNode.nodeValue = "";
+
+		if (!diffTime) {
+			return;
+		}
 
 		var errorMessage = {
 			be: "Падсьветка сынтаксісу на гэтай старонцы была адключаная, бо заняла шмат часу. Максымальна дапушчальны час апэрацыі — $1мс, а на вашым кампутары яна заняла $2мс. Паспрабуйце зачыніць нейкія закладкі і праграмы і націснуць «Праглядзець» або «Паказаць зьмены». Калі гэта не дапаможа, паспрабуйце іншы броўзэр; калі й гэта не дапаможа, выкарыстайце магутнейшы кампутар.",
@@ -662,11 +677,12 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document'], function
 		wpTextbox0.removeAttribute("lang");
 		wpTextbox0.setAttribute("style", "color:red; font-size:small");
 
-		wpTextbox0.textContent = errorMessage.replace("$1", syntaxHighlighterConfig.timeout).replace("$2", endTime - startTime);
+		wpTextbox0.textContent = errorMessage.replace("$1", syntaxHighlighterConfig.timeout).replace("$2", diffTime);
 	}
 
 	return {
 		init: init,
-		reset: resetHighlightSyntax
+		reset: resetHighlightSyntax,
+		isInitialized: getIsInitialized,
 	};
 });
