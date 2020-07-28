@@ -360,6 +360,11 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document'], function
 				document.title = bestTime;
 			}
 		}//*/
+
+		/**
+		 * Fandom change
+		 * - content of `if` statement was extracted to a separate function
+		 */
 		if (endTime - startTime > syntaxHighlighterConfig.timeout) {
 			resetHighlightSyntax(endTime - startTime);
 
@@ -422,6 +427,11 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document'], function
 		}
 	}
 
+	/**
+	 * Fandom change
+	 * - argument `texarea` added
+	 * - removed support for syntaxHighlighterSiteConfig
+ 	 */
 	function setup(textarea) {
 		function configureColor(parameterName, hardcodedFallback, defaultOk) {
 			if (syntaxHighlighterConfig[parameterName] === "normal") {
@@ -510,6 +520,10 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document'], function
 		wpTextbox0.style.width = "100%";
 		wpTextbox0.style.wordWrap = "normal"; //see below
 
+		/**
+		 * Fandom change
+		 * - line was added
+		 */
 		wpTextbox1 = textarea;
 		wpTextbox1.style.backgroundColor = "transparent";
 		wpTextbox1.style.borderBottomLeftRadius = wpTextbox1Style.borderBottomLeftRadius;
@@ -562,12 +576,22 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document'], function
 		highlightSyntax();
 	}
 
+	/**
+	 * Fandom change
+	 * - function was added for backward compat
+	 */
 	function queueSetup(textarea) {
 		setTimeout(function () {
 			setup(textarea);
 		}, 0);
 	}
 
+	/**
+	 * Fandom change
+	 * - function was added for backward compat
+	 * - arguments are added for backward compat
+	 * - function is exported from this module
+	 */
 	function init(textarea, config) {
 		maxSpanNumber = -1;
 
@@ -596,6 +620,11 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document'], function
 		}
 	}
 
+	/**
+	 * Fandom change
+	 * - function was added for backward compat
+	 * - function is exported from this module
+	 */
 	function resetHighlightSyntax() {
 		clearInterval(highlightSyntaxIfNeededIntervalID);
 		wpTextbox1.removeEventListener("input", highlightSyntax);
