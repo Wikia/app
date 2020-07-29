@@ -152,11 +152,15 @@ class SEOTweaksHooksHelper {
 				$meta['og:image'] = $imageUrl;
 			} else {
 				$file = wfFindFile( Title::newFromText( 'Wiki.png', NS_FILE ) );
-				$meta['og:image'] = wfExpandUrl( $file->createThumb( 200, 200 ) );
+				if ( $file ) {
+					$meta['og:image'] = wfExpandUrl( $file->createThumb( 200, 200 ) );
+				}
 			}
 		} else {
 			$file = wfFindFile( Title::newFromText( 'Wiki.png', NS_FILE ) );
-			$meta['og:image'] = wfExpandUrl( $file->createThumb( 200, 200 ) );
+			if ( $file ) {
+				$meta['og:image'] = wfExpandUrl( $file->createThumb( 200, 200 ) );
+			}
 		}
 
 		return true;
