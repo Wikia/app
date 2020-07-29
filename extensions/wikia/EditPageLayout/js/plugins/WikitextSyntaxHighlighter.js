@@ -18,6 +18,11 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document'], function
 	"use strict";
 
 	//variables that are preserved between function calls
+	/**
+	 * Fandom change
+	 * - variable added
+	 */
+	var isInitialized = false;
 	var wpTextbox0;
 	var wpTextbox1;
 	var syntaxStyleTextNode;
@@ -27,7 +32,6 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document'], function
 	var attributeObserver;
 	var parentObserver;
 	var syntaxHighlighterConfig;
-	var isInitialized;
 
 	/* Define context-specific regexes, one for every common token that ends the
 	   current context.
@@ -421,8 +425,12 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document'], function
 		if (wpTextbox1.scrollTop !== wpTextbox0.scrollTop) {
 			syncScrollY();
 		}
-		if (wpTextbox1.offsetHeight !== wpTextbox0.offsetHeight) {
+		if (
+			( wpTextbox1.offsetHeight !== wpTextbox0.offsetHeight ) ||
+			( wpTextbox1.getBoundingClientRect().top !== wpTextbox0.getBoundingClientRect().top )
+		) {
 			var height = wpTextbox1.offsetHeight + "px";
+			wpTextbox0.style.height = 'auto';
 			wpTextbox0.style.height = height;
 			wpTextbox1.style.marginTop = "-" + height;
 		}
@@ -558,7 +566,8 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document'], function
 		wpTextbox1.style.wordWrap = "normal"; //overall more visually appealing
 
 		//lock both heights to pixel values so that the browser zoom feature works better
-		wpTextbox1.style.height = wpTextbox0.style.height = wpTextbox1.offsetHeight + "px";
+		wpTextbox0.style.height = wpTextbox1.offsetHeight + 'px';
+		wpTextbox1.style.height = wpTextbox0.style.height;
 
 		//insert wpTextbox0 underneath wpTextbox1
 		wpTextbox1.style.marginTop = -wpTextbox1.offsetHeight + "px";
@@ -625,18 +634,14 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document'], function
 
 	/**
 	 * Fandom change
-	 * - function is exported from this module
-	 */
-	function getIsInitialized() {
-		return isInitialized;
-	}
-
-	/**
-	 * Fandom change
 	 * - function was added for backward compat
 	 * - function is exported from this module
 	 */
 	function resetHighlightSyntax(diffTime) {
+		if (!isInitialized) {
+			return;
+		}
+
 		clearInterval(highlightSyntaxIfNeededIntervalID);
 		wpTextbox1.removeEventListener("input", highlightSyntax);
 		wpTextbox1.removeEventListener("scroll", syncScrollX);
@@ -683,6 +688,5 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document'], function
 	return {
 		init: init,
 		reset: resetHighlightSyntax,
-		isInitialized: getIsInitialized,
 	};
 });

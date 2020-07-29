@@ -41,7 +41,7 @@
 							config = this.initConfig();
 
 						WikiTextSyntaxHighlighter.init(textarea, config);
-					} else if (WikiTextSyntaxHighlighter.isInitialized()) {
+					} else {
 						WikiTextSyntaxHighlighter.reset();
 					}
 				}
