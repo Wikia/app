@@ -425,12 +425,15 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document'], function
 		if (wpTextbox1.scrollTop !== wpTextbox0.scrollTop) {
 			syncScrollY();
 		}
+		/**
+		 * Fandom change
+		 * - new condition in `if` statement
+		 */
 		if (
 			( wpTextbox1.offsetHeight !== wpTextbox0.offsetHeight ) ||
 			( wpTextbox1.getBoundingClientRect().top !== wpTextbox0.getBoundingClientRect().top )
 		) {
 			var height = wpTextbox1.offsetHeight + "px";
-			wpTextbox0.style.height = 'auto';
 			wpTextbox0.style.height = height;
 			wpTextbox1.style.marginTop = "-" + height;
 		}
