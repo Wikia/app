@@ -535,7 +535,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document'], function
 		wpTextbox0.style.tabSize = wpTextbox1Style.tabSize;
 		wpTextbox0.style.whiteSpace = "pre-wrap";
 		wpTextbox0.style.width = "100%";
-		wpTextbox0.style.wordWrap = "normal"; //see below
+		wpTextbox0.style.wordWrap = "break-word"; //see below
 
 		wpTextbox1.style.backgroundColor = "transparent";
 		wpTextbox1.style.borderBottomLeftRadius = wpTextbox1Style.borderBottomLeftRadius;
@@ -566,7 +566,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document'], function
 		wpTextbox1.style.tabSize = wpTextbox1Style.tabSize;
 		wpTextbox1.style.whiteSpace = "pre-wrap";
 		wpTextbox1.style.width = "100%";
-		wpTextbox1.style.wordWrap = "normal"; //overall more visually appealing
+		wpTextbox1.style.wordWrap = "break-word"; //overall more visually appealing
 
 		//lock both heights to pixel values so that the browser zoom feature works better
 		wpTextbox0.style.height = wpTextbox1.offsetHeight + 'px';
