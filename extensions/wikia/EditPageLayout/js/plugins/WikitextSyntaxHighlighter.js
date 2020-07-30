@@ -505,7 +505,12 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document'], function
 		wpTextbox0.dir = wpTextbox1.dir;
 		wpTextbox0.id = "wpTextbox0";
 		wpTextbox0.lang = wpTextbox1.lang; //lang determines which font "monospace" is
-		wpTextbox0.style.backgroundColor = syntaxHighlighterConfig.backgroundColor;
+
+		/**
+		 * Fandom change
+		 * - source of color was changed
+		 */
+		wpTextbox0.style.backgroundColor = wpTextbox1Style.backgroundColor;
 		wpTextbox0.style.borderBottomLeftRadius = wpTextbox1Style.borderBottomLeftRadius;
 		wpTextbox0.style.borderBottomRightRadius = wpTextbox1Style.borderBottomRightRadius;
 		wpTextbox0.style.borderBottomStyle = wpTextbox1Style.borderBottomStyle;
@@ -524,7 +529,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document'], function
 		wpTextbox0.style.color = "transparent"; //makes it look just a little bit smoother
 		wpTextbox0.style.fontFamily = wpTextbox1Style.fontFamily;
 		wpTextbox0.style.fontSize = wpTextbox1Style.fontSize;
-		wpTextbox0.style.lineHeight = "normal";
+		wpTextbox0.style.lineHeight = "140%";
 		wpTextbox0.style.marginBottom = "0";
 		wpTextbox0.style.marginLeft = "0";
 		wpTextbox0.style.marginRight = "0";
@@ -552,10 +557,15 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document'], function
 		wpTextbox1.style.borderTopWidth = wpTextbox1Style.borderTopWidth;
 		wpTextbox1.style.boxSizing = "border-box";
 		wpTextbox1.style.clear = wpTextbox1Style.clear;
-		wpTextbox1.style.color = syntaxHighlighterConfig.foregroundColor;
+
+		/**
+		 * Fandom change
+		 * - source of color was changed
+		 */
+		wpTextbox1.style.color = wpTextbox1Style.color;
 		wpTextbox1.style.fontFamily = wpTextbox1Style.fontFamily;
 		wpTextbox1.style.fontSize = wpTextbox1Style.fontSize;
-		wpTextbox1.style.lineHeight = "normal";
+		wpTextbox1.style.lineHeight = "140%";
 		wpTextbox1.style.marginBottom = wpTextbox1Style.marginBottom; //lock to pixel value because the top margin was also locked to a pixel value when it was moved to wpTextbox0
 		wpTextbox1.style.marginLeft = "0";
 		wpTextbox1.style.marginRight = "0";
