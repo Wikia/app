@@ -14,7 +14,6 @@ import {
 	eventService,
 	facebookPixel,
 	iasPublisherOptimization,
-	identityLibrary,
 	InstantConfigCacheStorage,
 	JWPlayerManager,
 	nielsen,
@@ -103,19 +102,6 @@ function startAdEngine(inhibitors) {
 
 		eventService.on(AdSlot.SLOT_RENDERED_EVENT, (slot) => {
 			slot.getElement().classList.remove('default-height');
-		});
-
-		communicationService.action$.pipe(
-			ofType('[AdEngine] Identity library loaded')
-		).subscribe((props) => {
-			pageTracker.trackProp('identity_library_load_time', props.loadTime.toString());
-			pageTracker.trackProp('identity_library_ids', identityLibrary.getUids());
-		});
-
-		communicationService.action$.pipe(
-			ofType('[AdEngine] Identity library ids loaded')
-		).subscribe(() => {
-			pageTracker.trackProp('identity_library_ids_loaded', identityLibrary.getUids());
 		});
 
 		communicationService.action$.pipe(
