@@ -131,7 +131,6 @@
     "icComscoreJwpTracking": [
         {
             "apps": [
-                "f2",
                 "mobile-wiki",
                 "oasis"
             ],
