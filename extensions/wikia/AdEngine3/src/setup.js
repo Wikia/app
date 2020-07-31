@@ -12,7 +12,6 @@ import {
 	utils,
 	setupBidders
 } from '@wikia/ad-engine';
-import { set } from 'lodash';
 import basicContext from './ad-context';
 import pageTracker from './tracking/page-tracker';
 import slots from './slots';
@@ -24,7 +23,6 @@ import {
 	registerSlotTracker,
 	registerViewabilityTracker
 } from './tracking/tracker';
-import * as fallbackInstantConfig from './fallback-config.json';
 import { billTheLizardWrapper } from './bill-the-lizard-wrapper';
 
 function setupPageLevelTargeting(adsContext) {
@@ -56,8 +54,6 @@ async function setupAdContext(wikiContext, consents) {
 	utils.geoService.setUpGeoData();
 
 	context.extend(basicContext);
-
-	set(window, context.get('services.instantConfig.fallbackConfigKey'), fallbackInstantConfig);
 
 	const instantConfig =  await InstantConfigService.init();
 
