@@ -131,7 +131,6 @@
     "icComscoreJwpTracking": [
         {
             "apps": [
-                "f2",
                 "mobile-wiki",
                 "oasis"
             ],
@@ -883,18 +882,6 @@
                 "XX"
             ],
             "value": true
-        }
-    ],
-    "icIxIdentityLibrary": [
-        {
-            "apps": [
-                "futhead",
-                "gamepedia",
-                "mobile-wiki",
-                "muthead",
-                "oasis"
-            ],
-            "value": false
         }
     ],
     "icIASVideoTracking": [
