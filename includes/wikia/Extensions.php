@@ -1814,6 +1814,10 @@ if ( !empty ( $wgEnableHydralyticsExt ) ) {
 	include "$IP/extensions/wikia/Hydralytics/Hydralytics.setup.php";
 }
 
+if ( $wgEnableArticleCommentsExt || $wgEnableWallExt || $wgEnableDiscussions ) {
+	include "$IP/extensions/wikia/FeedsReportedPage/FeedsReportedPage.setup.php";
+}
+
 include_once "$IP/extensions/wikia/WikiDescription/WikiDescription.setup.php";
 
 $wgUCPCommunityCNWAddress = 'https://ucp.fandom.com/wiki/Special:CreateNewWiki';

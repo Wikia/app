@@ -5,6 +5,7 @@ use Exception;
 use Title;
 use User;
 use Wikia;
+use Wikia\Factory\ServiceFactory;
 use Wikia\Logger\Loggable;
 
 class RenameUserPagesTask extends BaseTask {
@@ -47,6 +48,32 @@ class RenameUserPagesTask extends BaseTask {
 		], __METHOD__ , [ 'DISTINCT' ] );
 	}
 
+	public function renameLocalPagesAndMarkAsDone( int $renameLogId, string $oldUserName, string $newUserName ) {
+		global $wgSpecialsDB, $wgCityId;
+		$marker = [ 'rename_log_id' => $renameLogId ];
+		try {
+			$this->info( __METHOD__ . 'starting local rename', $marker );
+			$this->renameLocalPages( $oldUserName, $newUserName );
+			$this->info( __METHOD__ . 'local rename success', $marker );
+			$dbw = wfGetDB( DB_MASTER, [], $wgSpecialsDB );
+			$dbw->update(
+				'rename_log_details',
+				[
+					'finished' => wfTimestamp( TS_DB ),
+					'was_successful' => true,
+				],
+				[ 'rename_log_id' => $renameLogId, 'wiki_id' => $wgCityId ]
+			);
+			$this->info( __METHOD__ . 'marked local rename success', $marker );
+			ServiceFactory::instance()->ucpTaskFactory()
+				->queue()->attemptToFinishRename( $renameLogId );
+			$this->info( __METHOD__ . 'scheduled attempt to finish rename', $marker );
+		} catch (Exception $e) {
+			$this->error( __METHOD__ . 'failed to perform local rename ' . $e->getMessage(), $marker );
+			throw $e;
+		}
+	}
+
 	/**
 	 * Rename local user related pages and their subpages to the new user name
 	 *
@@ -78,6 +105,17 @@ class RenameUserPagesTask extends BaseTask {
 
 		foreach ( $resultSet as $row ) {
 			$title = Title::newFromRow( $row );
+			if ( $title->isRedirect() ) {
+				$this->warning(
+					'UserRename: Page is redirect. Skipping',
+					[
+						'page' => $title->getText(),
+						'new_username' => $newUserName,
+						'old_username' => $oldUserName,
+					]
+				);
+				continue;
+			}
 
 			$newTitleText = preg_replace( "/$normalizedOldUsername/", $newUserName, $row->page_title );
 			$newTitle = Title::makeTitleSafe( $row->page_namespace, $newTitleText );

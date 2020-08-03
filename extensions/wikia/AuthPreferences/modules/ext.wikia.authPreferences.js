@@ -112,7 +112,7 @@ require(['jquery', 'mw', 'wikia.loader', 'wikia.nirvana', 'BannerNotification'],
 			window.FB.init({
 				appId: appId,
 				cookie: true,
-				version: 'v2.9'
+				version: 'v7.0'
 			});
 
 			return $.Deferred().resolve();

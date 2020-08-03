@@ -88,9 +88,9 @@ $messages['ksh'] = array(
 );
 
 $messages['lol'] = array(
-	'staffpowers-desc' => 'crwdns114390:0crwdne114390:0',
-	'staffpowers-ipblock-abort' => 'crwdns115902:0crwdne115902:0',
-	'right-unblockable' => 'crwdns114394:0crwdne114394:0',
+	'staffpowers-desc' => 'crwdns66499:0crwdne66499:0',
+	'staffpowers-ipblock-abort' => 'crwdns66500:0crwdne66500:0',
+	'right-unblockable' => 'crwdns66501:0crwdne66501:0',
 );
 
 $messages['mk'] = array(
