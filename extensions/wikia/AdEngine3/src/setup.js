@@ -119,6 +119,7 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('options.video.adsOnNextVideoFrequency', instantConfig.get('icFeaturedVideoAdsFrequency'));
 	context.set('options.video.isMidrollEnabled', instantConfig.get('icFeaturedVideoMidroll'));
 	context.set('options.video.isPostrollEnabled', instantConfig.get('icFeaturedVideoPostroll'));
+	context.set('options.video.comscoreJwpTracking', instantConfig.get('icComscoreJwpTracking'));
 
 	context.set('options.maxDelayTimeout', instantConfig.get('icAdEngineDelay', 2000));
 	context.set('options.tracking.kikimora.player', instantConfig.get('icPlayerTracking'));
@@ -209,7 +210,6 @@ async function setupAdContext(wikiContext, consents) {
 
 		const priceFloorRule = instantConfig.get('icPrebidSizePriceFloorRule');
 		context.set('bidders.prebid.priceFloor', priceFloorRule || null);
-		context.set('bidders.ixIdentityLibrary.enabled', instantConfig.get('icIxIdentityLibrary'));
 	}
 
 	if (instantConfig.get('icAdditionalVastSize')) {

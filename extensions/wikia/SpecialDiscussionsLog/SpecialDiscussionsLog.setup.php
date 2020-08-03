@@ -31,6 +31,6 @@ $wgAvailableRights[] = 'specialdiscussionslog';
 $wgGroupPermissions['*']['specialdiscussionslog'] = false;
 $wgGroupPermissions['user']['specialdiscussionslog'] = false;
 $wgGroupPermissions['staff']['specialdiscussionslog'] = true;
-$wgGroupPermissions['vstf']['specialdiscussionslog'] = true;
+$wgGroupPermissions['soap']['specialdiscussionslog'] = true;
 $wgGroupPermissions['helper']['specialdiscussionslog'] = true;
 $wgGroupPermissions['wiki-manager']['specialdiscussionslog'] = true;

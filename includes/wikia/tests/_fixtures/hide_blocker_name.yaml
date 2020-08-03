@@ -26,9 +26,9 @@ user:
     user_birthdate:
     user_options: ''
   - user_id: 3
-    user_name: 'VstfUser'
+    user_name: 'SoapUser'
     user_real_name: ''
-    user_email: 'vstf@example.com'
+    user_email: 'soap@example.com'
     user_touched: '20110101000000'
     user_token: 'loremipsum'
     user_email_authenticated: '20101102000000'
@@ -57,6 +57,6 @@ user_groups:
   - ug_user: 2
     ug_group: helper
   - ug_user: 3
-    ug_group: vstf
+    ug_group: soap
   - ug_user: 4
     ug_group: sysop

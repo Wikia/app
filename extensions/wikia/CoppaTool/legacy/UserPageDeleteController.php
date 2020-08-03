@@ -28,8 +28,22 @@ final class UserPageDeleteController extends WikiaController {
 			return;
 		}
 
+		/**
+		 * We need to disable Abuse Filter checks to delete user pages
+		 * @see https://wikia-inc.atlassian.net/browse/SER-4143
+		 */
+		$this->disableAbuseFilterHook();
+
 		$userPageDeleter = new UserPageDeleter();
 		$userPageDeleter->deletePages( $pageNames, User::newFromId( $requester ), $reason );
 		$this->response->setCode( WikiaResponse::RESPONSE_CODE_OK );
+	}
+
+	private function disableAbuseFilterHook(): void {
+		$handlers = &Hooks::getHandlersArray();
+		$newDeleteHandlers = array_filter( $handlers['ArticleDelete'], function ( $handler ): bool {
+			return 'AbuseFilterHooks::onArticleDelete' !== $handler;
+		} );
+		$handlers['ArticleDelete'] = $newDeleteHandlers;
 	}
 }

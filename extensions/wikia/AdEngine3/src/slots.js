@@ -228,7 +228,7 @@ export default {
 				defaultSizes: [[1, 1]],
 				targeting: {
 					loc: 'middle',
-					pos: ['incontent_player'],
+					pos: ['outstream'],
 					rv: 1,
 				},
 				isVideo: true,
