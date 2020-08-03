@@ -2,6 +2,7 @@ import {
 	AdSlot,
 	btRec,
 	context,
+	distroScale,
 	events,
 	eventService,
 	FmrRotator,
@@ -308,11 +309,7 @@ export default {
 
 		slotService.setState('featured', context.get('custom.hasFeaturedVideo'));
 
-		if (context.get('services.distroScale.enabled')) {
-			// It is required to *collapse* ICP for DistroScale
-			// TODO: clean up once we finish DS A/B test
-			this.setupIncontentPlayerForDistroScale();
-		} else {
+		if (!context.get('services.distroScale.enabled')) {
 			slotService.setState('incontent_player', context.get('custom.hasIncontentPlayer'));
 		}
 	},
@@ -323,7 +320,10 @@ export default {
 		slotService.setState(slotName, false, AdSlot.STATUS_COLLAPSE);
 		slotService.on(slotName, AdSlot.STATUS_COLLAPSE, () => {
 			slotDataParamsUpdater.updateOnCreate(slotService.get(slotName));
+			distroScale.call();
 		});
+
+		context.push('state.adStack', { id: slotName });
 	},
 
 	setupIdentificators() {
@@ -405,8 +405,13 @@ export default {
 	},
 
 	injectIncontentPlayer() {
+		const isDistroScaleEnabled = context.get('services.distroScale.enabled');
 		const isApplicable = !context.get('custom.hasFeaturedVideo');
-		const isInjected = !!slotInjector.inject('incontent_player');
+		const isInjected = !!slotInjector.inject('incontent_player', isDistroScaleEnabled);
+
+		if (isDistroScaleEnabled && isApplicable && isInjected) {
+			this.setupIncontentPlayerForDistroScale();
+		}
 
 		return isApplicable && isInjected;
 	},

@@ -81,6 +81,8 @@ async function setupAdContext(wikiContext, consents) {
 
 	context.set('slots', slots.getContext());
 	context.set('custom.hasFeaturedVideo', !!targeting.getVideoStatus().hasVideoOnPage);
+
+	context.set('services.distroScale.enabled', instantConfig.get('icDistroScale'));
 	context.set('custom.hasIncontentPlayer', slots.injectIncontentPlayer());
 
 	if (context.get('custom.hasFeaturedVideo')) {
@@ -158,7 +160,6 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('services.audigent.enabled', instantConfig.get('icAudigent'));
 	context.set('services.confiant.enabled', instantConfig.get('icConfiant'));
 	context.set('services.durationMedia.enabled', instantConfig.get('icDurationMedia'));
-	context.set('services.distroScale.enabled', instantConfig.get('icDistroScale'));
 	context.set('services.facebookPixel.enabled', instantConfig.get('icFacebookPixel'));
 	context.set('services.nielsen.enabled', instantConfig.get('icNielsen'));
 	context.set('services.permutive.enabled', instantConfig.get('icPermutive') && !context.get('wiki.targeting.directedAtChildren'));
