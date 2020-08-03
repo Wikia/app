@@ -1550,7 +1550,9 @@ $messages['de'] = array(
 	'group-content-team-member' => 'Fandom-Artikel-Team',
 	'grouppage-content-team-member' => 'Hilfe:Fandom-Artikel-Team',
 	'group-content-team-member-member' => 'Fandom-Artikel-Team',
-	'grouppage-soap' => 'w:c:de.community:Hilfe:VSTF',
+	'group-vstf' => 'VSTF',
+	'grouppage-vstf' => 'w:c:de.community:Hilfe:VSTF',
+	'group-vstf-member' => 'VSTF',
 );
 
 $messages['de-formal'] = array(
@@ -1817,7 +1819,9 @@ $messages['es'] = array(
 	'group-content-team-member' => 'Content Team Members',
 	'grouppage-content-team-member' => 'Ayuda:Content Team Members',
 	'group-content-team-member-member' => 'Content Team Member',
-	'grouppage-soap' => 'w:c:comunidad:Comunidad Central:SpamTaskForce',
+	'group-vstf' => 'VSTF',
+	'grouppage-vstf' => 'w:c:comunidad:Comunidad Central:SpamTaskForce',
+	'group-vstf-member' => 'VSTF',
 );
 
 $messages['et'] = array(
@@ -2134,7 +2138,9 @@ $messages['fr'] = array(
 	'group-content-team-member' => "Membres de l'équipe Contenu",
 	'grouppage-content-team-member' => "Aide:Membres de l'équipe Contenu",
 	'group-content-team-member-member' => "Membre de l'équipe Contenu",
-	'grouppage-soap' => "w:c:communaute:Aide:Niveaux d'accès utilisateur#VSTF",
+	'group-vstf' => 'VSTF',
+	'grouppage-vstf' => "w:c:communaute:Aide:Niveaux d'accès utilisateur#VSTF",
+	'group-vstf-member' => 'VSTF',
 );
 
 $messages['frc'] = array(
@@ -3187,7 +3193,9 @@ $messages['it'] = array(
 	'group-content-team-member-member' => 'Membro del team per i contenuti',
 	'group-soap' => 'Spam Obliteration and Prevention',
 	'group-soap-member' => 'membro Spam Obliteration and Prevention',
-	'grouppage-soap' => 'w:it:Aiuto:Diritti degli utenti#VSTF',
+	'group-vstf' => 'VSTF',
+	'grouppage-vstf' => 'w:it:Aiuto:Diritti degli utenti#VSTF',
+	'group-vstf-member' => 'VSTF',
 );
 
 $messages['iu'] = array(
@@ -3309,7 +3317,9 @@ $messages['ja'] = array(
 	'group-content-team-member' => 'コンテンツ・チーム・メンバー',
 	'grouppage-content-team-member' => 'ヘルプ:コンテンツ・チーム・メンバー',
 	'group-content-team-member-member' => 'コンテンツ・チーム・メンバー',
-	'grouppage-soap' => 'w:c:ja.community:ヘルプ:スパムタスクフォース',
+	'group-vstf' => 'VSTF',
+	'grouppage-vstf' => 'w:c:ja.community:ヘルプ:スパムタスクフォース',
+	'group-vstf-member' => 'VSTF',
 );
 
 $messages['jam'] = array(
@@ -5319,7 +5329,9 @@ $messages['pl'] = array(
 	'group-content-team-member' => 'Członkowie Zespołu Treści',
 	'grouppage-content-team-member' => 'Help:Członkowie Zespołu Treści',
 	'group-content-team-member-member' => 'Członek Zespołu Treści',
-	'grouppage-soap' => 'w:pl:Pomoc:Volunteer_Spam_Task_Force',
+	'group-vstf' => 'VSTF',
+	'grouppage-vstf' => 'w:pl:Pomoc:Volunteer_Spam_Task_Force',
+	'group-vstf-member' => 'VSTF',
 );
 
 $messages['pms'] = array(
@@ -5543,7 +5555,9 @@ $messages['pt'] = array(
 	'group-content-team-member' => 'Membros da equipe de conteúdo',
 	'grouppage-content-team-member' => 'Ajuda:Membros da equipe de conteúdo',
 	'group-content-team-member-member' => 'Membro da equipe de conteúdo',
-	'grouppage-soap' => 'w:Wikia:SpamTaskForce',
+	'group-vstf' => 'VSTF',
+	'grouppage-vstf' => 'w:Wikia:SpamTaskForce',
+	'group-vstf-member' => 'VSTF',
 );
 
 $messages['qu'] = array(
@@ -5801,7 +5815,9 @@ $messages['ru'] = array(
 	'group-content-team-member' => 'Менеджеры по контенту',
 	'grouppage-content-team-member' => 'Help:Content Team Members',
 	'group-content-team-member-member' => 'Менеджер по контенту',
-	'grouppage-soap' => 'w:Wikia:SpamTaskForce',
+	'group-vstf' => 'VSTF',
+	'grouppage-vstf' => 'w:Wikia:SpamTaskForce',
+	'group-vstf-member' => 'VSTF',
 );
 
 $messages['rue'] = array(
@@ -7578,7 +7594,9 @@ $messages['zh-hans'] = array(
 	'group-content-team-member' => '内容团队人员',
 	'grouppage-content-team-member' => 'w:Help:Content Team Members',
 	'group-content-team-member-member' => '内容团队人员',
-	'grouppage-soap' => 'w:Wikia:SpamTaskForce',
+	'group-vstf' => 'VSTF',
+	'grouppage-vstf' => 'w:Wikia:SpamTaskForce',
+	'group-vstf-member' => 'VSTF',
 );
 
 $messages['zh-hant'] = array(
@@ -7664,7 +7682,9 @@ $messages['zh-hant'] = array(
 	'group-content-team-member' => '內容團隊人員',
 	'grouppage-content-team-member' => '幫助:內容團隊人員',
 	'group-content-team-member-member' => '內容團隊人員',
-	'grouppage-soap' => 'w:c:zh.community:Help:反破壞小組',
+	'group-vstf' => 'VSTF',
+	'grouppage-vstf' => 'w:c:zh.community:Help:反破壞小組',
+	'group-vstf-member' => 'VSTF',
 );
 
 $messages['zu'] = array(

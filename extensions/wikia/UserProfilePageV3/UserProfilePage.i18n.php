@@ -747,6 +747,7 @@ $messages['de'] = array(
 	'user-identity-box-my-discord-handle' => 'Mein Discord',
 	'user-identity-box-discord-handle-hint' => 'Hinweis: Name#1234',
 	'user-identity-box-group-content-team-member' => 'Fandom-Artikel-Team',
+	'user-identity-box-group-vstf' => 'VSTF',
 );
 
 $messages['de-ch'] = array(
@@ -935,6 +936,7 @@ $messages['es'] = array(
 	'user-identity-box-my-discord-handle' => 'Mi Discord',
 	'user-identity-box-discord-handle-hint' => 'Indicio: Nombre#1234',
 	'user-identity-box-group-content-team-member' => 'Content Team Member',
+	'user-identity-box-group-vstf' => 'VSTF',
 );
 
 $messages['fa'] = array(
@@ -1187,6 +1189,7 @@ $messages['fr'] = array(
 	'user-identity-box-my-discord-handle' => 'Mon Discord',
 	'user-identity-box-discord-handle-hint' => 'Indice : Nom#1234',
 	'user-identity-box-group-content-team-member' => "Membre de l'équipe Contenu",
+	'user-identity-box-group-vstf' => 'VSTF',
 );
 
 $messages['gl'] = array(
@@ -1786,6 +1789,7 @@ $messages['it'] = array(
 	'user-identity-box-discord-handle-hint' => 'Suggerimento: Nome#1234',
 	'user-identity-box-group-content-team-member' => 'Membro del team per i contenuti',
 	'user-identity-box-group-soap' => 'SOAP',
+	'user-identity-box-group-vstf' => 'VSTF',
 );
 
 $messages['ja'] = array(
@@ -1928,6 +1932,7 @@ $messages['ja'] = array(
 	'user-identity-box-discord-handle-hint' => 'ヒント：名前#1234',
 	'user-identity-box-group-wiki-manager' => 'Wikiマネージャー',
 	'user-identity-box-group-content-team-member' => 'コンテンツ・チーム・メンバー',
+	'user-identity-box-group-vstf' => 'VSTF',
 );
 
 $messages['ko'] = array(
@@ -2699,6 +2704,7 @@ $messages['pl'] = array(
 	'user-identity-box-my-discord-handle' => 'Mój Discord',
 	'user-identity-box-discord-handle-hint' => 'Podpowiedź: Imię#1234',
 	'user-identity-box-group-content-team-member' => 'Członek Zespołu Treści',
+	'user-identity-box-group-vstf' => 'VSTF',
 );
 
 $messages['pms'] = array(
@@ -2894,6 +2900,7 @@ $messages['pt'] = array(
 	'user-identity-box-my-discord-handle' => 'Meu Discord',
 	'user-identity-box-discord-handle-hint' => 'Dica: Nome#1234',
 	'user-identity-box-group-content-team-member' => 'Membro da equipe de conteúdo',
+	'user-identity-box-group-vstf' => 'VSTF',
 );
 
 $messages['roa-tara'] = array(
@@ -3046,6 +3053,7 @@ $messages['ru'] = array(
 	'user-identity-box-my-discord-handle' => 'Мой Discord',
 	'user-identity-box-discord-handle-hint' => 'Пример: Имя#1234',
 	'user-identity-box-group-content-team-member' => 'Участник редакции',
+	'user-identity-box-group-vstf' => 'VSTF',
 );
 
 $messages['sr-ec'] = array(
@@ -3552,6 +3560,7 @@ $messages['vi'] = array(
 	'usermasthead-log' => 'Thành viên Truyền thông',
 	'user-identity-box-about-fb-page' => 'Địa chỉ liên kết tài khoản Facebook của bạn là?',
 	'user-identity-bio-show-more' => 'Hiển thị thêm',
+	'user-identity-box-group-vstf' => 'VSTF',
 );
 
 $messages['zh-hans'] = array(
@@ -3693,6 +3702,7 @@ $messages['zh-hans'] = array(
 	'user-identity-box-my-discord-handle' => '我的Discord',
 	'user-identity-box-discord-handle-hint' => '提示：名称#1234',
 	'user-identity-box-group-content-team-member' => '内容团队人员',
+	'user-identity-box-group-vstf' => 'VSTF',
 );
 
 $messages['zh-hant'] = array(
@@ -3834,5 +3844,6 @@ $messages['zh-hant'] = array(
 	'user-identity-box-my-discord-handle' => '我的Discord',
 	'user-identity-box-discord-handle-hint' => '提示：名字#1234',
 	'user-identity-box-group-content-team-member' => '內容團隊人員',
+	'user-identity-box-group-vstf' => 'VSTF',
 );
 
