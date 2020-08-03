@@ -6,6 +6,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\ResponseInterface;
 use Wikia\Logger\Loggable;
+use Wikia\Service\Constants;
 
 /**
  * Client class for the resources of Discussion service.
@@ -46,11 +47,11 @@ class FeedsReportedPageGateway {
 				"{$this->serviceUrl}/internal/{$this->wikiId}/reported-posts",
 				[
 					RequestOptions::HEADERS => [
-						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => 1
+						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => 1,
+						Constants::HELIOS_AUTH_HEADER => $userId
 					],
 					RequestOptions::QUERY => array_filter( $pagination ) + [
 						'viewableOnly' => $viewableOnly,
-						'userId' => $userId,
 					] + $containerTypeParam,
 				]
 			);
