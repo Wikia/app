@@ -14,7 +14,7 @@ $messages['en'] = array(
 	'wall-message-notify' => 'Notify admin',
 	'wall-message-remove' => 'Remove',
 	'wall-message-rev-delete' => 'Revision delete',
-	'wall-message-fast-admin-delete-message' => 'VSTF delete',
+	'wall-message-fast-admin-delete-message' => 'SOAP delete',
 	'wall-message-quote-button' => 'Quote',
 	'wall-message-elseswall' => "$1's wall",
 	'wall-message-no-permission' => "You don't have permissions to perform this action on the message",
@@ -265,7 +265,7 @@ $messages['qqq'] = array(
 	'wall-message-remove' => 'Menu item to remove a message.
 {{Identical|Remove}}',
 	'wall-message-rev-delete' => 'Dropdown menu for staff, option to revision-delete the message',
-	'wall-message-fast-admin-delete-message' => 'Button for vstf, allow to delete without any confirmation',
+	'wall-message-fast-admin-delete-message' => 'Button for soap, allow to delete without any confirmation',
 	'wall-message-quote-button' => 'Quote button on messages
 {{Identical|Quote}}',
 	'wall-message-elseswall' => "Link to a user's wall. Parameters:

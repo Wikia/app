@@ -17,7 +17,7 @@ require(['jquery', 'mw', 'wikia.loader'], function ($, mw, loader) {
 				window.FB.init({
 					appId: appId,
 					cookie: true,
-					version: 'v2.9'
+					version: 'v7.0'
 				});
 
 				FB.XFBML.parse($content[0]);

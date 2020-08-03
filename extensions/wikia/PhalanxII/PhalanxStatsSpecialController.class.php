@@ -179,9 +179,10 @@ class PhalanxStatsSpecialController extends WikiaSpecialPageController {
 			return false;
 		}
 
+		$sitename = WikiFactory::getVarValueByName( "wgSitename", $wiki->city_id );
 		return [
 			'wiki_id' => $wiki->city_id,
-			'sitename' => WikiFactory::getVarValueByName( "wgSitename", $wiki->city_id ),
+			'sitename' => empty( $sitename ) ? $wiki->city_title : $sitename,
 			// language-path - this returns the full url now. Is it handled properly?
 			'url' => WikiFactory::cityIDtoUrl( $wiki->city_id ),
 			'last_timestamp' => $this->wg->Lang->timeanddate( $wiki->city_last_timestamp ),

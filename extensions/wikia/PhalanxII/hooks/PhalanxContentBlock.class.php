@@ -231,7 +231,7 @@ class PhalanxContentBlock extends WikiaObject {
 	/**
 	 * BAC-675: handle $wgPhalanxDisableContent
 	 *
-	 * Don't check content related blocks on VSTF wiki
+	 * Don't check content related blocks on SOAP wiki
 	 *
 	 * @return bool
 	 */
