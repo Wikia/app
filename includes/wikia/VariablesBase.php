@@ -2076,7 +2076,6 @@ $wgEditInterfaceWhitelist = [
 	'User-identity-box-group-sysop',
 	'User-identity-box-group-threadmoderator',
 	'User-identity-box-group-voldev',
-	'User-identity-box-group-vstf',
 	'User-identity-box-group-soap',
 	'User-identity-box-group-wiki-manager',
 	'Userrights-groups-help',

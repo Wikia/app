@@ -1229,7 +1229,7 @@ class Block {
 
 	/**
 	 * Wikia change
-	 * SUS-288: Hide blocker name from logs and error pages if the block was made by staff/VSTF
+	 * SUS-288: Hide blocker name from logs and error pages if the block was made by staff/SOAP
 	 * @return bool Whether to hide the blocker's user name
 	 */
 	public function shouldHideBlockerName() {
@@ -1245,7 +1245,7 @@ class Block {
 
 	/**
 	 * SUS-288: Return the group name that should be shown instead of user name if the blocker name is hidden
-	 * (i.e. if the block was made by staff/VSTF)
+	 * (i.e. if the block was made by staff/SOAP)
 	 * @return string Group name text that will be parsed and output on the error page
 	 */
 	public function getGroupNameForHiddenBlocker() {
