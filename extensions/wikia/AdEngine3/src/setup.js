@@ -9,10 +9,10 @@ import {
 	PorvataFiller,
 	setupNpaContext,
 	setupRdpContext,
+	setupTCFv2Context,
 	utils,
 	setupBidders
 } from '@wikia/ad-engine';
-import { set } from 'lodash';
 import basicContext from './ad-context';
 import pageTracker from './tracking/page-tracker';
 import slots from './slots';
@@ -24,7 +24,6 @@ import {
 	registerSlotTracker,
 	registerViewabilityTracker
 } from './tracking/tracker';
-import * as fallbackInstantConfig from './fallback-config.json';
 import { billTheLizardWrapper } from './bill-the-lizard-wrapper';
 
 function setupPageLevelTargeting(adsContext) {
@@ -56,8 +55,6 @@ async function setupAdContext(wikiContext, consents) {
 	utils.geoService.setUpGeoData();
 
 	context.extend(basicContext);
-
-	set(window, context.get('services.instantConfig.fallbackConfigKey'), fallbackInstantConfig);
 
 	const instantConfig =  await InstantConfigService.init();
 
@@ -118,6 +115,7 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('options.video.adsOnNextVideoFrequency', instantConfig.get('icFeaturedVideoAdsFrequency'));
 	context.set('options.video.isMidrollEnabled', instantConfig.get('icFeaturedVideoMidroll'));
 	context.set('options.video.isPostrollEnabled', instantConfig.get('icFeaturedVideoPostroll'));
+	context.set('options.video.comscoreJwpTracking', instantConfig.get('icComscoreJwpTracking'));
 
 	context.set('options.maxDelayTimeout', instantConfig.get('icAdEngineDelay', 2000));
 	context.set('options.tracking.kikimora.player', instantConfig.get('icPlayerTracking'));
@@ -208,7 +206,6 @@ async function setupAdContext(wikiContext, consents) {
 
 		const priceFloorRule = instantConfig.get('icPrebidSizePriceFloorRule');
 		context.set('bidders.prebid.priceFloor', priceFloorRule || null);
-		context.set('bidders.ixIdentityLibrary.enabled', instantConfig.get('icIxIdentityLibrary'));
 	}
 
 	if (instantConfig.get('icAdditionalVastSize')) {
@@ -253,6 +250,10 @@ async function setupAdContext(wikiContext, consents) {
 
 async function configure(adsContext, consents) {
 	await setupAdContext(adsContext, consents);
+
+	const instantConfig = await InstantConfigService.init();
+
+	setupTCFv2Context(instantConfig);
 	setupNpaContext();
 	setupRdpContext();
 
@@ -262,8 +263,6 @@ async function configure(adsContext, consents) {
 	registerBidderTracker();
 	registerViewabilityTracker();
 	registerPostmessageTrackingTracker();
-
-	const instantConfig = await InstantConfigService.init();
 
 	billTheLizardWrapper.configureBillTheLizard(instantConfig.get('wgAdDriverBillTheLizardConfig', {}));
 }

@@ -3,7 +3,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'staffpowers-desc' => 'Gives Staff various superpowers like unblockable.',
-	'staffpowers-ipblock-abort' => 'Blocking Fandom Staff, Fandom Helpers, or members of our Volunteer Spam Task Force user team (VSTF) is not possible. Please use the [[Special:Contact|contact form]] to report any issues or problems with our staff.',
+	'staffpowers-ipblock-abort' => 'Blocking FANDOM Staff, FANDOM Helpers, or members of our Volunteer Spam Obliteration and Prevention user team (SOAP) is not possible. Please use the [[Special:Contact|contact form]] to report any issues or problems with our staff.',
 	'right-unblockable' => 'Cannot be blocked',
 );
 
@@ -88,9 +88,9 @@ $messages['ksh'] = array(
 );
 
 $messages['lol'] = array(
-	'staffpowers-desc' => 'crwdns114390:0crwdne114390:0',
-	'staffpowers-ipblock-abort' => 'crwdns115902:0crwdne115902:0',
-	'right-unblockable' => 'crwdns114394:0crwdne114394:0',
+	'staffpowers-desc' => 'crwdns66499:0crwdne66499:0',
+	'staffpowers-ipblock-abort' => 'crwdns66500:0crwdne66500:0',
+	'right-unblockable' => 'crwdns66501:0crwdne66501:0',
 );
 
 $messages['mk'] = array(

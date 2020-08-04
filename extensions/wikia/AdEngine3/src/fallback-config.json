@@ -128,6 +128,18 @@
             "value": true
         }
     ],
+    "icComscoreJwpTracking": [
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "US"
+            ],
+            "value": true
+        }
+    ],
     "icPrebidSizePriceFloorRule": [
         {
             "apps": [
@@ -294,22 +306,6 @@
         {
             "apps": [
                 "mobile-wiki",
-                "oasis"
-            ],
-            "regions": [
-                "XX"
-            ],
-            "value": true
-        }
-    ],
-    "icTcf1Disabled": [
-        {
-            "apps": [
-                "f2",
-                "futhead",
-                "gamepedia",
-                "mobile-wiki",
-                "muthead",
                 "oasis"
             ],
             "regions": [
@@ -611,7 +607,11 @@
                 "5406386861",
                 "5406386864",
                 "5419007438",
-                "5411280632"
+                "5411280632",
+                "5411350733",
+                "5410210521",
+                "5428434937",
+                "5437018947"
             ]
         }
     ],
@@ -869,23 +869,6 @@
             "value": true
         }
     ],
-    "icIxIdentityLibrary": [
-        {
-            "apps": [
-                "futhead",
-                "gamepedia",
-                "mobile-wiki",
-                "muthead",
-                "oasis"
-            ],
-            "regions": [
-                "XX"
-            ],
-            "sampling": 10.0,
-            "samplingCache": true,
-            "value": true
-        }
-    ],
     "icIASVideoTracking": [
         {
             "apps": [
@@ -972,22 +955,6 @@
             "value": true
         }
     ],
-    "icTcf2Enabled": [
-        {
-            "apps": [
-                "f2",
-                "futhead",
-                "gamepedia",
-                "mobile-wiki",
-                "muthead",
-                "oasis"
-            ],
-            "regions": [
-                "XX"
-            ],
-            "value": true
-        }
-    ],
     "icPrebid": [
         {
             "apps": [
@@ -1031,8 +998,8 @@
             "regions": [
                 "CA"
             ],
-            "sampling": 50.0,
-            "value": true
+            "sampling": 100.0,
+            "value": false
         }
     ],
     "icFloorAdhesionDelay": [

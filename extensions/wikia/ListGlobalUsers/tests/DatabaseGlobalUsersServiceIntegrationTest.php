@@ -14,14 +14,14 @@ class DatabaseGlobalUsersServiceIntegrationTest extends WikiaDatabaseTest {
 	}
 
 	public function testReturnsMappingOfGroupMemberUserIdsOrderedByName() {
-		$resultMap = $this->dataBaseGlobalUsersService->getGroupMembers( [ 'staff', 'vstf' ] );
+		$resultMap = $this->dataBaseGlobalUsersService->getGroupMembers( [ 'soap', 'staff' ] );
 
 		$this->assertCount( 2, $resultMap );
 		$this->assertEquals( 'KossuthLajos', $resultMap[1]['name'] );
 		$this->assertEquals( 'FerencJozsef', $resultMap[3]['name'] );
 
-		$this->assertEquals( [ 'staff', 'vstf' ], $resultMap[1]['groups'] );
-		$this->assertEquals( [ 'vstf' ], $resultMap[3]['groups'] );
+		$this->assertEquals( [ 'soap', 'staff' ], $resultMap[1]['groups'] );
+		$this->assertEquals( [ 'soap' ], $resultMap[3]['groups'] );
 	}
 
 	public function testReturnsEmptyMapForEmptySetOfGroups() {
