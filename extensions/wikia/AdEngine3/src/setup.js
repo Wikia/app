@@ -9,6 +9,7 @@ import {
 	PorvataFiller,
 	setupNpaContext,
 	setupRdpContext,
+	setupTCFv2Context,
 	utils,
 	setupBidders
 } from '@wikia/ad-engine';
@@ -249,6 +250,10 @@ async function setupAdContext(wikiContext, consents) {
 
 async function configure(adsContext, consents) {
 	await setupAdContext(adsContext, consents);
+
+	const instantConfig = await InstantConfigService.init();
+
+	setupTCFv2Context(instantConfig);
 	setupNpaContext();
 	setupRdpContext();
 
@@ -258,8 +263,6 @@ async function configure(adsContext, consents) {
 	registerBidderTracker();
 	registerViewabilityTracker();
 	registerPostmessageTrackingTracker();
-
-	const instantConfig = await InstantConfigService.init();
 
 	billTheLizardWrapper.configureBillTheLizard(instantConfig.get('wgAdDriverBillTheLizardConfig', {}));
 }
