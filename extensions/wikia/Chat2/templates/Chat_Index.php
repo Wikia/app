@@ -108,6 +108,7 @@
 					<?= DesignSystemHelper::renderSvg('wds-avatar-badges-discussion-moderator'); ?>
 				<% } else if (groups.indexOf('helper') !== -1) { %>
 					<?= DesignSystemHelper::renderSvg('wds-avatar-badges-helper', 'wds-icon wds-icon-small'); ?>
+				<% } %>
 			</span>
 		</span>
 		<div class="details">
