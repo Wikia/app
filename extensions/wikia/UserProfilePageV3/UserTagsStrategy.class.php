@@ -18,6 +18,7 @@ class UserTagsStrategy extends WikiaObject {
 		'wiki-manager',
 		'content-team-member',
 		'helper',
+		'soap',
 		'global-discussions-moderator',
 		'voldev',
 		'vanguard',
