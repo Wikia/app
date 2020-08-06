@@ -55,8 +55,8 @@ user_groups:
   - ug_user: 1
     ug_group: staff
   - ug_user: 1
-    ug_group: vstf
+    ug_group: soap
   - ug_user: 2
     ug_group: rollback
   - ug_user: 3
-    ug_group: vstf
+    ug_group: soap

@@ -207,6 +207,13 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document'], function
 							//some other kind of tag, search for its end
 							//the search is made easier because XML attributes may not contain the character ">"
 							var tagEnd = text.indexOf(">", i) + 1;
+							/**
+							 * Fandom change
+							 * - variable was moved here from nested `else` block
+							 * - variable is used in `if` statement below
+							 */
+							var tagName = match[0].substring(1);
+
 							if (tagEnd === 0) {
 								//not a tag, just a "<" with some text after it
 								writeText("<", color);
@@ -214,13 +221,11 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document'], function
 								break;
 							}
 
-							if (text.charAt(tagEnd - 2) === "/") {
+							if (text.charAt(tagEnd - 2) === "/" || tagName === "br") {
 								//empty tag
 								writeText(text.substring(i - match[0].length, tagEnd), syntaxHighlighterConfig.tagColor || color);
 								i = tagEnd;
 							} else {
-								var tagName = match[0].substring(1);
-
 								if (syntaxHighlighterConfig.sourceTags.indexOf(tagName) !== -1) {
 									//tag that contains text in a different programming language
 									var stopAfter = "</" + tagName + ">";
@@ -443,7 +448,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document'], function
 	 * Fandom change
 	 * - argument `texarea` added
 	 * - removed support for syntaxHighlighterSiteConfig
- 	 */
+	 */
 	function setup(textarea) {
 		function configureColor(parameterName, hardcodedFallback, defaultOk) {
 			if (syntaxHighlighterConfig[parameterName] === "normal") {

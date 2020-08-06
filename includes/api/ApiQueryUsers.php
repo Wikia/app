@@ -233,7 +233,7 @@ class ApiQueryUsers extends ApiQueryBase {
 
 	/**
 	 * SUS-1472: Check if current request is authorized to view global block information
-	 * (it is internal request or request by staff/VSTF/helper user)
+	 * (it is internal request or request by staff/SOAP/helper user)
 	 * @return bool
 	 */
 	private function canViewGlobalBlockInfo() {

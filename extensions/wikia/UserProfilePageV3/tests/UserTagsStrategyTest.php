@@ -90,7 +90,7 @@ class UserTagsStrategyTest extends WikiaBaseTest {
 					wfMessage( 'user-identity-box-group-founder' )->escaped()
 				]
 			],
-			'founder with other global rights' => [ [ 'helper', 'vstf' ], [ 'bureaucrat', 'sysop' ], false, false, true,
+			'founder with other global rights' => [ [ 'soap', 'helper' ], [ 'bureaucrat', 'sysop' ], false, false, true,
 				[
 					wfMessage( 'user-identity-box-group-helper' )->escaped(),
 					wfMessage( 'user-identity-box-group-founder' )->escaped()
@@ -102,9 +102,9 @@ class UserTagsStrategyTest extends WikiaBaseTest {
 					wfMessage( 'user-identity-box-group-sysop' )->escaped()
 				]
 			],
-			'multiple global rights and local admin' => [ [ 'vstf', 'council' ], [ 'sysop' ], false, false, false,
+			'multiple global rights and local admin' => [ [ 'soap', 'council' ], [ 'sysop' ], false, false, false,
 				[
-					wfMessage( 'user-identity-box-group-vstf' )->escaped(),
+					wfMessage( 'user-identity-box-group-soap' )->escaped(),
 					wfMessage( 'user-identity-box-group-sysop' )->escaped()
 				]
 			],
@@ -114,10 +114,10 @@ class UserTagsStrategyTest extends WikiaBaseTest {
 					wfMessage( 'user-identity-box-group-sysop' )->escaped()
 				]
 			],
-			'global rights only' => [ [ 'staff', 'vstf' ], [], false, false, false,
+			'global rights only' => [ [ 'soap', 'staff' ], [], false, false, false,
 				[
 					wfMessage( 'user-identity-box-group-staff' )->escaped(),
-					wfMessage( 'user-identity-box-group-vstf' )->escaped()
+					wfMessage( 'user-identity-box-group-soap' )->escaped(),
 				]
 			],
 			'founder with no global and multiple local rights' => [ [], [ 'threadmoderator', 'sysop' ], false, false, true,

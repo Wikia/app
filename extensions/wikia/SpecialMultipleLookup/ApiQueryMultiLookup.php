@@ -47,7 +47,7 @@ class ApiQueryMultiLookup extends ApiQueryBase {
 				continue;
 			}
 
-			foreach ( $this->getActivityOnWiki( $wiki->city_dbname, $ipAddress ) as $user ) {
+			foreach ( $this->getActivityOnWiki( $wiki, $ipAddress ) as $user ) {
 				$activity = [
 					'wiki' => $wiki->city_url,
 					'user' => $user,
@@ -75,17 +75,20 @@ class ApiQueryMultiLookup extends ApiQueryBase {
 		return $this->db;
 	}
 
-	private function getActivityOnWiki( $dbName, $ipAddress ) {
+	private function getActivityOnWiki( $wiki, $ipAddress ) {
+		$dbName = $wiki->city_dbname;
 		$userIp = inet_ntop( $ipAddress );
 		$cacheKey = wfSharedMemcKey( 'multilookup', $userIp, $dbName );
+		$isUcpWiki = $wiki->city_path == 'slot2';
+		$conds = $isUcpWiki ? [ 'rc_ip' => $userIp ] : [ 'rc_ip_bin' => $ipAddress ];
 
-		return WikiaDataAccess::cache( $cacheKey,60 * 15 /* 15 mins */, function () use ( $dbName, $ipAddress, $userIp ) {
+		return WikiaDataAccess::cache( $cacheKey,60 * 15 /* 15 mins */, function () use ( $dbName, $conds, $userIp ) {
 			$dbr = wfGetDB( DB_SLAVE, [], $dbName );
 
 			$res = $dbr->select(
 				[ 'recentchanges' ],
 				[ 'rc_user as user_id' ],
-				[ 'rc_ip_bin' => $ipAddress ],
+				$conds,
 				__METHOD__,
 				[ 'DISTINCT' ]
 			);
