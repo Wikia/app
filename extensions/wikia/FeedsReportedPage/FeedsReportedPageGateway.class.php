@@ -32,11 +32,14 @@ class FeedsReportedPageGateway {
 	 * Get the list of reported posts on the current wiki.
 	 * @param array $pagination associative array of pagination query params
 	 * @param bool $viewableOnly if hidden posts should be not returned
+	 * @param bool $canViewHidden if user is permitted to see hidden posts
+	 * @param bool $canViewHiddenInContainer if user is permitted to see hidden posts in given container
 	 * @param string $containerType
 	 * @param int $userId
 	 * @return array|null an object with reported posts on success, or null if an error occurred
 	 */
-	public function getReportedPosts( array $pagination, bool $viewableOnly, ?string $containerType, int $userId ):
+	public function getReportedPosts( array $pagination, bool $viewableOnly, bool $canViewHidden,
+									  bool $canViewHiddenInContainer, ?string $containerType, int $userId ):
 	?array {
 		try {
 			$containerTypeParam = empty( $containerType ) ? [] : [
@@ -51,7 +54,9 @@ class FeedsReportedPageGateway {
 						Constants::HELIOS_AUTH_HEADER => $userId
 					],
 					RequestOptions::QUERY => array_filter( $pagination ) + [
-						'viewableOnly' => $viewableOnly,
+						'viewableOnly' => $viewableOnly ? 'true' : 'false',
+						'canViewHidden' => $canViewHidden ? 'true' : 'false',
+						'canViewHiddenInContainer' => $canViewHiddenInContainer ? 'true' : 'false',
 					] + $containerTypeParam,
 				]
 			);
