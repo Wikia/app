@@ -10,6 +10,10 @@ class ArticleCommentsHooks {
 	 * @return bool
 	 */
 	public static function onAfterPageHeaderButtons( \Title $title, array &$buttons ): bool {
+		if ( WikiaPageType::isActionPage() ) {
+			return true;
+		}
+
 		$service = new PageStatsService( $title );
 		$comments = $service->getCommentsCount();
 
