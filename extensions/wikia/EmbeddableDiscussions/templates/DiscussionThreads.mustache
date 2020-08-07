@@ -5,7 +5,7 @@
 			<div id="post-{{id}}" class="embeddable-discussions-header-container">
 				<div class="avatar-container">
 					{{#authorAvatar}}
-						<a href="{{scriptPath}}/wiki/User:{{author}}">
+						<a href="{{authorUserPageUrl}}">
 							<img src="{{authorAvatar}}" class="avatar" alt="{{author}}">
 						</a>
 					{{/authorAvatar}}
@@ -14,7 +14,7 @@
 					{{/authorAvatar}}
 				</div>
 				<div class="avatar-details">
-					<a class="avatar-username" href="{{scriptPath}}/wiki/User:{{author}}">
+					<a class="avatar-username" href="{{authorUserPageUrl}}">
 						{{author}}
 					</a>
 					<span class="embeddable-discussions-timestamp" title="{{timestamp}}">

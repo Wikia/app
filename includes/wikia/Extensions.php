@@ -817,7 +817,7 @@ if ( !empty( $wgArchiveWikiForums ) ) {
 if ( !empty( $wgEnableDiscussionsNavigation ) && !empty( $wgEnableDiscussions )
 	 && empty( $wgEnableForumExt )
 ) {
-	// Then add /d/f Discussions link to Oasis Global Navigation if it doesn't have a custom value
+	// Then add /f Discussions link to Oasis Global Navigation if it doesn't have a custom value
 	if ( empty( $wgOasisGlobalNavigation ) ) {
 		$wgOasisGlobalNavigation =
 			"*__NOLINK__oasis-on-the-wiki
@@ -826,7 +826,7 @@ if ( !empty( $wgEnableDiscussionsNavigation ) && !empty( $wgEnableDiscussions )
 **Special:Videos|Videos
 **Special:NewFiles|oasis-navigation-v2-new-photos
 **Special:Chat|Chat
-**/d/f|discussions
+**/f|discussions
 **Special:Maps|Maps";
 	}
 }
