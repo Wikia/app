@@ -484,7 +484,7 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document'], function
 		//tag lists are ordered from most common to least common
 		syntaxHighlighterConfig.nowikiTags = syntaxHighlighterConfig.nowikiTags || ["nowiki", "pre"];
 		syntaxHighlighterConfig.sourceTags = syntaxHighlighterConfig.sourceTags || ["math", "syntaxhighlight", "source", "timeline", "hiero"];
-		syntaxHighlighterConfig.timeout = syntaxHighlighterConfig.timeout || 50;
+		syntaxHighlighterConfig.timeout = syntaxHighlighterConfig.timeout || 200;
 
 		syntaxHighlighterConfig.nowikiTags.forEach(function (tagName) {
 			nowikiTagBreakerRegexCache[tagName] = nowikiTagBreakerRegex(tagName);
@@ -668,39 +668,13 @@ define('WikiTextSyntaxHighlighter', ['wikia.window', 'wikia.document'], function
 		parentObserver.disconnect();
 		syntaxStyleTextNode.nodeValue = "";
 
-		if (!diffTime) {
-			return;
+		if (diffTime) {
+			console.info(
+				'Syntax highlighting took too long. The maximum allowed ' +
+				'highlighting time is ' + syntaxHighlighterConfig.timeout +
+				', and your computer took ' + diffTime + '.'
+			);
 		}
-
-		var errorMessage = {
-			be: "Падсьветка сынтаксісу на гэтай старонцы была адключаная, бо заняла шмат часу. Максымальна дапушчальны час апэрацыі — $1мс, а на вашым кампутары яна заняла $2мс. Паспрабуйце зачыніць нейкія закладкі і праграмы і націснуць «Праглядзець» або «Паказаць зьмены». Калі гэта не дапаможа, паспрабуйце іншы броўзэр; калі й гэта не дапаможа, выкарыстайце магутнейшы кампутар.",
-			ca: "S'ha desactivat el remarcar de sintaxi en aquesta pàgina perquè ha trigat massa temps. El temps màxim permès per a remarcar és $1ms, i el vostre ordinador ha trigat $2ms. Proveu tancar algunes pestanyes i programes i fer clic en \"Mostra la previsualització\" o \"Mostra els canvis\". Si no funciona això, proveu un altre navegador web, i si això no funciona, proveu un ordinador més ràpid.",
-			de: "Die Syntaxhervorhebung wurde auf dieser Seite deaktiviert, da diese zu lange gedauert hat. Die maximal erlaubte Zeit zur Hervorhebung beträgt $1ms und dein Computer benötigte $2ms. Versuche einige Tabs und Programme zu schließen und klicke \"Vorschau zeigen\" oder \"Änderungen zeigen\". Wenn das nicht funktioniert, probiere einen anderen Webbrowser und wenn immer noch nicht, probiere einen schnelleren Computer.",
-			el: "Η έμφαση σύνταξης έχει απενεργοποιηθεί σε αυτήν τη σελίδα γιατί αργούσε πολύ. Ο μέγιστος επιτρεπτός χρόνος για την έμφαση σύνταξης είναι $1ms και ο υπολογιστής σας έκανε $2ms. Δοκιμάστε να κλείσετε μερικές καρτέλες και προγράμματα και να κάνετε κλικ στην «Εμφάνιση προεπισκόπησης» ή στην «Εμφάνιση αλλαγών». Αν αυτό δεν δουλέψει, δοκιμάστε έναν διαφορετικό περιηγητή και αν ούτε αυτό δουλέψει, δοκιμάστε έναν ταχύτερο υπολογιστή.",
-			en: "Syntax highlighting on this page was disabled because it took too long. The maximum allowed highlighting time is $1ms, and your computer took $2ms. Try closing some tabs and programs and clicking \"Show preview\" or \"Show changes\". If that doesn't work, try a different web browser, and if that doesn't work, try a faster computer.",
-			es: "Se desactivó el resaltar de sintaxis en esta página porque tardó demasiado. El tiempo máximo permitido para resaltar es $1ms, y tu ordenador tardó $2ms. Prueba cerrar algunas pestañas y programas y hacer clic en \"Mostrar previsualización\" o \"Mostrar cambios\". Si no funciona esto, prueba otro navegador web, y si eso no funciona, prueba un ordenador más rápido.",
-			fa: "از آنجایی که زمان زیادی صرف آن می‌شد، برجسته‌سازی نحو در این صفحه غیرفعال شده است. بیشینهٔ زمان برجسته‌سازی برای ابزار $1ms تعریف شده در حالی که رایانهٔ شما $2ms زمان نیاز داشت. می‌توانید بستن برخی سربرگ‌ها و برنامه‌ها و سپس کلیک‌کردن دکمهٔ «پیش‌نمایش» یا «نمایش تغییرات» را بیازمایید. اگر جواب نداد مرورگر دیگری را امتحان کنید؛ و اگر باز هم جواب نداد، رایانهٔ سریع‌تری را بیازمایید.",
-			fr: "La coloration syntaxique a été désactivée sur cette page en raison d'un temps de chargement trop important ($2ms). Le temps maximum autorisé est $1ms. Vous pouvez essayer de fermer certains onglets et programmes et cliquez sur \"Prévisualisation\" ou \"Voir mes modifications\". Si cela ne fonctionne pas, essayez un autre navigateur web, et si cela ne fonctionne toujours pas, essayez un ordinateur plus rapide.",
-			hy: "Շարադասության ընդգծումը այս էջում անջատվել է, քանի որ այն չափից շատ է տևել։ Ընդգծման թույլատրելի առավելագույն ժամանակը $1 միլիվայրկյան է, բայց այս էջում տևել է $2 միլիվայրկյան։ Փորձեք անջատել որոշ ներդիրներ կամ ծրագրեր և սեղմել «Նախադիտել» կամ «Կատարված փոփոխությունները»։ Կրկին չաշխատելու դեպքում փորձեք այլ վեբ դիտարկիչ, եթե կրկին չաշխատի, փորձեք ավելի արագ համակարգիչ։",
-			io: "Sintaxo-hailaitar en ca pagino esis nekapabligata pro ke konsumis tro multa tempo. La maxima permisata hailaitala tempo es $1ms, e tua ordinatro konsumis $2ms. Probez klozar kelka tabi e programi e kliktar \"Previdar\" o \"Montrez chanji\". Se to ne funcionas, probez altra brauzero, e se to ne funcionas, probez plu rapida ordinatro.",
-			it: "L'evidenziazione delle sintassi su questa pagina è stata disabilitata perché ha richiesto troppo tempo. Il tempo massimo per l'evidenziazione è di $1ms e al tuo computer sono serviti $2ms. Prova a chiudere alcune schede e programmi e ricarica la pagina cliccando su \"Visualizza anteprima\" o \"Mostra modifiche\". Se non funziona ancora, prova con un web browser differente e, in ultima alternativa, prova ad utilizzare un computer più veloce.",
-			ko: "이 문서에서의 문법 강조가 너무 오래 걸러서 해제되었습니다. 최대로 할당된 강조 시간은 $1ms인데, 당신의 컴퓨터는 $2ms이나 걸렸습니다. 탭과 프로그램을 일부 닫으신 후에 \"미리 보기\"나 \"차이 보기\"를 클릭하시기 바랍니다. 만약 작동하지 않으면 다른 웹 브라우저로 시도해보시고, 그래도 안되면 더 빠른 컴퓨터를 이용하십시오",
-			pt: "O marcador de sintaxe foi desativado nesta página porque demorou demais. O tempo máximo permitido para marcar é de $1ms, e seu computador demorou $2ms. Tente fechar algumas abas e programas e clique em \"Mostrar previsão\" ou \"Mostrar alterações\". Se isso não funcionar, tente usar um outro navegador web, e se ainda não funcionar, tente em um computador mais rápido.",
-			ru: "Подсветка синтаксиса на странице была отключена, так как заняла слишком долго. Максимальное допустимое время операции - $1мс, сейчас на вашем компьютере она заняла $2мс. Попробуйте закрыть несколько вкладок и программ, затем нажать «Предварительный просмотр» или «Внесённые изменения». Если это не поможет, попробуйте другой браузер; если и это не поможет, используйте более быстрый компьютер.",
-			sr: "Истицање синтаксе на овој страници је онемогућено јер се одвија предуго. Максимално дозвољено време истицања је $1ms, а на Вашем рачунару траје $2ms. Покушајте затворити неке картице и програме или кликните на „Прикажи претпреглед” или „Прикажи измене”. Ако то не ради, покушајте са другим веб-прегледачем, а ако и тада не ради, покушајте са бржим рачунаром.",
-			zh: "此頁面上的語法突出顯示被禁用，因為它花費的時間太長。允許的突出顯示時間最長為$1毫秒，而您的計算機則為$2毫秒。請嘗試關閉一些標籤和程序，然後單擊“顯示預覽”或“顯示更改”。如果不起作用，請嘗試使用其他網頁瀏覽器，如果还不起作用，請嘗試使用速度更快的計算機。",
-		};
-		var wgUserLanguage = mw.config.get("wgUserLanguage");
-
-		errorMessage = errorMessage[wgUserLanguage] || errorMessage[wgUserLanguage.substring(0, wgUserLanguage.indexOf("-"))] || errorMessage.en;
-
-		wpTextbox1.style.backgroundColor = "";
-		wpTextbox1.style.marginTop = "0";
-		wpTextbox0.removeAttribute("dir");
-		wpTextbox0.removeAttribute("lang");
-		wpTextbox0.setAttribute("style", "color:red; font-size:small");
-
-		wpTextbox0.textContent = errorMessage.replace("$1", syntaxHighlighterConfig.timeout).replace("$2", diffTime);
 	}
 
 	return {
