@@ -1000,8 +1000,8 @@
             "regions": [
                 "CA"
             ],
-            "sampling": 100.0,
-            "value": false
+            "sampling": 50.0,
+            "value": true
         }
     ],
     "icFloorAdhesionDelay": [
