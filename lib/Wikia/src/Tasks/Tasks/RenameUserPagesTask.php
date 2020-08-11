@@ -156,8 +156,8 @@ class RenameUserPagesTask extends BaseTask {
 
 		$this->renameCheckUserMentions( $oldUserName, $newUserName );
 
-		$user = User::newFromName( $newUserName );
-		$user->deleteCache();
+		User::newFromName( $newUserName )->deleteCache();
+		User::newFromName( $oldUserName )->deleteCache();
 	}
 
 	private function renameCheckUserMentions( string $oldUsername, string $newUsername ): void {
