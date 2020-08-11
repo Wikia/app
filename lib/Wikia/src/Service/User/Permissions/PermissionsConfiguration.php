@@ -41,7 +41,6 @@ class PermissionsConfiguration {
 		'util',
 		'vanguard',
 		'voldev',
-		'vstf',
 		'soap',
 		'fandom-editor',
 		'global-discussions-moderator',
@@ -424,9 +423,6 @@ class PermissionsConfiguration {
 
 		$this->groupsAddableByGroup['content-reviewer'] = [ 'content-reviewer' ];
 		$this->groupsRemovableByGroup['content-reviewer'] = [ 'content-reviewer' ];
-
-		$this->groupsSelfAddableByGroup['vstf'] = [ 'rollback', 'bot', 'sysop' ];
-		$this->groupsSelfRemovableByGroup['vstf'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat' ];
 
 		$this->groupsSelfAddableByGroup['soap'] = [ 'rollback', 'bot', 'sysop' ];
 		$this->groupsSelfRemovableByGroup['soap'] = [ 'rollback', 'bot', 'sysop', 'bureaucrat' ];

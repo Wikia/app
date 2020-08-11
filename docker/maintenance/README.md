@@ -181,12 +181,6 @@ Reinitialise or update wiki's statistics tables.
 
 Crawls through LyricWiki, pulls data from its articles and puts it to Solr.
 
-#### phalanx-migrate-user-blocks.yaml
-
-`extensions/wikia/PhalanxII/maintenance/MigratePhalanxUserBlocks.php`
-
-Closes accounts permanently blocked in Phalanx.
-
 #### phrase-alerts.yaml
 
 `maintenance/wikia/phrase-alerts.php`

@@ -94,7 +94,7 @@ abstract class PhalanxModel extends WikiaObject {
 	/**
 	 * Skip calls to Phalanx service if this method returns true
 	 * We must skip check if and only if:
-	 * - user has 'phalanxexempt' right (staff/VSTF/helper)
+	 * - user has 'phalanxexempt' right (staff/SOAP/helper)
 	 * - this is an internal request (except if it's looking up different user, e.g. user-permissions service)
 	 *
 	 * @return bool whether to skip call to Phalanx service
