@@ -55,8 +55,8 @@ class FeedsReportedPageGateway {
 					],
 					RequestOptions::QUERY => array_filter( $pagination ) + [
 						'viewableOnly' => $viewableOnly ? 'true' : 'false',
-						'canViewHidden' => $canViewHidden ? 'true' : 'false',
-						'canViewHiddenInContainer' => $canViewHiddenInContainer ? 'true' : 'false',
+						'canViewHiddenPosts' => $canViewHidden ? 'true' : 'false',
+						'canViewHiddenPostsInContainer' => $canViewHiddenInContainer ? 'true' : 'false',
 					] + $containerTypeParam,
 				]
 			);
