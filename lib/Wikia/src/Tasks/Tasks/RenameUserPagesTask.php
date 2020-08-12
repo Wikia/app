@@ -74,6 +74,80 @@ class RenameUserPagesTask extends BaseTask {
 		}
 	}
 
+	public function renameMessageWall( string $oldUserName, string $newUserName ) {
+		// SUS-3835: suppress watchlist emails triggered by UserRenameTool page renames
+		global $wgEnotifWatchlist, $wgEnotifUserTalk, $wgCommandLineMode;
+		/**
+		 * Run rename as from command line to allow moving wall namespaces.
+		 * @see \WallHooksHelper::onNamespaceIsMovable()
+		 */
+		$wgCommandLineMode = true;
+		$wgEnotifWatchlist = false;
+		$wgEnotifUserTalk = false;
+
+		$dbr = wfGetDB( DB_SLAVE );
+		$normalizedOldUsername = self::normalizeUserName( $oldUserName );
+
+		$subPagesLikeQuery = $dbr->buildLike( "$normalizedOldUsername/", $dbr->anyString() );
+
+		$resultSet = $dbr->select( 'page', '*', [
+			'page_namespace' => [
+				NS_USER_WALL,
+				NS_USER_WALL_MESSAGE,
+				NS_USER_WALL_MESSAGE_GREETING,
+			],
+			'page_title = '. $dbr->addQuotes( $normalizedOldUsername ) . " OR page_title $subPagesLikeQuery"
+		], __METHOD__ );
+
+		$robot = $GLOBALS['wgUser'] = User::newFromName( Wikia::BOT_USER );
+
+		foreach ( $resultSet as $row ) {
+			$title = Title::newFromRow( $row );
+			if ( $title->isRedirect() ) {
+				$this->warning(
+					'UserRename: Page is redirect. Skipping',
+					[
+						'page' => $title->getText(),
+						'new_username' => $newUserName,
+						'old_username' => $oldUserName,
+					]
+				);
+				continue;
+			}
+
+			$newTitleText = preg_replace( "/$normalizedOldUsername/", $newUserName, $row->page_title );
+			$newTitle = Title::makeTitleSafe( $row->page_namespace, $newTitleText );
+
+			$editSummary =
+				wfMessage( 'userrenametool-move-log', $title->getText(), $newTitle->getText() )
+					->inContentLanguage()
+					->text();
+
+			$this->info(
+				'UserRename: Moving page',
+				[
+					'namespace' => $title->getNsText(),
+					'old_title_db_key' => $title->getDBkey(),
+					'new_title_db_key' => $newTitle->getDBkey(),
+				]
+			);
+			$status = $title->moveTo( $newTitle, false, $editSummary, true, $robot );
+			if ( $status !== true ) {
+				$this->error(
+					'UserRename: Failed to move page',
+					[
+						'status' => $status,
+						'namespace' => $title->getNsText(),
+						'old_title_db_key' => $title->getDBkey(),
+						'new_title_db_key' => $newTitle->getDBkey(),
+					]
+				);
+				throw new Exception( 'UserRename: Failed to move page' );
+			}
+			$title->invalidateCache();
+		}
+	}
+
 	/**
 	 * Rename local user related pages and their subpages to the new user name
 	 *
