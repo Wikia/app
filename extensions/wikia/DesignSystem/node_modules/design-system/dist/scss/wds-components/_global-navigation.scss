@@ -2,7 +2,6 @@
 
 .wds-global-navigation {
 	$notification-counter-size: 18px;
-	$partner-slot-width: 75px;
 	$scroll-animation-duration: .4s;
 
 	background-color: $wds-fandom-color-navy;
@@ -259,66 +258,6 @@
 	&__avatar-notifications-counter {
 		left: 3px;
 		top: 6px;
-	}
-
-	&__partner-slot {
-		$link-padding: 10px;
-
-		align-items: center;
-		border-left: 1px solid rgba($wds-color-white, .25);
-		display: flex;
-		flex-basis: 100%;
-		height: 100%;
-		max-width: $partner-slot-width;
-		position: absolute;
-		right: 0;
-		top: 0;
-
-		&-link {
-			padding: $link-padding;
-		}
-
-		&-image {
-			vertical-align: middle;
-		}
-
-		&-horizontal-bar {
-			display: none;
-		}
-
-		@media #{$wds-breakpoint-small-down} {
-			background: $wds-fandom-color-navy;
-			border: none;
-			height: 30px;
-			justify-content: flex-end;
-			max-width: none;
-			width: 100vw;
-			margin-top: -10px;
-			position: relative;
-
-			&-link {
-				padding: 6px
-			}
-
-			&-horizontal-bar {
-				border-bottom: 1px solid $wds-fandom-color-dark-gray;
-				display: block;
-				height: 2px;
-				width: 100%;
-			}
-		}
-	}
-
-	.wds-is-modal-opened &__partner-slot {
-		display: none;
-	}
-
-	&.wds-has-partner-slot &__content-bar-right {
-		margin-right: $partner-slot-width;
-
-		@media #{$wds-breakpoint-small-down} {
-			margin-right: 0;
-		}
 	}
 
 	.wds-avatar {
