@@ -133,7 +133,8 @@ class RenameUserPagesTask extends BaseTask {
 					'new_title_db_key' => $newTitle->getDBkey(),
 				]
 			);
-			$status = $title->moveTo( $newTitle, false, $editSummary, true, $robot );
+			$createRedirect = !($title->isCssSubpage() || $title->isJsSubpage());
+			$status = $title->moveTo( $newTitle, false, $editSummary, $createRedirect, $robot );
 			if ( $status !== true ) {
 				$this->error(
 					'UserRename: Failed to move page',
