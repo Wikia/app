@@ -33,5 +33,15 @@ export default {
 			timestamp: now.getTime(),
 			tz_offset: now.getTimezoneOffset(),
 		});
+
+		if (name === 'labrador') {
+			track({
+				eventName: 'labradorpageview',
+				trackingMethod: 'internal',
+				value: value,
+				timestamp: now.getTime(),
+				tz_offset: now.getTimezoneOffset(),
+			});
+		}
 	},
 };
