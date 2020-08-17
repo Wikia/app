@@ -1008,6 +1008,20 @@ $wgAdDriverUseAdsAfterInfobox = false;
 $wgAdDriverTrackState = false;
 
 /**
+ * Version of AdEngine bundle
+ * @see extensions/fandom/AdEngine
+ * @var string $wgAdEngineVersion
+ */
+$wgAdEngineVersion = null;
+
+/**
+ * Enable new bundle on mobile wiki
+ * @see extensions/fandom/AdEngine
+ * @var string $wgAdEngineExperimental
+ */
+$wgAdEngineExperimental = null;
+
+/**
  * @name $wgAdDriverEnableCheshireCat
  * Whether to use Cheshire Cat
  */
