@@ -165,19 +165,22 @@ class VideoInfoHelper extends WikiaModel {
 	public function renameVideo( $oldTitle, $newTitle ) {
 		wfProfileIn( __METHOD__ );
 
-		$affected = false;
-		$videoInfo = VideoInfo::newFromTitle( $oldTitle->getDBKey() );
+		$oldVideoInfo = VideoInfo::newFromTitle( $oldTitle->getDBKey() );
 
 		// delete old video
-		if ( !empty($videoInfo) ) {
-			$videoInfo->deleteVideo();
+		if ( !empty($oldVideoInfo) ) {
+			$oldVideoInfo->deleteVideo();
 		}
 
 		// add new video
-		$videoInfo = $this->getVideoInfoFromTitle( $newTitle );
-		if ( !empty($videoInfo) ) {
-			$affected = $videoInfo->addVideo();
+		$newVideoInfo = $this->getVideoInfoFromTitle( $newTitle );
+
+		if ( empty($newVideoInfo) ) {
+			$newVideoInfo = $oldVideoInfo;
+			$newVideoInfo->setVideoTitle( $newTitle->getDBkey() );
 		}
+
+		$affected = $newVideoInfo->addVideo();
 
 		wfProfileOut( __METHOD__ );
 
