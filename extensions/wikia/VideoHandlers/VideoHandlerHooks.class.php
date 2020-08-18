@@ -174,11 +174,10 @@ class VideoHandlerHooks {
 	 */
 	public static function onFindRedirectedFile( $repos, $title, $options, $useCache, &$file, &$cacheEntry ) {
 		$redirect = RepoGroup::singleton()->getLocalRepo()->checkRedirect( $title );
-
 		if ( $redirect instanceof Title && $redirect->getNamespace() == NS_FILE && $title->getDBKey() != $redirect->getDBKey() ) {
 			foreach ( $repos as $repo ) {
 				if ( $repo->allowRedirect) {
-					$file = $repo->findFile( $redirect, $options );
+					$file = $repo->findfile( $redirect, $options );
 					if ( $file && $useCache ) {
 						$cacheEntry = $file;
 					}
