@@ -539,7 +539,6 @@ export default {
 		},
 		durationMedia: {
 			enabled: false,
-			siteId: '1167',
 		},
 		distroScale: {
 			enabled: false,
