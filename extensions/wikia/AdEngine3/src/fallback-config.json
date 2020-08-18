@@ -848,6 +848,25 @@
             "value": "//static.wikia.nocookie.net/fandom-ae-assets/prebid.js/v3.23.0/20200630.min.js"
         }
     ],
+    "icDurationMediaLibraryUrl": [
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "value": "//tag.durationmedia.net/sites/10651/dm.js"
+        },
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "value": "//pr.realvu.net/flip/2/c=E4KZ_f=site_si=1067"
+        }
+    ],
     "icA9Bidder": [
         {
             "apps": [
