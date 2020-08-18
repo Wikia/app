@@ -215,7 +215,8 @@ class ForumDumper {
 									"namespace" => $row->page_namespace,
 									"raw_title" => $row->page_title,
 									"latest_revision_id" => $row->page_latest,
-									"first_revision_id" => $row->first_rev_id
+									"first_revision_id" => $row->first_rev_id,
+									"deleted_ind" => $row->deleted
 								]
 							);
 
