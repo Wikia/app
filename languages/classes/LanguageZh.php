@@ -58,24 +58,12 @@ class ZhConverter extends LanguageConverter {
 	}
 
 	function postLoadTables() {
-		$this->mTables['zh-cn']->setArray(
-			$this->mTables['zh-cn']->getArray() + $this->mTables['zh-hans']->getArray()
-		);
-		$this->mTables['zh-hk']->setArray(
-			$this->mTables['zh-hk']->getArray() + $this->mTables['zh-hant']->getArray()
-		);
-		$this->mTables['zh-mo']->setArray(
-			$this->mTables['zh-mo']->getArray() + $this->mTables['zh-hant']->getArray()
-		);
-		$this->mTables['zh-my']->setArray(
-			$this->mTables['zh-my']->getArray() + $this->mTables['zh-hans']->getArray()
-		);
-		$this->mTables['zh-sg']->setArray(
-			$this->mTables['zh-sg']->getArray() + $this->mTables['zh-hans']->getArray()
-		);
-		$this->mTables['zh-tw']->setArray(
-			$this->mTables['zh-tw']->getArray() + $this->mTables['zh-hant']->getArray()
-		);
+		$this->mTables['zh-cn']->merge( $this->mTables['zh-hans'] );
+		$this->mTables['zh-hk']->merge( $this->mTables['zh-hant'] );
+		$this->mTables['zh-mo']->merge( $this->mTables['zh-hant'] );
+		$this->mTables['zh-my']->merge( $this->mTables['zh-hans'] );
+		$this->mTables['zh-sg']->merge( $this->mTables['zh-hans'] );
+		$this->mTables['zh-tw']->merge( $this->mTables['zh-hant'] );
 	}
 
 	/**
