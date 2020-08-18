@@ -4,6 +4,11 @@ use Wikia\Logger\WikiaLogger;
 
 class DumpUtils {
 
+	// Discussions uses TEXT columns for content, which are limited to 2**16 bytes.  Also
+	// subtracting 16 bytes from the max size since going right up to the limit still causes
+	// MySQL to fail the insert.
+	const MAX_CONTENT_SIZE = 65520;
+
 	public static function createInsert( $table, $cols, $data ) {
 		$db = wfGetDB( DB_SLAVE );
 
@@ -22,7 +27,18 @@ class DumpUtils {
 				$value = $data[$col];
 			}
 
-			$insert .= ', ' . $db->addQuotes( $value );
+			if ( $col == "raw_content" || $col == "content" ) {
+				//addQuotes performs additional escaping, so it can make string out of bytes range
+				$dbValue = substr($db->addQuotes( $value ), 1, -1);
+
+				if ( strlen($dbValue) > self::MAX_CONTENT_SIZE ) {
+					$dbValue = mb_strcut( $dbValue, 0, DumpUtils::MAX_CONTENT_SIZE );
+				}
+
+				$insert .= ', ' . "'" . $dbValue . "'";
+			} else {
+				$insert .= ', ' . $db->addQuotes( $value );
+			}
 		}
 
 		$insert .= ');';

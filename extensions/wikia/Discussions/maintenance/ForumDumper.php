@@ -21,11 +21,6 @@ class ForumDumper {
 	const CONTRIBUTOR_TYPE_DELETED = "[deleted]";
 	const CONTRIBUTOR_TYPE_UNKNOWN = "[unknown]";
 
-	// Discussions uses TEXT columns for content, which are limited to 2**16 bytes.  Also
-	// subtracting 16 bytes from the max size since going right up to the limit still causes
-	// MySQL to fail the insert.
-	const MAX_CONTENT_SIZE = 65520;
-
 	// A very loose interpretation of markup favoring false positives for markup.  Match
 	// alphanumerics, anything in a basic URL and punctuation.  If any character in the text
 	// doesn't match, assume there is wiki text and parse it.
@@ -575,28 +570,28 @@ class ForumDumper {
 		}
 
 		// Truncate the strings if they are too big
-		if ( strlen( $parsedText ) > self::MAX_CONTENT_SIZE ) {
+		if ( strlen( $parsedText ) > DumpUtils::MAX_CONTENT_SIZE ) {
 
 			if ( $this->debug ) {
 				WikiaLogger::instance()->info( "Truncate parsed text of " . $revId .
 						" revision - " . strlen( $parsedText ) . " bytes.", [$revId] );
 			}
 
-			$parsedText = mb_strcut( $parsedText, 0, self::MAX_CONTENT_SIZE );
+			$parsedText = mb_strcut( $parsedText, 0, DumpUtils::MAX_CONTENT_SIZE );
 
 			if ( $this->debug ) {
 				WikiaLogger::instance()->info( "Parsed text truncated to " . strlen( $parsedText ) .
 					" bytes.", [] );
 			}
 		}
-		if ( strlen( $rawText ) > self::MAX_CONTENT_SIZE ) {
+		if ( strlen( $rawText ) > DumpUtils::MAX_CONTENT_SIZE ) {
 
 			if ( $this->debug ) {
 				WikiaLogger::instance()->info( "Truncate raw text of " . $revId .
 											   " revision - " . strlen( $rawText ) . " bytes.", [$revId] );
 			}
 
-			$rawText = mb_strcut( $rawText, 0, self::MAX_CONTENT_SIZE );
+			$rawText = mb_strcut( $rawText, 0, DumpUtils::MAX_CONTENT_SIZE );
 
 			if ( $this->debug ) {
 				WikiaLogger::instance()->info( "Raw text truncated to " . strlen( $rawText ) .
