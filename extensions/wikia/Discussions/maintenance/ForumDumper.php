@@ -788,7 +788,7 @@ class ForumDumper {
 			return [null, null];
 		}
 
-		return [ $title->getText(), $title->getLocalURL() ];
+		return [ $title->getText(), '/wiki/' . $title->getText() ];
 	}
 
 	private function getPageIdsDisplayOrder( array $pageIdsFixed, int $minIndex ) {
