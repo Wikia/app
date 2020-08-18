@@ -568,6 +568,12 @@ class ForumDumper {
 			$rawText = strip_tags( $parsedText );
 		}
 
+		if ( $rawText && $parsedText ) {
+			$rawText = preg_replace( self::ANON_WROTE_SELECTOR, self::ANON_WROTE_REPLACEMENT, $rawText );
+			$parsedText = preg_replace( self::ANON_WROTE_SELECTOR, self::ANON_WROTE_REPLACEMENT, $parsedText );
+			$parsedText = preg_replace( self::QUOTE_SELECTOR, self::QUOTE_REPLACEMENT, $parsedText );
+		}
+
 		// Truncate the strings if they are too big
 		if ( strlen( $parsedText ) > self::MAX_CONTENT_SIZE ) {
 
@@ -599,13 +605,6 @@ class ForumDumper {
 		}
 
 		$this->removeTitle( $textId );
-
-		if ( $rawText && $parsedText ) {
-			$rawTextAnonymoused = preg_replace( self::ANON_WROTE_SELECTOR, self::ANON_WROTE_REPLACEMENT, $rawText );
-			$parsedTextAnonymoused = preg_replace( self::ANON_WROTE_SELECTOR, self::ANON_WROTE_REPLACEMENT, $parsedText );
-			$parsedTextQuoteStyled = preg_replace( self::QUOTE_SELECTOR, self::QUOTE_REPLACEMENT, $parsedTextAnonymoused );
-			return [ $parsedTextQuoteStyled, $rawTextAnonymoused, $title ];
-		}
 
 		return [ $parsedText, $rawText, $title ];
 	}
