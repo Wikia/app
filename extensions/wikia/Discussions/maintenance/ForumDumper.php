@@ -570,10 +570,32 @@ class ForumDumper {
 
 		// Truncate the strings if they are too big
 		if ( strlen( $parsedText ) > self::MAX_CONTENT_SIZE ) {
+
+			if ( $this->debug ) {
+				WikiaLogger::instance()->info( "Truncate parsed text of " . $revId .
+						" revision - " . strlen( $parsedText ) . " bytes.", [$revId] );
+			}
+
 			$parsedText = mb_strcut( $parsedText, 0, self::MAX_CONTENT_SIZE );
+
+			if ( $this->debug ) {
+				WikiaLogger::instance()->info( "Parsed text truncated to " . strlen( $parsedText ) .
+					" bytes.", [] );
+			}
 		}
 		if ( strlen( $rawText ) > self::MAX_CONTENT_SIZE ) {
+
+			if ( $this->debug ) {
+				WikiaLogger::instance()->info( "Truncate raw text of " . $revId .
+											   " revision - " . strlen( $rawText ) . " bytes.", [$revId] );
+			}
+
 			$rawText = mb_strcut( $rawText, 0, self::MAX_CONTENT_SIZE );
+
+			if ( $this->debug ) {
+				WikiaLogger::instance()->info( "Raw text truncated to " . strlen( $rawText ) .
+											   " bytes.", [] );
+			}
 		}
 
 		$this->removeTitle( $textId );
