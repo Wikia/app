@@ -2838,7 +2838,7 @@ $wgEnableHideTagsExt = true;
  * @see extensions/wikia/ImageLazyLoad
  * @var bool s$wgEnableImageLazyLoadExt
  */
-$wgEnableImageLazyLoadExt = true;
+$wgEnableImageLazyLoadExt = false;
 
 /**
  * Enable ImageMap extension.
