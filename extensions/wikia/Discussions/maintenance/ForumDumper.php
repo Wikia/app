@@ -656,8 +656,11 @@ class ForumDumper {
 	 * @return mixed
 	 */
 	private function updateLazyImages( $text ) {
-		return preg_replace( "/<img +[^>]+ +data-src=[^>]+><noscript>(<img[^>]+>)<\\/noscript>/",
+		$text = preg_replace( "/<img +[^>]+ +data-src=[^>]+><noscript>(<img[^>]+>)<\\/noscript>/",
 			"$1", $text );
+		$text = preg_replace( "/<noscript>(<img[^>]+>)<\\/noscript><img +[^>]+ +data-src=[^>]+>/",
+			"$1", $text );
+		return $text;
 	}
 
 	private function removeACMetadata( $text ) {
