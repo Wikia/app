@@ -9397,3 +9397,8 @@ $wgEnablePostForumMigrationMessage = false;
  * Expiration timestamp for post forum migration message
  */
 $wgPostForumMigrationMessageExpiration = 0;
+
+/**
+ * If it is forum migration dump process or not.
+ */
+$wgForumMigration = false;

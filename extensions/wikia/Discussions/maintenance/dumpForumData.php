@@ -43,6 +43,9 @@ class DumpForumData extends Maintenance {
 			$this->error( "Unable to open file " . $this->outputName, 1 );
 		}
 
+		global $wgForumMigration;
+		$wgForumMigration = true;
+
 		$this->dumper = new Discussions\ForumDumper( $this->bulk, $this->debug );
 
 		$this->setConnectinoEncoding();

@@ -36,11 +36,11 @@ class JSSnippets {
 	 */
 
 	static public function addToStack( $dependencies, $loaders = array(), $callback = null, $options = null ) {
-		global $wgArticleAsJson;
+		global $wgArticleAsJson, $wgForumMigration;
 		$js = "";
 
-		// HG-97: Don't include script tags when the article is requested as Json
-		if ( !empty( $wgArticleAsJson ) ) {
+		// HG-97: Don't include script tags when the article is requested as Json or it is forum migration dump
+		if ( !empty( $wgArticleAsJson ) || !empty($wgForumMigration) ) {
 			return $js;
 		}
 		
