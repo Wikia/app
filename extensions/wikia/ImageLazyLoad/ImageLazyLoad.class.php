@@ -28,7 +28,7 @@ class ImageLazyLoad  {
 	}
 
 	public static function onThumbnailImageHTML( $options, $linkAttribs, $attribs, $file, &$html ) {
-		if ( self::isValidLazyLoadedImage( $attribs[ 'src' ] ) ) {
+		if ( false ) {
 			$origImgAlt = Xml::element( 'img', $attribs, '', true );
 
 			// Remove empty alt attributes (messes up string replace later if not removed)
@@ -60,7 +60,7 @@ class ImageLazyLoad  {
 	public static function onGalleryBeforeRenderImage( &$image ) {
 		global $wgParser;
 
-		if ( self::isEnabled() ) {
+		if ( false ) {
 
 			// Don't lazy-load data elements
 			if ( startsWith( $image[ 'thumbnail' ], 'data:' ) ) {
