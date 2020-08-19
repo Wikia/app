@@ -35,7 +35,8 @@ class DumpForumData extends Maintenance {
 
 	public function execute() {
 
-		$GLOBALS['wgEnableImageLazyLoadExt'] = false;
+		global $wgEnableImageLazyLoadExt;
+		$wgEnableImageLazyLoadExt = false;
 
 		$this->outputName = $this->hasOption( 'out' ) ? $this->getArg() : "php://stdout";
 		$this->bulk = $this->hasOption( 'bulk' );
