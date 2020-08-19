@@ -894,7 +894,7 @@ if ( !empty( $wgEnableLightboxExt ) ) {
 }
 
 if( !empty( $wgEnableImageLazyLoadExt ) ) {
-	//include( "$IP/extensions/wikia/ImageLazyLoad/ImageLazyLoad.setup.php" );
+	include( "$IP/extensions/wikia/ImageLazyLoad/ImageLazyLoad.setup.php" );
 }
 
 if( !empty( $wgEnableWikiaMainpageFixer ) ) {
