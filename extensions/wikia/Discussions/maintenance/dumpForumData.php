@@ -16,9 +16,6 @@ include_once( __DIR__ . '/ForumDumper.php' );
 include_once( __DIR__ . '/FollowsFinder.php' );
 include_once( __DIR__ . '/WallHistoryFinder.php' );
 
-global $wgForumMigration;
-$wgForumMigration = true;
-
 class DumpForumData extends Maintenance {
 	/** @var  \Discussions\ForumDumper */
 	private $dumper;
