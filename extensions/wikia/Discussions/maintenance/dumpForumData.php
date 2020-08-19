@@ -16,6 +16,8 @@ include_once( __DIR__ . '/ForumDumper.php' );
 include_once( __DIR__ . '/FollowsFinder.php' );
 include_once( __DIR__ . '/WallHistoryFinder.php' );
 
+global $wgForumMigration;
+$wgForumMigration = true;
 
 class DumpForumData extends Maintenance {
 	/** @var  \Discussions\ForumDumper */
@@ -42,9 +44,6 @@ class DumpForumData extends Maintenance {
 		if ( $this->fh === false ) {
 			$this->error( "Unable to open file " . $this->outputName, 1 );
 		}
-
-		global $wgForumMigration;
-		$wgForumMigration = true;
 
 		$this->dumper = new Discussions\ForumDumper( $this->bulk, $this->debug );
 
