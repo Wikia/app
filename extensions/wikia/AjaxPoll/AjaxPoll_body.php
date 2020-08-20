@@ -48,6 +48,13 @@ class AjaxPollClass {
 		$class->mParser = $parser;
 		$class->mAttribs = $params;
 
+		/**
+		 * Render poll as closed for polls in forum posts to be migrated to feeds.
+		 */
+		if ( !empty( getenv( 'FORUM_MIGRATION' ) ) ) {
+			$class->mAttribs['status'] = 'close';
+		}
+
 		return $class->render();
 	}
 
