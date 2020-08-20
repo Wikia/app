@@ -42,6 +42,10 @@ class DumpForumData extends Maintenance {
 			$this->error( "Unable to open file " . $this->outputName, 1 );
 		}
 
+		if ( empty( getenv( 'FORUM_MIGRATION' ) ) ) {
+			$this->error( "FORUM_MIGRATION env variable should be set.", 1 );
+		}
+
 		$this->dumper = new Discussions\ForumDumper( $this->bulk, $this->debug );
 
 		$this->setConnectinoEncoding();
