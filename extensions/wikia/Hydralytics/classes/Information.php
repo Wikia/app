@@ -148,7 +148,9 @@ class Information {
 
 		$res = \Redshift::query(
 			'SELECT url, SUM(cnt) as views FROM wikianalytics.pageviews ' .
-			'WHERE wiki_id = :wiki_id AND is_file=True AND url <> \'/\'  AND url <> \'/index.php\'  GROUP BY url ' .
+			// TODO: find out why '/', '/index.php', and '/wiki/' are marked as files
+			"WHERE wiki_id = :wiki_id AND is_file=True AND url NOT IN ('/',  '/index.php', '/wiki/') " .
+			'GROUP BY url ' .
 			'ORDER BY views DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
 		);
