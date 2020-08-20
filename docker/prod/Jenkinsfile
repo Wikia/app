@@ -369,7 +369,7 @@ EOL""")
                 'DATACENTER': 'res',
                 'APP_VERSION': nextAppTag,
                 'CONFIG_VERSION': nextConfigTag,
-                'PODS': '2'
+                'PODS': '1'
               ])
 
               sh("""cat > docker/prod/res.yaml <<EOL
