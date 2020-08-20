@@ -1,5 +1,7 @@
 <?php
 
+use Wikia\Logger\WikiaLogger;
+
 /**
  * JS Snippets main class
  *
@@ -36,9 +38,11 @@ class JSSnippets {
 	 */
 
 	static public function addToStack( $dependencies, $loaders = array(), $callback = null, $options = null ) {
-		global $wgArticleAsJson, $wgForumMigration;
+		global $wgArticleAsJson;
 		$js = "";
 
+		WikiaLogger::instance()->info( getenv( 'FORUM_MIGRATION' ) );
+		var_dump( getenv( 'FORUM_MIGRATION' ) );
 		// HG-97: Don't include script tags when the article is requested as Json or it is forum migration dump
 		if ( !empty( $wgArticleAsJson ) || !empty( getenv( 'FORUM_MIGRATION' ) ) ) {
 			return $js;
