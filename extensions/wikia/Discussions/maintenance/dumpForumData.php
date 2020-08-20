@@ -16,7 +16,6 @@ include_once( __DIR__ . '/ForumDumper.php' );
 include_once( __DIR__ . '/FollowsFinder.php' );
 include_once( __DIR__ . '/WallHistoryFinder.php' );
 
-
 class DumpForumData extends Maintenance {
 	/** @var  \Discussions\ForumDumper */
 	private $dumper;
@@ -41,6 +40,10 @@ class DumpForumData extends Maintenance {
 		$this->fh = fopen( $this->outputName, 'w' );
 		if ( $this->fh === false ) {
 			$this->error( "Unable to open file " . $this->outputName, 1 );
+		}
+
+		if ( empty( getenv( 'FORUM_MIGRATION' ) ) ) {
+			$this->error( "FORUM_MIGRATION env variable should be set.", 1 );
 		}
 
 		$this->dumper = new Discussions\ForumDumper( $this->bulk, $this->debug );

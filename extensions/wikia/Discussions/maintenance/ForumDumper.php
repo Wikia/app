@@ -21,11 +21,6 @@ class ForumDumper {
 	const CONTRIBUTOR_TYPE_DELETED = "[deleted]";
 	const CONTRIBUTOR_TYPE_UNKNOWN = "[unknown]";
 
-	// Discussions uses TEXT columns for content, which are limited to 2**16 bytes.  Also
-	// subtracting 16 bytes from the max size since going right up to the limit still causes
-	// MySQL to fail the insert.
-	const MAX_CONTENT_SIZE = 65520;
-
 	// A very loose interpretation of markup favoring false positives for markup.  Match
 	// alphanumerics, anything in a basic URL and punctuation.  If any character in the text
 	// doesn't match, assume there is wiki text and parse it.
@@ -215,7 +210,8 @@ class ForumDumper {
 									"namespace" => $row->page_namespace,
 									"raw_title" => $row->page_title,
 									"latest_revision_id" => $row->page_latest,
-									"first_revision_id" => $row->first_rev_id
+									"first_revision_id" => $row->first_rev_id,
+									"deleted_ind" => $row->deleted
 								]
 							);
 
@@ -567,22 +563,43 @@ class ForumDumper {
 			$rawText = strip_tags( $parsedText );
 		}
 
-		// Truncate the strings if they are too big
-		if ( strlen( $parsedText ) > self::MAX_CONTENT_SIZE ) {
-			$parsedText = mb_strcut( $parsedText, 0, self::MAX_CONTENT_SIZE );
+		if ( $rawText && $parsedText ) {
+			$rawText = preg_replace( self::ANON_WROTE_SELECTOR, self::ANON_WROTE_REPLACEMENT, $rawText );
+			$parsedText = preg_replace( self::ANON_WROTE_SELECTOR, self::ANON_WROTE_REPLACEMENT, $parsedText );
+			$parsedText = preg_replace( self::QUOTE_SELECTOR, self::QUOTE_REPLACEMENT, $parsedText );
 		}
-		if ( strlen( $rawText ) > self::MAX_CONTENT_SIZE ) {
-			$rawText = mb_strcut( $rawText, 0, self::MAX_CONTENT_SIZE );
+
+		// Truncate the strings if they are too big
+		if ( strlen( $parsedText ) > DumpUtils::MAX_CONTENT_SIZE ) {
+
+			if ( $this->debug ) {
+				WikiaLogger::instance()->info( "Truncate parsed text of " . $revId .
+						" revision - " . strlen( $parsedText ) . " bytes.", [$revId] );
+			}
+
+			$parsedText = mb_strcut( $parsedText, 0, DumpUtils::MAX_CONTENT_SIZE );
+
+			if ( $this->debug ) {
+				WikiaLogger::instance()->info( "Parsed text truncated to " . strlen( $parsedText ) .
+					" bytes.", [] );
+			}
+		}
+		if ( strlen( $rawText ) > DumpUtils::MAX_CONTENT_SIZE ) {
+
+			if ( $this->debug ) {
+				WikiaLogger::instance()->info( "Truncate raw text of " . $revId .
+											   " revision - " . strlen( $rawText ) . " bytes.", [$revId] );
+			}
+
+			$rawText = mb_strcut( $rawText, 0, DumpUtils::MAX_CONTENT_SIZE );
+
+			if ( $this->debug ) {
+				WikiaLogger::instance()->info( "Raw text truncated to " . strlen( $rawText ) .
+											   " bytes.", [] );
+			}
 		}
 
 		$this->removeTitle( $textId );
-
-		if ( $rawText && $parsedText ) {
-			$rawTextAnonymoused = preg_replace( self::ANON_WROTE_SELECTOR, self::ANON_WROTE_REPLACEMENT, $rawText );
-			$parsedTextAnonymoused = preg_replace( self::ANON_WROTE_SELECTOR, self::ANON_WROTE_REPLACEMENT, $parsedText );
-			$parsedTextQuoteStyled = preg_replace( self::QUOTE_SELECTOR, self::QUOTE_REPLACEMENT, $parsedTextAnonymoused );
-			return [ $parsedTextQuoteStyled, $rawTextAnonymoused, $title ];
-		}
 
 		return [ $parsedText, $rawText, $title ];
 	}
@@ -639,8 +656,11 @@ class ForumDumper {
 	 * @return mixed
 	 */
 	private function updateLazyImages( $text ) {
-		return preg_replace( "/<img +[^>]+ +data-src=[^>]+><noscript>(<img[^>]+>)<\\/noscript>/",
+		$text = preg_replace( "/<img +[^>]+ +data-src=[^>]+><noscript>(<img[^>]+>)<\\/noscript>/",
 			"$1", $text );
+		$text = preg_replace( "/<noscript>(<img[^>]+>)<\\/noscript><img +[^>]+ +data-src=[^>]+>/",
+			"$1", $text );
+		return $text;
 	}
 
 	private function removeACMetadata( $text ) {
@@ -771,7 +791,7 @@ class ForumDumper {
 			return [null, null];
 		}
 
-		return [ $title->getText(), $title->getLocalURL() ];
+		return [ $title->getText(), '/wiki/' . $title->getText() ];
 	}
 
 	private function getPageIdsDisplayOrder( array $pageIdsFixed, int $minIndex ) {

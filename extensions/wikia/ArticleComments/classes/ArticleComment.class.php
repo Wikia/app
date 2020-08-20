@@ -411,8 +411,19 @@ class ArticleComment {
 		// SUS-1527: {{Special:RecentChanges}} in message on wall breaks page
 		$opts->setAllowSpecialInclusion( false );
 
+		/**
+		 * Separate cache for forum migration script.
+		 */
+		if ( !empty( getenv( 'FORUM_MIGRATION' ) ) ) {
+			$cacheKey = wfMemcKey( __METHOD__, md5( $this->mRawtext . $this->mTitle->getPrefixedDBkey() ),
+				$opts->optionsHash( ParserOptions::legacyOptions() ), 'migration' );
+		} else {
+			$cacheKey = wfMemcKey( __METHOD__, md5( $this->mRawtext . $this->mTitle->getPrefixedDBkey() ),
+				$opts->optionsHash( ParserOptions::legacyOptions() ) );
+		}
+
 		$data = WikiaDataAccess::cache(
-			wfMemcKey( __METHOD__, md5( $this->mRawtext . $this->mTitle->getPrefixedDBkey() ), $opts->optionsHash( ParserOptions::legacyOptions() ) ),
+			$cacheKey,
 			WikiaResponse::CACHE_STANDARD,
 			function() use ( $opts ) {
 				$parser = ParserPool::get();
