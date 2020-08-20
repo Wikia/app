@@ -17,6 +17,9 @@
 				<input type='radio' name='wpPollRadio<?php echo $id ?>' id='wpPollRadio<?php echo $id ?>' value='<?php echo $nr ?>' /><?=$answer; ?>
 			</label>
 		<?php endif ?>
+		<?php if( $status === "close" && $forum_migration ): ?>
+			<?php echo $answer ?>
+		<?php endif ?>
 		</div>
 		<div class='pollAnswerVotes' onmouseover='span=this.getElementsByTagName("span")[0];tmpPollVar=span.innerHTML;span.innerHTML=span.title;span.title="";' onmouseout='span=this.getElementsByTagName("span")[0];span.title=span.innerHTML;span.innerHTML=tmpPollVar;'>
 			<?php

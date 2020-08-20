@@ -261,6 +261,7 @@ class AjaxPollClass {
 			'attribs'	=> $this->mAttribs,
 			'created_time'	=> $wgContLang->time( $timestamp ),
 			'created_date'	=> $wgContLang->date( $timestamp ),
+			'forum_migration' => !empty( getenv( 'FORUM_MIGRATION' ) )
 		));
 
 		$before .= $oTmpl->render( 'poll' );
