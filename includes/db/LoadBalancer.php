@@ -35,7 +35,7 @@ class LoadBalancer {
 		if ( !isset( $params['servers'] ) ) {
 			throw new MWException( __CLASS__.': missing servers parameter' );
 		}
-		$this->mServers = $params['servers'];
+		$this->mServers = $this->resolveServerArray( $params['servers'] );
 
 		if ( isset( $params['waitTimeout'] ) ) {
 			$this->mWaitTimeout = $params['waitTimeout'];
@@ -83,6 +83,39 @@ class LoadBalancer {
 	}
 
 	/**
+	 * Given an array of LoadBalancer server configurations expected to contain at most two servers,
+	 * resolve the Consul hostname of the replica server configuration (if present) and add the IP addresses of the
+	 * replica nodes to the configuration.
+	 * @param array $servers
+	 * @return array
+	 */
+	private function resolveServerArray( array $servers ): array {
+		// Nothing to do for non-replicating clusters.
+		if ( count( $servers ) === 1 ) {
+			return $servers;
+		}
+
+		[ $masterServerConfig, $replicaServerConfig ] = $servers;
+
+		// Don't bother eagerly resolving the master DB host name as it should always resolve to a single physical DB.
+		$physicalServers = [ $masterServerConfig ];
+
+		// Consul DNS records will contain all hosts that it considers healthy.
+		// Make sure that we make all of these hosts available to MediaWiki for optimal app-level load balancing.
+		// https://www.consul.io/docs/agent/dns
+		$healthyReplicaHosts = (array)gethostbynamel( $replicaServerConfig['host'] );
+		// Split the load equally between each replica
+		$loadPerHost = $replicaServerConfig['load'];
+
+		foreach ( $healthyReplicaHosts as $host ) {
+			// Preserve additional connection params (credentials, flags etc.)
+			$physicalServers[] = [ 'host' => $host, 'load' => $loadPerHost ] + $replicaServerConfig;
+		}
+
+		return $physicalServers;
+	}
+
+	/**
 	 * Get a LoadMonitor instance
 	 *
 	 * @return LoadMonitor
@@ -103,6 +136,40 @@ class LoadBalancer {
 	function parentInfo( $x = null ) {
 		return wfSetVar( $this->mParentInfo, $x );
 	}
+	/**
+	 * Given an array of non-normalised probabilities, this function will select
+	 * an element and return the appropriate key
+	 *
+	 * @param int[] $weights
+	 * @return int|bool
+	 */
+	private function pickRandom( array $weights ) {
+		if ( count( $weights ) == 0 ) {
+			return false;
+		}
+
+		$sum = array_sum( $weights );
+		if ( $sum == 0 ) {
+			# No loads on any of them
+			# In previous versions, this triggered an unweighted random selection,
+			# but this feature has been removed as of April 2006 to allow for strict
+			# separation of query groups.
+			return false;
+		}
+		$max = mt_getrandmax();
+		$rand = mt_rand( 0, $max ) / $max * $sum;
+
+		$sum = 0;
+
+		foreach ( $weights as $i => $w ) {
+			$sum += $w;
+			if ( $sum >= $rand ) {
+				break;
+			}
+		}
+
+		return $i;
+	}
 
 	/**
 	 * Get the index of the reader connection, which may be a slave
@@ -116,9 +183,50 @@ class LoadBalancer {
 	 * @throws MWException
 	 */
 	function getReaderIndex( $group = false, $wiki = false ) {
-		// Wikia change: just return the index of the replica DB in the server array
-		// Consul will handle health checks and load balancing for us
-		return count( $this->mServers ) - 1;
+		if ( count( $this->mServers ) == 1 )  {
+			# Skip the load balancing if there's only one server
+			return 0;
+		} elseif ( $this->mReadIndex >= 0 ) {
+			# Shortcut if generic reader exists already
+			return $this->mReadIndex;
+		}
+
+		$i = false;
+		$currentLoads = $this->mLoads;
+		while ( count( $currentLoads ) ) {
+			$i = $this->pickRandom( $currentLoads );
+
+			// No loads on any of the servers
+			if ( $i === false ) {
+				return false;
+			}
+
+			$conn = $this->openConnection( $i, $wiki );
+
+			if ( !$conn ) {
+				unset( $currentLoads[$i] );
+				continue;
+			}
+
+			// Decrement reference counter, we are finished with this connection.
+			// It will be incremented for the caller later.
+			if ( $wiki !== false ) {
+				$this->reuseConnection( $conn );
+			}
+
+			// Return this server
+			break;
+		}
+
+		if ( $i !== false ) {
+			# Wikia change - SUS-1801: don't abuse MASTER_POS_WAIT when obtaining slave connection
+			# Slave connection successful
+			if ( $this->mReadIndex <=0 && $this->mLoads[$i]>0 && $i !== false ) {
+				$this->mReadIndex = $i;
+			}
+		}
+
+		return $i;
 	}
 
 	/**
