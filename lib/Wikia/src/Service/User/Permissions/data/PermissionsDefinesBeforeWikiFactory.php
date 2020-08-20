@@ -160,6 +160,7 @@ $wgGroupPermissions['helper']['reupload'] = true;
 $wgGroupPermissions['helper']['createpage'] = true;
 $wgGroupPermissions['helper']['createtalk'] = true;
 $wgGroupPermissions['helper']['InterwikiEdit'] = true;
+$wgGroupPermissions['helper']['lookupuser'] = true;
 $wgGroupPermissions['helper']['multilookup'] = true;
 $wgGroupPermissions['helper']['createwikilimitsexempt'] = true;
 $wgGroupPermissions['helper']['phalanx'] = true;
@@ -174,6 +175,8 @@ $wgGroupPermissions['helper']['dumpsondemand'] = true;
 $wgGroupPermissions['helper']['wallfastadmindelete'] = true;
 $wgGroupPermissions['helper']['quicktools'] = true;
 $wgGroupPermissions['helper']['hideblockername'] = true;
+$wgGroupPermissions['helper']['editusercss'] = true;
+$wgGroupPermissions['helper']['edituserjs'] = true;
 // SUS-870
 $wgGroupPermissions['helper']['checkuser'] = true;
 $wgGroupPermissions['helper']['checkuser-log'] = true;

@@ -153,6 +153,7 @@ $wgGroupPermissions[ '*' ][ 'abusefilter-bypass' ] = false;
 $wgGroupPermissions[ 'staff' ][ 'abusefilter-bypass' ] = true;
 $wgGroupPermissions[ 'wiki-manager' ]['abusefilter-bypass'] = true;
 $wgGroupPermissions[ 'content-team-member' ]['abusefilter-bypass'] = true;
+$wgGroupPermissions[ 'helper' ]['abusefilter-bypass'] = true;
 
 // RIGHTS
 $wgGroupPermissions['*']['platinum'] = false;
@@ -471,6 +472,7 @@ $wgGroupPermissions['sysop']['managewikiahome'] = false;
 
 $wgGroupPermissions['*']['newwikislist'] = false;
 $wgGroupPermissions['staff']['newwikislist'] = true;
+$wgGroupPermissions['helper']['newwikislist'] = true;
 
 $wgGroupPermissions['*']['restricted_promote'] = false;
 $wgGroupPermissions['staff']['restricted_promote'] = true;
