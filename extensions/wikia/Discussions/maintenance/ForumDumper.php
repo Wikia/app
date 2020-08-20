@@ -112,6 +112,13 @@ class ForumDumper {
 			return false;
 		}
 
+		// There are some mysterious cases when the page appears twice and both of them exist (they are not deleted).
+		// To be honest I can't find the reason, but let's keep latter reference as valid.
+		if ( !empty( $this->pages[$id] ) ) {
+			$this->pages[$id] = $data;
+			return false;
+		}
+
 		$this->pages[$id] = $data;
 		return true;
 	}
