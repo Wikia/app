@@ -116,10 +116,7 @@ class ArticleAsJson {
 				break;
 			case 1:
 				$result = [
-					[
-						'typeRow1' => true,
-						'items' => $media,
-					]
+					self::getGalleryRow1items( $media ),
 				];
 				break;
 			case 2:
@@ -150,6 +147,17 @@ class ArticleAsJson {
 		}
 
 		return $result;
+	}
+
+	private static function getGalleryRow1items( $items ) {
+		$thumbsize = 450;
+		$items[0]['thumbnailUrl'] = self::getGalleryThumbnail( $items[0], $thumbsize );
+		$items[0]['thumbSize'] = $thumbsize;
+
+		return [
+			'typeRow1' => true,
+			'items' => $items,
+		];
 	}
 
 	private static function getGalleryRow2items( $items, $hidden = false ) {

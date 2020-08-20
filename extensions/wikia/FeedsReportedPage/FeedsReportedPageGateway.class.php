@@ -6,6 +6,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\ResponseInterface;
 use Wikia\Logger\Loggable;
+use Wikia\Service\Constants;
 
 /**
  * Client class for the resources of Discussion service.
@@ -31,11 +32,14 @@ class FeedsReportedPageGateway {
 	 * Get the list of reported posts on the current wiki.
 	 * @param array $pagination associative array of pagination query params
 	 * @param bool $viewableOnly if hidden posts should be not returned
+	 * @param bool $canViewHidden if user is permitted to see hidden posts
+	 * @param bool $canViewHiddenInContainer if user is permitted to see hidden posts in given container
 	 * @param string $containerType
 	 * @param int $userId
 	 * @return array|null an object with reported posts on success, or null if an error occurred
 	 */
-	public function getReportedPosts( array $pagination, bool $viewableOnly, ?string $containerType, int $userId ):
+	public function getReportedPosts( array $pagination, bool $viewableOnly, bool $canViewHidden,
+									  bool $canViewHiddenInContainer, ?string $containerType, int $userId ):
 	?array {
 		try {
 			$containerTypeParam = empty( $containerType ) ? [] : [
@@ -46,11 +50,13 @@ class FeedsReportedPageGateway {
 				"{$this->serviceUrl}/internal/{$this->wikiId}/reported-posts",
 				[
 					RequestOptions::HEADERS => [
-						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => 1
+						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => 1,
+						Constants::HELIOS_AUTH_HEADER => $userId
 					],
 					RequestOptions::QUERY => array_filter( $pagination ) + [
-						'viewableOnly' => $viewableOnly,
-						'userId' => $userId,
+						'viewableOnly' => $viewableOnly ? 'true' : 'false',
+						'canViewHiddenPosts' => $canViewHidden ? 'true' : 'false',
+						'canViewHiddenPostsInContainer' => $canViewHiddenInContainer ? 'true' : 'false',
 					] + $containerTypeParam,
 				]
 			);

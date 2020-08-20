@@ -54,10 +54,16 @@ class FeedsReportedPageController extends WikiaController {
 			return;
 		}
 
-		$reportedPosts = $this->gateway->getReportedPosts( $pagination, $viewableOnly, $containerType, $user->getId() );
+		$canViewHidden = $user->isAllowed( 'posts:viewhidden' );
+		$canViewHiddenInContainer = $containerType == 'WALL' ? $user->isAllowed( 'wallremove' ) : $canViewHidden;
+
+		$reportedPosts = $this->gateway->getReportedPosts(
+			$pagination, $viewableOnly, $canViewHidden, $canViewHiddenInContainer, $containerType, $user->getId()
+		);
 
 		if ( $reportedPosts ) {
 			$this->mapLinks( $reportedPosts );
+			$this->addPermissions( $user, $reportedPosts );
 			$this->response->setData( $reportedPosts );
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_OK );
 		} else {
@@ -92,6 +98,24 @@ class FeedsReportedPageController extends WikiaController {
 			->withHost( $this->baseDomain )
 			->withPath( $this->scriptPath . '/wikia.php' )
 			->withQuery( build_query( $controllerQueryParams ) );
+	}
+
+	private function addPermissions( User $user, array &$reportedPosts ) {
+		foreach ( $reportedPosts['_embedded']['doc:posts'] as &$postData ) {
+			$post = ( new PostBuilder() )
+				->position( $postData['position'] )
+				->author( empty( $postData['creatorId'] ) ? 0 : (int)$postData['creatorId'] )
+				->creationDate( $postData['creationDate']['epochSecond'] )
+				->isEditable( $postData['isEditable'] )
+				->isThreadEditable( $postData['_embedded']['thread'][0]['isEditable'] )
+				->build();
+
+			$rights = FeedsPermissionManager::getRights( $user, $post );
+
+			if ( !empty( $rights ) ) {
+				$postData['_embedded']['userData'][0]['permissions'] = $rights;
+			}
+		}
 	}
 
 	/**
