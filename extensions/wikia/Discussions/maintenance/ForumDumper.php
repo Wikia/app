@@ -96,6 +96,8 @@ class ForumDumper {
 
 	private $titles = [];
 	private $pages = [];
+	private $votes = [];
+
 	private $bulk;
 	private $debug;
 
@@ -125,6 +127,24 @@ class ForumDumper {
 
 	public function addTitle( $id, $title ) {
 		$this->titles[$id] = $title;
+	}
+
+	public function addVote( $id, $userId ) {
+		if ( !empty( $this->votes[$id] ) ) {
+			$voters = $this->votes[$id];
+
+			//There are weird cases when single user did multiple votes on the same post.
+			if (in_array($userId, $voters)) {
+				return false;
+			}
+
+			$voters[] = $userId;
+			$this->votes[$id] = $voters;
+			return true;
+		}
+
+		$this->votes[$id] = [$userId];
+		return true;
 	}
 
 	public function removeTitle( $id ) {
@@ -719,21 +739,26 @@ class ForumDumper {
 				->runLoop( $dbh, function ( $result ) use ( $dbh, $fh, &$inserts ) {
 
 					while ($row = $result->fetchObject()) {
-						$insert = DumpUtils::createInsert(
-							'import_vote',
-							self::COLUMNS_VOTE,
-							[
-								"page_id" => $row->article_id,
-								"user_identifier" => $row->user_id,
-								"timestamp" => $row->time,
-							]
-						) . "\n";
 
-						$inserts[] = $insert;
+						$validVote = $this->addVote( $row->article_id, $row->user_id );
 
-						if ( !$this->bulk ) {
-							fwrite( $fh, $insert) ;
-							fflush( $fh );
+						if ( $validVote ) {
+							$insert = DumpUtils::createInsert(
+									'import_vote',
+									self::COLUMNS_VOTE,
+									[
+										"page_id" => $row->article_id,
+										"user_identifier" => $row->user_id,
+										"timestamp" => $row->time,
+									]
+								) . "\n";
+
+							$inserts[] = $insert;
+
+							if ( !$this->bulk ) {
+								fwrite( $fh, $insert) ;
+								fflush( $fh );
+							}
 						}
 					}
 
