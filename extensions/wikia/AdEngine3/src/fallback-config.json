@@ -629,6 +629,7 @@
                 "5428434937",
                 "5437018947",
                 "5334881004",
+                "5451772486",
                 "5447937745"
             ]
         }
@@ -864,7 +865,7 @@
             "regions": [
                 "XX"
             ],
-            "value": "//pr.realvu.net/flip/2/c=E4KZ_f=site_si=1067"
+            "value": "//pr.realvu.net/flip/2/c=E4KZ_f=site_si=1167"
         }
     ],
     "icA9Bidder": [
@@ -1005,7 +1006,8 @@
                 "oasis"
             ],
             "regions": [
-                "JP"
+                "JP",
+                "PL"
             ],
             "value": true
         }
