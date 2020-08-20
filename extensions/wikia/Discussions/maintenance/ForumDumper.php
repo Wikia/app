@@ -109,10 +109,11 @@ class ForumDumper {
 		// and one where its not marked deleted in comments_index.  This might represent a move.
 		// If this is the case, prefer the un-deleted version.
 		if ( !empty( $this->pages[$id] ) && $data["deleted_ind"] == 1 ) {
-			return;
+			return false;
 		}
 
 		$this->pages[$id] = $data;
+		return true;
 	}
 
 	public function addTitle( $id, $title ) {
@@ -203,7 +204,7 @@ class ForumDumper {
 								}
 							}
 
-							$this->addPage(
+							$validPage = $this->addPage(
 								$row->page_id,
 								[
 									"page_id" => $row->page_id,
@@ -215,42 +216,44 @@ class ForumDumper {
 								]
 							);
 
-							$insert = DumpUtils::createInsert(
-									'import_page',
-									self::COLUMNS_PAGE,
-									[
-										"page_id" => $row->page_id,
-										"namespace" => $row->page_namespace,
-										"raw_title" => $row->page_title,
-										"is_redirect" => $row->page_is_redirect,
-										"is_new" => $row->page_is_new,
-										"touched" => $row->page_touched,
-										"latest_revision_id" => $row->page_latest,
-										"length" => $row->page_len,
-										"parent_page_id" => $row->parent_page_id,
-										"parent_comment_id" => $row->parent_comment_id,
-										"last_child_comment_id" => $row->last_child_comment_id,
-										"archived_ind" => $row->archived ?: 0,
-										"deleted_ind" => $row->deleted ?: 0,
-										"removed_ind" => $row->removed ?: 0,
-										"locked_ind" => $row->locked ?: 0,
-										"protected_ind" => $row->protected ?: 0,
-										"sticky_ind" => $row->sticky ?: 0,
-										"first_revision_id" => $row->page_latest, //we want just one revision
-										"last_revision_id" => $row->page_latest,
-										"comment_timestamp" => $row->last_touched,
-										"display_order" => $pageIdsToOrder[$row->page_id],
-									]
-								) . "\n";
+							if ( $validPage ) {
+								$insert = DumpUtils::createInsert(
+										'import_page',
+										self::COLUMNS_PAGE,
+										[
+											"page_id" => $row->page_id,
+											"namespace" => $row->page_namespace,
+											"raw_title" => $row->page_title,
+											"is_redirect" => $row->page_is_redirect,
+											"is_new" => $row->page_is_new,
+											"touched" => $row->page_touched,
+											"latest_revision_id" => $row->page_latest,
+											"length" => $row->page_len,
+											"parent_page_id" => $row->parent_page_id,
+											"parent_comment_id" => $row->parent_comment_id,
+											"last_child_comment_id" => $row->last_child_comment_id,
+											"archived_ind" => $row->archived ?: 0,
+											"deleted_ind" => $row->deleted ?: 0,
+											"removed_ind" => $row->removed ?: 0,
+											"locked_ind" => $row->locked ?: 0,
+											"protected_ind" => $row->protected ?: 0,
+											"sticky_ind" => $row->sticky ?: 0,
+											"first_revision_id" => $row->page_latest, //we want just one revision
+											"last_revision_id" => $row->page_latest,
+											"comment_timestamp" => $row->last_touched,
+											"display_order" => $pageIdsToOrder[$row->page_id],
+										]
+									) . "\n";
 
-							$inserts[] = $insert;
+								$inserts[] = $insert;
 
-							if ( !$this->bulk ) {
-								fwrite( $fh, $insert );
-								fflush( $fh );
+								if ( !$this->bulk ) {
+									fwrite( $fh, $insert );
+									fflush( $fh );
+								}
+
+								$this->addTitle( $row->page_id, Title::newFromRow( $row ) );
 							}
-
-							$this->addTitle( $row->page_id, Title::newFromRow( $row ) );
 						}
 
 						$dbh->freeResult( $result );
