@@ -143,7 +143,7 @@ class UserApiController extends WikiaApiController {
 
 	private function getAvatars( array $userIds ): array {
 		$userAttributeService = ServiceFactory::instance()->attributesFactory()->userAttributeGateway();
-		$attributesForUsers = $userAttributeService->getAllAttributesForMultipleUsers( $userIds );
+		$attributesForUsers = $userAttributeService->getAllAttributesForMultipleUsers( $userIds )['users'];
 
 		$result = [];
 		foreach ( $userIds as $id ) {
