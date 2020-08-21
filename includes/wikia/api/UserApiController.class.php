@@ -1,4 +1,7 @@
 <?php
+
+use Wikia\Factory\ServiceFactory;
+
 /**
  * Controller to fetch information about users
  *
@@ -116,14 +119,37 @@ class UserApiController extends WikiaApiController {
 		);
 
 		$users = [];
+		$userIds = [];
 
 		foreach ( $res as $row ) {
 			$users[] = [
 				'id' => $row->user_id,
 				'name' => $row->user_name_normalized,
 			];
+			$userIds[] = (int)$row->user_id;
+		}
+
+		if ( count( $userIds ) > 0 ) {
+			$avatars = $this->getAvatars( $userIds );
+
+			$users = array_map( function ( $user ) use ( $avatars ) {
+				$user['avatarUrl'] = $avatars[$user['id']];
+				return $user;
+			}, $users );
 		}
 
 		$this->response->setData( [ 'users' => $users ] );
+	}
+
+	private function getAvatars( array $userIds ): array {
+		$userAttributeService = ServiceFactory::instance()->attributesFactory()->userAttributeGateway();
+		$attributesForUsers = $userAttributeService->getAllAttributesForMultipleUsers( $userIds );
+
+		$result = [];
+		foreach ( $userIds as $id ) {
+			$result[$id] = $attributesForUsers[$id]['avatar'] ?? null;
+		}
+
+		return $result;
 	}
 }
