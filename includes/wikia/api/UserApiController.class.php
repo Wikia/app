@@ -133,7 +133,7 @@ class UserApiController extends WikiaApiController {
 			$avatars = $this->getAvatars( $userIds );
 
 			$users = array_map( function ( $user ) use ( $avatars ) {
-				$user['avatarUrl'] = $avatars[$user['id']];
+				$user['avatarUrl'] = $avatars[(int)$user['id']];
 				return $user;
 			}, $users );
 		}
