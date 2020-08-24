@@ -255,7 +255,15 @@ async function configure(adsContext, consents) {
 
 	const instantConfig = await InstantConfigService.init();
 
-	setupTCFv2Context(instantConfig);
+	// setupTCFv2Context(instantConfig);
+	context.set('custom.tcf2Enabled', true);
+	context.set(
+		'targeting.rollout_tracking',
+		context.get('targeting.rollout_tracking')
+			? `${context.get('targeting.rollout_tracking')},tcf`
+			: 'tcf',
+	);
+
 	setupNpaContext();
 	setupRdpContext();
 
