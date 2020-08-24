@@ -12,7 +12,7 @@ use Wikia\Service\Constants;
  * Client class for the resources of Discussion service.
  * @package Fandom\FeedsReportedPage\Gateway
  */
-class FeedsReportedPageGateway {
+class DiscussionGateway {
 	use Loggable;
 
 	/** @var Client $httpClient */

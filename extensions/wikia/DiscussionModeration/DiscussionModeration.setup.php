@@ -1,11 +1,11 @@
 <?php
 
 $wgExtensionCredits['other'][] = array(
-	'name' => 'feeds-reported-page-api',
+	'name' => 'DiscussionModeration',
 	'author' => array(
 		'Fandom',
 	),
-	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/FeedsReportedPage',
+	'url' => 'https://github.com/Wikia/app/tree/dev/extensions/wikia/DiscussionModeration',
 	'descriptionmsg' => 'feeds-reported-page-api-desc'
 );
 
@@ -13,9 +13,10 @@ $dir = dirname(__FILE__) . '/';
 
 $wgAutoloadClasses['Post'] =  $dir . 'Post.class.php';
 $wgAutoloadClasses['PostBuilder'] =  $dir . 'PostBuilder.class.php';
-$wgAutoloadClasses['FeedsPermissionManager'] =  $dir . 'FeedsPermissionManager.class.php';
-$wgAutoloadClasses['FeedsReportedPageController'] =  $dir . 'FeedsReportedPageController.class.php';
-$wgAutoloadClasses['FeedsReportedPageGateway'] =  $dir . 'FeedsReportedPageGateway.class.php';
+$wgAutoloadClasses['DiscussionPermissionManager'] =  $dir . 'DiscussionPermissionManager.class.php';
+$wgAutoloadClasses['DiscussionGateway'] =  $dir . 'DiscussionGateway.class.php';
+$wgAutoloadClasses['DiscussionModerationController'] =  $dir . 'DiscussionModerationController.class.php';
+$wgAutoloadClasses['FeedsReportedPageController'] =  $dir . 'DiscussionModerationController.class.php';
 
 $wgGroupPermissions['*']['posts:delete']                               = false;
 $wgGroupPermissions['threadmoderator']['posts:delete']                 = true;

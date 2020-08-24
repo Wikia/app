@@ -1,6 +1,6 @@
 <?php
 
-class FeedsPermissionManager {
+class DiscussionPermissionManager {
 
 	const CAN_DELETE_PERMISSION = "canDelete";
 	const CAN_UNDELETE_PERMISSION = "canUndelete";

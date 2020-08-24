@@ -6,7 +6,7 @@ use Wikia\Factory\ServiceFactory;
 use function GuzzleHttp\Psr7\build_query;
 use function GuzzleHttp\Psr7\parse_query;
 
-class FeedsReportedPageController extends WikiaController {
+class DiscussionModerationController extends WikiaController {
 
 	private const PAGINATION_QUERY_PARAMS = [ 'limit', 'page', 'pivotId' ];
 
@@ -21,7 +21,7 @@ class FeedsReportedPageController extends WikiaController {
 
 		$discussionsServiceUrl = ServiceFactory::instance()->providerFactory()->urlProvider()->getUrl( 'discussion' );
 
-		$this->gateway = new FeedsReportedPageGateway(
+		$this->gateway = new DiscussionGateway(
 			new Client(),
 			$discussionsServiceUrl,
 			$this->wg->CityId
@@ -87,7 +87,7 @@ class FeedsReportedPageController extends WikiaController {
 	private function buildNewLink( Uri $uri ) {
 		$serviceQueryParams = parse_query( $uri->getQuery() );
 		$controllerQueryParams = [
-			'controller' => 'FeedsReportedPageController',
+			'controller' => 'DiscussionModerationController',
 			'method' => 'getReportedPosts',
 		];
 
@@ -110,7 +110,7 @@ class FeedsReportedPageController extends WikiaController {
 				->isThreadEditable( $postData['_embedded']['thread'][0]['isEditable'] )
 				->build();
 
-			$rights = FeedsPermissionManager::getRights( $user, $post );
+			$rights = DiscussionPermissionManager::getRights( $user, $post );
 
 			if ( !empty( $rights ) ) {
 				$postData['_embedded']['userData'][0]['permissions'] = $rights;
@@ -132,3 +132,5 @@ class FeedsReportedPageController extends WikiaController {
 		return false;
 	}
 }
+
+class_alias( DiscussionModerationController::class, 'FeedsReportedPageController' );
