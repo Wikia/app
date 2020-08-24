@@ -14,6 +14,7 @@ $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['Post'] =  $dir . 'Post.class.php';
 $wgAutoloadClasses['PostBuilder'] =  $dir . 'PostBuilder.class.php';
 $wgAutoloadClasses['DiscussionPermissionManager'] =  $dir . 'DiscussionPermissionManager.class.php';
+$wgAutoloadClasses['ReportedPostsHelper'] =  $dir . 'ReportedPostsHelper.class.php';
 $wgAutoloadClasses['DiscussionGateway'] =  $dir . 'DiscussionGateway.class.php';
 $wgAutoloadClasses['DiscussionModerationController'] =  $dir . 'DiscussionModerationController.class.php';
 $wgAutoloadClasses['FeedsReportedPageController'] =  $dir . 'DiscussionModerationController.class.php';
