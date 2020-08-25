@@ -2,11 +2,13 @@
 declare( strict_types = 1 );
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\RequestOptions;
 use Psr\Http\Message\ResponseInterface;
 use Wikia\Logger\Loggable;
 use Wikia\Service\Constants;
+use function GuzzleHttp\Psr7\build_query;
 
 /**
  * Client class for the resources of Discussion service.
@@ -88,6 +90,55 @@ class DiscussionGateway {
 				'statusCode' => $response->getStatusCode(),
 				'body' => $this->entity( $response ),
 			];
+		} catch ( ClientException $e ) {
+			$this->error( 'error while loading report details', [
+				'exception' => $e,
+			] );
+
+			return [
+				'statusCode' => $e->getResponse()->getStatusCode(),
+				'body' => $this->entity( $e->getResponse() ),
+			];
+		} catch ( Exception $e ) {
+			$this->error( 'error while loading report details', [
+				'exception' => $e,
+			] );
+
+			return [
+				'statusCode' => \WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR,
+				'body' => []
+			];
+		}
+	}
+
+	public function getPostListReports( array $postIds, int $userId ): array {
+		try {
+			$response = $this->httpClient->get(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/reports",
+				[
+					RequestOptions::HEADERS => [
+						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => 'mediawiki-app',
+						Constants::HELIOS_AUTH_HEADER => $userId
+					],
+					RequestOptions::QUERY => build_query( [ 'postId' => $postIds ],
+						PHP_QUERY_RFC1738 ),
+					RequestOptions::TIMEOUT => 3.0
+				]
+			);
+
+			return [
+				'statusCode' => $response->getStatusCode(),
+				'body' => $this->entity( $response ),
+			];
+		} catch ( ClientException $e ) {
+			$this->error( 'error while loading report details', [
+				'exception' => $e,
+			] );
+
+			return [
+				'statusCode' => $e->getResponse()->getStatusCode(),
+				'body' => $this->entity( $e->getResponse() ),
+			];
 		} catch ( Exception $e ) {
 			$this->error( 'error while loading report details', [
 				'exception' => $e,
@@ -102,10 +153,11 @@ class DiscussionGateway {
 
 	/**
 	 * Extract the body of the given HTTP response and attempt to deserialize it as JSON.
-	 * Return the deserialized value if the body was a valid JSON object or array, return null otherwise.
+	 * Return the deserialized value if the body was a valid JSON object or array, return empty
+	 * array otherwise.
 	 *
 	 * @param ResponseInterface $response
-	 * @return array|null
+	 * @return array
 	 */
 	private function entity( ResponseInterface $response ): array {
 		$body = (string)$response->getBody();

@@ -100,6 +100,30 @@ class DiscussionModerationController extends WikiaController {
 		$this->response->setData( $body );
 	}
 
+	public function getPostListReports(): void {
+		$postIds = $this->request->getArray( 'postId', [] );
+		$user = $this->getContext()->getUser();
+
+		if ( !$user->isAllowed( 'posts:validate' ) || $user->isBlocked() || !$user->isAllowed( 'read' ) ) {
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_FORBIDDEN );
+			return;
+		}
+
+		[ 'statusCode' => $statusCode, 'body' => $body ] = $this->gateway->getPostListReports( $postIds, $user->getId() );
+
+		$this->response->setCode( $statusCode );
+
+		if ( $statusCode != WikiaResponse::RESPONSE_CODE_OK ) {
+			$this->response->setData( $body );
+
+			return;
+		}
+
+		$body['posts'] = ReportDetailsHelper::applyBadgePermissionToList( $body['posts'] );
+
+		$this->response->setData( $body );
+	}
+
 	/**
 	 * Check if the given user is an registered - non blocked user.
 	 * @param User $user
