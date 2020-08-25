@@ -18,6 +18,10 @@ $wgAutoloadClasses['ReportedPostsHelper'] =  $dir . 'ReportedPostsHelper.class.p
 $wgAutoloadClasses['DiscussionGateway'] =  $dir . 'DiscussionGateway.class.php';
 $wgAutoloadClasses['DiscussionModerationController'] =  $dir . 'DiscussionModerationController.class.php';
 $wgAutoloadClasses['FeedsReportedPageController'] =  $dir . 'DiscussionModerationController.class.php';
+$wgAutoloadClasses['ReportDetailsHelper'] =  $dir . 'ReportDetailsHelper.class.php';
+
+$wgGroupPermissions['*']['posts:report']                               = false;
+$wgGroupPermissions['user']['posts:report']                            = true;
 
 $wgGroupPermissions['*']['posts:delete']                               = false;
 $wgGroupPermissions['threadmoderator']['posts:delete']                 = true;

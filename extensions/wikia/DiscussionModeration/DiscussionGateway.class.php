@@ -40,7 +40,7 @@ class DiscussionGateway {
 	 */
 	public function getReportedPosts( array $pagination, bool $viewableOnly, bool $canViewHidden,
 									  bool $canViewHiddenInContainer, ?string $containerType, int $userId ):
-	?array {
+	array {
 		try {
 			$containerTypeParam = empty( $containerType ) ? [] : [
 				'containerType' => $containerType
@@ -50,7 +50,7 @@ class DiscussionGateway {
 				"{$this->serviceUrl}/internal/{$this->wikiId}/reported-posts",
 				[
 					RequestOptions::HEADERS => [
-						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => 1,
+						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => 'mediawiki-app',
 						Constants::HELIOS_AUTH_HEADER => $userId
 					],
 					RequestOptions::QUERY => array_filter( $pagination ) + [
@@ -61,13 +61,42 @@ class DiscussionGateway {
 				]
 			);
 
-			return $this->entityOrNull( $response );
+			return $this->entity( $response );
 		} catch ( GuzzleException $e ) {
 			$this->error( 'error while loading reported posts', [
 				'exception' => $e,
 			] );
 
-			return null;
+			return [];
+		}
+	}
+
+	public function getReportDetails( string $postId, int $userId ): array {
+		try {
+			$response = $this->httpClient->get(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/posts/{$postId}/report/details",
+				[
+					RequestOptions::HEADERS => [
+						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => 'mediawiki-app',
+						Constants::HELIOS_AUTH_HEADER => $userId
+					],
+					RequestOptions::TIMEOUT => 3.0
+				]
+			);
+
+			return [
+				'statusCode' => $response->getStatusCode(),
+				'body' => $this->entity( $response ),
+			];
+		} catch ( Exception $e ) {
+			$this->error( 'error while loading report details', [
+				'exception' => $e,
+			] );
+
+			return [
+				'statusCode' => \WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR,
+				'body' => []
+			];
 		}
 	}
 
@@ -78,7 +107,7 @@ class DiscussionGateway {
 	 * @param ResponseInterface $response
 	 * @return array|null
 	 */
-	private function entityOrNull( ResponseInterface $response ): ?array {
+	private function entity( ResponseInterface $response ): array {
 		$body = (string)$response->getBody();
 		$entity = json_decode( $body, true );
 
@@ -86,6 +115,6 @@ class DiscussionGateway {
 			return $entity;
 		}
 
-		return null;
+		return [];
 	}
 }

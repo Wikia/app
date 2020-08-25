@@ -65,7 +65,7 @@ class DiscussionModerationController extends WikiaController {
 			$this->gateway->getReportedPosts( $pagination, $viewableOnly, $canViewHidden,
 				$canViewHiddenInContainer, $containerType, $user->getId() );
 
-		if ( $reportedPosts ) {
+		if ( !empty( $reportedPosts ) ) {
 			$this->reportedPostsHelper->mapLinks( $reportedPosts );
 			$this->reportedPostsHelper->addPermissions( $user, $reportedPosts );
 			$this->response->setData( $reportedPosts );
@@ -73,6 +73,31 @@ class DiscussionModerationController extends WikiaController {
 		} else {
 			$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
 		}
+	}
+
+	public function getReportDetails(): void {
+		$postId = $this->getVal( 'postId', 0 );
+
+		$user = $this->getContext()->getUser();
+
+		if ( !$user->isAllowed( 'posts:report' ) || $user->isBlocked() || !$user->isAllowed( 'read' ) ) {
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_FORBIDDEN );
+			return;
+		}
+
+		[ 'statusCode' => $statusCode, 'body' => $body ] = $this->gateway->getReportDetails( $postId, $user->getId() );
+
+		$this->response->setCode( $statusCode );
+
+		if ( $statusCode != WikiaResponse::RESPONSE_CODE_OK ) {
+			$this->response->setData( $body );
+
+			return;
+		}
+
+		$body['userInfo'] = ReportDetailsHelper::applyBadgePermission( $body['userInfo'] );
+
+		$this->response->setData( $body );
 	}
 
 	/**
