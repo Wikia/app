@@ -43,79 +43,43 @@ class DiscussionGateway {
 	public function getReportedPosts( array $pagination, bool $viewableOnly, bool $canViewHidden,
 									  bool $canViewHiddenInContainer, ?string $containerType, int $userId ):
 	array {
-		try {
-			$containerTypeParam = empty( $containerType ) ? [] : [
-				'containerType' => $containerType
-			];
+		$containerTypeParam = empty( $containerType ) ? [] : [
+			'containerType' => $containerType
+		];
+		$queryParams = array_filter( $pagination ) + [
+				'viewableOnly' => $viewableOnly ? 'true' : 'false',
+				'canViewHiddenPosts' => $canViewHidden ? 'true' : 'false',
+				'canViewHiddenPostsInContainer' => $canViewHiddenInContainer ? 'true' : 'false',
+			] + $containerTypeParam;
 
-			$response = $this->httpClient->get(
-				"{$this->serviceUrl}/internal/{$this->wikiId}/reported-posts",
+		return $this->makeCall( function () use ( $queryParams, $userId ) {
+			return $this->httpClient->get( "{$this->serviceUrl}/internal/{$this->wikiId}/reported-posts",
 				[
 					RequestOptions::HEADERS => [
 						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
 						Constants::HELIOS_AUTH_HEADER => $userId
 					],
-					RequestOptions::QUERY => array_filter( $pagination ) + [
-						'viewableOnly' => $viewableOnly ? 'true' : 'false',
-						'canViewHiddenPosts' => $canViewHidden ? 'true' : 'false',
-						'canViewHiddenPostsInContainer' => $canViewHiddenInContainer ? 'true' : 'false',
-					] + $containerTypeParam,
-				]
-			);
-
-			return $this->entity( $response );
-		} catch ( GuzzleException $e ) {
-			$this->error( 'error while loading reported posts', [
-				'exception' => $e,
-			] );
-
-			return [];
-		}
+					RequestOptions::QUERY => $queryParams,
+				] );
+		} );
 	}
 
 	public function getReportDetails( string $postId, int $userId ): array {
-		try {
-			$response = $this->httpClient->get(
-				"{$this->serviceUrl}/internal/{$this->wikiId}/posts/{$postId}/report/details",
+		return $this->makeCall( function () use ( $postId, $userId ) {
+			return $this->httpClient->get( "{$this->serviceUrl}/internal/{$this->wikiId}/posts/{$postId}/report/details",
 				[
 					RequestOptions::HEADERS => [
 						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
 						Constants::HELIOS_AUTH_HEADER => $userId
 					],
 					RequestOptions::TIMEOUT => 3.0
-				]
-			);
-
-			return [
-				'statusCode' => $response->getStatusCode(),
-				'body' => $this->entity( $response ),
-			];
-		} catch ( ClientException $e ) {
-			$this->error( 'error while loading report details', [
-				'exception' => $e,
-			] );
-
-			return [
-				'statusCode' => $e->getResponse()->getStatusCode(),
-				'body' => $this->entity( $e->getResponse() ),
-			];
-		} catch ( Exception $e ) {
-			$this->error( 'error while loading report details', [
-				'exception' => $e,
-			] );
-
-			return [
-				'statusCode' => \WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR,
-				'body' => []
-			];
-		}
+				] );
+		} );
 	}
 
 	public function getPostListReports( array $postIds, int $userId ): array {
-		try {
-			$response = $this->httpClient->get(
-				"{$this->serviceUrl}/internal/{$this->wikiId}/reports",
-				[
+		return $this->makeCall( function () use ( $postIds, $userId ) {
+			return $this->httpClient->get( "{$this->serviceUrl}/internal/{$this->wikiId}/reports", [
 					RequestOptions::HEADERS => [
 						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
 						Constants::HELIOS_AUTH_HEADER => $userId
@@ -123,46 +87,26 @@ class DiscussionGateway {
 					RequestOptions::QUERY => build_query( [ 'postId' => $postIds ],
 						PHP_QUERY_RFC1738 ),
 					RequestOptions::TIMEOUT => 3.0
-				]
-			);
-
-			return [
-				'statusCode' => $response->getStatusCode(),
-				'body' => $this->entity( $response ),
-			];
-		} catch ( ClientException $e ) {
-			$this->error( 'error while loading report details', [
-				'exception' => $e,
-			] );
-
-			return [
-				'statusCode' => $e->getResponse()->getStatusCode(),
-				'body' => $this->entity( $e->getResponse() ),
-			];
-		} catch ( Exception $e ) {
-			$this->error( 'error while loading report details', [
-				'exception' => $e,
-			] );
-
-			return [
-				'statusCode' => \WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR,
-				'body' => []
-			];
-		}
+				] );
+		} );
 	}
 
 	public function createPostReport( string $postId, int $userId, array $userTraceHeaders ) {
-		try {
-			$response = $this->httpClient->put(
-				"{$this->serviceUrl}/internal/{$this->wikiId}/posts/{$postId}/report",
+		return $this->makeCall( function () use ( $postId, $userId, $userTraceHeaders ) {
+			return $this->httpClient->put( "{$this->serviceUrl}/internal/{$this->wikiId}/posts/{$postId}/report",
 				[
 					RequestOptions::HEADERS => [
-						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
-						Constants::HELIOS_AUTH_HEADER => $userId,
-					] + $userTraceHeaders,
-					RequestOptions::TIMEOUT => 3.0
-				]
-			);
+												   WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+												   Constants::HELIOS_AUTH_HEADER => $userId,
+											   ] + $userTraceHeaders,
+					RequestOptions::TIMEOUT => 3.0,
+				] );
+		} );
+	}
+
+	private function makeCall( callable $callback ): array {
+		try {
+			$response = $callback();
 
 			return [
 				'statusCode' => $response->getStatusCode(),

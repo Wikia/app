@@ -61,18 +61,21 @@ class DiscussionModerationController extends WikiaController {
 		$canViewHiddenInContainer =
 			$containerType == 'WALL' ? $user->isAllowed( 'wallremove' ) : $canViewHidden;
 
-		$reportedPosts =
+		[ 'statusCode' => $statusCode, 'body' => $body ] =
 			$this->gateway->getReportedPosts( $pagination, $viewableOnly, $canViewHidden,
 				$canViewHiddenInContainer, $containerType, $user->getId() );
 
-		if ( !empty( $reportedPosts ) ) {
-			$this->reportedPostsHelper->mapLinks( $reportedPosts );
-			$this->reportedPostsHelper->addPermissions( $user, $reportedPosts );
-			$this->response->setData( $reportedPosts );
-			$this->response->setCode( WikiaResponse::RESPONSE_CODE_OK );
-		} else {
-			$this->response->setCode( WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR );
+		$this->response->setCode( $statusCode );
+
+		if ( $statusCode != WikiaResponse::RESPONSE_CODE_OK ) {
+			$this->response->setData( $body );
+
+			return;
 		}
+
+		$this->reportedPostsHelper->mapLinks( $body );
+		$this->reportedPostsHelper->addPermissions( $user, $body );
+		$this->response->setData( $body );
 	}
 
 	public function getReportDetails(): void {
