@@ -75,7 +75,7 @@ class CheckPostponedWikis extends Maintenance {
 
 
 		foreach ( $forumWikis as $id ) {
-			if ( !in_array( $id, $disabledMigrationBannerWikis ) ) {
+			if ( in_array( $id, $disabledMigrationBannerWikis ) ) {
 				fwrite( $fh, $id . "\n");
 			}
 		}
