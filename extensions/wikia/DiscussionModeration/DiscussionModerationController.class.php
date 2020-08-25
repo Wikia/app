@@ -124,6 +124,29 @@ class DiscussionModerationController extends WikiaController {
 		$this->response->setData( $body );
 	}
 
+	public function reportPost(): void {
+		if ( !$this->request->wasPosted() ) {
+			$this->response->setCode(WikiaResponse::RESPONSE_CODE_METHOD_NOT_ALLOWED );
+			return;
+		}
+
+		$postId = $this->getVal( 'postId', 0 );
+		$user = $this->getContext()->getUser();
+
+		if ( !$user->isAllowed( 'posts:report' ) || $user->isBlocked() || !$user->isAllowed( 'read' ) ) {
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_FORBIDDEN );
+			return;
+		}
+
+		$userTraceHeaders = $this->getUserTraceHeaders( $this->getContext()->getRequest() );
+
+		[ 'statusCode' => $statusCode, 'body' => $body ] =
+			$this->gateway->createPostReport( $postId, $user->getId(), $userTraceHeaders );
+
+		$this->response->setCode( $statusCode );
+		$this->response->setData( $body );
+	}
+
 	/**
 	 * Check if the given user is an registered - non blocked user.
 	 * @param User $user
@@ -136,6 +159,17 @@ class DiscussionModerationController extends WikiaController {
 		}
 
 		return false;
+	}
+
+	private function getUserTraceHeaders( \WebRequest $request ): array {
+		return [
+			'X-Original-User-Agent' => $request->getHeader( 'user-agent' ) ?? '',
+			'Fastly-Client-IP' => $request->getHeader( 'Fastly-Client-IP' ) ?? '',
+			'X-GeoIP-City' => $request->getHeader( 'X-GeoIP-City' ) ?? '',
+			'X-GeoIP-Region' => $request->getHeader( 'X-GeoIP-Region' ) ?? '',
+			'X-GeoIP-Country-Name' => $request->getHeader( 'X-GeoIP-Country-Name' ) ?? '',
+			'X-Wikia-WikiaAppsID' => $request->getHeader( 'X-Wikia-WikiaAppsID' ) ?? '',
+		];
 	}
 }
 

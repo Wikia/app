@@ -52,7 +52,7 @@ class DiscussionGateway {
 				"{$this->serviceUrl}/internal/{$this->wikiId}/reported-posts",
 				[
 					RequestOptions::HEADERS => [
-						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => 'mediawiki-app',
+						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
 						Constants::HELIOS_AUTH_HEADER => $userId
 					],
 					RequestOptions::QUERY => array_filter( $pagination ) + [
@@ -79,7 +79,7 @@ class DiscussionGateway {
 				"{$this->serviceUrl}/internal/{$this->wikiId}/posts/{$postId}/report/details",
 				[
 					RequestOptions::HEADERS => [
-						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => 'mediawiki-app',
+						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
 						Constants::HELIOS_AUTH_HEADER => $userId
 					],
 					RequestOptions::TIMEOUT => 3.0
@@ -117,11 +117,49 @@ class DiscussionGateway {
 				"{$this->serviceUrl}/internal/{$this->wikiId}/reports",
 				[
 					RequestOptions::HEADERS => [
-						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => 'mediawiki-app',
+						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
 						Constants::HELIOS_AUTH_HEADER => $userId
 					],
 					RequestOptions::QUERY => build_query( [ 'postId' => $postIds ],
 						PHP_QUERY_RFC1738 ),
+					RequestOptions::TIMEOUT => 3.0
+				]
+			);
+
+			return [
+				'statusCode' => $response->getStatusCode(),
+				'body' => $this->entity( $response ),
+			];
+		} catch ( ClientException $e ) {
+			$this->error( 'error while loading report details', [
+				'exception' => $e,
+			] );
+
+			return [
+				'statusCode' => $e->getResponse()->getStatusCode(),
+				'body' => $this->entity( $e->getResponse() ),
+			];
+		} catch ( Exception $e ) {
+			$this->error( 'error while loading report details', [
+				'exception' => $e,
+			] );
+
+			return [
+				'statusCode' => \WikiaResponse::RESPONSE_CODE_INTERNAL_SERVER_ERROR,
+				'body' => []
+			];
+		}
+	}
+
+	public function createPostReport( string $postId, int $userId, array $userTraceHeaders ) {
+		try {
+			$response = $this->httpClient->put(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/posts/{$postId}/report",
+				[
+					RequestOptions::HEADERS => [
+						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+						Constants::HELIOS_AUTH_HEADER => $userId,
+					] + $userTraceHeaders,
 					RequestOptions::TIMEOUT => 3.0
 				]
 			);

@@ -24,6 +24,7 @@ class WikiaResponse {
 	const RESPONSE_CODE_BAD_REQUEST = 400;
 	const RESPONSE_CODE_FORBIDDEN = 403;
 	const RESPONSE_CODE_NOT_FOUND = 404;
+	const RESPONSE_CODE_METHOD_NOT_ALLOWED = 405;
 
 	/**
 	 * Output formats
