@@ -118,6 +118,20 @@ class DiscussionGateway {
 		} );
 	}
 
+	public function bulkApprove( string $reporterId, int $userId ) {
+		return $this->makeCall( function () use ( $reporterId, $userId ) {
+			return $this->httpClient->put(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/users/{$reporterId}/bulk-approve",
+				[
+					RequestOptions::HEADERS => [
+						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+						Constants::HELIOS_AUTH_HEADER => $userId,
+					],
+					RequestOptions::TIMEOUT => 3.0,
+				] );
+		} );
+	}
+
 	private function makeCall( callable $callback ): array {
 		try {
 			$response = $callback();
@@ -127,7 +141,7 @@ class DiscussionGateway {
 				'body' => $this->entity( $response ),
 			];
 		} catch ( ClientException $e ) {
-			$this->error( 'error while loading report details', [
+			$this->error( 'error while fetching data from discussion', [
 				'exception' => $e,
 			] );
 
@@ -136,7 +150,7 @@ class DiscussionGateway {
 				'body' => $this->entity( $e->getResponse() ),
 			];
 		} catch ( Exception $e ) {
-			$this->error( 'error while loading report details', [
+			$this->error( 'error while fetching data from discussion', [
 				'exception' => $e,
 			] );
 
