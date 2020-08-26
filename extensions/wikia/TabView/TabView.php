@@ -48,8 +48,8 @@ function tabviewRender($input, $params, $parser ) {
 	if(isset($tabs[0]) && $tabs[0] == "") {
 		unset($tabs[0]);
 	}
-	if($tabs[count($tabs)] == "") {
-		unset($tabs[count($tabs)]);
+	if($tabs[count($tabs) - 1] == "") {
+		unset($tabs[count($tabs) - 1]);
 	}
 
 	// prepeare tabs options array
