@@ -104,6 +104,20 @@ class DiscussionGateway {
 		} );
 	}
 
+	public function validatePostReport( string $postId, int $userId ) {
+		return $this->makeCall( function () use ( $postId, $userId ) {
+			return $this->httpClient->put(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/posts/{$postId}/report/valid",
+				[
+					RequestOptions::HEADERS => [
+						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+						Constants::HELIOS_AUTH_HEADER => $userId,
+					],
+					RequestOptions::TIMEOUT => 3.0,
+				] );
+		} );
+	}
+
 	private function makeCall( callable $callback ): array {
 		try {
 			$response = $callback();
