@@ -48,7 +48,8 @@ class MaintenanceTaskScheduler extends Maintenance {
 		$sql = ( new \WikiaSQL() )
 			->SELECT( "city_id" )
 			->FROM( "city_list" )
-			->WHERE("city_public")->EQUAL_TO(WikiFactory::PUBLIC_WIKI);
+			->WHERE( 'city_public' )->EQUAL_TO( WikiFactory::PUBLIC_WIKI )
+			->AND_( 'city_path' )->EQUAL_TO( WikiFactory::SLOT_1 );
 
 		if ( count( $idsParam ) > 0 ) {
 			$sql->AND_( "city_id" )
