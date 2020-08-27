@@ -728,10 +728,12 @@ class WikiFactoryLoader {
 				unset( $this->mVariables[ 'wgSharedUploadDBname' ] );
 				unset( $this->mVariables[ 'wgUseSharedUploads' ] );
 
+				$url = rtrim( WikiFactory::getLocalEnvURL( $partnerWikiData->city_url ), '/' ) . '/api.php';
+
 				$this->mVariables['wgForeignFileRepos'][] = [
 					'name' => 'sharedUploadHack',
 					'class' => 'ForeignAPIRepo',
-					'apibase' => WikiFactory::getLocalEnvURL( $partnerWikiData->city_url ) . 'api.php',
+					'apibase' => $url,
 					'hashLevels' => 2,
 					'apiThumbCacheExpiry' => 0
 				];
