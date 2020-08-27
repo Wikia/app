@@ -1,6 +1,6 @@
 <?php
 
-class FeedsPermissionManager {
+class DiscussionPermissionManager {
 
 	const CAN_DELETE_PERMISSION = "canDelete";
 	const CAN_UNDELETE_PERMISSION = "canUndelete";
@@ -9,6 +9,21 @@ class FeedsPermissionManager {
 	const CAN_LOCK_PERMISSION = "canLock";
 	const CAN_UNLOCK_PERMISSION = "canUnlock";
 	const CAN_MOVE_THREADS_PERMISSION = "canMove";
+
+	const BADGE_SYSOP = "badge:sysop";
+	const BADGE_VSTF = "badge:vstf";
+	const BADGE_STAFF = "badge:staff";
+	const BADGE_THREADMODERATOR = "badge:threadmoderator";
+	const BADGE_HELPER = "badge:helper";
+	const BADGE_GLOBAL_DISCUSSIONS_MOD = "badge:global-discussions-moderator";
+	const BADGE_PRIORITY = [
+		self::BADGE_SYSOP,
+		self::BADGE_THREADMODERATOR,
+		self::BADGE_STAFF,
+		self::BADGE_HELPER,
+		self::BADGE_GLOBAL_DISCUSSIONS_MOD,
+		self::BADGE_VSTF,
+	];
 
 	private static $postPermissions = [
 		'posts:delete' => [ self::CAN_DELETE_PERMISSION, self::CAN_UNDELETE_PERMISSION ],
@@ -89,5 +104,17 @@ class FeedsPermissionManager {
 	private static function canEditPost( User $user, Post $post ): bool {
 		return $user->isAllowed( 'posts:superedit' )
 			   || ( $post->isAuthor( $user ) && $post->isDuringEditablePeriod() );
+	}
+
+	public static function getPermissionBadge( User $user ): string {
+		$userGroups = $user->getEffectiveGroups();
+
+		foreach ( self::BADGE_PRIORITY as $badge ) {
+			if ( in_array( explode(':', $badge)[1], $userGroups) ) {
+				return $badge;
+			}
+		}
+
+		return '';
 	}
 }
