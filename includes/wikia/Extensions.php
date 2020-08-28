@@ -1815,6 +1815,7 @@ if ( !empty ( $wgEnableHydralyticsExt ) ) {
 }
 
 if ( $wgEnableArticleCommentsExt || $wgEnableWallExt || $wgEnableDiscussions ) {
+	include "$IP/extensions/wikia/DiscussionPermissions/DiscussionPermissions.setup.php";
 	include "$IP/extensions/wikia/DiscussionModeration/DiscussionModeration.setup.php";
 }
 
