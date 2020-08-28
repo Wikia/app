@@ -1,8 +1,6 @@
 <?php
 /**
  * Real User Monitoring
- *
- * @author wladek
  */
 
 $wgExtensionCredits[ 'specialpage' ][ ] = array(
