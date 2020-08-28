@@ -1328,3 +1328,9 @@ $wgGcsConfig = [
 ];
 
 $wgThumblrUrl = 'https://thumblr-prod.c1.us-west1-a.gke.wikia.net';
+
+/**
+ * Define the base url and sampling factor for page loads for performance monitoring.
+ */
+$wgPerformanceMonitoringBaseUrl = 'https://beacon.wikia-services.com/__track';
+$wgPerformanceMonitoringSamplingFactor = 100; // sample 1/100 of requests
