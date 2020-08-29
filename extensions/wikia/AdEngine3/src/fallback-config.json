@@ -638,7 +638,10 @@
                 "5460357292",
                 "5460673082",
                 "5460673085",
-                "5460673343"
+                "5460673343",
+                "5452088588",
+                "5452088585",
+                "5451829654"
             ]
         }
     ],
@@ -864,7 +867,7 @@
                 "oasis"
             ],
             "regions": [
-                "CA"
+                "XX"
             ],
             "value": "//tag.durationmedia.net/sites/10651/dm.js"
         },
@@ -1144,7 +1147,7 @@
             "regions": [
                 "XX"
             ],
-            "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v4.0.13/tracking-opt-in.min.js"
+            "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v4.0.15/tracking-opt-in.min.js"
         }
     ],
     "icPermutive": [
