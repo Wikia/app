@@ -96,15 +96,6 @@ class SassUtil {
 
 					$settings['background-image-width'] = static::$oasisSettings['background-image-width'] = $bgImage->getWidth();
 					$settings['background-image-height'] = static::$oasisSettings['background-image-height'] = $bgImage->getHeight();
-
-					// SUS-3104: Do not run this in the context of the session user
-					$globalStateWrapper = new Wikia\Util\GlobalStateWrapper( [
-						'wgUser' => User::newFromName( Wikia::BOT_USER, false )
-					] );
-
-					$globalStateWrapper->wrap( function () use ( $themeSettings, $settings ) {
-						$themeSettings->saveSettings( $settings );
-					} );
 				}
 			}
 
