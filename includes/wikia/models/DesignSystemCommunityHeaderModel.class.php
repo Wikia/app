@@ -297,6 +297,8 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 	public function getExploreMenu(): array {
 		if ( $this->exploreMenu === null ) {
+			$qs = $_SERVER['QUERY_STRING'];
+			$wgEnableShopLink = strpos( $qs, 'enableShopLinkReview' );
 			$wgEnableCommunityPageExt =
 				WikiFactory::getVarValueByName( 'wgEnableCommunityPageExt',
 					$this->productInstanceId, false, F::app()->wg->enableCommunityPageExt );
@@ -356,6 +358,12 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 					'tracking' => 'explore-forum',
 					'include' => !empty( $wgEnableForumExt ) && !empty( $wgEnableDiscussions ),
 				],
+				[
+					'url' => 'www.amazon.com/fandom',
+					'key' => 'community-header-shop',
+					'tracking' => 'explore-shop',
+					'include' => !empty( $wgEnableShopLink ),
+				]
 			];
 
 			$this->exploreMenu = [
