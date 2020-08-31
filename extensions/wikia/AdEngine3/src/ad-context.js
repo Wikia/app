@@ -524,6 +524,12 @@ export default {
 		uap: 'none',
 		uap_c: 'none'
 	},
+	templates: {
+		safeFanTakeoverElement: {
+			boxadSlotNames: [ 'top_boxad', 'incontent_boxad_1' ],
+			boxadSize: [ 300, 601 ]
+		}
+	},
 	services: {
 		billTheLizard: {
 			enabled: true,
