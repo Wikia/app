@@ -1820,4 +1820,6 @@ if ( $wgEnableArticleCommentsExt || $wgEnableWallExt || $wgEnableDiscussions ) {
 
 include_once "$IP/extensions/wikia/WikiDescription/WikiDescription.setup.php";
 
+include_once "$IP/extensions/wikia/PerformanceMonitoring/PerformanceMonitoring.setup.php";
+
 $wgUCPCommunityCNWAddress = 'https://ucp.fandom.com/wiki/Special:CreateNewWiki';
