@@ -61,6 +61,9 @@ class LegacyRedirect {
 		/** @var LegacyRedirectsApi $api */
 		$api = $apiProvider->getApi( self::SERVICE_NAME, LegacyRedirectsApi::class );
 		$api->getApiClient()->getConfig()->setCurlTimeout( self::TIMEOUT );
+		$api->getApiClient()
+			->getConfig()
+			->addDefaultHeader( WebRequest::WIKIA_INTERNAL_REQUEST_HEADER, 1 );
 
 		return $api;
 	}
