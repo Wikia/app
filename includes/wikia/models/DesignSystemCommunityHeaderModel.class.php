@@ -358,29 +358,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 					'tracking' => 'explore-forum',
 					'include' => !empty( $wgEnableForumExt ) && !empty( $wgEnableDiscussions ),
 				],
-				[
-					'url' => 'www.shop.fandom.com',
-					'key' => 'community-header-shop',
-					'tracking' => 'explore-shop',
-					'include' => $wgEnableShopLink,
-					'items' => [
-						[
-							'url' => 'www.shop.fandom.com/apparel',
-							'tracking' => 'explore-shop-apparel',
-							'key' => 'community-header-shop-apparel',
-						],
-						[
-							'url' => 'www.shop.fandom.com/kids',
-							'tracking' => 'explore-shop-kids',
-							'key' => 'community-header-shop-kids',
-						],
-						[
-							'url' => 'www.shop.fandom.com/bags',
-							'tracking' => 'explore-shop-bags',
-							'key' => 'community-header-shop-bags',
-						],
-					],
-				]
+				$this->getFandomMockApi( $wgEnableShopLink )
 			];
 
 			$this->exploreMenu = [
@@ -405,10 +383,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 						'items' => array_key_exists( 'items', $item ) ? array_map( function ( $item ) {
 							return [
 								'type' => 'link-text',
-								'title' => [
-									'type' => 'translatable-text',
-									'key' => $item[ 'key' ],
-								],
+								'value' => $item['value'],
 								'href' => $item[ 'url' ],
 								'tracking_label' => $item[ 'tracking' ],
 							];
@@ -510,5 +485,52 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 	private function getSpecialPageURL( $name ): string {
 		return SpecialPage::getTitleFor( $name )->getLocalURL();
+	}
+
+	private function getFandomMockApi( $shouldInclude ) {
+		// mock data to be replaced with call to api
+		$mockApi = (object) [
+			'results' => [
+				(object) [
+					'text' => 'Yu-gi-oh!',
+					'url' => 'https://fandom.intentx.com/yu-gi-oh/apparel/4854-gf33402.html',
+				],
+				(object) [
+					'text' => 'Apparel',
+					'url' => 'https://fandom.intentx.com/yu-gi-oh-ft4854.html',
+				],
+				(object) [
+					'text' => 'Accessories',
+					'url' => 'https://fandom.intentx.com/yu-gi-oh/accessories/4854-gf33432.html',
+				],
+				(object) [
+					'text' => 'Costumes',
+					'url' => 'https://fandom.intentx.com/yu-gi-oh/costumes/4854-gf33496.html',
+				],
+				(object) [
+					'text' => 'Toys & Games',
+					'url' => 'https://fandom.intentx.com/yu-gi-oh/toys-games/4854-gf33521.html',
+				],
+			],
+		];
+
+		return $this->formatFandomStoreData( $mockApi->results, $shouldInclude );
+	}
+
+	private function formatFandomStoreData( $apiData, $shouldInclude ) {
+		return [
+			'url' => $apiData[0]->url,
+			'key' => 'community-header-shop',
+			'tracking' => 'explore-shop',
+			'include' => $shouldInclude,
+			'items' => array_map( function ( $item ) {
+				$lower = strtolower( $item->text );
+				return [
+					'tracking' => 'explore-shop-' . $lower,
+					'url' => $item->url,
+					'value' => $item->text,
+				];
+			}, $apiData ),
+		];
 	}
 }
