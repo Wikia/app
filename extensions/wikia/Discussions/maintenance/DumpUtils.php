@@ -35,7 +35,7 @@ class DumpUtils {
 					$dbValue = mb_strcut( $dbValue, 0, DumpUtils::MAX_CONTENT_SIZE );
 				}
 
-				$insert .= ', ' . "'" . $dbValue . "'";
+				$insert .= ', ' . "'" . rtrim( $dbValue, '\\' ) . "'";
 			} else {
 				$insert .= ', ' . $db->addQuotes( $value );
 			}
