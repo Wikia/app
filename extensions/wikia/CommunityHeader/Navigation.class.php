@@ -27,14 +27,28 @@ class Navigation {
 
 	private function getExploreItems(): array {
 		$exploreItems = $this->model->getExploreMenu()['items'];
-
 		return array_map(
 			function ( $item ) {
-				return new Link(
-					new Label( $item['title']['key'], Label::TYPE_TRANSLATABLE_TEXT ),
-					$item['href'],
-					$item['tracking_label']
-				);
+				if ( array_key_exists( 'items', $item ) && !empty( $item['items'] ) ) {
+					return new Link(
+						new Label( $item['title']['key'], Label::TYPE_TRANSLATABLE_TEXT ),
+						$item['href'],
+						$item['tracking_label'],
+						array_map( function ( $item ) {
+							return new Link(
+								new Label( $item['title']['key'], Label::TYPE_TRANSLATABLE_TEXT ),
+								$item['href'],
+								$item['tracking_label']
+							);
+						}, $item['items'] ),
+					);
+				} else {
+					return new Link(
+						new Label( $item['title']['key'], Label::TYPE_TRANSLATABLE_TEXT ),
+						$item['href'],
+						$item['tracking_label']
+					);
+				}
 			},
 			$exploreItems
 		);

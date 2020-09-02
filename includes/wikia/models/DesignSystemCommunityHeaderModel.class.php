@@ -298,7 +298,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	public function getExploreMenu(): array {
 		if ( $this->exploreMenu === null ) {
 			$qs = $_SERVER['QUERY_STRING'];
-			$wgEnableShopLink = strpos( $qs, 'enableShopLinkReview' );
+			$wgEnableShopLink = strpos( $qs, 'enableShopLinkReview' ) ? true : false;
 			$wgEnableCommunityPageExt =
 				WikiFactory::getVarValueByName( 'wgEnableCommunityPageExt',
 					$this->productInstanceId, false, F::app()->wg->enableCommunityPageExt );
@@ -359,12 +359,33 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 					'include' => !empty( $wgEnableForumExt ) && !empty( $wgEnableDiscussions ),
 				],
 				[
-					'url' => 'www.amazon.com/fandom',
+					'url' => 'www.shop.fandom.com',
 					'key' => 'community-header-shop',
 					'tracking' => 'explore-shop',
-					'include' => !empty( $wgEnableShopLink ),
+					'include' => $wgEnableShopLink,
+					'items' => [
+						[
+							'url' => 'www.shop.fandom.com/apparel',
+							'tracking' => 'explore-shop-apparel',
+							'key' => 'community-header-shop-apparel',
+						],
+						[
+							'url' => 'www.shop.fandom.com/kids',
+							'tracking' => 'explore-shop-kids',
+							'key' => 'community-header-shop-kids',
+						],
+						[
+							'url' => 'www.shop.fandom.com/bags',
+							'tracking' => 'explore-shop-bags',
+							'key' => 'community-header-shop-bags',
+						],
+					],
 				]
 			];
+
+			$filteredExplore = array_values( array_filter( $exploreItems, function ( $item ) {
+				return $item['include'];
+			} ) );
 
 			$this->exploreMenu = [
 				'type' => 'dropdown',
@@ -384,7 +405,18 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 							'key' => $item[ 'key' ],
 						],
 						'href' => $item[ 'url' ],
-						'tracking_label' => $item[ 'tracking' ]
+						'tracking_label' => $item[ 'tracking' ],
+						'items' => array_key_exists( 'items', $item ) ? array_map( function ( $item ) {
+							return [
+								'type' => 'link-text',
+								'title' => [
+									'type' => 'translatable-text',
+									'key' => $item[ 'key' ],
+								],
+								'href' => $item[ 'url' ],
+								'tracking_label' => $item[ 'tracking' ],
+							];
+						}, $item[ 'items' ] ) : [],
 					];
 				}, array_values( array_filter( $exploreItems, function ( $item ) {
 					return $item[ 'include' ];
