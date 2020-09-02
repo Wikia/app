@@ -980,7 +980,7 @@ $wgAdDriverAdEngine3Enabled = true;
  * @name $wgAdDriverAdEngine3DevAssets
  * Enables AdEngine3 dev assets (from AdEngine3/dist-dev)
  */
-$wgAdDriverAdEngine3DevAssets = false;
+$wgAdDriverAdEngine3DevAssets = true; // ToDo: false
 
 /**
  * @name $wgAdPageLevelCategoryLangs
@@ -1026,6 +1026,12 @@ $wgAdEngineExperimental = null;
  * Whether to use Cheshire Cat
  */
 $wgAdDriverEnableCheshireCat = true;
+
+/**
+ * @name $wgAdDriverEnableAffiliateSlot
+ * Whether to inject affiliate_slot
+ */
+$wgAdDriverEnableAffiliateSlot = true; // ToDo: false
 
 /**
  * @name $wgDisableIncontentPlayer

@@ -40,6 +40,10 @@ function isFloorAdhesionApplicable() {
 	return !context.get('custom.hasFeaturedVideo') && !context.get('slots.floor_adhesion.disabled');
 }
 
+function isAffiliateSlotApplicable() {
+	return isRightRailApplicable() && context.get('wiki.opts.enableAffiliateSlot') && !context.get('custom.hasFeaturedVideo');
+}
+
 function registerFloorAdhesionCodePriority() {
 	let porvataClosedActive = false;
 
@@ -138,6 +142,20 @@ export default {
 				options: {},
 				slotShortcut: 'm',
 				defaultSizes: [[300, 250], [300, 600], [300, 1050]],
+				targeting: {
+					loc: 'top',
+					rv: 1,
+				},
+			},
+			affiliate_slot: {
+				adProduct: 'affiliate_slot',
+				aboveTheFold: true,
+				slotNameSuffix: '',
+				group: 'AU',
+				options: {},
+				slotShortcut: 'a',
+				defaultSizes: [[280, 120]],
+				insertBeforeSelector: '#top_boxad',
 				targeting: {
 					loc: 'top',
 					rv: 1,
@@ -301,6 +319,7 @@ export default {
 		slotService.setState('hivi_leaderboard', false);
 		slotService.setState('top_leaderboard', true);
 		slotService.setState('top_boxad', isRightRailApplicable());
+		slotService.setState('affiliate_slot', isAffiliateSlotApplicable());
 		slotService.setState('incontent_boxad_1', isRightRailApplicable());
 		slotService.setState('bottom_leaderboard', true);
 		slotService.setState('invisible_skin', true);
@@ -449,5 +468,11 @@ export default {
 		);
 
 		registerFloorAdhesionCodePriority();
+	},
+
+	injectAffiliateSlot() {
+		slotInjector.inject('affiliate_slot', true);
+
+		context.push('state.adStack', { id: 'affiliate_slot' });
 	},
 };
