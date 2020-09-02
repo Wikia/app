@@ -383,10 +383,6 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 				]
 			];
 
-			$filteredExplore = array_values( array_filter( $exploreItems, function ( $item ) {
-				return $item['include'];
-			} ) );
-
 			$this->exploreMenu = [
 				'type' => 'dropdown',
 				'title' => [
