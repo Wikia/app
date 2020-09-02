@@ -167,6 +167,7 @@
                 "XX"
             ],
             "sampling": 50.0,
+            "samplingCache": true,
             "value": true
         }
     ],
@@ -303,6 +304,7 @@
     "icSlotTracking": [
         {
             "apps": [
+                "bingebot",
                 "f2",
                 "futhead",
                 "gamepedia",
@@ -331,6 +333,7 @@
     "icViewabilityTracking": [
         {
             "apps": [
+                "bingebot",
                 "f2",
                 "futhead",
                 "gamepedia",
@@ -641,6 +644,7 @@
                 "5452088588",
                 "5452088585",
                 "5451829654",
+                "5465152035",
                 "5461291396"
             ]
         }
@@ -1020,41 +1024,7 @@
                 "oasis"
             ],
             "regions": [
-                "AR",
-                "AT",
-                "AU",
-                "BE",
-                "BR",
-                "CA",
-                "CL",
-                "CN",
-                "CO",
-                "ES",
-                "FI",
-                "FR",
-                "HK",
-                "ID",
-                "IE",
-                "IN",
-                "IT",
-                "JP",
-                "KR",
-                "MX",
-                "MY",
-                "NL",
-                "NZ",
-                "PE",
-                "PH",
-                "PL",
-                "RU",
-                "SE",
-                "SG",
-                "TH",
-                "TR",
-                "TW",
-                "UA",
-                "US",
-                "VN"
+                "XX"
             ],
             "value": true
         }
@@ -1104,6 +1074,23 @@
             ],
             "sampling": 50.0,
             "value": true
+        }
+    ],
+    "deRecoActiveExperiment": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "browsers": [
+                "Chrome"
+            ],
+            "devices": [
+                "desktop"
+            ],
+            "regions": [
+                "PL"
+            ],
+            "value": "CF|ARL|4|E1|A"
         }
     ],
     "icFloorAdhesionDelay": [
