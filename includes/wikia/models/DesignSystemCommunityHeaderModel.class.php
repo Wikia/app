@@ -363,7 +363,8 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 					'tracking' => 'explore-forum',
 					'include' => !empty( $wgEnableForumExt ) && !empty( $wgEnableDiscussions ),
 				],
-				$this->getFandomStoreData( $wgEnableShopLink )
+				// will need to map store key better for query param
+				$this->getFandomStoreData( 'Yu-Gi-Oh!', $wgEnableShopLink )
 			];
 
 			$this->exploreMenu = [
@@ -492,13 +493,13 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		return SpecialPage::getTitleFor( $name )->getLocalURL();
 	}
 
-	private function getFandomStoreData( $shouldInclude ) {
-		$storeData = json_decode( $this->doApiRequest()->getBody() );
+	private function getFandomStoreData( $store, $shouldInclude ) {
+		$storeData = json_decode( $this->doApiRequest( $store )->getBody() );
 
 		return $this->formatFandomStoreData( $storeData->results, $shouldInclude );
 	}
 
-	private function doApiRequest() {
+	private function doApiRequest( $store ) {
 		$client = new Client( [
 			'base_uri' => 'http://138.201.119.29:9420/ix/api/seo/v1/footer',
 			'timeout' => 5.0,
@@ -508,7 +509,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 		$params = [
 			'clientId' => 'fandom',
-			'relevanceKey' => 'Yu-Gi-Oh!',
+			'relevanceKey' => $store,
 		];
 
 		try {
