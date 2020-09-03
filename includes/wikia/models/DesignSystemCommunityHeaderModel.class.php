@@ -301,13 +301,15 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	}
 
 	public function getExploreMenu(): array {
+		global $wgCityId;
+
 		if ( $this->exploreMenu === null ) {
 			// temporary debug param
 			$qs = $_SERVER['QUERY_STRING'];
 			 // remove after design review and enable shop
 			$wgEnableShopLink = strpos( $qs, 'enableShopLinkReview' ) ? true : false;
 			// this will be different for the header
-			$footerUri = 'http://138.201.119.29:9420/ix/api/seo/v1/footer';
+			$uri = 'http://138.201.119.29:9420/ix/api/seo/v1/footer';
 			// this will come from wiki name
 			$store = 'Yu-Gi-Oh!';
 
@@ -370,9 +372,12 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 					'tracking' => 'explore-forum',
 					'include' => !empty( $wgEnableForumExt ) && !empty( $wgEnableDiscussions ),
 				],
-				// will need to map store key better for query param
-				$this->getFandomStoreData( $footerUri, $store, $wgEnableShopLink ),
 			];
+
+			// If store community add link to explore items
+			if ( $this->isFandomStoreCommunity( $wgCityId ) ) {
+				array_push( $exploreItems, $this->getFandomStoreData( $uri, $wgEnableShopLink ) );
+			}
 
 			$this->exploreMenu = [
 				'type' => 'dropdown',
@@ -500,13 +505,15 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		return SpecialPage::getTitleFor( $name )->getLocalURL();
 	}
 
-	private function getFandomStoreData( $uri, $store, $shouldInclude ) {
-		$storeData = json_decode( $this->doApiRequest( $uri, $store )->getBody() );
+	private function isFandomStoreCommunity( $wikiId ) {
+		global $wgFandomStoreMap;
+		return array_key_exists( $wikiId, $wgFandomStoreMap );
+	}
 
-		// Don't render store link if no results
-		if ( empty( $storeData->results ) ) {
-			return;
-		}
+	private function getFandomStoreData( $uri, $shouldInclude ) {
+		global $wgFandomStoreMap, $wgCityId;
+
+		$storeData = json_decode( $this->doApiRequest( $uri )->getBody() );
 
 		return $this->formatFandomStoreData( $storeData->results, $shouldInclude );
 	}
