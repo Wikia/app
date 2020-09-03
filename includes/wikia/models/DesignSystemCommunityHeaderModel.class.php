@@ -21,6 +21,65 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	private $discussLinkData = null;
 	private $wikiLocalNavigation = null;
 
+	private $storeMap = [
+		'147' => 'Star Wars',
+		'naruto' => 'Naruto',
+		'onepiece' => 'One Piece',
+		'dragonball' => 'Dragon Ball',
+		'kimetsu-no-yaiba' => 'Kimetsu no Yaiba',
+		'yugioh' =>	'Yu-Gi-Oh!',
+		'haikyuu' => 'Haikyuu!!',
+		'harrypotter' => 'Harry Potter',
+		'marvel' =>	'Marvel',
+		'dc' =>	'DC',
+		'animalcrossing' => 'Animal Crossing',
+		'fallout' => 'Fallout',
+		'elderscrolls' => 'Elder Scrolls',
+		'witcher' => 'Witcher',
+		'gta' => 'Grand Theft Auto',
+		'finalfantasy' => 'Final Fantasy',
+		'warframe' => 'Warframe',
+		'forgottenrealms' => 'Dungeons & Dragons',
+		'pokemon' => 'Pokemon',
+		'borderlands' => 'Borderlands',
+		'megamitensei' => 'Megami Tensei',
+		'dragonage' => 'Dragon Age',
+		'callofduty' => 'Call of Duty',
+		'leagueoflegends' => 'League of Legends',
+		'fategrandorder' => 'Fate/Grand Order',
+		'hollowknight' => 'Hollow Knight',
+		'xenoblade' => 'Xenoblade',
+		'' => 'Roblox', // get community for this
+		'dontstarve' => 'Don\'t Starve',
+		'danganronpa' => 'Danganronpa',
+		'reddead' => 'Red Dead',
+		'warhammer40k' => 'Warhammer',
+		'assassinscreed' => 'Assassin\'s Creed',
+		'' => 'Minecraft', // get community for this
+		'aj-item-worth' => 'Animal Jam',
+		'residentevil' => 'Resident Evil',
+		'wowwiki' => 'World of Warcraft',
+		'darksouls' => 'Dark Souls',
+		'' => 'Nintendo', // get community for this
+		'starwars' => 'Star Wars',
+		'disney' => 'Disney',
+		'lotr' => 'Lord of the Rings',
+		'avatar' => 'Avatar',
+		'memory-alpha' => 'Star Trek',
+		'muppet' => 'Muppets',
+		'tardis' => 'Doctor Who',
+		'powerrangers' => 'Power Rangers',
+		'spongebob' => 'Spongebob',
+		'vampirediaries' => 'Vampire Diaries',
+		'ttte' => 'Thomas the Tank Engine',
+		'greysanatomy' => 'Grey\'s Anatomy',
+		'walkingdead' => 'The Walking Dead',
+		'gameofthrones' => 'Game of Thrones',
+		'criminalminds' => 'Criminal Minds',
+		'steven-universe' => 'Steven Universe',
+		'battlefordreamisland' => 'Battle of Dream Island',
+	];
+
 	public function __construct( string $langCode ) {
 		global $wgCityId, $wgServer, $wgScriptPath;
 
@@ -307,7 +366,9 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 			 // remove after design review and enable shop
 			$wgEnableShopLink = strpos( $qs, 'enableShopLinkReview' ) ? true : false;
 			// this will be different for the header
-			$uri = 'http://138.201.119.29:9420/ix/api/seo/v1/footer';
+			$footerUri = 'http://138.201.119.29:9420/ix/api/seo/v1/footer';
+			// this will come from wiki name
+			$store = 'Yu-Gi-Oh!';
 
 			$wgEnableCommunityPageExt =
 				WikiFactory::getVarValueByName( 'wgEnableCommunityPageExt',
@@ -369,7 +430,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 					'include' => !empty( $wgEnableForumExt ) && !empty( $wgEnableDiscussions ),
 				],
 				// will need to map store key better for query param
-				$this->getFandomStoreData( $uri, $wgEnableShopLink ),
+				$this->getFandomStoreData( $footerUri, $store, $wgEnableShopLink ),
 			];
 
 			$this->exploreMenu = [
@@ -498,8 +559,8 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		return SpecialPage::getTitleFor( $name )->getLocalURL();
 	}
 
-	private function getFandomStoreData( $uri, $shouldInclude ) {
-		$storeData = json_decode( $this->doApiRequest( $uri )->getBody() );
+	private function getFandomStoreData( $uri, $store, $shouldInclude ) {
+		$storeData = json_decode( $this->doApiRequest( $uri, $store )->getBody() );
 
 		// Don't render store link if no results
 		if ( empty( $storeData->results ) ) {
@@ -509,9 +570,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		return $this->formatFandomStoreData( $storeData->results, $shouldInclude );
 	}
 
-	private function doApiRequest( $uri ) {
-		global $wgCityId;
-
+	private function doApiRequest( $uri, $store ) {
 		$client = new Client( [
 			'base_uri' => $uri,
 			'timeout' => 5.0,
@@ -521,7 +580,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 		$params = [
 			'clientId' => 'fandom',
-			'relevanceKey' => WikiMap::getWikiName( $wgCityId ),
+			'relevanceKey' => $this->getRelevanceKey(),
 		];
 
 		try {
@@ -554,5 +613,11 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 				];
 			}, $apiData ),
 		];
+	}
+
+	private function getRelevanceKey(): string {
+		global $wgCityId;
+
+		return $this->storeMap[ $wgCityId ];
 	}
 }
