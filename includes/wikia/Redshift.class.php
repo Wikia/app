@@ -30,6 +30,9 @@ class Redshift {
 			try {
 				$then = microtime(true);
 				self::$connection = new \PDO( $dsn, $wgRedshiftUser, $wgRedshiftPass );
+				// don't allow queries longer than 20s
+				// if the query times out, the result will be empty
+				self::$connection->query("set statement_timeout to 20000");
 				$took = microtime(true) - $then;
 			}
 			catch ( \PDOException $e ) {
