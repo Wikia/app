@@ -21,65 +21,6 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	private $discussLinkData = null;
 	private $wikiLocalNavigation = null;
 
-	private $storeMap = [
-		'147' => 'Star Wars',
-		'naruto' => 'Naruto',
-		'onepiece' => 'One Piece',
-		'dragonball' => 'Dragon Ball',
-		'kimetsu-no-yaiba' => 'Kimetsu no Yaiba',
-		'yugioh' =>	'Yu-Gi-Oh!',
-		'haikyuu' => 'Haikyuu!!',
-		'harrypotter' => 'Harry Potter',
-		'marvel' =>	'Marvel',
-		'dc' =>	'DC',
-		'animalcrossing' => 'Animal Crossing',
-		'fallout' => 'Fallout',
-		'elderscrolls' => 'Elder Scrolls',
-		'witcher' => 'Witcher',
-		'gta' => 'Grand Theft Auto',
-		'finalfantasy' => 'Final Fantasy',
-		'warframe' => 'Warframe',
-		'forgottenrealms' => 'Dungeons & Dragons',
-		'pokemon' => 'Pokemon',
-		'borderlands' => 'Borderlands',
-		'megamitensei' => 'Megami Tensei',
-		'dragonage' => 'Dragon Age',
-		'callofduty' => 'Call of Duty',
-		'leagueoflegends' => 'League of Legends',
-		'fategrandorder' => 'Fate/Grand Order',
-		'hollowknight' => 'Hollow Knight',
-		'xenoblade' => 'Xenoblade',
-		'' => 'Roblox', // get community for this
-		'dontstarve' => 'Don\'t Starve',
-		'danganronpa' => 'Danganronpa',
-		'reddead' => 'Red Dead',
-		'warhammer40k' => 'Warhammer',
-		'assassinscreed' => 'Assassin\'s Creed',
-		'' => 'Minecraft', // get community for this
-		'aj-item-worth' => 'Animal Jam',
-		'residentevil' => 'Resident Evil',
-		'wowwiki' => 'World of Warcraft',
-		'darksouls' => 'Dark Souls',
-		'' => 'Nintendo', // get community for this
-		'starwars' => 'Star Wars',
-		'disney' => 'Disney',
-		'lotr' => 'Lord of the Rings',
-		'avatar' => 'Avatar',
-		'memory-alpha' => 'Star Trek',
-		'muppet' => 'Muppets',
-		'tardis' => 'Doctor Who',
-		'powerrangers' => 'Power Rangers',
-		'spongebob' => 'Spongebob',
-		'vampirediaries' => 'Vampire Diaries',
-		'ttte' => 'Thomas the Tank Engine',
-		'greysanatomy' => 'Grey\'s Anatomy',
-		'walkingdead' => 'The Walking Dead',
-		'gameofthrones' => 'Game of Thrones',
-		'criminalminds' => 'Criminal Minds',
-		'steven-universe' => 'Steven Universe',
-		'battlefordreamisland' => 'Battle of Dream Island',
-	];
-
 	public function __construct( string $langCode ) {
 		global $wgCityId, $wgServer, $wgScriptPath;
 
@@ -570,7 +511,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		return $this->formatFandomStoreData( $storeData->results, $shouldInclude );
 	}
 
-	private function doApiRequest( $uri, $store ) {
+	private function doApiRequest( $uri ) {
 		$client = new Client( [
 			'base_uri' => $uri,
 			'timeout' => 5.0,
@@ -616,8 +557,8 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	}
 
 	private function getRelevanceKey(): string {
-		global $wgCityId;
+		global $wgCityId, $wgFandomStoreMap;
 
-		return $this->storeMap[ $wgCityId ];
+		return $wgFandomStoreMap[ $wgCityId ];
 	}
 }
