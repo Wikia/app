@@ -503,10 +503,17 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	private function getFandomStoreData( $uri, $store, $shouldInclude ) {
 		$storeData = json_decode( $this->doApiRequest( $uri, $store )->getBody() );
 
+		// Don't render store link if no results
+		if ( empty( $storeData->results ) ) {
+			return;
+		}
+
 		return $this->formatFandomStoreData( $storeData->results, $shouldInclude );
 	}
 
 	private function doApiRequest( $uri, $store ) {
+		global $wgCityId;
+
 		$client = new Client( [
 			'base_uri' => $uri,
 			'timeout' => 5.0,
@@ -516,7 +523,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 		$params = [
 			'clientId' => 'fandom',
-			'relevanceKey' => $store,
+			'relevanceKey' => WikiMap::getWikiName( $wgCityId ),
 		];
 
 		try {
