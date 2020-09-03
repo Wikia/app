@@ -645,7 +645,8 @@
                 "5452088585",
                 "5451829654",
                 "5465152035",
-                "5461291396"
+                "5461291396",
+                "5459355788"
             ]
         }
     ],
@@ -1070,27 +1071,11 @@
                 "oasis"
             ],
             "regions": [
-                "CA"
+                "CA",
+                "US"
             ],
-            "sampling": 50.0,
+            "sampling": 10.0,
             "value": true
-        }
-    ],
-    "deRecoActiveExperiment": [
-        {
-            "apps": [
-                "oasis"
-            ],
-            "browsers": [
-                "Chrome"
-            ],
-            "devices": [
-                "desktop"
-            ],
-            "regions": [
-                "PL"
-            ],
-            "value": "CF|ARL|4|E1|A"
         }
     ],
     "icFloorAdhesionDelay": [
@@ -1134,7 +1119,7 @@
             "regions": [
                 "XX"
             ],
-            "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v4.0.15/tracking-opt-in.min.js"
+            "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v4.0.17/tracking-opt-in.min.js"
         }
     ],
     "icPermutive": [
