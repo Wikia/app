@@ -7,6 +7,8 @@ use function GuzzleHttp\Psr7\build_query;
 
 class DesignSystemCommunityHeaderModel extends WikiaModel {
 	const WORDMARK_TYPE_GRAPHIC = 'graphic';
+	const MEMC_PREFIX_FANDOM_STORE = 'DesignSystemCommunityHeaderModelClass::doApiRequest';
+	const FANDOM_STORE_ERROR_MESSAGE = 'Failed to get data from Fandom Store';
 
 	private $productInstanceId;
 	private $langCode;
@@ -308,10 +310,8 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 			$qs = $_SERVER['QUERY_STRING'];
 			 // remove after design review and enable shop
 			$wgEnableShopLink = strpos( $qs, 'enableShopLinkReview' ) ? true : false;
-			// this will be different for the header
+			// current api url for fandom store
 			$uri = 'http://138.201.119.29:9420/ix/api/seo/v1/footer';
-			// this will come from wiki name
-			$store = 'Yu-Gi-Oh!';
 
 			$wgEnableCommunityPageExt =
 				WikiFactory::getVarValueByName( 'wgEnableCommunityPageExt',
@@ -513,39 +513,51 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	private function getFandomStoreData( $uri, $shouldInclude ) {
 		global $wgFandomStoreMap, $wgCityId;
 
-		$storeData = json_decode( $this->doApiRequest( $uri )->getBody() );
+		$storeData = $this->doApiRequest( $uri, $wgCityId );
 
 		return $this->formatFandomStoreData( $storeData->results, $shouldInclude );
 	}
 
-	private function doApiRequest( $uri ) {
-		$client = new Client( [
-			'base_uri' => $uri,
-			'timeout' => 5.0,
-		] );
+	private function doApiRequest( $uri, $wikiId ) {
+		global $wgMemc;
 
-		$error_message = 'Failed to get data from Fandom Store';
+		$memcKey = wfMemcKey( self::MEMC_PREFIX_FANDOM_STORE, $wikiId );
+		$retVal = $wgMemc->get( $memcKey );
 
-		$params = [
-			'clientId' => 'fandom',
-			'relevanceKey' => $this->getRelevanceKey(),
-		];
-
-		try {
-			return $client->get( '', [
-				'query' => build_query( $params, PHP_QUERY_RFC1738 ),
-			] );
-		}
-		catch ( ClientException $e ) {
-			WikiaLogger::instance()->error( $error_message, [
-				'error_message' => $e->getMessage(),
-				'status_code' => $e->getCode(),
+		// return cached value if available
+		if ( !empty( $retVal ) ) {
+			return $retVal;
+		} else {
+			$client = new Client( [
+				'base_uri' => $uri,
+				'timeout' => 5.0,
 			] );
 
-			throw new WikiaException( $error_message, 500, $e );
-		}
-	}
+			$params = [
+				'clientId' => 'fandom',
+				'relevanceKey' => $this->getRelevanceKey(),
+			];
+
+			try {
+				$response = $client->get( '', [
+					'query' => build_query( $params, PHP_QUERY_RFC1738 ),
+				] );
+				$data = json_decode( $response->getBody() );
+				// store in cache for one hour
+				$wgMemc->set( $memcKey, $data, 3600 );
+				return $data;
+			}
+			catch ( ClientException $e ) {
+				WikiaLogger::instance()->error( self::FANDOM_STORE_ERROR_MESSAGE, [
+					'error_message' => $e->getMessage(),
+					'status_code' => $e->getCode(),
+				] );
 	
+				throw new WikiaException( self::FANDOM_STORE_ERROR_MESSAGE, 500, $e );
+			}
+		}	
+	}
+
 	private function formatFandomStoreData( $apiData, $shouldInclude ) {
 		return [
 			'url' => $apiData[0]->url,

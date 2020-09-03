@@ -2638,9 +2638,8 @@ $wgEnableFandomAppSmartBanner = false;
 $wgFandomAppSmartBannerText = null;
 
 /**
- * Used to display fandom store names by wikiId for IntentX
+ * Used to display fandom store names by prod wikiId for IntentX
  */
-// domains need to be converted to ids
 $wgFandomStoreMap = [
 	'1318' => 'Naruto',
 	'1081' => 'One Piece',
