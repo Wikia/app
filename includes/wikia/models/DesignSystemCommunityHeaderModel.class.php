@@ -302,8 +302,15 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 	public function getExploreMenu(): array {
 		if ( $this->exploreMenu === null ) {
+			// temporary debug param
 			$qs = $_SERVER['QUERY_STRING'];
+			 // remove after design review and enable shop
 			$wgEnableShopLink = strpos( $qs, 'enableShopLinkReview' ) ? true : false;
+			// this will be different for the header
+			$footerUri = 'http://138.201.119.29:9420/ix/api/seo/v1/footer';
+			// this will come from wiki name
+			$store = 'Yu-Gi-Oh!';
+
 			$wgEnableCommunityPageExt =
 				WikiFactory::getVarValueByName( 'wgEnableCommunityPageExt',
 					$this->productInstanceId, false, F::app()->wg->enableCommunityPageExt );
@@ -364,7 +371,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 					'include' => !empty( $wgEnableForumExt ) && !empty( $wgEnableDiscussions ),
 				],
 				// will need to map store key better for query param
-				$this->getFandomStoreData( 'Yu-Gi-Oh!', $wgEnableShopLink )
+				$this->getFandomStoreData( $footerUri, $store, $wgEnableShopLink ),
 			];
 
 			$this->exploreMenu = [
@@ -493,15 +500,15 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		return SpecialPage::getTitleFor( $name )->getLocalURL();
 	}
 
-	private function getFandomStoreData( $store, $shouldInclude ) {
-		$storeData = json_decode( $this->doApiRequest( $store )->getBody() );
+	private function getFandomStoreData( $uri, $store, $shouldInclude ) {
+		$storeData = json_decode( $this->doApiRequest( $uri, $store )->getBody() );
 
 		return $this->formatFandomStoreData( $storeData->results, $shouldInclude );
 	}
 
-	private function doApiRequest( $store ) {
+	private function doApiRequest( $uri, $store ) {
 		$client = new Client( [
-			'base_uri' => 'http://138.201.119.29:9420/ix/api/seo/v1/footer',
+			'base_uri' => $uri,
 			'timeout' => 5.0,
 		] );
 
