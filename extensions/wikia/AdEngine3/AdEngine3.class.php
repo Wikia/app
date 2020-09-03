@@ -119,6 +119,7 @@ class AdEngine3
 					'adEngineExperimental' => $wg->AdEngineExperimental,
 					'adsInContent' => $wg->EnableAdsInContent,
 					'enableCheshireCat' => $wg->AdDriverEnableCheshireCat,
+					'enableAffiliateSlot' => $wg->AdDriverEnableAffiliateSlot,
 					'isAdTestWiki' => $wg->AdDriverIsAdTestWiki,
 					'isIncontentPlayerDisabled' => $wg->DisableIncontentPlayer,
 					'pageType' => $adPageTypeService->getPageType(),

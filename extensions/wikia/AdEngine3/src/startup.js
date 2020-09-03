@@ -98,6 +98,7 @@ function startAdEngine(inhibitors) {
 		});
 		slots.injectHighImpact();
 		slots.injectFloorAdhesion();
+		slots.injectAffiliateSlot();
 
 		eventService.on(AdSlot.SLOT_RENDERED_EVENT, (slot) => {
 			slot.getElement().classList.remove('default-height');

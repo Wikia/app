@@ -7,6 +7,7 @@ export function getConfig() {
 			'invisible_skin',
 		],
 		slotsToDisable: [
+			'affiliate_slot',
 			'incontent_player',
 			'floor_adhesion',
 		],

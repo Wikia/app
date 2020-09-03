@@ -38,6 +38,7 @@ export const getConfig = () => ({
 		this.updateNavbarOnScroll = scrollListener.addCallback(() => this.updateNavbar());
 
 		slotService.disable('incontent_player', 'hivi-collapse');
+		slotService.disable('affiliate_slot', 'hivi-collapse');
 
 		return slotTweaker.onReady(adSlot).then(() => {
 			wrapper.style.opacity = '';

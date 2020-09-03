@@ -1028,6 +1028,12 @@ $wgAdEngineExperimental = null;
 $wgAdDriverEnableCheshireCat = true;
 
 /**
+ * @name $wgAdDriverEnableAffiliateSlot
+ * Whether to inject affiliate_slot
+ */
+$wgAdDriverEnableAffiliateSlot = false;
+
+/**
  * @name $wgDisableIncontentPlayer
  * Flag disabling incontent player (for feed experiments)
  */
