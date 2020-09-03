@@ -1,5 +1,10 @@
 <?php
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
+use Wikia\Logger\WikiaLogger;
+use function GuzzleHttp\Psr7\build_query;
+
 class DesignSystemCommunityHeaderModel extends WikiaModel {
 	const WORDMARK_TYPE_GRAPHIC = 'graphic';
 
@@ -358,7 +363,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 					'tracking' => 'explore-forum',
 					'include' => !empty( $wgEnableForumExt ) && !empty( $wgEnableDiscussions ),
 				],
-				$this->getFandomMockApi( $wgEnableShopLink )
+				$this->getFandomStoreData( $wgEnableShopLink )
 			];
 
 			$this->exploreMenu = [
@@ -487,36 +492,40 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		return SpecialPage::getTitleFor( $name )->getLocalURL();
 	}
 
-	private function getFandomMockApi( $shouldInclude ) {
-		// mock data to be replaced with call to api
-		$mockApi = (object) [
-			'results' => [
-				(object) [
-					'text' => 'Yu-gi-oh!',
-					'url' => 'https://fandom.intentx.com/yu-gi-oh/apparel/4854-gf33402.html',
-				],
-				(object) [
-					'text' => 'Apparel',
-					'url' => 'https://fandom.intentx.com/yu-gi-oh-ft4854.html',
-				],
-				(object) [
-					'text' => 'Accessories',
-					'url' => 'https://fandom.intentx.com/yu-gi-oh/accessories/4854-gf33432.html',
-				],
-				(object) [
-					'text' => 'Costumes',
-					'url' => 'https://fandom.intentx.com/yu-gi-oh/costumes/4854-gf33496.html',
-				],
-				(object) [
-					'text' => 'Toys & Games',
-					'url' => 'https://fandom.intentx.com/yu-gi-oh/toys-games/4854-gf33521.html',
-				],
-			],
-		];
+	private function getFandomStoreData( $shouldInclude ) {
+		$storeData = json_decode( $this->doApiRequest()->getBody() );
 
-		return $this->formatFandomStoreData( $mockApi->results, $shouldInclude );
+		return $this->formatFandomStoreData( $storeData->results, $shouldInclude );
 	}
 
+	private function doApiRequest() {
+		$client = new Client( [
+			'base_uri' => 'http://138.201.119.29:9420/ix/api/seo/v1/footer',
+			'timeout' => 5.0,
+		] );
+
+		$error_message = 'Failed to get data from Fandom Store';
+
+		$params = [
+			'clientId' => 'fandom',
+			'relevanceKey' => 'Yu-Gi-Oh!',
+		];
+
+		try {
+			return $client->get( '', [
+				'query' => build_query( $params, PHP_QUERY_RFC1738 ),
+			] );
+		}
+		catch ( ClientException $e ) {
+			WikiaLogger::instance()->error( $error_message, [
+				'error_message' => $e->getMessage(),
+				'status_code' => $e->getCode(),
+			] );
+
+			throw new WikiaException( $error_message, 500, $e );
+		}
+	}
+	
 	private function formatFandomStoreData( $apiData, $shouldInclude ) {
 		return [
 			'url' => $apiData[0]->url,
