@@ -2638,18 +2638,18 @@ $wgEnableFandomAppSmartBanner = false;
 $wgFandomAppSmartBannerText = null;
 
 /**
- * Used to display fandom store names by prod wikiId for IntentX
+ * Used to map IntentX API endpoints to prod wiki id
  */
 $wgFandomStoreMap = [
 	'1318' => 'Naruto',
 	'1081' => 'One Piece',
 	'530' => 'Dragon Ball',
 	'1358984' => 'Kimetsu no Yaiba',
-	'410' =>	'Yu-Gi-Oh!',
+	'410' => 'Yu-Gi-Oh!',
 	'525179	' => 'Haikyuu!!',
 	'509' => 'Harry Potter',
-	'2233' =>	'Marvel',
-	'2237' =>	'DC',
+	'2233' => 'Marvel',
+	'2237' => 'DC',
 	'583' => 'Animal Crossing',
 	'3035' => 'Fallout',
 	'1706' => 'Elder Scrolls',

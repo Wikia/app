@@ -376,7 +376,11 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 			// If store community add link to explore items
 			if ( $this->isFandomStoreCommunity( $wgCityId ) ) {
-				array_push( $exploreItems, $this->getFandomStoreData( $uri, $wgEnableShopLink ) );
+				$storeData = $this->getFandomStoreData( $uri, $wgEnableShopLink );
+
+				if ( $storeData ) {
+					array_push( $exploreItems,  $storeData );
+				}
 			}
 
 			$this->exploreMenu = [
@@ -515,6 +519,11 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 		$storeData = $this->doApiRequest( $uri, $wgCityId );
 
+		// if results are empty, return null
+		if ( empty( $storeData->results ) ) {
+			return null;
+		}
+
 		return $this->formatFandomStoreData( $storeData->results, $shouldInclude );
 	}
 
@@ -532,7 +541,6 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 				'base_uri' => $uri,
 				'timeout' => 5.0,
 			] );
-
 			$params = [
 				'clientId' => 'fandom',
 				'relevanceKey' => $this->getRelevanceKey(),
