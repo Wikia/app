@@ -646,7 +646,9 @@
                 "5451829654",
                 "5465152035",
                 "5461291396",
-                "5459355788"
+                "5459355788",
+                "5460496953",
+                "5460497508"
             ]
         }
     ],
@@ -1164,6 +1166,51 @@
                 "XX"
             ],
             "value": 2000
+        }
+    ],
+    "icDeRecoExperiment": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "browsers": [
+                "Chrome"
+            ],
+            "devices": [
+                "desktop"
+            ],
+            "regions": [
+                "PL"
+            ],
+            "value": {
+                "name": "just_testing",
+                "groups": [
+                    {
+                        "name": "A",
+                        "config": {
+                            "wikiStrategy": "ARL",
+                            "articleStrategy": "CV"
+                        },
+                        "sampling": 25
+                    },
+                    {
+                        "name": "B",
+                        "config": {
+                            "wikiStrategy": "ARL",
+                            "articleStrategy": "CV"
+                        },
+                        "sampling": 25
+                    },
+                    {
+                        "name": "X",
+                        "config": {
+                            "wikiStrategy": "ARL",
+                            "articleStrategy": "CV"
+                        },
+                        "sampling": 25
+                    }
+                ]
+            }
         }
     ]
 }
