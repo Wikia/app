@@ -63,6 +63,7 @@ require([
 			return {
 				author: thread.createdBy.name,
 				authorAvatar: thread.createdBy.avatarUrl,
+				authorUserPageUrl: window.wgScriptPath + '/wiki/User:' + thread.createdBy.name,
 				commentCount: thread.postCount,
 				createdAt: $.timeago(date),
 				timestamp: date.toLocaleString([mw.config.get('wgContentLanguage')]),

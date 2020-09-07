@@ -1,3 +1,5 @@
+import fallbackInstantConfig from './fallback-config.json';
+
 export default {
 	adUnitId: '/{custom.dfpId}/{custom.serverPrefix}.{slotConfig.group}/{slotConfig.adProduct}{slotConfig.slotNameSuffix}/{state.deviceType}/{targeting.skin}-{targeting.s2}/{custom.wikiIdentifier}-{targeting.s0}',
 	bidders: {
@@ -485,11 +487,11 @@ export default {
 				slots: {
 					featured: {
 						videoAdUnitId: '/5441/wka.life/_project43//article/test/outstream',
-						customParams: 's1=_project43&artid=402&src=test&pos=outstream&passback=wikiaVideo'
+						customParams: 's1=_project43&artid=402&src=test&pos=outstream'
 					},
 					incontent_player: {
 						videoAdUnitId: '/5441/wka.life/_project43//article/test/outstream',
-						customParams: 's1=_project43&artid=402&src=test&pos=outstream&passback=wikiaVideo'
+						customParams: 's1=_project43&artid=402&src=test&pos=outstream'
 					}
 				}
 			}
@@ -518,10 +520,15 @@ export default {
 	},
 	targeting: {
 		ae3: '1',
-		outstream: 'none',
 		skin: 'oasis',
 		uap: 'none',
 		uap_c: 'none'
+	},
+	templates: {
+		safeFanTakeoverElement: {
+			boxadSlotNames: [ 'top_boxad', 'incontent_boxad_1' ],
+			boxadSize: [ 300, 601 ]
+		}
 	},
 	services: {
 		billTheLizard: {
@@ -538,15 +545,27 @@ export default {
 		},
 		durationMedia: {
 			enabled: false,
-			siteId: '1167',
+		},
+		distroScale: {
+			enabled: false,
+			id: '22599',
+		},
+		externalLogger: {
+			endpoint: '/wikia.php?controller=AdEngine&method=postLog',
+		},
+		iasPublisherOptimization: {
+			pubId: '930616',
+			slots: [
+				'hivi_leaderboard',
+				'top_leaderboard',
+				'top_boxad',
+				'incontent_boxad_1',
+				'bottom_leaderboard',
+			],
 		},
 		instantConfig: {
 			endpoint: 'https://services.wikia.com/icbm/api/config?app=oasis',
-			fallbackConfigKey: 'fallbackInstantConfig',
-		},
-		moatYi: {
-			enabled: false,
-			partnerCode: 'wikiaprebidheader490634422386',
+			fallback: fallbackInstantConfig,
 		},
 		nielsen: {
 			enabled: false,
@@ -559,7 +578,7 @@ export default {
 	src: 'gpt',
 	state: {
 		adStack: [],
-		isMobile: true,
+		isMobile: false,
 	},
 	options: {
 		customAdLoader: {

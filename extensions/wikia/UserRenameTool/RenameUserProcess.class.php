@@ -134,8 +134,9 @@ class RenameUserProcess {
 				$this->addLog( "Adding a row in replication queue" );
 				$dbw->insert(
 					'user_replicate_queue',
-					['user_id' => $this->mUserId],
-					__METHOD__
+					[ 'user_id' => $this->mUserId ],
+					__METHOD__,
+					[ 'IGNORE' ]
 				);
 
 				$dbw->commit( __METHOD__ );
@@ -143,7 +144,7 @@ class RenameUserProcess {
 
 				$this->addLog( "Changed user {$this->mOldUsername} to {$this->mNewUsername} in {$wgExternalSharedDB}" );
 
-				User::clearUserCache( $this->mUserId );
+				User::newFromId( $this->mUserId )->deleteCache();
 
 				return true;
 			} else {

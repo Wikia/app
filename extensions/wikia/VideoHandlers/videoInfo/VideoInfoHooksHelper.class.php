@@ -111,7 +111,18 @@ class VideoInfoHooksHelper {
 	 * @param Title $newTitle
 	 * @return bool true
 	 */
-	public static function onFileRenameComplete( MovePageForm $form , Title &$oldTitle , Title &$newTitle ): bool {
+	public static function onFileRenameComplete( MovePageForm $form , Title $oldTitle , Title $newTitle ): bool {
+		// Nothing to do if the page being renamed is not a file at all (IW-4212)
+		if ( !$oldTitle->inNamespace( NS_FILE ) ) {
+			return true;
+		}
+
+		$file = wfFindFile( $oldTitle );
+
+		// Nothing to do if the page being renamed is not a video (IW-4212)
+		if ( !WikiaFileHelper::isVideoFile( $file ) ) {
+			return true;
+		}
 
 		$videoInfoHelper = new VideoInfoHelper();
 		$affected = $videoInfoHelper->renameVideo( $oldTitle, $newTitle );

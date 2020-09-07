@@ -163,22 +163,6 @@ $wgCookieDomain = ".$wgWikiaBaseDomain";
 $wgCorporatePageRedirectWiki = "https://community.$wgFandomBaseDomain/wiki/";
 
 /**
- * Settings for incoming cross-site AJAX requests. Newer browsers support
- * cross-site AJAX when the target resource allows requests from the origin
- * domain by the Access-Control-Allow-Origin header. $wgCrossSiteAJAXdomains can
- * be set using a wildcard syntax where '*' matches any number of characters and
- * '?' matches any 1 character.
- * @example  $wgCrossSiteAJAXdomains = [ 'www.wikia.com', '*.wikia.com' ];
- * @see PLATFORM-1719
- * @see wfHandleCrossSiteAJAXdomain()
- * @var string $wgCrossSiteAJAXdomains
- */
-$wgCrossSiteAJAXdomains = [
-	"internal-vstf.$wgWikiaBaseDomain",
-	"internal-vstf.$wgFandomBaseDomain",
-];
-
-/**
  * The datacenter that hosts the starter dumps for CreateNewWiki
  * @see \Wikia\CreateNewWiki\Starters
  * @var string $wgCreateWikiStarterDumpsDatacenter
@@ -263,7 +247,8 @@ $wgLBFactoryConf = [
         'wikicities_c6'  => 'c6',
         'wikicities_c7'  => 'c7',
         'wikicities_c8'  => 'c8',
-        'dataware'       => 'ext1',
+		'wikicities_c9'  => 'c9',
+		'dataware'       => 'ext1',
         'archive'        => 'ext1',
         'portability_db' => 'ext1',
         'specials'       => 'specials',
@@ -319,6 +304,10 @@ $wgLBFactoryConf = [
             'geo-db-h-master.query.consul' => 0,
             'geo-db-h-slave.query.consul' => 1000,
         ],
+		'c9' => [
+			'ucp-dbmigration-s1' => 0,
+		],
+
         'ext1' => $wgDBArchiveCluster,
         'specials' => [
             'geo-db-specials-master.query.consul' => 0,

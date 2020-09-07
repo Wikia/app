@@ -34,7 +34,10 @@ class FounderEmailsRegisterEvent extends FounderEmailsEvent {
 
 		return true;
 	}
-
+	
+	/**
+	* Hook disabled in IW-3680, will be enabled in IW-3675
+	*/
 	public static function registerUser( User $user ) {
 		$eventData = [
 			'newUserName' => $user->getName()

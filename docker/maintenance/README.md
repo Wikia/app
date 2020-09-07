@@ -97,12 +97,6 @@ Removes dataware.wall_notification entries older than X days.
 
 Removes wikicities.shared_newtalks entries older than 90 days.
 
-#### close-my-account.yaml
-
-`extensions/wikia/CloseMyAccount/maintenance/CloseMyAccountMaintenance.php`
-
-Actually closes accounts scheduled to be closed.
-
 #### delete-articles-by-prefix-blogs.yaml
 
 `maintenance/wikia/deleteArticlesByPrefix.php`
@@ -187,23 +181,11 @@ Reinitialise or update wiki's statistics tables.
 
 Crawls through LyricWiki, pulls data from its articles and puts it to Solr.
 
-#### phalanx-migrate-user-blocks.yaml
-
-`extensions/wikia/PhalanxII/maintenance/MigratePhalanxUserBlocks.php`
-
-Closes accounts permanently blocked in Phalanx.
-
 #### phrase-alerts.yaml
 
 `maintenance/wikia/phrase-alerts.php`
 
 Scans users' activity for certain suspicious phrases and alerts ComSup.
-
-#### publish-content-review-status.yaml
-
-`extensions/wikia/ContentReview/maintenance/publishContentReviewStatus.php`
-
-Publishes JS review statistics on a Slack channel
 
 #### remove-qa-wikis.yaml
 

@@ -115,8 +115,11 @@ class AdEngine3
 			return [
 				'bidders' => [],
 				'opts' => array_filter([
+					'adEngineVersion' => $wg->AdEngineVersion,
+					'adEngineExperimental' => $wg->AdEngineExperimental,
 					'adsInContent' => $wg->EnableAdsInContent,
 					'enableCheshireCat' => $wg->AdDriverEnableCheshireCat,
+					'enableAffiliateSlot' => $wg->AdDriverEnableAffiliateSlot,
 					'isAdTestWiki' => $wg->AdDriverIsAdTestWiki,
 					'isIncontentPlayerDisabled' => $wg->DisableIncontentPlayer,
 					'pageType' => $adPageTypeService->getPageType(),

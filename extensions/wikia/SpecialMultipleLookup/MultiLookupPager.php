@@ -50,7 +50,7 @@ class MultiLookupPager extends TablePager {
 		$wiki = WikiFactory::getWikiByID( $row->ml_city_id );
 
 		if ( $wiki ) {
-			$row->users = $this->getWikiUsers( $wiki->city_dbname );
+			$row->users = $this->getWikiUsers($wiki->city_dbname, $wiki->city_path === 'slot2');
 			$row->wiki_url = $wiki->city_url;
 
 			return parent::formatRow( $row );
@@ -62,19 +62,22 @@ class MultiLookupPager extends TablePager {
 	/**
 	 * Get recent contributors that used this IP address on a wiki
 	 * @param string $dbName
+	 * @param bool $isUcpWiki
 	 * @return string[] array of user names and IP addresses
 	 */
-	private function getWikiUsers( $dbName ) {
+	private function getWikiUsers( $dbName, $isUcpWiki ) {
 		$userIp = inet_ntop( $this->target );
 		$cacheKey = wfSharedMemcKey( 'multilookup', $userIp, $dbName );
 
-		return WikiaDataAccess::cache( $cacheKey,60 * 15 /* 15 mins */, function () use ( $dbName, $userIp ) {
+		$conds = $isUcpWiki ? [ 'rc_ip' => $userIp ] : [ 'rc_ip_bin' => $this->target ];
+
+		return WikiaDataAccess::cache( $cacheKey,60 * 15 /* 15 mins */, function () use ( $dbName, $userIp, $conds ) {
 			$dbr = wfGetDB( DB_SLAVE, [], $dbName );
 
 			$res = $dbr->select(
 				[ 'recentchanges' ],
 				[ 'rc_user as user_id' ],
-				[ 'rc_ip_bin' => $this->target ],
+				$conds,
 				__METHOD__,
 				[ 'DISTINCT' ]
 			);

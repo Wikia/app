@@ -25,7 +25,7 @@ class ArticleCommentsController extends WikiaController {
 	 */
 	public function content() {
 		//this is coming via ajax we need to set correct wgTitle ourselves
-		global $wgTitle;
+		global $wgTitle, $wgArticleCommentsReadOnlyMode;
 
 		$articleId = $this->request->getVal( 'articleId', null );
 		$page = $this->request->getVal( 'page', 1 );
@@ -48,6 +48,7 @@ class ArticleCommentsController extends WikiaController {
 
 		$this->getCommentsData( $title, $page );
 		$this->isMiniEditorEnabled = ArticleComment::isMiniEditorEnabled();
+		$this->setVal('readOnly', $wgArticleCommentsReadOnlyMode);
 
 		// Uncomment this when surrogate key purging works
 		//Wikia::setSurrogateKeysHeaders( ArticleComment::getSurrogateKey( $articleId ) );

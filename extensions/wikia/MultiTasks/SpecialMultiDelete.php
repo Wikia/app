@@ -26,3 +26,5 @@ $wgExtensionMessagesFiles['MultideleteAliases'] = __DIR__ . '/MultiTasks.aliases
 extAddSpecialPage( dirname(__FILE__) . '/SpecialMultiDelete_body.php', 'Multidelete', 'Multidelete' );
 
 $wgSpecialPageGroups['Multidelete'] = 'pagetools';
+
+$wgAutoloadClasses['MultiDeleteController'] = dirname( __FILE__ ). '/MultiDeleteController.php';

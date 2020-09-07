@@ -81,19 +81,6 @@ class AntiSpoofHooks {
 	}
 
 	/**
-	 * On new account creation, record the username's thing-bob.
-	 * (Called after a user account is created)
-	 *
-	 * @param $user User
-	 * @return bool
-	 */
-	public static function asAddNewAccountHook( $user ) {
-		$spoof = self::makeSpoofUser( $user->getName() );
-		$spoof->record();
-		return true;
-	}
-
-	/**
 	 * On rename, remove the old entry and add the new
 	 * (After a sucessful user rename)
 	 *

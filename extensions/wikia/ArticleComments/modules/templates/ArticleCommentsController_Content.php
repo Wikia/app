@@ -3,7 +3,7 @@
 </ul>
 <h1 id="article-comments-counter-header"><?= wfMessage( 'oasis-comments-header' )->numParams( $countCommentsNested )->parse() ?></h1>
 <div id="article-comments" class="article-comments">
-	<? if ( !$isBlocked && $commentingAllowed ): ?>
+	<? if ( !$isBlocked && $commentingAllowed && !$readOnly ): ?>
 		<? if ( $isMiniEditorEnabled ): ?>
 			<?= $app->renderView( 'MiniEditorController', 'Setup' ) ?>
 		<? endif ?>

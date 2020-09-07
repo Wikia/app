@@ -817,7 +817,7 @@ if ( !empty( $wgArchiveWikiForums ) ) {
 if ( !empty( $wgEnableDiscussionsNavigation ) && !empty( $wgEnableDiscussions )
 	 && empty( $wgEnableForumExt )
 ) {
-	// Then add /d/f Discussions link to Oasis Global Navigation if it doesn't have a custom value
+	// Then add /f Discussions link to Oasis Global Navigation if it doesn't have a custom value
 	if ( empty( $wgOasisGlobalNavigation ) ) {
 		$wgOasisGlobalNavigation =
 			"*__NOLINK__oasis-on-the-wiki
@@ -826,7 +826,7 @@ if ( !empty( $wgEnableDiscussionsNavigation ) && !empty( $wgEnableDiscussions )
 **Special:Videos|Videos
 **Special:NewFiles|oasis-navigation-v2-new-photos
 **Special:Chat|Chat
-**/d/f|discussions
+**/f|discussions
 **Special:Maps|Maps";
 	}
 }
@@ -1393,8 +1393,8 @@ $wgFileBackends['gcs-backend'] = [
 
 // SER-3444 always use GCS
 $wgEnabledFileBackend = 'gcs-backend';
-
-
+// This is required to be able run CoppaTool tasks on all wikis
+include( "{$IP}/extensions/wikia/CoppaTool/legacy/CoppaToolLegacyTasks.setup.php" );
 if ( !empty( $wgEnableCoppaToolExt ) ) {
 	include( "{$IP}/extensions/wikia/CoppaTool/CoppaTool.setup.php" );
 }
@@ -1814,6 +1814,12 @@ if ( !empty ( $wgEnableHydralyticsExt ) ) {
 	include "$IP/extensions/wikia/Hydralytics/Hydralytics.setup.php";
 }
 
+if ( $wgEnableArticleCommentsExt || $wgEnableWallExt || $wgEnableDiscussions ) {
+	include "$IP/extensions/wikia/DiscussionModeration/DiscussionModeration.setup.php";
+}
+
 include_once "$IP/extensions/wikia/WikiDescription/WikiDescription.setup.php";
+
+include_once "$IP/extensions/wikia/PerformanceMonitoring/PerformanceMonitoring.setup.php";
 
 $wgUCPCommunityCNWAddress = 'https://ucp.fandom.com/wiki/Special:CreateNewWiki';

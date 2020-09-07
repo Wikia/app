@@ -21,6 +21,11 @@ TEMPLATE=`cat $SCRIPT_FOLDER/cronjob-template.yaml`
 JOB_JSON=`yaml2json $job_description_file_name`
 NAME=`basename "$job_description_file_name" .yaml`
 SCHEDULE=`echo "$JOB_JSON" | jq .schedule`
+
+CONCURRENCY=`echo "$JOB_JSON" | jq .concurrency`
+if [ "${CONCURRENCY}" = 'null' ]; then
+  CONCURRENCY="Allow"
+fi
 # we need to add 12 spaces of padding to align yaml in template
 ARGS=`echo "$JOB_JSON" | jq .args[] | sed -e 's/^/            - /g'`
 SERVER_ID=`echo "$JOB_JSON" | jq .server_id`
@@ -44,4 +49,5 @@ job_k8s_descriptor="${job_k8s_descriptor/\$\{args\}/${ARGS}}"
 job_k8s_descriptor="${job_k8s_descriptor/\$\{label\}/${LABEL}}"
 job_k8s_descriptor="${job_k8s_descriptor/\$\{server_id\}/${SERVER_ID}}"
 job_k8s_descriptor="${job_k8s_descriptor/\$\{schedule\}/${SCHEDULE}}"
+job_k8s_descriptor="${job_k8s_descriptor/\$\{concurrency\}/${CONCURRENCY}}"
 echo "$job_k8s_descriptor"

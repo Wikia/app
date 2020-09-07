@@ -270,31 +270,34 @@ class LinksUpdate {
 	}
 
 	function queueRecursiveJobs() {
-		global $wgUpdateRowsPerJob;
-		wfProfileIn( __METHOD__ );
-
 		$cache = $this->mTitle->getBacklinkCache();
-		$batches = $cache->partition( 'templatelinks', $wgUpdateRowsPerJob );
+		$batches = $cache->partition( 'templatelinks', BatchRefreshLinksForTemplate::TITLES_PER_TASK );
 		if ( !$batches ) {
-			wfProfileOut( __METHOD__ );
 			return;
 		}
 
 		$this->queueRefreshTasks( $batches );
-
-		wfProfileOut( __METHOD__ );
 	}
 
-	private function queueRefreshTasks( $batches ) {
+	/**
+	 * Queue a BatchRefreshLinksForTemplate task for each batch in the given set of backlinks
+	 * @param array $batches
+	 */
+	private function queueRefreshTasks( array $batches ): void {
 		global $wgCityId;
+
+		$tasks = [];
+
+		$triggeringRevisionId = $this->mTitle->getLatestRevID();
 
 		foreach ( $batches as $batch ) {
 			list( $start, $end ) = $batch;
 			$task = new BatchRefreshLinksForTemplate();
 			$task->title( $this->mTitle );
 			$task->wikiId( $wgCityId );
-			$task->call( 'refreshTemplateLinks', $start, $end, wfTimestampNow() );
-			$task->queue();
+			$task->call( 'refreshTemplateLinks', $start, $end, wfTimestampNow(), $triggeringRevisionId );
+
+			$tasks[] = $task;
 
 			Wikia\Logger\WikiaLogger::instance()->info( 'LinksUpdate::queueRefreshTasks', [
 				'title' => $this->mTitle->getPrefixedDBkey(),
@@ -303,6 +306,7 @@ class LinksUpdate {
 			] );
 		}
 
+		BatchRefreshLinksForTemplate::batch( $tasks );
 	}
 
 
@@ -380,7 +384,7 @@ class LinksUpdate {
 	 *
 	 * method changed by Wikia CE-677
 	 * @author Kamil Koterba kamil@wikia-inc.com
-	 * 
+	 *
 	 * @param Array $cats array of strings - categories names
 	 */
 	function queueCategoriesInvalidation( $cats ) {
@@ -401,10 +405,10 @@ class LinksUpdate {
 
 	/**
 	 * Queues flies pages for update
-	 * 
+	 *
 	 * method changed by Wikia CE-677
 	 * @author Kamil Koterba kamil@wikia-inc.com
-	 * 
+	 *
 	 * @param Array $images array of strings - files names
 	 */
 	function queueImageDescriptionsInvalidation( $images ) {
@@ -434,23 +438,43 @@ class LinksUpdate {
 	 * @param $insertions
 	 */
 	function incrTableUpdate( $table, $prefix, $deletions, $insertions ) {
+		global $wgUpdateRowsPerQuery;
+
 		if ( $table == 'page_props' ) {
 			$fromField = 'pp_page';
 		} else {
 			$fromField = "{$prefix}_from";
 		}
-		$where = array( $fromField => $this->mId );
+		$deleteWheres = [];
 		if ( $table == 'pagelinks' || $table == 'templatelinks' || $table == 'iwlinks' ) {
 			if ( $table == 'iwlinks' ) {
 				$baseKey = 'iwl_prefix';
 			} else {
 				$baseKey = "{$prefix}_namespace";
 			}
-			$clause = $this->mDb->makeWhereFrom2d( $deletions, $baseKey, "{$prefix}_title" );
-			if ( $clause ) {
-				$where[] = $clause;
-			} else {
-				$where = false;
+
+			$curBatchSize = 0;
+			$curDeletionBatch = [];
+			$deletionBatches = [];
+			foreach ( $deletions as $ns => $dbKeys ) {
+				foreach ( $dbKeys as $dbKey => $unused ) {
+					$curDeletionBatch[$ns][$dbKey] = 1;
+					if ( ++$curBatchSize >= $wgUpdateRowsPerQuery ) {
+						$deletionBatches[] = $curDeletionBatch;
+						$curDeletionBatch = [];
+						$curBatchSize = 0;
+					}
+				}
+			}
+			if ( $curDeletionBatch ) {
+				$deletionBatches[] = $curDeletionBatch;
+			}
+
+			foreach ( $deletionBatches as $deletionBatch ) {
+				$deleteWheres[] = [
+					$fromField => $this->mId,
+					$this->mDb->makeWhereFrom2d( $deletionBatch, $baseKey, "{$prefix}_title" )
+				];
 			}
 		} else {
 			if ( $table == 'langlinks' ) {
@@ -460,17 +484,39 @@ class LinksUpdate {
 			} else {
 				$toField = $prefix . '_to';
 			}
-			if ( count( $deletions ) ) {
-				$where[] = "$toField IN (" . $this->mDb->makeList( array_keys( $deletions ) ) . ')';
-			} else {
-				$where = false;
+			$deletionBatches = array_chunk( array_keys( $deletions ), $wgUpdateRowsPerQuery );
+			foreach ( $deletionBatches as $deletionBatch ) {
+				$deleteWheres[] = [ $fromField => $this->mId, $toField => $deletionBatch ];
 			}
 		}
-		if ( $where ) {
-			$this->mDb->delete( $table, $where, __METHOD__ );
+
+		// If this is a background task running in autocommit mode, wait for replication after each batch update
+		// to reduce the load on replica DBs when processing a large amount of updates from concurrent links refreshes.
+		// Do not wait for replication if DBO_TRX is set, as it's likely to be a user-facing web request wrapped in
+		// a transaction - in this scenario, prefer to skip the wait to preserve transactional integrity rather than
+		// prematurely committing the main transaction round.
+		$waitForReplication = !$this->mDb->getFlag( DBO_TRX );
+		$lb = wfGetLB();
+
+		foreach ( $deleteWheres as $deleteWhere ) {
+			$this->mDb->delete( $table, $deleteWhere, __METHOD__ );
+
+			if ( $waitForReplication ) {
+				$pos = $this->mDb->getMasterPos();
+
+				$lb->waitForAll($pos, false);
+			}
 		}
-		if ( count( $insertions ) ) {
-			$this->mDb->insert( $table, $insertions, __METHOD__, 'IGNORE' );
+
+		$insertBatches = array_chunk( $insertions, $wgUpdateRowsPerQuery );
+		foreach ( $insertBatches as $insertBatch ) {
+			$this->mDb->insert( $table, $insertBatch, __METHOD__, 'IGNORE' );;
+
+			if ( $waitForReplication ) {
+				$pos = $this->mDb->getMasterPos();
+
+				$lb->waitForAll($pos, false);
+			}
 		}
 	}
 

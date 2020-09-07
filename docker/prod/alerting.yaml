@@ -52,22 +52,6 @@ spec:
       annotations:
         description: CleanUpWallNotifications maintenance script did not run in the last 24 hours
         summary: CleanUpWallNotifications last succeeded {{humanizeDuration $value}} ago
-    # CloseMyAccountMaintenance should be run every 24h
-    - alert: mediawiki_maintenance_scripts_CloseMyAccountMaintenance_last_run
-      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="CloseMyAccountMaintenance"}) > 3600 * 25
-      labels:
-        team: core-platform
-      annotations:
-        description: CloseMyAccountMaintenance maintenance script did not run in the last 24 hours
-        summary: CloseMyAccountMaintenance last succeeded {{humanizeDuration $value}} ago
-    # ContentReviewStatus should be run every 3h
-    - alert: mediawiki_maintenance_scripts_ContentReviewStatus_last_run
-      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="ContentReviewStatus"}) > 3600 * 4
-      labels:
-        team: core-platform
-      annotations:
-        description: "ContentReviewStatus should post a message on #js-review-tool Slack channel every three hours"
-        summary: ContentReviewStatus last succeeded {{humanizeDuration $value}} ago
     # DeleteArticlesByPrefix should be run every 24h
     - alert: mediawiki_maintenance_scripts_DeleteArticlesByPrefix_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="DeleteArticlesByPrefix"}) > 3600 * 25
@@ -84,14 +68,6 @@ spec:
       annotations:
         description: FounderEmailsMaintenance maintenance script did not run in the last 24 hours
         summary: FounderEmailsMaintenance last succeeded {{humanizeDuration $value}} ago
-    # MigratePhalanxUserBlocks should be run every 24h
-    - alert: mediawiki_maintenance_scripts_MigratePhalanxUserBlocks_last_run
-      expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="MigratePhalanxUserBlocks"}) > 3600 * 25
-      labels:
-        team: services
-      annotations:
-        description: MigratePhalanxUserBlocks maintenance script did not run in the last 24 hours
-        summary: MigratePhalanxUserBlocks last succeeded {{humanizeDuration $value}} ago
     # PhraseAlerts should be run every 24h
     - alert: mediawiki_maintenance_scripts_PhraseAlerts_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="PhraseAlerts"}) > 3600 * 25

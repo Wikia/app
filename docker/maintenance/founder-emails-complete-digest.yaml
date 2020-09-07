@@ -1,6 +1,0 @@
-schedule: "50 20 * * *"
-server_id: 1802109 # sus.wikia.com
-args:
-- php
-- /usr/wikia/slot1/current/src/extensions/wikia/FounderEmails/FounderEmailsMaintenance.php
-- --event=completeDigest

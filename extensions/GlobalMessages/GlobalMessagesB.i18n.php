@@ -3759,18 +3759,21 @@ $messages['de'] = array(
 	'bold_sample' => 'Fetter Text',
 	'bold_tip' => 'Fetter Text',
 	'blockedtitle' => 'Benutzer ist gesperrt',
-	'blockedtext' => 'Dein Benutzername oder deine IP-Adresse wurde von $1 gesperrt.
+	'blockedtext' => '<big>\'\'\'Dein Benutzername oder deine IP-Adresse wurde gesperrt.\'\'\'</big>
 
-* Folgender Grund wurde angegeben: $2
-* Beginn der Sperre: $8
-* Ablaufdatum der Sperre: $6
-* Gesperrt ist: $7
-* Sperrnummer (ID): $5
+<div id="mw-message-blockedtext" style="border:1px solid black; padding-left:0.5em;">
+Die Sperrung wurde von $1 vorgenommen.
+
+* Angegebener Grund: $2
+* Beginn der Sperrung: $8
+* Ende der Sperrung: $6
+* Gesperrter Nutzer: $7
+* Gesperrte ID: #$5
 * Aktuelle IP-Adresse: $3
+</div>
 
-Du kannst $1 oder andere [[Special:ListAdmins|Administratoren]] kontaktieren, um über die Sperre zu sprechen. Bei Problemen kannst Du [[Special:Contact|Kontakt zu Fandom]] aufnehmen.
-
-Bitte gib bei entsprechenden Anfragen immer den Namen dieses Wikis und die Sperrnummer an.',
+Du kannst $1 oder einen [[Special:ListUsers|{{MediaWiki:group-sysop-member}}]] kontaktieren, um die Sperrung zu besprechen.
+Bitte gib alle oben genannten Details bei allen Anfragen an.',
 	'blockednoreason' => 'keine Begründung angegeben',
 	'blocked-notice-logextract' => '{{GENDER:$1|Dieser Benutzer|Diese Benutzerin|Dieser Benutzer}} ist zurzeit gesperrt.
 Zur Information folgt ein aktueller Auszug aus dem Benutzersperr-Logbuch:',

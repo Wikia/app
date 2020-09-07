@@ -4,7 +4,7 @@
 		<button  class="secondary fast-admin-delete-message" data-mode="fastadmin"><?= wfMessage( 'wall-message-fast-admin-delete-message' )->escaped() ?></button>
 	<? endif; ?>
 
-	<? if ( !$isClosed ): ?>
+	<? if ( !$isClosed && $canQuote ): ?>
 		<button class="quote-button secondary"><?= wfMessage( 'wall-message-quote-button' )->escaped() ?></button>
 	<? endif; ?>
 

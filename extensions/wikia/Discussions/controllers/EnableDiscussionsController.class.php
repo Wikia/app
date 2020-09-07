@@ -2,7 +2,8 @@
 
 class EnableDiscussionsController extends \WikiaController {
 
-	const ROLLBACK = 'rollback';
+	const ENABLE_DISCUSSIONS = 'enableDiscussions';
+	const ENABLE_FORUM = 'enableForum';
 	const SITE_ID = 'siteId';
 	const CREATE_WELCOME_POST = 'createWelcomePost';
 
@@ -44,21 +45,63 @@ class EnableDiscussionsController extends \WikiaController {
 	}
 
 	public function toggleVars() {
-		$isRollback = $this->request->getBool( self::ROLLBACK );
+		$enableDiscussions = $this->request->getBool( self::ENABLE_DISCUSSIONS );
+		$enableForum = $this->request->getBool( self::ENABLE_FORUM );
 		$cityId = $this->request->getInt( self::SITE_ID, $this->wg->CityId );
 
-		( new DiscussionsVarToggler( $cityId ) )->setEnableDiscussions( !$isRollback )
-			->setEnableDiscussionsNav( !$isRollback )
-			->setArchiveWikiForums( !$isRollback )
-			->setEnableForums( $isRollback )
+		( new DiscussionsVarToggler( $cityId ) )->setEnableDiscussions( $enableDiscussions )
+			->setEnableDiscussionsNav( $enableDiscussions )
+			->setArchiveWikiForums( !$enableForum )
+			->setEnableForums( $enableForum )
 			->save();
 
 		$this->response->setBody( json_encode( [
-			DiscussionsVarToggler::ENABLE_DISCUSSIONS => !$isRollback,
-			DiscussionsVarToggler::ENABLE_DISCUSSIONS_NAV => !$isRollback,
-			DiscussionsVarToggler::ARCHIVE_WIKI_FORUMS => !$isRollback,
-			DiscussionsVarToggler::ENABLE_FORUMS => $isRollback,
+			DiscussionsVarToggler::ENABLE_DISCUSSIONS => $enableDiscussions,
+			DiscussionsVarToggler::ENABLE_DISCUSSIONS_NAV => $enableDiscussions,
+			DiscussionsVarToggler::ARCHIVE_WIKI_FORUMS => !$enableForum,
+			DiscussionsVarToggler::ENABLE_FORUMS => $enableForum,
 		] ) );
+	}
+
+	public function toggleReadOnlyForum() {
+		$cityId = $this->request->getInt( 'siteId', $this->wg->CityId );
+		$isRollback = $this->request->getBool( 'rollback', false );
+
+		$success = WikiFactory::setVarByName( 'wgHideForumForms', $cityId, !$isRollback);
+
+		if ( $success ) {
+			$this->response->setCode( 200 );
+		} else {
+			$this->response->setCode( 500 );
+		}
+	}
+
+	public function togglePostForumMigrationMessage() {
+		$cityId = $this->request->getInt( 'siteId', $this->wg->CityId );
+		$value = $this->request->getBool( 'value', true );
+
+		$successBool = WikiFactory::setVarByName( 'wgEnablePostForumMigrationMessage', $cityId, $value );
+		// keep the message displayed for 7 days
+		$successTimestamp = WikiFactory::setVarByName( 'wgPostForumMigrationMessageExpiration', $cityId, time() + 60 * 60 * 24 * 7 );
+
+		if ( $successBool && $successTimestamp ) {
+			$this->response->setCode( 200 );
+		} else {
+			$this->response->setCode( 500 );
+		}
+	}
+
+	public function toggleBeforeForumMigrationMessage() {
+		$cityId = $this->request->getInt( 'siteId', $this->wg->CityId );
+		$value = $this->request->getBool( 'value', false );
+
+		$success = WikiFactory::setVarByName( 'wgEnableForumMigrationMessage', $cityId, $value );
+
+		if ( $success ) {
+			$this->response->setCode( 200 );
+		} else {
+			$this->response->setCode( 500 );
+		}
 	}
 
 	/**

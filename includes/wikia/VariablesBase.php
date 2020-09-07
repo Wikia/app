@@ -1018,7 +1018,7 @@ $wgCategoryMagicGallery = true;
 $wgCategoryPagingLimit = 200;
 
 /**
- * Points to ucp-internal-test-community.fandom.com.
+ * Points to ucp.fandom.com.
  * Should be switched to ucp.fandom.com for initial rollout and to community.fandom.com after
  * Community Central has been migrated to UCP.
  */
@@ -1654,6 +1654,7 @@ $wgDefaultUserOptions = [
 	'showtoolbar' => 1,
 	'skin' => 'oasis',
 	'stubthreshold' => 0,
+	'timecorrection' => 'System|0',
 	'thumbsize' => 2,
 	'underline' => 2,
 	'uselivepreview' => 0,
@@ -2075,7 +2076,7 @@ $wgEditInterfaceWhitelist = [
 	'User-identity-box-group-sysop',
 	'User-identity-box-group-threadmoderator',
 	'User-identity-box-group-voldev',
-	'User-identity-box-group-vstf',
+	'User-identity-box-group-soap',
 	'User-identity-box-group-wiki-manager',
 	'Userrights-groups-help',
 	'Welcome-bot-flag',
@@ -2239,6 +2240,11 @@ $wgEnableAPI = true;
  * @var bool $wgEnableArticleCommentsExt
  */
 $wgEnableArticleCommentsExt = false;
+
+/**
+ * Used to put article comments extension in readonly mode
+ */
+$wgArticleCommentsReadOnlyMode = false;
 
 /**
  * Enable ArticleVideo extension.
@@ -2721,6 +2727,12 @@ $wgEnableForumExt = false;
  * @var  $wgArchiveWikiForums
  */
 $wgArchiveWikiForums = null;
+
+/**
+ * Hide all forum forms (make forum read-only)
+ * @var bool $wgHideForumForms
+ */
+$wgHideForumForms = false;
 
 /**
  * Disallow anonymous editing of Forum:Index.
@@ -4718,6 +4730,7 @@ $wgGlobalUserPreferenceWhiteList = [
 		'usenewrc',
 		'userlandingpage',
 		'variant',
+		'viewmode',
 		'visualeditor-betatempdisable',
 		'visualeditor-enable',
 		'walldelete',
@@ -6388,7 +6401,7 @@ $wgPoolCounterConf = null;
  * @see $wgEnablePoolCounter
  * @var Array $wgPoolCounterServers
  */
-$wgPoolCounterServers = [ 'prod.kubernetes-lb-l4.service.consul' ];
+$wgPoolCounterServers = [ 'poolcounter' ];
 
 /**
  * Whether to emit more detailed debug logs for a PoolWorkArticleView
@@ -6668,6 +6681,9 @@ $wgRateLimits = [
 	'changeemail' => [
 		'ip' => [ 10, 3600 ],
 		'user' => [ 4, 86400 ],
+	],
+	'share-email' => [
+		'user' => [ 10, 3600 ], // 10 emails/hour
 	],
 ];
 
@@ -9356,3 +9372,28 @@ $wgOverrideUcfirstCharacters = [
 $wgTimelineRenderHashAppend = 'v2';
 
 $wgIsTestWiki = false;
+
+/**
+ * Variable storing country codes where Video Bridge can appear
+ */
+$wgVideoBridgeCountries = [];
+
+/**
+ * Variable for enabling/disabling forum migration message per wiki
+ */
+$wgEnableForumMigrationMessage = true;
+
+/**
+ * Variable for enabling/disabling forum migration message globally (value from Community Central's WikiFactory is used)
+ */
+$wgEnableForumMigrationMessageGlobal = false;
+
+/**
+ * Variable for enabling/disabling message that appears after forum migration
+ */
+$wgEnablePostForumMigrationMessage = false;
+
+/**
+ * Expiration timestamp for post forum migration message
+ */
+$wgPostForumMigrationMessageExpiration = 0;

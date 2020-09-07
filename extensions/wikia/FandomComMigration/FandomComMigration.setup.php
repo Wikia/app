@@ -20,6 +20,7 @@ $wgExtensionMessagesFiles['FandomComMigration'] = __DIR__ . '/FandomComMigration
 $wgResourceModules['ext.fandomComMigration'] = [
 	'messages' => [
 		'fandom-com-migration-after',
-		'fandom-com-migration-before'
+		'fandom-com-migration-before',
+		'fandom-ucp-migration-before'
 	]
 ];

@@ -44,7 +44,7 @@ class FixUserRegistration extends Maintenance {
 				$dbw->begin();
 				try {
 					$dbw->update( 'user', array( 'user_registration' => $timestamp ), array( 'user_id' => $id ), __METHOD__ );
-					$dbw->insert( 'user_replicate_queue', [ 'user_id' => $id ] );
+					$dbw->insert( 'user_replicate_queue', [ 'user_id' => $id ], __METHOD__, [ 'IGNORE' ] );
 					$this->output( "$id $timestamp\n" );
 					$dbw->commit();
 				} catch ( DBError $e ) {

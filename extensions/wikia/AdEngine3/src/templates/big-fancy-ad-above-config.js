@@ -18,6 +18,7 @@ export const getConfig = () => ({
 	slotParams: null,
 	updateNavbarOnScroll: null,
 	slotsToDisable: [
+		'affiliate_slot',
 		'incontent_player',
 		'invisible_high_impact_2',
 		'floor_adhesion',

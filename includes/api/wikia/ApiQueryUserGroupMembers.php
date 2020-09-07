@@ -86,7 +86,7 @@ class ApiQueryUserGroupMembers extends ApiQueryBase {
 
 	public function getExamples() {
 		return [
-			'api.php?action=query&list=groupmembers&gmgroups=vstf|staff&gmlimit=15',
+			'api.php?action=query&list=groupmembers&gmgroups=soap|staff&gmlimit=15',
 			'api.php?action=query&list=groupmembers&gmgroups=sysop&gmoffset=999&',
 		];
 	}

@@ -15,6 +15,8 @@
 
 namespace Hydralytics;
 
+use Wikia\Logger\WikiaLogger;
+
 class SpecialAnalytics extends \SpecialPage {
 
 	// bump this one to invalidate the Redshift results cache
@@ -70,318 +72,336 @@ class SpecialAnalytics extends \SpecialPage {
 		// use $wgLang to differ the cache based on user language
 		$memcKey = wfMemcKey( __CLASS__, self::CACHE_VERSION, $wgLang->getCode() );
 
-		$sections = \WikiaDataAccess::cacheWithLock( $memcKey, \WikiaResponse::CACHE_SHORT, function() {
-			try {
-				global $wgLang;
-				$sections = [
-					'top_viewed_pages' => '',
-					'number_of_pageviews' => '',
-					'top_editors' => '',
-					'geolocation' => '',
-					'most_visited_files' => '',
-					'desktop_vs_mobile' => '',
-					'browser_breakdown' => '',
-					'active_editors' => '',
-					'edits_per_day' => '',
-					'logged_in_out' => '',
-					'top_search_terms' => ''
-				];
+		$redshiftError = false;
 
-				/**
-				 *  Browser Breakdown + Desktop vs Mobile
-				 */
-				$deviceBreakdown = Information::getDeviceBreakdown(4);
-				$sections['browser_breakdown'] = TemplateAnalytics::wrapSectionData('browser_breakdown', $deviceBreakdown['browser']);
-				$sections['desktop_vs_mobile'] = TemplateAnalytics::wrapSectionData('desktop_vs_mobile', $deviceBreakdown['deviceCategory']);
+		try {
+			$sections = \WikiaDataAccess::cacheWithLock($memcKey, \WikiaResponse::CACHE_SHORT, function () {
+				try {
+					global $wgLang;
+					$sections = [
+						'top_viewed_pages' => '',
+						'number_of_pageviews' => '',
+						'top_editors' => '',
+						'geolocation' => '',
+						'most_visited_files' => '',
+						'desktop_vs_mobile' => '',
+						'browser_breakdown' => '',
+						'active_editors' => '',
+						'edits_per_day' => '',
+						'logged_in_out' => '',
+						'top_search_terms' => ''
+					];
 
-				/**
-				 *  Number Of Pageviews
-				 */
-				$dailyTotals = Information::getDailyTotals();
-				$totalViews = 0;
-				$numberOfPageviews = [];
-				if (isset($dailyTotals['pageviews'])) {
-					foreach ($dailyTotals['pageviews'] as $date => $views) {
-						$totalViews += $views;
-						$numberOfPageviews[strtotime($date)] = $views;
-					}
-				}
+					/**
+					 *  Browser Breakdown + Desktop vs Mobile
+					 */
+					$deviceBreakdown = Information::getDeviceBreakdown(4);
+					$sections['browser_breakdown'] = TemplateAnalytics::wrapSectionData('browser_breakdown', $deviceBreakdown['browser']);
+					$sections['desktop_vs_mobile'] = TemplateAnalytics::wrapSectionData('desktop_vs_mobile', $deviceBreakdown['deviceCategory']);
 
-				$sections['number_of_pageviews'] = TemplateAnalytics::wrapSectionData(
-					'number_of_pageviews',
-					[
-						'per_day' => $numberOfPageviews,
-						'total' => $this->getLanguage()->formatNum($totalViews)
-					]
-				);
-
-				/**
-				 *  Logged in vs Logged out Edits
-				 */
-				$edits = Information::getEditsLoggedInOut();
-
-				global $wgDisableAnonymousEditing;
-				// hide this section when the wiki does not allow logged out edits
-				if (  empty( $wgDisableAnonymousEditing ) ) {
-					$sections['logged_in_out'] = TemplateAnalytics::wrapSectionData( 'logged_in_out', $edits );
-				}
-				else {
-					unset( $sections['logged_in_out'] );
-				}
-
-				/**
-				 *  Edit Per Day
-				 */
-				$dailyEdits = $edits['all'];
-				$sections['edits_per_day'] = TemplateAnalytics::wrapSectionData('edits_per_day', $dailyEdits);
-
-				/**
-				 * Geolocation
-				 */
-				$geolocation = Information::getGeolocation();
-				$sections['geolocation'] = TemplateAnalytics::wrapSectionData('geolocation',$geolocation);
-				$countries = \CountryNames::getNames($wgLang->getCode());
-				//arsort($geolocation['sessions']);
-				if (isset($geolocation['pageviews'])) {
-					$sections['geolocation'] = "
-					<table class=\"analytics_table\">
-						<thead>
-							<tr>
-								<th>".wfMessage('location')->escaped()."</th>
-								<th>".wfMessage('views')->escaped()."</th>
-							</tr>
-						</thead>
-						<tbody>
-						";
-					foreach ($geolocation['pageviews'] as $location => $sessions) {
-						$sections['geolocation'] .= "
-							<tr>
-								<td>".$countries[$location]."</td>
-								<td>".$this->getLanguage()->formatNum($sessions)."</td>
-							</tr>";
-					}
-					$sections['geolocation'] .= "
-						</tbody>
-					</table>";
-				}
-
-				/**
-				 *  Top Viewed Pages
-				 */
-				$topPages = Information::getTopViewedPages();
-				if (isset($topPages['pageviews'])) {
-					$sections['top_viewed_pages'] = "
-					<table class=\"analytics_table\">
-						<thead>
-							<tr>
-								<th>".wfMessage('page')->escaped()."</th>
-								<th>".wfMessage('views')->escaped()."</th>
-							</tr>
-						</thead>
-						<tbody>
-						";
-					foreach ($topPages['pageviews'] as $uri => $views) {
-						$newUri = $this->normalizeUri($uri);
-
-						// remove language url part and "/wiki/" and underscores from page names
-						$title = preg_replace('|^(/\w+)?/wiki/|', '', $newUri);
-						$title = str_replace('_', ' ', $title);
-
-						$sections['top_viewed_pages'] .= "
-							<tr>
-
-								<td><a href='".\Sanitizer::encodeAttribute(wfExpandUrl($newUri))."'>". htmlspecialchars($title) . "</a></td>
-								<td>".$this->getLanguage()->formatNum($views)."</td>
-							</tr>";
-					}
-					$sections['top_viewed_pages'] .= "
-						</tbody>
-					</table>";
-				}
-
-				/**
-				 * Top Editors
-				 */
-				$topEditorsAllTime = Information::getTopEditors();
-				if (count($topEditorsAllTime)) {
-					$sections['top_editors'] = "
-					<table class=\"analytics_table\">
-						<thead>
-							<tr>
-								<th>".wfMessage('user')->escaped()."</th>
-								<th>".wfMessage('points')->escaped()."</th>
-							</tr>
-						</thead>
-						<tbody>
-					";
-					foreach ($topEditorsAllTime as $data) {
-						$sections['top_editors'] .= "<tr><td>".$this->getLanguage()->formatNum($data['points'])."</td><td>".\Linker::link($data['user']['user-page'])."</td></tr>";
-					}
-					$sections['top_editors'] .= "
-						</tbody>
-					</table>".\Linker::link($this->getTitleFor('WikiPoints'), wfMessage('view_more')->escaped());
-				}
-
-				$topEditorsActive = Information::getTopEditors(true);
-				if (count($topEditorsActive)) {
-					$lastMonth = strtotime(date('Y-m-d', strtotime('First day of last month')).'T00:00:00+00:00');
-					$sections['active_editors'] = "
-					<table class=\"analytics_table\">
-						<thead>
-							<tr>
-								<th>".wfMessage('user')->escaped()."</th>
-								<th>".wfMessage('points')->escaped()."</th>
-								<th>".wfMessage('active_month')->escaped()."</th>
-							</tr>
-						</thead>
-						<tbody>";
-					foreach ($topEditorsActive as $data) {
-						if ($data['month'] >= $lastMonth) {
-							$sections['active_editors'] .= "<tr><td>".$this->getLanguage()->formatNum($data['points'])."</td><td>".\Linker::link($data['user']->getUserPage())."</td><td>".gmdate('F Y', $data['month'])."</td></tr>";
+					/**
+					 *  Number Of Pageviews
+					 */
+					$dailyTotals = Information::getDailyTotals();
+					$totalViews = 0;
+					$numberOfPageviews = [];
+					if (isset($dailyTotals['pageviews'])) {
+						foreach ($dailyTotals['pageviews'] as $date => $views) {
+							$totalViews += $views;
+							$numberOfPageviews[strtotime($date)] = $views;
 						}
 					}
-					$sections['active_editors'] .= "
-						</tbody>
-					</table>".\Linker::link($this->getTitleFor('WikiPoints/monthly'), wfMessage('view_more')->escaped());
-				}
 
-				/**
-				 * Top Files
-				 */
-				$topFiles = Information::getTopViewedFiles();
-				if (isset($topFiles['pageviews'])) {
-					$sections['most_visited_files'] = "
+					$sections['number_of_pageviews'] = TemplateAnalytics::wrapSectionData(
+						'number_of_pageviews',
+						[
+							'per_day' => $numberOfPageviews,
+							'total' => $this->getLanguage()->formatNum($totalViews)
+						]
+					);
+
+					/**
+					 *  Logged in vs Logged out Edits
+					 */
+					$edits = Information::getEditsLoggedInOut();
+
+					global $wgDisableAnonymousEditing;
+					// hide this section when the wiki does not allow logged out edits
+					if (empty($wgDisableAnonymousEditing)) {
+						$sections['logged_in_out'] = TemplateAnalytics::wrapSectionData('logged_in_out', $edits);
+					} else {
+						unset($sections['logged_in_out']);
+					}
+
+					/**
+					 *  Edit Per Day
+					 */
+					$dailyEdits = $edits['all'];
+					$sections['edits_per_day'] = TemplateAnalytics::wrapSectionData('edits_per_day', $dailyEdits);
+
+					/**
+					 * Geolocation
+					 */
+					$geolocation = Information::getGeolocation();
+					$sections['geolocation'] = TemplateAnalytics::wrapSectionData('geolocation', $geolocation);
+					$countries = \CountryNames::getNames($wgLang->getCode());
+					//arsort($geolocation['sessions']);
+					if (isset($geolocation['pageviews'])) {
+						$sections['geolocation'] = "
 					<table class=\"analytics_table\">
 						<thead>
 							<tr>
-								<th>".wfMessage('file')->escaped()."</th>
-								<th>".wfMessage('views')->escaped()."</th>
+								<th>" . wfMessage('location')->escaped() . "</th>
+								<th>" . wfMessage('views')->escaped() . "</th>
 							</tr>
 						</thead>
 						<tbody>
 						";
-					foreach ($topFiles['pageviews'] as $uri => $views) {
-						$newUri = $this->normalizeUri($uri);
-
-						// remove NS_FILE namespace prefix
-						$uriText = explode(":", $newUri);
-						array_shift($uriText);
-						$uriText = implode(":", $uriText);
-						$uriText = str_replace('_', ' ', $uriText);
-
-						$sections['most_visited_files'] .= "
+						foreach ($geolocation['pageviews'] as $location => $sessions) {
+							$sections['geolocation'] .= "
 							<tr>
-								<td><a href='".\Sanitizer::encodeAttribute(wfExpandUrl($newUri))."'>".
-								htmlspecialchars($uriText)."</a></td>
-								<td>".$this->getLanguage()->formatNum($views)."</td>
+								<td>" . $countries[$location] . "</td>
+								<td>" . $this->getLanguage()->formatNum($sessions) . "</td>
 							</tr>";
-					}
-					$sections['most_visited_files'] .= "
+						}
+						$sections['geolocation'] .= "
 						</tbody>
 					</table>";
-				}
+					}
 
-				/**
-				 *  Staff Contact / Help Links
-				 *
-				$managers = Information::getWikiManagers();
-				$sections['staff_contact'] = "
-				<table class=\"analytics_table\">
-						<thead>
-							<tr>
-								<th>".wfMessage("wiki_manager")->text()."</th>
-							</tr>
-						</thead>
-						<tbody>";
-				foreach ($managers as $manager) {
-					$title = \Title::newFromText('User:'.$manager);
-					$sections['staff_contact'] .= "<tr><td>".\Linker::link($title, $manager)."</td></tr>";
-				}
-				$sections['staff_contact'] .= "
-				</table>";
-
-				if ($wgCommunityManager) {
-					$sections['staff_contact'] .= "
+					/**
+					 *  Top Viewed Pages
+					 */
+					$topPages = Information::getTopViewedPages();
+					if (isset($topPages['pageviews'])) {
+						$sections['top_viewed_pages'] = "
 					<table class=\"analytics_table\">
 						<thead>
 							<tr>
-								<th>".wfMessage("community_manager")->text()."</th>
+								<th>" . wfMessage('page')->escaped() . "</th>
+								<th>" . wfMessage('views')->escaped() . "</th>
 							</tr>
 						</thead>
 						<tbody>
-							<tr><td>".\Linker::link(\Title::newFromText("User:".$wgCommunityManager), $wgCommunityManager)."</td></tr>
+						";
+						foreach ($topPages['pageviews'] as $uri => $views) {
+							$newUri = $this->normalizeUri($uri);
+
+							// remove language url part and "/wiki/" and underscores from page names
+							$title = preg_replace('|^(/\w+)?/wiki/|', '', $newUri);
+							$title = str_replace('_', ' ', $title);
+
+							$sections['top_viewed_pages'] .= "
+							<tr>
+
+								<td><a href='" . \Sanitizer::encodeAttribute(wfExpandUrl($newUri)) . "'>" . htmlspecialchars($title) . "</a></td>
+								<td>" . $this->getLanguage()->formatNum($views) . "</td>
+							</tr>";
+						}
+						$sections['top_viewed_pages'] .= "
 						</tbody>
 					</table>";
-				}
+					}
 
-				$sections['staff_contact'] = "
-				<table class=\"analytics_table\">
-					<thead>
-						<tr>
-							<th>".wfMessage("help_links")->text()."</th>
-						</tr>
-					</thead>
-					<tbody>
-						<tr><td>".Information::getFaqLink()."</td></tr>
-						<tr><td>".Information::getFeedbackLink()."</td></tr>
-						<tr><td>".Information::getSlackLink()."</td></tr>
-					</tbody>
-				</table>";
-				 **/
-				/**
-				 * Top Search Terms
-				 */
+					/**
+					 * Top Editors
+					 */
+					$topEditorsAllTime = Information::getTopEditors();
+					if (count($topEditorsAllTime)) {
+						$sections['top_editors'] = "
+					<table class=\"analytics_table\">
+						<thead>
+							<tr>
+								<th>" . wfMessage('user')->escaped() . "</th>
+								<th>" . wfMessage('points')->escaped() . "</th>
+							</tr>
+						</thead>
+						<tbody>
+					";
+						foreach ($topEditorsAllTime as $data) {
+							$sections['top_editors'] .= "<tr><td>" . $this->getLanguage()->formatNum($data['points']) . "</td><td>" . \Linker::link($data['user']['user-page']) . "</td></tr>";
+						}
+						$sections['top_editors'] .= "
+						</tbody>
+					</table>" . \Linker::link($this->getTitleFor('WikiPoints'), wfMessage('view_more')->escaped());
+					}
 
-				$terms = Information::getTopSearchTerms();
-				$sections['top_search_terms'] = "
+					$topEditorsActive = Information::getTopEditors(true);
+					if (count($topEditorsActive)) {
+						$lastMonth = strtotime(date('Y-m-d', strtotime('First day of last month')) . 'T00:00:00+00:00');
+						$sections['active_editors'] = "
+					<table class=\"analytics_table\">
+						<thead>
+							<tr>
+								<th>" . wfMessage('user')->escaped() . "</th>
+								<th>" . wfMessage('points')->escaped() . "</th>
+								<th>" . wfMessage('active_month')->escaped() . "</th>
+							</tr>
+						</thead>
+						<tbody>";
+						foreach ($topEditorsActive as $data) {
+							if ($data['month'] >= $lastMonth) {
+								$sections['active_editors'] .= "<tr><td>" . $this->getLanguage()->formatNum($data['points']) . "</td><td>" . \Linker::link($data['user']->getUserPage()) . "</td><td>" . gmdate('F Y', $data['month']) . "</td></tr>";
+							}
+						}
+						$sections['active_editors'] .= "
+						</tbody>
+					</table>" . \Linker::link($this->getTitleFor('WikiPoints/monthly'), wfMessage('view_more')->escaped());
+					}
+
+					/**
+					 * Top Files
+					 */
+					$topFiles = Information::getTopViewedFiles();
+					if (isset($topFiles['pageviews'])) {
+						$sections['most_visited_files'] = "
+					<table class=\"analytics_table\">
+						<thead>
+							<tr>
+								<th>" . wfMessage('file')->escaped() . "</th>
+								<th>" . wfMessage('views')->escaped() . "</th>
+							</tr>
+						</thead>
+						<tbody>
+						";
+						foreach ($topFiles['pageviews'] as $uri => $views) {
+							$newUri = $this->normalizeUri($uri);
+
+							// remove NS_FILE namespace prefix
+							$uriText = explode(":", $newUri);
+							array_shift($uriText);
+							$uriText = implode(":", $uriText);
+							$uriText = str_replace('_', ' ', $uriText);
+
+							$sections['most_visited_files'] .= "
+							<tr>
+								<td><a href='" . \Sanitizer::encodeAttribute(wfExpandUrl($newUri)) . "'>" .
+								htmlspecialchars($uriText) . "</a></td>
+								<td>" . $this->getLanguage()->formatNum($views) . "</td>
+							</tr>";
+						}
+						$sections['most_visited_files'] .= "
+						</tbody>
+					</table>";
+					}
+
+					/**
+					 *  Staff Contact / Help Links
+					 *
+					 * $managers = Information::getWikiManagers();
+					 * $sections['staff_contact'] = "
+					 * <table class=\"analytics_table\">
+					 * <thead>
+					 * <tr>
+					 * <th>".wfMessage("wiki_manager")->text()."</th>
+					 * </tr>
+					 * </thead>
+					 * <tbody>";
+					 * foreach ($managers as $manager) {
+					 * $title = \Title::newFromText('User:'.$manager);
+					 * $sections['staff_contact'] .= "<tr><td>".\Linker::link($title, $manager)."</td></tr>";
+					 * }
+					 * $sections['staff_contact'] .= "
+					 * </table>";
+					 *
+					 * if ($wgCommunityManager) {
+					 * $sections['staff_contact'] .= "
+					 * <table class=\"analytics_table\">
+					 * <thead>
+					 * <tr>
+					 * <th>".wfMessage("community_manager")->text()."</th>
+					 * </tr>
+					 * </thead>
+					 * <tbody>
+					 * <tr><td>".\Linker::link(\Title::newFromText("User:".$wgCommunityManager), $wgCommunityManager)."</td></tr>
+					 * </tbody>
+					 * </table>";
+					 * }
+					 *
+					 * $sections['staff_contact'] = "
+					 * <table class=\"analytics_table\">
+					 * <thead>
+					 * <tr>
+					 * <th>".wfMessage("help_links")->text()."</th>
+					 * </tr>
+					 * </thead>
+					 * <tbody>
+					 * <tr><td>".Information::getFaqLink()."</td></tr>
+					 * <tr><td>".Information::getFeedbackLink()."</td></tr>
+					 * <tr><td>".Information::getSlackLink()."</td></tr>
+					 * </tbody>
+					 * </table>";
+					 **/
+					/**
+					 * Top Search Terms
+					 */
+
+					$terms = Information::getTopSearchTerms();
+					$sections['top_search_terms'] = "
 				<table class=\"analytics_table\">
 						<thead>
 							<tr>
-								<th>".wfMessage('search_term')->escaped()."</th>
-								<th>".wfMessage('views')->escaped()."</th>
+								<th>" . wfMessage('search_term')->escaped() . "</th>
+								<th>" . wfMessage('views')->escaped() . "</th>
 							</tr>
 						</thead>
 						<tbody>";
 
-				// generate URLs like this one: https://elderscrolls.fandom.com/wiki/Special:Search?query=Marriage
-				$specialSearch = \SpecialPage::getTitleFor('Search');
+					// generate URLs like this one: https://elderscrolls.fandom.com/wiki/Special:Search?query=Marriage
+					$specialSearch = \SpecialPage::getTitleFor('Search');
 
-				foreach ($terms as $term => $count) {
-					$url = $specialSearch->getLocalURL( [ 'query' => $term ] );
-					$sections['top_search_terms'] .="
+					foreach ($terms as $term => $count) {
+						$url = $specialSearch->getLocalURL(['query' => $term]);
+						$sections['top_search_terms'] .= "
 					<tr>
 						<td>
-							<a href='".htmlspecialchars($url)."'>".htmlspecialchars($term)."</a>
+							<a href='" . htmlspecialchars($url) . "'>" . htmlspecialchars($term) . "</a>
 						</td>
 						<td>
-							".$this->getLanguage()->formatNum($count).
-						"</td>
+							" . $this->getLanguage()->formatNum($count) .
+							"</td>
 					</tr>
 					";
-				}
+					}
 
-				$sections['top_search_terms'] .= "
+					$sections['top_search_terms'] .= "
 					</tbody>
 				</table>";
 
-				// $sections['top_search_terms'] .= \Linker::link($this->getTitleFor('SearchLog'), wfMessage('view_more')->escaped());
-			} catch (\MWException $e) {
-				throw new \ErrorPageError(
-					'error_analytics_title',
-					'error_analytics_text',
-					[$e->getMessage()]
-				);
-			} catch ( \PDOException $e ) {
-				// Redshift database connection / query issue
-				throw new \ErrorPageError(
-					'error_analytics_title',
-					'error_analytics_text',
-					['Redshift backend error']
-				);
-			}
+					// $sections['top_search_terms'] .= \Linker::link($this->getTitleFor('SearchLog'), wfMessage('view_more')->escaped());
+				} catch (\MWException $e) {
+					throw new \ErrorPageError(
+						'error_analytics_title',
+						'error_analytics_text',
+						[$e->getMessage()]
+					);
+				}
 
-			return $sections;
-		});
+				return $sections;
+			});
+		} catch ( \PDOException $e ) {
+			// Redshift database connection / query issue
+			WikiaLogger::instance()->error( 'Redshift backend error', [
+				'exception' => $e,
+			] );
+			$redshiftError = true;
+		}
+
+		if ( $redshiftError ) {
+			$this->getOutput()->setPageTitle(wfMessage('analytics_dashboard')->escaped());
+			$this->content = "
+			<div id='analytics_wrapper'>
+				<div id='analytics_confidential_header'>
+					<div id='analytics_confidential'>
+					We're having trouble retrieving analytics data at the moment.
+					Please try again in a couple of minutes.
+					We're sorry for the inconvenience.
+					</div>
+				</div>
+			</div>
+			";
+			return;
+		}
 
 		$generatedAt = wfMessage('analytics_report_generated', wfMsgExt('timeago-day', array(), 1))->escaped();
 

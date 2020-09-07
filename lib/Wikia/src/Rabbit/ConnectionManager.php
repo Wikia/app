@@ -62,7 +62,7 @@ class ConnectionManager {
 	public function getChannel( string $vHost ): AMQPChannel {
 		$this->circuitBreaker->assertOperationAllowed();
 
-		if ( !isset( $this->channels[$vHost] ) ) {
+		if ( !isset( $this->channels[$vHost] ) || !$this->channels[$vHost]->is_open() ) {
 			$this->channels[$vHost] = $this->getConnection( $vHost )->channel();
 
 			// Allow basic_publish to fail in case the connection is blocked by rabbit, due to insufficient resources.

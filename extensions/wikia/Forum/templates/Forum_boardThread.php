@@ -11,10 +11,12 @@
 		<ul class="activity">
 			<li class="threads"><?= wfMessage( 'forum-board-thread-replies' )->numParams( $repliesNumber )->escaped() ?></li>
 			<li class="posts"><?= wfMessage( 'forum-board-thread-kudos' )->numParams( $kudosNumber )->escaped() ?></li>
-			<? if ( $isWatched ): ?>
-				<li class="follow following" data-iswatched="1"><?= wfMessage( 'forum-board-thread-following' )->escaped() ?></li>
-			<? else : ?>
-				<li class="follow" data-iswatched="0"><?= wfMessage( 'forum-board-thread-follow' )->escaped() ?></li>
+			<? if ( $showFollowing ): ?>
+				<? if ( $isWatched ): ?>
+					<li class="follow following" data-iswatched="1"><?= wfMessage( 'forum-board-thread-following' )->escaped() ?></li>
+				<? else : ?>
+					<li class="follow" data-iswatched="0"><?= wfMessage( 'forum-board-thread-follow' )->escaped() ?></li>
+				<? endif ?>
 			<? endif ?>
 		</ul>
 	</div>

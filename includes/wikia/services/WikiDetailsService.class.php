@@ -10,7 +10,7 @@ class WikiDetailsService extends WikiService {
 	const DEFAULT_WIDTH = 250;
 	const DEFAULT_HEIGHT = null;
 	const DEFAULT_SNIPPET_LENGTH = null;
-	const CACHE_VERSION = 3;
+	const CACHE_VERSION = 4;
 	const WORDMARK_URL_SETTING = 'wordmark-image-url';
 	private static $flagsBlacklist = [ 'blocked', 'promoted' ];
 
@@ -39,6 +39,13 @@ class WikiDetailsService extends WikiService {
 					$this->getFromWAMService( $wikiId ),
 					$this->getFromCommunityData( $wikiId )
 				);
+
+				//post process thumbnails
+				$wikiInfo = array_merge(
+					$wikiInfo,
+					$this->getImageData( $wikiInfo, $width, $height )
+				);
+
 			} else {
 				$wikiInfo = [
 					'id' => (int)$wikiId,
@@ -51,11 +58,7 @@ class WikiDetailsService extends WikiService {
 		if ( isset( $wikiInfo['exists'] ) ) {
 			return [];
 		}
-		//post process thumbnails
-		$wikiInfo = array_merge(
-			$wikiInfo,
-			$this->getImageData( $wikiInfo, $width, $height )
-		);
+
 		//set snippet
 		if ( isset( $wikiInfo['desc'] ) ) {
 			$length = ( $snippet !== null ) ? $snippet : static::DEFAULT_SNIPPET_LENGTH;
@@ -284,24 +287,23 @@ class WikiDetailsService extends WikiService {
 	}
 
 	/**
-	 * Gets the count of threads for the given community's discussions, or returns null if discussions in not active
-	 * on that community
+	 * Gets the count of threads for the given community's discussions.
+	 * If there's an error while fetching thread count, it returns 0.
 	 *
 	 * @param int $id
-	 * @return mixed
+	 * @return int
 	 */
-	private function getDiscussionStats( $id ) {
+	private function getDiscussionStats( int $id ): int {
 		$discussionsServiceUrl = ServiceFactory::instance()->providerFactory()->urlProvider()->getUrl( 'discussion' );
 		$response = Http::get( "http://$discussionsServiceUrl/$id/forums", 'default', [ 'noProxy' => true ] );
-		$nullToIndicateDiscussionsNotActive = null;
 
-		if ($response === false) {
-			return $nullToIndicateDiscussionsNotActive;
+		if ( $response === false ) {
+			return 0;
 		}
 
 		$decodedResponse = json_decode( $response, true );
 		if ( json_last_error() !== JSON_ERROR_NONE || !isset( $decodedResponse['_embedded']['doc:forum'] ) ) {
-			return $nullToIndicateDiscussionsNotActive;
+			return 0;
 		}
 
 		$threadCount = 0;

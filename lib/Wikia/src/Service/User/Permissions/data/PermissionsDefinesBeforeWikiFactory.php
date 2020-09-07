@@ -160,6 +160,7 @@ $wgGroupPermissions['helper']['reupload'] = true;
 $wgGroupPermissions['helper']['createpage'] = true;
 $wgGroupPermissions['helper']['createtalk'] = true;
 $wgGroupPermissions['helper']['InterwikiEdit'] = true;
+$wgGroupPermissions['helper']['lookupuser'] = true;
 $wgGroupPermissions['helper']['multilookup'] = true;
 $wgGroupPermissions['helper']['createwikilimitsexempt'] = true;
 $wgGroupPermissions['helper']['phalanx'] = true;
@@ -174,54 +175,54 @@ $wgGroupPermissions['helper']['dumpsondemand'] = true;
 $wgGroupPermissions['helper']['wallfastadmindelete'] = true;
 $wgGroupPermissions['helper']['quicktools'] = true;
 $wgGroupPermissions['helper']['hideblockername'] = true;
+$wgGroupPermissions['helper']['editusercss'] = true;
+$wgGroupPermissions['helper']['edituserjs'] = true;
 // SUS-870
 $wgGroupPermissions['helper']['checkuser'] = true;
 $wgGroupPermissions['helper']['checkuser-log'] = true;
 $wgGroupPermissions['helper']['editinterfacetrusted'] = true;
 
-// VSTF permissions rt#27789
-$wgGroupPermissions['vstf'] = [];
-$wgGroupPermissions['vstf']['autoconfirmed'] = true;
-$wgGroupPermissions['vstf']['block'] = true;
-$wgGroupPermissions['vstf']['blockemail'] = true;
-$wgGroupPermissions['vstf']['ipblock-exempt'] = true;
-$wgGroupPermissions['vstf']['protect'] = true;
-$wgGroupPermissions['vstf']['delete'] = true;
-$wgGroupPermissions['vstf']['bigdelete'] = true;
-$wgGroupPermissions['vstf']['undelete'] = true;
-$wgGroupPermissions['vstf']['deletedhistory'] = true;
-$wgGroupPermissions['vstf']['editinterface'] = true;
-$wgGroupPermissions['vstf']['autopatrol'] = true;
-$wgGroupPermissions['vstf']['move'] = true;
-$wgGroupPermissions['vstf']['move-subpages'] = true;
-$wgGroupPermissions['vstf']['move-rootuserpages'] = true;
-$wgGroupPermissions['vstf']['movefile'] = true;
-$wgGroupPermissions['vstf']['createpage'] = true;
-$wgGroupPermissions['vstf']['createtalk'] = true;
-$wgGroupPermissions['vstf']['reupload'] = true;
-$wgGroupPermissions['vstf']['reupload-shared'] = true;
-$wgGroupPermissions['vstf']['skipcaptcha'] = true;
-$wgGroupPermissions['vstf']['rollback'] = true;
-$wgGroupPermissions['vstf']['markbotedits'] = true;
-$wgGroupPermissions['vstf']['suppressredirect'] = true;
-$wgGroupPermissions['vstf']['apihighlimits'] = true;
-$wgGroupPermissions['vstf']['phalanx'] = true;
-$wgGroupPermissions['vstf']['phalanxexempt'] = true;
-$wgGroupPermissions['vstf']['commentmove'] = true;
-$wgGroupPermissions['vstf']['commentedit'] = true;
-$wgGroupPermissions['vstf']['commentdelete'] = true;
-$wgGroupPermissions['vstf']['deletedtext'] = true;
-$wgGroupPermissions['vstf']['multilookup'] = true;
-$wgGroupPermissions['vstf']['lookupcontribs'] = true;
-$wgGroupPermissions['vstf']['checkuser'] = true;
-$wgGroupPermissions['vstf']['checkuser-log'] = true;
-$wgGroupPermissions['vstf']['deleterevision'] = true;
-$wgGroupPermissions['vstf']['chatmoderator'] = true;
-$wgGroupPermissions['vstf']['tboverride'] = true;
-$wgGroupPermissions['vstf']['welcomeexempt'] = true;
-
-$wgGroupPermissions['vstf']['userrights'] = false; // just in case
-$wgGroupPermissions['vstf']['hideblockername'] = true;
+$wgGroupPermissions['soap'] = [];
+$wgGroupPermissions['soap']['autoconfirmed'] = true;
+$wgGroupPermissions['soap']['block'] = true;
+$wgGroupPermissions['soap']['blockemail'] = true;
+$wgGroupPermissions['soap']['ipblock-exempt'] = true;
+$wgGroupPermissions['soap']['protect'] = true;
+$wgGroupPermissions['soap']['delete'] = true;
+$wgGroupPermissions['soap']['bigdelete'] = true;
+$wgGroupPermissions['soap']['undelete'] = true;
+$wgGroupPermissions['soap']['deletedhistory'] = true;
+$wgGroupPermissions['soap']['editinterface'] = true;
+$wgGroupPermissions['soap']['autopatrol'] = true;
+$wgGroupPermissions['soap']['move'] = true;
+$wgGroupPermissions['soap']['move-subpages'] = true;
+$wgGroupPermissions['soap']['move-rootuserpages'] = true;
+$wgGroupPermissions['soap']['movefile'] = true;
+$wgGroupPermissions['soap']['createpage'] = true;
+$wgGroupPermissions['soap']['createtalk'] = true;
+$wgGroupPermissions['soap']['reupload'] = true;
+$wgGroupPermissions['soap']['reupload-shared'] = true;
+$wgGroupPermissions['soap']['skipcaptcha'] = true;
+$wgGroupPermissions['soap']['rollback'] = true;
+$wgGroupPermissions['soap']['markbotedits'] = true;
+$wgGroupPermissions['soap']['suppressredirect'] = true;
+$wgGroupPermissions['soap']['apihighlimits'] = true;
+$wgGroupPermissions['soap']['phalanx'] = true;
+$wgGroupPermissions['soap']['phalanxexempt'] = true;
+$wgGroupPermissions['soap']['commentmove'] = true;
+$wgGroupPermissions['soap']['commentedit'] = true;
+$wgGroupPermissions['soap']['commentdelete'] = true;
+$wgGroupPermissions['soap']['deletedtext'] = true;
+$wgGroupPermissions['soap']['multilookup'] = true;
+$wgGroupPermissions['soap']['lookupcontribs'] = true;
+$wgGroupPermissions['soap']['checkuser'] = true;
+$wgGroupPermissions['soap']['checkuser-log'] = true;
+$wgGroupPermissions['soap']['deleterevision'] = true;
+$wgGroupPermissions['soap']['chatmoderator'] = true;
+$wgGroupPermissions['soap']['tboverride'] = true;
+$wgGroupPermissions['soap']['welcomeexempt'] = true;
+$wgGroupPermissions['soap']['userrights'] = false;
+$wgGroupPermissions['soap']['hideblockername'] = true;
 
 // global version of the bot group
 $wgGroupPermissions['bot-global']['bot'] = true;
@@ -300,7 +301,7 @@ $wgGroupPermissions['authenticated']['authenticated'] = true;
 
 // Allow edit in MediaWiki namespace
 $wgGroupPermissions['util']['editinterfacetrusted'] = true;
-$wgGroupPermissions['vstf']['editinterfacetrusted'] = true;
+$wgGroupPermissions['soap']['editinterfacetrusted'] = true;
 
 /* Allow delete in MediaWiki namespace overwritten by editinterfacetrusted
  * To restrict deletetion remove both deleteinterfacetrusted and editinterfacetrusted */
@@ -312,13 +313,13 @@ $wgGroupPermissions['voldev']['voldev'] = true;
 //add wikia staff tool rights to staff users
 $wgGroupPermissions['*']['edithub'] = false;
 $wgGroupPermissions['staff']['edithub'] = true;
-$wgGroupPermissions['vstf']['edithub'] = false;
+$wgGroupPermissions['soap']['edithub'] = false;
 $wgGroupPermissions['helper']['edithub'] = true;
 $wgGroupPermissions['sysop']['edithub'] = false;
 
 $wgGroupPermissions['staff']['noratelimit'] = true;
 $wgGroupPermissions['helper']['noratelimit'] = true;
-$wgGroupPermissions['vstf']['noratelimit'] = true;
+$wgGroupPermissions['soap']['noratelimit'] = true;
 $wgGroupPermissions['bot-global']['noratelimit'] = true;
 $wgGroupPermissions['wiki-manager']['noratelimit'] = true;
 $wgGroupPermissions['content-team-member']['noratelimit'] = true;
@@ -346,7 +347,7 @@ $wgGroupPermissions['*']['videoupload'] = true;
  * Allow use of the 'mcache' query string parameter.
  */
 $wgGroupPermissions['staff']['mcachepurge'] = true;
-$wgGroupPermissions['vstf']['mcachepurge'] = true;
+$wgGroupPermissions['soap']['mcachepurge'] = true;
 $wgGroupPermissions['helper']['mcachepurge'] = true;
 $wgGroupPermissions['wiki-manager']['mcachepurge'] = true;
 
@@ -360,14 +361,14 @@ $wgGroupPermissions['vanguard']['template-bulk-classification'] = true;
  */
 $wgGroupPermissions['staff']['first-edit-dialog-exempt'] = true;
 $wgGroupPermissions['helper']['first-edit-dialog-exempt'] = true;
-$wgGroupPermissions['vstf']['first-edit-dialog-exempt'] = true;
+$wgGroupPermissions['soap']['first-edit-dialog-exempt'] = true;
 $wgGroupPermissions['bot-global']['first-edit-dialog-exempt'] = true;
 $wgGroupPermissions['util']['first-edit-dialog-exempt'] = true;
 $wgGroupPermissions['vanguard']['first-edit-dialog-exempt'] = true;
 $wgGroupPermissions['wiki-manager']['first-edit-dialog-exempt'] = true;
 
-// SUS-1175: Allow Staff, Helpers, and VSTF to delete user profile masthead contents with one click
-$wgGroupPermissions['vstf']['clearuserprofile'] = true;
+// SUS-1175: Allow Staff, Helpers, and SOAP to delete user profile masthead contents with one click
+$wgGroupPermissions['soap']['clearuserprofile'] = true;
 $wgGroupPermissions['staff']['clearuserprofile'] = true;
 $wgGroupPermissions['helper']['clearuserprofile'] = true;
 
@@ -376,12 +377,12 @@ $wgGroupPermissions['wiki-manager']['block'] = true;
 
 $wgGroupPermissions['staff']['protectsite'] = true;
 $wgGroupPermissions['helper']['protectsite'] = true;
-$wgGroupPermissions['vstf']['protectsite'] = true;
+$wgGroupPermissions['soap']['protectsite'] = true;
 $wgGroupPermissions['wiki-manager']['protectsite'] = true;
 
 $wgGroupPermissions['helper']['protectsite-exempt'] = true;
 $wgGroupPermissions['staff']['protectsite-exempt'] = true;
-$wgGroupPermissions['vstf']['protectsite-exempt'] = true;
+$wgGroupPermissions['soap']['protectsite-exempt'] = true;
 $wgGroupPermissions['sysop']['protectsite-exempt'] = true;
 $wgGroupPermissions['wiki-manager']['protectsite-exempt'] = true;
 $wgGroupPermissions['content-team-member']['protectsite-exempt'] = true;

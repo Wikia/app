@@ -15,8 +15,8 @@ class ProtectSiteSpecialControllerIntegrationTest extends WikiaDatabaseTest {
 	/** @var User $staffUser */
 	private $staffUser;
 
-	/** @var User $vstfUser */
-	private $vstfUser;
+	/** @var User $soapUser */
+	private $soapUser;
 
 	/** @var ProtectSiteModel $model */
 	private $model;
@@ -36,7 +36,7 @@ class ProtectSiteSpecialControllerIntegrationTest extends WikiaDatabaseTest {
 
 		$this->normalUser = User::newFromName( 'NormalUser' );
 		$this->staffUser = User::newFromName( 'StaffUser' );
-		$this->vstfUser = User::newFromName( 'VstfUser' );
+		$this->soapUser = User::newFromName( 'SoapUser' );
 
 		$this->model = new ProtectSiteModel();
 		$this->requestContext = new RequestContext();
@@ -91,7 +91,7 @@ class ProtectSiteSpecialControllerIntegrationTest extends WikiaDatabaseTest {
 	public function testShouldRejectLongExpiryTimeWhenUserCannotBypassTimeRestriction( string $time ) {
 
 		$this->prepareRequestWithToken( [ 'edit' => 1, 'create' => 1, 'expiry' => $time ] );
-		$this->requestContext->setUser( $this->vstfUser );
+		$this->requestContext->setUser( $this->soapUser );
 
 		$result = $this->controller->saveProtectionSettings();
 

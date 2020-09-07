@@ -1,4 +1,5 @@
 schedule: "15 10 * * *"
+concurrency: Forbid
 args:
 - php
 - /usr/wikia/slot1/current/src/extensions/wikia/WikiFactory/Close/maintenance.php

@@ -29,10 +29,6 @@ class ImageServing {
 	 * @var $imageServingDrivers ImageServingDriverBase
 	 */
 	private $imageServingDrivers;
-	/**
-	 * @var $memc MemCache
-	 */
-	private $memc;
 
 	// store up to 20 images for each article (see BAC-734)
 	// ImageServing::getImages() will then take an appropriate slice of them
@@ -67,7 +63,6 @@ class ImageServing {
 
 		$this->app = F::app();
 		$this->width = $width;
-		$this->memc = $this->app->wg->Memc;
 		$this->imageServingDrivers = $this->app->wg->ImageServingDrivers;
 
 		$this->db = $db;
@@ -121,45 +116,16 @@ class ImageServing {
 
 			$this->articlesByNS = array();
 
-			wfProfileIn( __METHOD__ . '::fetchMetadata' );
+			$titles = Title::newFromIDs( array_keys( $articles ) );
 
-			// fetch articles metadata (try from cache)
-			foreach ( $articles as $key => $value ) {
-				$title = Title::newFromID( $key );
-
-				if ( $title instanceof  Title ) {
-					$mcValue = $this->memc->get( $this->makeKey( $key, $title->getLatestRevID() ) );
-
-					if ( !empty( $mcValue ) ) {
-						unset( $articles[$key] );
-						$this->addArticleToList( $mcValue );
-					}
-				}
+			foreach ( $titles as $title ) {
+				$this->addArticleToList( [
+					'ns' => $title->getNamespace(),
+					'title' => $title->getDBkey(),
+					'id' => $title->getArticleID(),
+					'page_latest' => $title->getLatestRevID(),
+				] );
 			}
-
-			// fetch articles metadata (from database + cache it)
-			if ( !empty( $articles ) ) {
-				$res = $db->select(
-					array( 'page' ),
-					array(
-						'page_namespace as ns',
-						'page_title as title',
-						'page_id as id',
-						'page_latest'
-					),
-					array(
-						'page_id' => $articles
-					),
-					__METHOD__
-				);
-
-				while ( $row = $db->fetchRow( $res ) ) {
-					$this->memc->set( $this->makeKey( $row['id'], $row['page_latest'] ), $row, 86400 );
-					$this->addArticleToList( $row );
-				}
-			}
-
-			wfProfileOut( __METHOD__ . '::fetchMetadata' );
 
 			if ( empty( $driverName ) ) {
 				foreach ( $this->imageServingDrivers as $key => $value ) {
@@ -215,17 +181,6 @@ class ImageServing {
 			$this->articlesByNS[$value['ns']] = array();
 		}
 		$this->articlesByNS[$value['ns']][$value['id']] = $value;
-	}
-
-	/**
-	 * Returns memcache key to be used to cache articles metadata (article id + namespace id)
-	 *
-	 * @param $articleId int
-	 * @param $revId int
-	 * @return String
-	 */
-	private function makeKey( $articleId, $revId ) {
-		return wfMemcKey( "imageserving-article-metadata", $articleId, $revId );
 	}
 
 	/**

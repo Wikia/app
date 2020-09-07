@@ -23,7 +23,7 @@ class CommunityPageSpecialUsersModel {
 		'content-moderator',
 		'staff',
 		'helper',
-		'vstf'
+		'soap'
 	];
 
 	const PERMISSIONS_TO_BADGES = [
@@ -32,7 +32,6 @@ class CommunityPageSpecialUsersModel {
 		'content-moderator' => 'wds-avatar-badges-content-moderator',
 		'staff' => 'wds-avatar-badges-staff',
 		'helper' => 'wds-avatar-badges-helper',
-		'vstf' => 'wds-avatar-badges-vstf',
 	];
 
 	const PERMISSIONS_TO_GROUP_MSG_KEY = [
@@ -41,7 +40,7 @@ class CommunityPageSpecialUsersModel {
 		'content-moderator' => 'group-content-moderator-member',
 		'staff' => 'group-staff-member',
 		'helper' => 'group-helper-member',
-		'vstf' => 'group-vstf-member',
+		'soap' => 'group-soap-member',
 	];
 
 	private $wikiService;
@@ -296,7 +295,7 @@ class CommunityPageSpecialUsersModel {
 				$globalIds = ( new WikiaSQL() )
 					->SELECT( 'ug_user' )
 					->FROM( 'user_groups' )
-					->WHERE( 'ug_group' )->IN( [ 'bot', 'bot-global', 'staff', 'util', 'helper', 'vstf' ] )
+					->WHERE( 'ug_group' )->IN( [ 'bot', 'bot-global', 'staff', 'util', 'helper', 'soap' ] )
 					->GROUP_BY( 'ug_user' )
 					->runLoop( $globalDb, function ( &$globalIds, $row ) {
 						$globalIds[] = $row->ug_user;

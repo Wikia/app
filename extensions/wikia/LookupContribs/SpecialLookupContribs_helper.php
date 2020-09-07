@@ -4,17 +4,12 @@ class LookupContribsCore {
 	const CONTRIB_CACHE_TTL = 900; // 900 == 15min
 	const ACTIVITY_CACHE_TTL = 600; // 600 == 10min
 
-	const SORT_BY_TITLE = 'title';
-	const SORT_BY_URL = 'url';
 	const SORT_BY_LAST_EDIT = 'lastedit';
-	const SORT_BY_EDITS = 'edits';
 
 	const DEFAULT_LIMIT = 25;
 	const DEFAULT_SORT = self::SORT_BY_LAST_EDIT;
 	const DEFAULT_SORT_DIRECTION = 'asc';
 
-	private $mUsername;
-	private $mUserId;
 	private $mMode;
 	private $mDBname;
 
@@ -23,20 +18,18 @@ class LookupContribsCore {
 	private $mOrder = self::DEFAULT_SORT;
 	private $mOrderDirection = self::DEFAULT_SORT_DIRECTION;
 
-	private $mWikiID;
 	private $mWikia;
 	private $mNamespaces;
 	private $mNumRecords = 0;
 
 	/** @var User */
 	private $oUser;
+	/** @var UserIdCacheKeys */
+	private $userCache;
 
-	public function __construct( $username, $mode = 0, $dbName = '', $ns = false ) {
-		$this->mUsername = $username;
-		$this->oUser = User::newFromName( $this->mUsername );
-		if ( $this->oUser instanceof User ) {
-			$this->mUserId = $this->oUser->getId();
-		}
+	public function __construct( User $user, $mode = 0, $dbName = '', $ns = false ) {
+		$this->oUser = $user;
+		$this->userCache = new UserIdCacheKeys( $this->oUser->getId() );
 		$this->setMode( $mode );
 		$this->setDBname( $dbName );
 		$this->setNamespaces( $ns );
@@ -45,8 +38,8 @@ class LookupContribsCore {
 	public function setDBname( $dbname = '' ) {
 		if ( $dbname ) {
 			$this->mDBname = $dbname;
-			$this->mWikiID = WikiFactory::DBtoID( $this->mDBname );
-			$this->mWikia = WikiFactory::getWikiByID( $this->mWikiID );
+			$mWikiID = WikiFactory::DBtoID( $this->mDBname );
+			$this->mWikia = WikiFactory::getWikiByID( $mWikiID );
 		}
 	}
 
@@ -71,7 +64,7 @@ class LookupContribsCore {
 			return;
 		}
 
-		list( $orderType, $orderDirection ) = explode( ':', $order );
+		[ $orderType, $orderDirection ] = explode( ':', $order );
 
 		$this->mOrder = $orderType;
 		$this->mOrderDirection = $orderDirection;
@@ -103,40 +96,6 @@ class LookupContribsCore {
 		return $res;
 	}
 
-	public function setNumRecords( $num = 0 ) {
-		$this->mNumRecords = $num;
-	}
-
-	public function getNumRecords() {
-		return $this->mNumRecords;
-	}
-
-	/**
-	 * Return if such user exists
-	 *
-	 * @return bool
-	 */
-	public function checkUser() {
-		if ( empty( $this->mUsername ) ) {
-			return false;
-		}
-
-		if ( !$this->oUser instanceof User ) {
-			return false;
-		}
-
-		if ( empty( $this->mUserId ) ) {
-			return false;
-		}
-
-		// For all those anonymous users out there
-		if ( F::app()->wg->User->isIP( $this->mUsername ) ) {
-			return true;
-		}
-
-		return true;
-	}
-
 	/**
 	 * Gets data for AJAX request for data to user contribution table
 	 *
@@ -148,7 +107,7 @@ class LookupContribsCore {
 	public function getUserActivity() {
 		global $wgMemc, $wgSpecialsDB;
 
-		$memKey = $this->getUserActivityMemKey();
+		$memKey = $this->userCache->forLookupContribs();
 		$data = $wgMemc->get( $memKey );
 
 		if ( !empty( $data ) && is_array( $data ) ) {
@@ -166,7 +125,7 @@ class LookupContribsCore {
 		$excludedWikis = $this->getExclusionList();
 
 		$where = [
-			'user_id' => $this->mUserId,
+			'user_id' => $this->oUser->getId(),
 			'edits > 0',
 		];
 
@@ -228,11 +187,7 @@ class LookupContribsCore {
 	 */
 	public function clearUserActivityCache() {
 		global $wgMemc;
-		$wgMemc->delete( $this->getUserActivityMemKey() );
-	}
-
-	private function getUserActivityMemKey() {
-		return wfSharedMemcKey( __CLASS__, $this->mUserId );
+		$wgMemc->delete( $this->userCache->forLookupContribs() );
 	}
 
 	private function orderData( $userActivity ) {
@@ -296,7 +251,7 @@ class LookupContribsCore {
 		];
 
 		$conditions = [
-			'rev_user' => $this->mUserId,
+			'rev_user' => $this->oUser->getId(),
 			'rc_timestamp = rev_timestamp'
 		];
 		$namespaces = $this->getNamespaces();
@@ -346,7 +301,7 @@ class LookupContribsCore {
 		];
 
 		$conditions = [
-			'rev_user' => $this->mUserId,
+			'rev_user' => $this->oUser->getId(),
 			'rev_id = page_latest'
 		];
 		$namespaces = $this->getNamespaces();
@@ -396,7 +351,7 @@ class LookupContribsCore {
 		];
 
 		$conditions = [
-			'rev_user' => $this->mUserId,
+			'rev_user' => $this->oUser->getId(),
 			'page_id = rev_page'
 		];
 		$namespaces = $this->getNamespaces();
@@ -447,7 +402,7 @@ class LookupContribsCore {
 
 		$conditions = [
 			'log_action' => "tag",
-			'log_user' => $this->mUserId,
+			'log_user' => $this->oUser->getId(),
 		];
 		$namespaces = $this->getNamespaces();
 		if ( !empty( $namespaces ) ) {
@@ -496,7 +451,7 @@ class LookupContribsCore {
 		];
 
 		$conditions = [
-			'ar_user' => $this->mUserId,
+			'ar_user' => $this->oUser->getId(),
 		];
 		$namespaces = $this->getNamespaces();
 		if ( !empty( $namespaces ) ) {
@@ -652,7 +607,7 @@ class LookupContribsCore {
 			$this->mMode,
 			$this->mDBname,
 			$this->mNamespaces,
-			$this->mUserId,
+			$this->oUser->getId(),
 			$this->mLimit,
 			$this->mOffset
 		);
@@ -719,7 +674,7 @@ class LookupContribsCore {
 		if ( $row->page_remove == 1 ) {
 			$pageContribs = Title::makeTitle ( NS_SPECIAL, "Log" );
 		} else {
-			$pageContribs = Title::makeTitle ( NS_SPECIAL, "Contributions/{$this->mUsername}" );
+			$pageContribs = Title::makeTitle ( NS_SPECIAL, "Contributions/{$this->oUser->getName()}" );
 		}
 
 		$page = Title::makeTitle ( $row->rc_namespace, $row->rc_title );

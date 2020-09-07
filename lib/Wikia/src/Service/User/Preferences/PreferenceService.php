@@ -164,7 +164,7 @@ class PreferenceService {
 	 * @return bool
 	 * @throws \Exception
 	 */
-	public function save( $userId, array $additionalGlobalOptions = [] ) {
+	public function save( $userId ) {
 		if ( $userId == 0 ) {
 			return false;
 		}
@@ -193,10 +193,6 @@ class PreferenceService {
 			}
 		}
 
-		foreach ( $additionalGlobalOptions as $key => $val ) {
-			$prefsToSave->setGlobalPreference( $key, $val );
-		}
-
 		if ( !$prefsToSave->isEmpty() ) {
 			try {
 				return $this->persistence->save( $userId, $prefsToSave );
@@ -215,9 +211,6 @@ class PreferenceService {
 
 	public function getLocalDefault( $pref, $wikiId ) {
 		return $this->defaultPreferences->getLocalPreference( $pref, $wikiId );
-	}
-
-	public function deleteFromCache( $userId ) {
 	}
 
 	protected function getLoggerContext() {

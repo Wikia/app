@@ -44,7 +44,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 
 		$action = $this->getVal( 'action', '' );
 
-		if ( 'editmode' == $action ) {
+		if ( 'editmode' == $action && !$this->wg->HideForumForms ) {
 			$this->forward( 'ForumSpecial', 'editMode' );
 		}
 
@@ -56,6 +56,7 @@ class ForumSpecialController extends WikiaSpecialPageController {
 		$this->response->setVal('lastPostByMsg', wfMessage( 'forum-specialpage-board-lastpostby' )->escaped());
 		$this->response->setVal('canEdit', $this->wg->User->isAllowed( 'forumadmin' ));
 		$this->response->setVal('editUrl', $this->wg->Title->getFullUrl( 'action=editmode' ));
+		$this->response->setVal('showEditButton', !$this->wg->HideForumForms);
 
 		$forum = new Forum();
 

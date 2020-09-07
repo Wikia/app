@@ -2142,3 +2142,11 @@ $config['search_tracking_js'] = [
 		'//skins/oasis/js/search-tracking/pageOnTimeTracker.js',
 	]
 ];
+
+$config['forum_migration_js'] = [
+	'type' => AssetsManager::TYPE_JS,
+	'assets' => [
+		'//extensions/wikia/Discussions/scripts/forumMigration.js',
+	]
+];
+

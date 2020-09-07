@@ -9,6 +9,7 @@ require([
 	'wikia.articleVideo.featuredVideo.autoplay',
 	'wikia.articleVideo.featuredVideo.cookies',
 	'wikia.articleVideo.featuredVideo.session',
+	'wikia.geo',
 	require.optional('ext.wikia.adEngine3.api'),
 ], function (
 	win,
@@ -21,6 +22,7 @@ require([
 	featuredVideoAutoplay,
 	featuredVideoCookieService,
 	featuredVideoSession,
+	geo,
 	adsApi,
 ) {
 	var allowedPlayerImpressionsPerSession = videoDetails.impressionsPerSession || 1,
@@ -30,7 +32,8 @@ require([
 		if (hasVideoOnPage === null) {
 			hasVideoOnPage = videoDetails && (
 				videoDetails.isDedicatedForArticle ||
-				!featuredVideoSession.hasMaxedOutPlayerImpressionsInSession(allowedPlayerImpressionsPerSession)
+				(isVideoBridgeAllowedForCountry() &&
+					!featuredVideoSession.hasMaxedOutPlayerImpressionsInWiki(allowedPlayerImpressionsPerSession))
 			);
 		}
 
@@ -164,9 +167,18 @@ require([
 	}
 
 	function getNormalizedPlaylistIndex(playlist) {
-		var playerImpressions = featuredVideoCookieService.getPlayerImpressionsInSession() || 0;
+		var playerImpressions = featuredVideoCookieService.getPlayerImpressionsInWiki() || 0;
 
 		return playerImpressions > playlist.length ? playerImpressions % playlist.length : playerImpressions;
+	}
+
+	function isVideoBridgeAllowedForCountry() {
+		var countryCode = geo.getCountryCode().toLowerCase();
+		var allowedCountries = (window.wgVideoBridgeCountries || []).map(function (allowedCountryCode) {
+			return allowedCountryCode.toLowerCase();
+		});
+
+		return countryCode && allowedCountries.indexOf(countryCode) !== -1;
 	}
 
 	trackingOptIn.pushToUserConsentQueue(function () {

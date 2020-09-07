@@ -73,7 +73,7 @@ class Starters {
 	 * @return string
 	 */
 	public static function getStarterContentDumpPath( $starter ) {
-		return sprintf( '/dumps/%s.xml.bz2', $starter );
+		return sprintf( 'starter/%s.xml.bz2', $starter );
 	}
 
 	/**
@@ -83,17 +83,6 @@ class Starters {
 	 * @return string
 	 */
 	public static function getStarterSqlDumpPath( $starter ) {
-		return sprintf( '/dumps/%s.sql.bz2', $starter );
-	}
-
-	/**
-	 * Return SwiftStorage instance used to upload and fetch XML dumps
-	 *
-	 * @return SwiftStorage
-	 */
-	public static function getStarterDumpStorage() {
-		global $wgCreateWikiStarterDumpsDatacenter;
-		// SRE: make sure to always use proper Swift
-		return SwiftStorage::newFromContainer( self::STARTER_DUMPS_BUCKET, '', $wgCreateWikiStarterDumpsDatacenter );
+		return sprintf( 'starter/%s.sql.bz2', $starter );
 	}
 }

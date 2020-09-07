@@ -30,6 +30,9 @@ class Redshift {
 			try {
 				$then = microtime(true);
 				self::$connection = new \PDO( $dsn, $wgRedshiftUser, $wgRedshiftPass );
+				// don't allow queries longer than 20s
+				// if the query times out, the result will be empty
+				self::$connection->query("set statement_timeout to 20000");
 				$took = microtime(true) - $then;
 			}
 			catch ( \PDOException $e ) {
@@ -113,10 +116,24 @@ class Redshift {
 	public static function getDailyTotals(int $days) : array {
 		global $wgCityId;
 
-		$res = self::query(
+		$sql = 'WITH dates AS (' . # generates a sequence of dates between the current date and :days before
+			'SELECT (GETDATE()::date - row_number() OVER (ORDER BY true))::date AS n ' .
+			'FROM wikianalytics.pageviews ' .
+			'LIMIT :days ' .
+			'),' .
+			'data AS (' .
 			'SELECT dt, SUM(cnt) AS views FROM wikianalytics.pageviews ' .
-			'WHERE wiki_id = :wiki_id GROUP BY dt ' .
-			'ORDER BY dt DESC LIMIT :days',
+			'WHERE wiki_id = :wiki_id ' .
+			'GROUP BY dt ' .
+			') ' .
+			'SELECT n AS dt, NVL(views, 0) AS views ' .
+			'FROM dates ' .
+			'LEFT OUTER JOIN data ' .
+			'ON n=dt ' .
+			'ORDER BY dt DESC';
+
+		$res = self::query(
+			$sql,
 			[ ':wiki_id' => $wgCityId, ':days' => $days ]
 		);
 

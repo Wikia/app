@@ -97,7 +97,7 @@ class PhalanxHooks {
 		}, 0 );
 
 
-		// VSTF should not be allowed to block emails in Phalanx
+		// SOAP should not be allowed to block emails in Phalanx
 		if ( ( $phalanx['type'] & Phalanx::TYPE_EMAIL ) && !F::app()->wg->User->isAllowed( 'phalanxemailblock' ) ) {
 			return false;
 		}
@@ -171,7 +171,7 @@ class PhalanxHooks {
 
 		$phalanx = Phalanx::newFromId( $id );
 
-		// VSTF should not be allowed to delete email blocks in Phalanx
+		// SOAP should not be allowed to delete email blocks in Phalanx
 		if ( ( $phalanx['type'] & Phalanx::TYPE_EMAIL ) && !F::app()->wg->User->isAllowed( 'phalanxemailblock' ) ) {
 			wfProfileOut( __METHOD__ );
 			return false;

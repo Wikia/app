@@ -62,12 +62,27 @@ $wgExtensionMessagesFiles['StaffWelcomePost'] = __DIR__ . '/i18n/StaffWelcomePos
 $wgAvailableRights[] = 'specialdiscussions';
 $wgGroupPermissions['*']['specialdiscussions'] = false;
 $wgGroupPermissions['user']['specialdiscussions'] = false;
-$wgGroupPermissions['vstf']['specialdiscussions'] = false;
+$wgGroupPermissions['soap']['specialdiscussions'] = false;
 $wgGroupPermissions['helper']['specialdiscussions'] = true;
 $wgGroupPermissions['staff']['specialdiscussions'] = true;
 $wgGroupPermissions['wiki-manager']['specialdiscussions'] = true;
 
 $wgHooks['WikiaSkinTopScripts'][] = 'DiscussionsHooksHelper::addDiscussionJsVariable';
+$wgHooks['BeforePageDisplay'][] = 'DiscussionsHooksHelper::onBeforePageDisplay';
+
+$wgResourceModules['ext.wikia.Disucssions.migration'] = [
+	'messages' => [
+		'before-forum-to-discussions-migration-message',
+		'in-progress-forum-to-discussions-migration-message',
+		'after-forum-to-discussions-migration-message',
+	],
+	'scripts' => [
+		'scripts/forumMigration.js',
+	],
+
+	'localBasePath' => __DIR__,
+	'remoteExtPath' => 'wikia/Discussions',
+];
 
 $urlProvider = new \Wikia\Service\Gateway\KubernetesExternalUrlProvider();
 $wgDiscussionsApiUrl = $urlProvider->getUrl( 'discussion' );

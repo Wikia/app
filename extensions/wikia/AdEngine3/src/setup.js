@@ -9,10 +9,10 @@ import {
 	PorvataFiller,
 	setupNpaContext,
 	setupRdpContext,
+	setupTCFv2Context,
 	utils,
 	setupBidders
 } from '@wikia/ad-engine';
-import { set } from 'lodash';
 import basicContext from './ad-context';
 import pageTracker from './tracking/page-tracker';
 import slots from './slots';
@@ -24,7 +24,6 @@ import {
 	registerSlotTracker,
 	registerViewabilityTracker
 } from './tracking/tracker';
-import * as fallbackInstantConfig from './fallback-config.json';
 import { billTheLizardWrapper } from './bill-the-lizard-wrapper';
 
 function setupPageLevelTargeting(adsContext) {
@@ -57,8 +56,6 @@ async function setupAdContext(wikiContext, consents) {
 
 	context.extend(basicContext);
 
-	set(window, context.get('services.instantConfig.fallbackConfigKey'), fallbackInstantConfig);
-
 	const instantConfig =  await InstantConfigService.init();
 
 	context.set('wiki', wikiContext);
@@ -81,6 +78,8 @@ async function setupAdContext(wikiContext, consents) {
 
 	context.set('slots', slots.getContext());
 	context.set('custom.hasFeaturedVideo', !!targeting.getVideoStatus().hasVideoOnPage);
+
+	context.set('services.distroScale.enabled', instantConfig.get('icDistroScale'));
 	context.set('custom.hasIncontentPlayer', slots.injectIncontentPlayer());
 
 	if (context.get('custom.hasFeaturedVideo')) {
@@ -96,6 +95,15 @@ async function setupAdContext(wikiContext, consents) {
 		context.push(`slots.${context.get('custom.hiviLeaderboard') ? 'hivi_leaderboard' : 'top_leaderboard'}.defaultTemplates`, 'stickyTLB');
 	}
 
+	context.set(
+		'templates.safeFanTakeoverElement.lineItemIds',
+		instantConfig.get('icSafeFanTakeoverLineItemIds'),
+	);
+	context.set(
+		'templates.safeFanTakeoverElement.unstickTimeout',
+		instantConfig.get('icSafeFanTakeoverUnstickTimeout'),
+	);
+
 	context.set('state.deviceType', utils.client.getDeviceType());
 
 	context.set('options.billTheLizard.garfield', context.get('services.billTheLizard.enabled'));
@@ -109,6 +117,7 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('options.video.adsOnNextVideoFrequency', instantConfig.get('icFeaturedVideoAdsFrequency'));
 	context.set('options.video.isMidrollEnabled', instantConfig.get('icFeaturedVideoMidroll'));
 	context.set('options.video.isPostrollEnabled', instantConfig.get('icFeaturedVideoPostroll'));
+	context.set('options.video.comscoreJwpTracking', instantConfig.get('icComscoreJwpTracking'));
 
 	context.set('options.maxDelayTimeout', instantConfig.get('icAdEngineDelay', 2000));
 	context.set('options.tracking.kikimora.player', instantConfig.get('icPlayerTracking'));
@@ -122,7 +131,7 @@ async function setupAdContext(wikiContext, consents) {
 	context.set('options.geoRequiresConsent', consents.geoRequiresConsent);
 	context.set('options.optOutSale', consents.isSaleOptOut);
 	context.set('options.geoRequiresSignal', consents.geoRequiresSignal);
-	context.set('options.isSubjectToCoppa', !!window.wgUserIsSubjectToCoppa);
+	context.set('options.isSubjectToCcpa', !!window.wgUserIsSubjectToCcpa);
 
 	context.set('options.floatingMedrecDestroyable', instantConfig.get('icFloatingMedrecDestroyable'));
 
@@ -145,20 +154,22 @@ async function setupAdContext(wikiContext, consents) {
 		fillerService.register(new PorvataFiller());
 	}
 
+	context.set('services.audigent.enabled', instantConfig.get('icAudigent'));
 	context.set('services.confiant.enabled', instantConfig.get('icConfiant'));
 	context.set('services.durationMedia.enabled', instantConfig.get('icDurationMedia'));
-	context.set('services.moatYi.enabled', instantConfig.get('icMoatYieldIntelligence'));
+	context.set('services.durationMedia.libraryUrl', instantConfig.get('icDurationMediaLibraryUrl'));
+	context.set('services.facebookPixel.enabled', instantConfig.get('icFacebookPixel'));
 	context.set('services.nielsen.enabled', instantConfig.get('icNielsen'));
 	context.set('services.permutive.enabled', instantConfig.get('icPermutive') && !context.get('wiki.targeting.directedAtChildren'));
-
-	if (instantConfig.get('icTaxonomyComicsTag')) {
-		context.set('services.taxonomy.comics.enabled', true);
-		context.set('services.taxonomy.communityId', context.get('wiki.targeting.wikiId'));
-		context.set('services.taxonomy.pageArticleId', context.get('wiki.targeting.pageArticleId'));
-	}
+	context.set('services.iasPublisherOptimization.enabled', instantConfig.get('icIASPublisherOptimization'));
 
 	context.set('options.video.moatTracking.enabledForArticleVideos', instantConfig.get('icFeaturedVideoMoatTracking'));
 	context.set('options.video.iasTracking.enabled', instantConfig.get('icIASVideoTracking'));
+
+	context.set(
+		'options.jwplayerA9LoggerErrorCodes',
+		instantConfig.get('icA9LoggerErrorCodes'),
+	);
 
 	setupPageLevelTargeting(context.get('wiki'));
 
@@ -241,6 +252,10 @@ async function setupAdContext(wikiContext, consents) {
 
 async function configure(adsContext, consents) {
 	await setupAdContext(adsContext, consents);
+
+	const instantConfig = await InstantConfigService.init();
+
+	setupTCFv2Context(instantConfig);
 	setupNpaContext();
 	setupRdpContext();
 
@@ -250,8 +265,6 @@ async function configure(adsContext, consents) {
 	registerBidderTracker();
 	registerViewabilityTracker();
 	registerPostmessageTrackingTracker();
-
-	const instantConfig = await InstantConfigService.init();
 
 	billTheLizardWrapper.configureBillTheLizard(instantConfig.get('wgAdDriverBillTheLizardConfig', {}));
 }

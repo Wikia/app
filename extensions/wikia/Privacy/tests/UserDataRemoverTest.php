@@ -18,9 +18,6 @@ class UserDataRemoverTest extends WikiaDatabaseTest {
 	const EXACT_HASH = '9ce937b220262ce1bb62b918ea196d78c39d6326ceaae974f8d3fbf1d550b44b';
 	const NORMALIZED_HASH = 'dd6846900c173f39d39c0760dc8d23a35f5799cea4a91239fba16620ad4e59e6';
 
-	/** @var \Wikia\Service\Helios\HeliosClient|PHPUnit_Framework_MockObject_MockObject $heliosClientMock */
-	private $heliosClientMock;
-
 	/**
 	 * Returns the test dataset.
 	 *

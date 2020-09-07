@@ -2,7 +2,7 @@
 
 class SpecialDiscussionsController extends WikiaSpecialPageController {
 
-	const DISCUSSIONS_LINK = '/d/f';
+	const DISCUSSIONS_LINK = '/f';
 	const DISCUSSIONS_ACTION = 'specialdiscussions';
 
 	const DEFAULT_TEMPLATE_ENGINE = \WikiaResponse::TEMPLATE_ENGINE_MUSTACHE;

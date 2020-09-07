@@ -8,6 +8,7 @@ $wgExtensionCredits['other'][] = [
 ];
 
 // Autoload
+$wgAutoloadClasses['AdEngineController'] =  __DIR__ . '/AdEngineController.class.php';
 $wgAutoloadClasses['AdEngine3'] =  __DIR__ . '/AdEngine3.class.php';
 $wgAutoloadClasses['AdEngine3Controller'] =  __DIR__ . '/AdEngine3Controller.class.php';
 $wgAutoloadClasses['AdEngine3DeciderService'] = __DIR__ . '/AdEngine3DeciderService.class.php';

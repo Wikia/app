@@ -17,7 +17,7 @@ class PreferenceServiceTest extends TestCase {
 	/** @var UserPreferences */
 	protected $savedPreferences;
 
-	/** @var PHPUnit_Framework_MockObject_MockObject|PreferencePersistence */
+	/** @var PHPUnit_Framework_MockObject_MockObject */
 	protected $persistence;
 
 	protected function setUp() {
@@ -167,7 +167,7 @@ class PreferenceServiceTest extends TestCase {
 		$preferences->setGlobalPreference( $this->userId, "newpreference", "1" );
 		$prefs = $preferences->getPreferences( $this->userId );
 		$this->assertTrue( $prefs->isReadOnly() );
-		$this->assertFalse( $preferences->save( $this->userId, [] ) );
+		$this->assertFalse( $preferences->save( $this->userId ) );
 	}
 
 	public function testDeleteAllShortCircuit() {

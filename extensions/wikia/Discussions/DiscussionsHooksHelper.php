@@ -73,6 +73,55 @@ class DiscussionsHooksHelper {
 		return true;
 	}
 
+	/**
+	 * responsible for displaying forum migration messages as banner notifications
+	 * @param OutputPage $out
+	 * @return bool
+	 */
+	public static function onBeforePageDisplay( \OutputPage $out ): bool {
+		global $wgEnableForumMigrationMessage, $wgEnableForumMigrationMessageGlobal, $wgEnableForumExt,
+		       $wgEnablePostForumMigrationMessage, $wgPostForumMigrationMessageExpiration, $wgHideForumForms;
+
+		$showBeforeForumMigrationMessage = $wgEnableForumMigrationMessage && $wgEnableForumExt;
+		$showInProgressForumMigrationMessage = $wgHideForumForms && $wgEnableForumExt && !$wgEnablePostForumMigrationMessage;
+		$showAfterForumMigrationMessage =
+			!$wgEnableForumExt && $wgEnablePostForumMigrationMessage && $wgPostForumMigrationMessageExpiration > time();
+
+		$canLoadMigrationMessageScript =
+			$showBeforeForumMigrationMessage || $showInProgressForumMigrationMessage || $showAfterForumMigrationMessage;
+
+		if ( !$canLoadMigrationMessageScript ) {
+			return true;
+		}
+
+		$enabledGlobally =
+			WikiFactory::getVarValueByName( 'wgEnableForumMigrationMessageGlobal', WikiFactory::COMMUNITY_CENTRAL )
+				?: $wgEnableForumMigrationMessageGlobal;
+
+		if ( $showInProgressForumMigrationMessage || $showAfterForumMigrationMessage || $enabledGlobally ) {
+			$forumMigrationMessageToDisplay = '';
+
+			if ( $showBeforeForumMigrationMessage ) {
+				$forumMigrationMessageToDisplay = 'before';
+			}
+
+			if ( $showInProgressForumMigrationMessage ) {
+				$forumMigrationMessageToDisplay = 'in-progress';
+			}
+
+			if ( $showAfterForumMigrationMessage ) {
+				$forumMigrationMessageToDisplay = 'after';
+			}
+
+			$out->addJsConfigVars( [
+				'forumMigrationMessageToDisplay' => $forumMigrationMessageToDisplay,
+			] );
+			$out->addModules( [ 'ext.wikia.Disucssions.migration' ] );
+		}
+
+		return true;
+	}
+
 	private static function isWallNamespace( $ns ) {
 		global $wgWallNS;
 

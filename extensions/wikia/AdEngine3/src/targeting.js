@@ -1,4 +1,4 @@
-import { bidders, context, likhoService, utils } from '@wikia/ad-engine';
+import { bidders, context, utils } from '@wikia/ad-engine';
 
 const MAX_NUMBER_OF_CATEGORIES = 3;
 
@@ -193,7 +193,6 @@ export default {
 	getPageLevelTargeting(adsContext = {}) {
 		const zone = getZone(adsContext);
 		const legacyParams = decodeLegacyDartParams(adsContext.targeting.wikiCustomKeyValues);
-		const likho = likhoService.refresh();
 
 		const targeting = {
 			s0: zone.site,
@@ -207,12 +206,12 @@ export default {
 			cat: getPageCategories(adsContext),
 			dmn: getDomain(),
 			hostpre: getHostnamePrefix(),
+			kid_wiki: adsContext.targeting.directedAtChildren ? '1' : '0',
 			lang: adsContext.targeting.wikiLanguage || 'unknown',
 			wpage: adsContext.targeting.pageName && adsContext.targeting.pageName.toLowerCase(),
 			ref: getRefParam(),
 			esrb: adsContext.targeting.esrbRating,
-			geo: utils.geoService.getCountryCode() || 'none',
-			likho,
+			geo: utils.geoService.getCountryCode() || 'none'
 		};
 
 		if (window.pvNumber) {

@@ -3,7 +3,7 @@ $messages = array();
 
 $messages['en'] = array(
 	'staffpowers-desc' => 'Gives Staff various superpowers like unblockable.',
-	'staffpowers-ipblock-abort' => 'Blocking FANDOM Staff, FANDOM Helpers, or members of our Volunteer Spam Task Force user team (VSTF) is not possible. Please use the [[Special:Contact|contact form]] to report any issues or problems with our staff.',
+	'staffpowers-ipblock-abort' => 'Blocking FANDOM Staff, FANDOM Helpers, or members of our Volunteer Spam Obliteration and Prevention user team (SOAP) is not possible. Please use the [[Special:Contact|contact form]] to report any issues or problems with our staff.',
 	'right-unblockable' => 'Cannot be blocked',
 );
 
@@ -27,8 +27,8 @@ $messages['cs'] = array(
 
 $messages['de'] = array(
 	'staffpowers-desc' => 'Gibt Mitarbeitern verschiedene Superkräfte wie unsperrbar.',
-	'staffpowers-ipblock-abort' => 'Es ist nicht möglich, FANDOM-Mitarbeiter, FANDOM-Helfer oder Mitglieder unseres Benutzerteams der Volunteer Spam Task Force (VSTF) zu sperren. Bitte verwende das [[Spezial:Kontakt|Kontaktformular]], um Probleme zu melden, die du mit unseren Mitarbeitern hast.',
-	'right-unblockable' => 'Cannot be blocked',
+	'staffpowers-ipblock-abort' => 'Es ist nicht möglich, Fandom-Mitarbeiter, Fandom-Helfer oder Mitglieder unseres Benutzerteams der Volunteer Spam Task Force (VSTF) zu sperren. Bitte verwende das [[Spezial:Kontakt|Kontaktformular]], um Probleme zu melden, die du mit unseren Mitarbeitern hast.',
+	'right-unblockable' => 'Kann nicht gesperrt werden',
 );
 
 $messages['es'] = array(

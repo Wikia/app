@@ -28,7 +28,7 @@ class ArticleCommentsAjax {
 	 * @return String -- json-ized array
 	 */
 	static public function axSave() {
-		global $wgRequest, $wgUser, $wgTitle;
+		global $wgRequest, $wgUser, $wgTitle, $wgArticleCommentsReadOnlyMode;
 
 		$articleId = $wgRequest->getVal( 'article', false );
 		$commentId = $wgRequest->getVal( 'id', false );
@@ -46,6 +46,12 @@ class ArticleCommentsAjax {
 		// Return with error if we can't find the article
 		$title = Title::newFromID( $articleId );
 		if ( !$title ) {
+			return $errorResult;
+		}
+
+		if ( $wgArticleCommentsReadOnlyMode ) {
+			$errorResult['msg'] = 'Comments are currently read only';
+
 			return $errorResult;
 		}
 
@@ -176,9 +182,13 @@ class ArticleCommentsAjax {
 	 * @return array
 	 */
 	static public function axPost() {
-		global $wgRequest, $wgUser, $wgLang;
+		global $wgRequest, $wgUser, $wgLang, $wgArticleCommentsReadOnlyMode;
 
 		$result = [ 'error' => 1 ];
+
+		if ( $wgArticleCommentsReadOnlyMode ) {
+			return $result;
+		}
 
 		try {
 			$wgRequest->assertValidWriteRequest( $wgUser );

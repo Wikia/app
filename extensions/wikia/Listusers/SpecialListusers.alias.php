@@ -12,7 +12,7 @@ $specialPageAliases = array();
  * English (English)
  */
 $specialPageAliases['en'] = array(
-	'Listvstf'	=> array( 'Listvstf' ),
+	'Listsoap'	=> array( 'Listsoap' ),
 	'Liststaff'	=> array( 'Liststaff' ),
 	'Listhelpers'	=> array( 'Listhelpers' ),
 );
@@ -21,7 +21,7 @@ $specialPageAliases['en'] = array(
  * German (Deutsch)
  */
 $specialPageAliases[ 'de' ] = array(
-	'Listvstf'	=> array( 'Vstf' ),
+	'Listsoap'	=> array( 'Soap' ),
 	'Liststaff'	=> array( 'Wikia-mitarbeiter' ),
 	'Listhelpers'	=> array( 'Wikia-helfer' ),
 );
@@ -30,7 +30,7 @@ $specialPageAliases[ 'de' ] = array(
  * French (Français)
  */
 $specialPageAliases['fr'] = array(
-	'Listvstf'	=> array( 'Listevstf', 'Liste_vstf' ),
+	'Listsoap'	=> array( 'Listesoap', 'Liste_soap' ),
 	'Liststaff'	=> array( 'Listestaff', 'Liste_staff' ),
 	'Listhelpers'	=> array( 'Listedesassistants', 'Liste_des_assistants' ),
 );
@@ -39,7 +39,7 @@ $specialPageAliases['fr'] = array(
  * Italian (Italiano)
  */
 $specialPageAliases['it'] = array(
-	'Listvstf'	=> array( 'Vstf', 'Elencovstf' ),
+	'Listsoap'	=> array( 'Soap', 'Elencosoap' ),
 	'Liststaff'	=> array( 'Staff', 'Elencostaff' ),
 	'Listhelpers'	=> array( 'Helper', 'Elencohelper' ),
 );
@@ -48,16 +48,16 @@ $specialPageAliases['it'] = array(
  * Korean (한국어)
  */
 $specialPageAliases['ko'] = array(
-	'Listvstf'	=> array( '스태프' ),
+	'Listsoap'	=> array( '스태프' ),
 	'Liststaff'	=> array( '헬퍼' ),
-	'Listhelpers'	=> array( 'VSTF' ),
+	'Listhelpers'	=> array( 'SOAP' ),
 );
 
 /**
  * Dutch (Nederlands)
  */
 $specialPageAliases['nl'] = array(
-	'Listvstf'	=> array( 'Vstflijst' ),
+	'Listsoap'	=> array( 'Soaplijst' ),
 	'Liststaff'	=> array( 'Medewerkerlijst', 'Medewerkerslijst', 'Stafledenlijst' ),
 	'Listhelpers'	=> array( 'Helperlijst', 'Helperslijst' ),
 );
@@ -66,7 +66,7 @@ $specialPageAliases['nl'] = array(
  * Polish (Polski)
  */
 $specialPageAliases['pl'] = array(
-	'Listvstf'	=> array( 'Vstf' ),
+	'Listsoap'	=> array( 'Soap' ),
 	'Liststaff'	=> array( 'Staffowie' ),
 	'Listhelpers'	=> array( 'Helperzy' ),
 );
@@ -75,7 +75,7 @@ $specialPageAliases['pl'] = array(
  * Vietnamese (Tiếng Việt)
  */
 $specialPageAliases['vi'] = array(
-	'Listvstf'	=> array( 'Danh_sách_nhân_viên' ),
+	'Listsoap'	=> array( 'Danh_sách_nhân_viên' ),
 	'Liststaff'	=> array( 'Danh_sách_hỗ_trợ_viên' ),
 	'Listhelpers'	=> array( 'Danh_sách_vstf' ),
 );

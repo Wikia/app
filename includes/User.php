@@ -119,13 +119,15 @@ class User implements JsonSerializable {
 		'mBirthDate', // Wikia. Added to reflect our user table layout.
 		// user_groups table
 		'mGroups',
+		// user_properties table
+		'mOptionOverrides',
 	);
 
 	/** @name Cache variables */
 	//@{
 	var $mId, $mName, $mRealName,
 		$mEmail, $mToken, $mEmailAuthenticated,
-		$mEmailToken, $mEmailTokenExpires, $mRegistration, $mGroups,
+		$mEmailToken, $mEmailTokenExpires, $mRegistration, $mGroups, $mOptionOverrides,
 		$mCookiePassword, $mAllowUsertalk;
 	var $mBirthDate; // Wikia. Added to reflect our user table layout.
 	//@}
@@ -205,6 +207,16 @@ class User implements JsonSerializable {
 	 */
 	function __construct() {
 		$this->clearInstanceCache( 'defaults' );
+	}
+
+	/**
+	 * @param String $name
+	 * @return string
+	 */
+	private static function getUserIdCacheKey( string $name ): string {
+		$cacheKey = new UserNameCacheKeys( $name );
+		$key = $cacheKey->forUserId();
+		return $key;
 	}
 
 	/**
@@ -314,7 +326,7 @@ class User implements JsonSerializable {
 		 */
 		$isExpired = true;
 		if(!empty($data)) {
-			$_key = self::getUserTouchedKey( $this->mId );
+			$_key = $this->getUserTouchedKey();
 			$_touched = $wgMemc->get( $_key );
 			if( empty( $_touched ) ) {
 				$wgMemc->set( $_key, $data['mTouched'] );
@@ -359,30 +371,32 @@ class User implements JsonSerializable {
 			return;
 		}
 
+		// prepare mOptionOverrides for caching
+		$this->mOptionOverrides = [];
+		foreach ( $this->mOptions as $optionKey => $optionValue ) {
+			if ( $this->shouldOptionBeStored( $optionKey, $optionValue ) ) {
+				$this->mOptionOverrides[$optionKey] = $optionValue;
+			}
+		}
+
 		$data = array();
 		foreach ( self::$mCacheVars as $name ) {
 			$data[$name] = $this->$name;
 		}
 		$data['mVersion'] = MW_USER_VERSION;
 
-		// Wikia
 		global $wgMemc;
 		$wgMemc->set( $this->getCacheKey(), $data, WikiaResponse::CACHE_LONG );
-		$wgMemc->set( self::getCacheKeyByName( $this->getName() ), (int) $this->getId(), WikiaResponse::CACHE_LONG ); // SUS-2945
+		// SUS-2945
+		$key = new UserNameCacheKeys( $this->getName() );
+		$wgMemc->set( $key->forUserId(), (int) $this->getId(), WikiaResponse::CACHE_LONG );
 
 		wfDebug( "User: user {$this->mId} stored in cache\n" );
 	}
 
-	private function getCacheKey() {
-		return self::getCacheKeyById( $this->mId );
-	}
-
-	private static function getCacheKeyById( int $id ) : string {
-		return wfMemcKey( 'user', 'id', $id );
-	}
-
-	private static function getCacheKeyByName( string $name ) : string {
-		return wfSharedMemcKey( 'user', 'name', $name );
+	private function getCacheKey(): string {
+		$cacheKey = new UserIdCacheKeys($this->getId());
+		return $cacheKey->forUser();
 	}
 
 	/** @name newFrom*() static factory methods */
@@ -642,7 +656,7 @@ class User implements JsonSerializable {
 		// worth caching given the fact that (user ID, user name) pairs do not change very often
 		global $wgMemc;
 
-		$key = self::getCacheKeyByName( $name );
+		$key = self::getUserIdCacheKey( $name );
 		$cachedId = $wgMemc->get( $key );
 
 		if ( is_numeric( $cachedId ) ) {
@@ -1011,6 +1025,7 @@ class User implements JsonSerializable {
 		$this->mName = $name;
 		$this->mRealName = '';
 		$this->mEmail = '';
+		$this->mOptionOverrides = null;
 		$this->mOptionsLoaded = false;
 
 		$loggedOut = $this->getRequest()->getCookie( 'LoggedOut' );
@@ -1210,6 +1225,7 @@ class User implements JsonSerializable {
 		$this->mBlockedby = -1; # Unset
 		$this->mHash = false;
 		$this->mOptions = null;
+		$this->mOptionOverrides = null;
 		$this->mOptionsLoaded = false;
 
 		if ( $reloadFrom ) {
@@ -1567,7 +1583,7 @@ class User implements JsonSerializable {
 
 		$triggered = false;
 		foreach( $keys as $key => $limit ) {
-			list( $max, $period ) = $limit;
+			[ $max, $period ] = $limit;
 			$summary = "(limit $max in {$period}s)";
 			$count = $wgMemc->get( $key );
 			// Already pinged?
@@ -2023,8 +2039,7 @@ class User implements JsonSerializable {
 			// Wikia: and save updated user data in the cache to avoid memcache miss and DB query
 			$this->saveToCache();
 
-			$memckey = self::getUserTouchedKey( $this->mId );
-			$wgMemc->set( $memckey, $this->mTouched );
+			$wgMemc->set( $this->getUserTouchedKey(), $this->mTouched );
 			wfDebug( "Shared user: updating shared user_touched\n" );
 		}
 	}
@@ -2044,13 +2059,23 @@ class User implements JsonSerializable {
 		self::permissionsService()->invalidateCache( $this );
 	}
 
+	/**
+	 * This method should be used to clear all cache for the user, not just account data, but also Masthead,
+	 * contributions and others. This should be used when user is renamed, anonymized and so on.
+	 */
 	public function deleteCache() {
-		global $wgMemc;
+		global $wgMemc, $wgCityId;
 
 		$this->load();
-		$wgMemc->delete( $this->getCacheKey() );
-		$wgMemc->delete( self::getCacheKeyByName( $this->getName() ) ); // SUS-2945
-		$this->userPreferences()->deleteFromCache( $this->getId() );
+
+		$userCache = new UserIdCacheKeys( $this->getId() );
+		foreach ( $userCache->getAllKeys() as $key) {
+			$wgMemc->delete( $key);
+		}
+		$usernameCache = new UserNameCacheKeys( $this->getName() );
+		foreach ( $usernameCache->getAllKeys( $wgCityId ) as $key) {
+			$wgMemc->delete($key);
+		}
 	}
 
 	/**
@@ -2113,19 +2138,6 @@ class User implements JsonSerializable {
 		}
 
 		return $this->mTouched;
-	}
-
-	/**
-	 * A function to clear cache with no side effects.  Functions such as clearSharedCache
-	 * or invalidateCache both have side effects like loading things from cache before clearing
-	 * it and writing back to cache after finishing.
-	 *
-	 * @param int $userId
-	 */
-	public static function clearUserCache( $userId ) {
-		global $wgMemc;
-		$memKey = self::getCacheKeyById( $userId );
-		$wgMemc->delete( $memKey );
 	}
 
 	/**
@@ -2355,7 +2367,6 @@ class User implements JsonSerializable {
 	 */
 	private function getOptionHelper( $oname, $defaultOverride = null, $ignoreHidden = false ) {
 		global $wgHiddenPrefs;
-
 		$this->loadOptions();
 
 		if ( is_null( $this->mOptions ) ) {
@@ -3054,6 +3065,7 @@ class User implements JsonSerializable {
 			return;
 
 		$this->mOptionsLoaded = true;
+		$this->mOptionOverrides = array();
 
 		// If an option is not set in $str, use the default value
 		$this->mOptions = self::getDefaultOptions();
@@ -3063,6 +3075,7 @@ class User implements JsonSerializable {
 			$m = array();
 			if ( preg_match( "/^(.[^=]*)=(.*)$/", $s, $m ) ) {
 				$this->mOptions[$m[1]] = $m[2];
+				$this->mOptionOverrides[$m[1]] = $m[2];
 			}
 		}
 	}
@@ -3687,7 +3700,7 @@ class User implements JsonSerializable {
 		} else {
 			$wantHTML = $this->isAnon() || $this->getGlobalPreference( 'htmlemails' );
 
-			list($body, $bodyHTML) = wfMsgHTMLwithLanguage( $message, $this->getGlobalPreference( 'language' ), array(), $args, $wantHTML );
+			[$body, $bodyHTML] = wfMsgHTMLwithLanguage( $message, $this->getGlobalPreference( 'language' ), array(), $args, $wantHTML );
 
 			if ( !empty($emailTextTemplate) && $wantHTML ) {
 				$emailParams = array(
@@ -4095,23 +4108,31 @@ class User implements JsonSerializable {
 
 		$this->mOptions = self::getDefaultOptions();
 		// Maybe load from the object
+		if ( !is_null( $this->mOptionOverrides ) ) {
+			wfDebug( "User: loading options for user " . $this->getId() . " from override cache.\n" );
+			foreach( $this->mOptionOverrides as $key => $value ) {
+				$this->mOptions[$key] = $value;
+			}
+		} else {
+			wfDebug( "User: loading options for user " . $this->getId() . " from database.\n" );
+			// Load from database
+			// shared users database
+			// @author Krzysztof Krzyżaniak (eloy)
+			global $wgExternalSharedDB;
+			$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
 
-		wfDebug( "User: loading options for user " . $this->getId() . " from database.\n" );
-		// Load from database
-		// shared users database
-		// @author Krzysztof Krzyżaniak (eloy)
-		global $wgExternalSharedDB;
-		$dbr = wfGetDB( DB_SLAVE, [], $wgExternalSharedDB );
+			$res = $dbr->select(
+				'user_properties',
+				'*',
+				array( 'up_user' => $this->getId() ),
+				__METHOD__
+			);
 
-		$res = $dbr->select(
-			'user_properties',
-			'*',
-			array( 'up_user' => $this->getId() ),
-			__METHOD__
-		);
-
-		foreach ( $res as $row ) {
-			$this->mOptions[$row->up_property] = $row->up_value;
+			$this->mOptionOverrides = array();
+			foreach ( $res as $row ) {
+				$this->mOptionOverrides[$row->up_property] = $row->up_value;
+				$this->mOptions[$row->up_property] = $row->up_value;
+			}
 		}
 
 		$this->mOptionsLoaded = true;
@@ -4125,14 +4146,7 @@ class User implements JsonSerializable {
 	 * @see getGlobalPreference for documentation about preferences
 	 */
 	protected function savePreferences() {
-		$additionalGlobalOptions = [];
-		foreach( $this->mOptions as $key => $value ) {
-			if ( $this->shouldOptionBeStored( $key, $value ) ) {
-				$additionalGlobalOptions[$key] = $value;
-			}
-		}
-
-		$this->userPreferences()->save($this->getId(), $additionalGlobalOptions);
+		$this->userPreferences()->save($this->getId());
 	}
 
 	/**
@@ -4266,16 +4280,11 @@ class User implements JsonSerializable {
 
 	/**
 	 * Return the memcache key for storing cross-wiki "user_touched" value.
-	 *
 	 * It's used to refresh user caches on Wiki B when user changes his setting on Wiki A
-	 *
-	 * @author wikia
-	 *
-	 * @param int $user_id
 	 * @return string memcache key
 	 */
-	public static function getUserTouchedKey( $user_id ) {
-		return wfSharedMemcKey( "user_touched", 'v1', $user_id );
+	public function getUserTouchedKey(): string {
+		return wfSharedMemcKey( "user_touched", 'v1',  $this->mId );
 	}
 
 	/**
@@ -4591,13 +4600,13 @@ class User implements JsonSerializable {
 	}
 
 	/**
-	 * Get flag if user is <16 y.o. for COPPA.
+	 * Get flag if user is <16 y.o. for CCPA.
 	 *
 	 * @see ADEN-10054
 	 *
 	 * @return Boolean User is below 16 y.o.
 	 */
-	public function isSubjectToCoppa() { // TODO: Unit tests; Is it cached? If yes, is the cache properly cleared?
+	public function isSubjectToCcpa() {
 		if ($this->mBirthDate === null) {
 			return false;
 		}

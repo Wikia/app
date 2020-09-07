@@ -50,9 +50,16 @@ class AdEngine3DeciderService {
 			|| WikiaPageType::isSearch()
 			|| WikiaPageType::isWikiaHub();
 
+		$title = $this->wg->Title;
+		if ( $title &&
+			!empty( $this->wg->AdDriverPagesWithoutAds ) &&
+			in_array( $title->getPrefixedDBKey(), $this->wg->AdDriverPagesWithoutAds )
+		) {
+			return true;
+		}
+
 		if ( !$runAds ) {
-			if ( $this->wg->Title ) {
-				$title = $this->wg->Title;
+			if ( $title ) {
 				$namespace = $title->getNamespace();
 				$runAds = in_array( $namespace, $this->wg->ContentNamespaces )
 					|| isset( $this->wg->ExtraNamespaces[$namespace] )

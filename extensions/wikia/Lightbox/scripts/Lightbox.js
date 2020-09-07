@@ -188,7 +188,6 @@
 						}
 					);
 
-					Lightbox.openModal.share.shareUrl = json.shareUrl; // cache shareUrl for email share
 					Lightbox.setupShareEmail();
 
 					Lightbox.openModal.share.find('.social-links').on('click', 'a', function () {
@@ -932,15 +931,23 @@
 				wikiaForm = new WikiaForm(shareEmailForm),
 				inputGroups = shareEmailForm.find('.general-errors, .general-success');
 
-			function doShareEmail(addresses) {
+			function doShareEmail(address) {
+				// Only main namespace or category pages can be shared; otherwise, share the file
+				var namespace = mw.config.get('wgNamespaceNumber'),
+					isArticleValidShareTarget = namespace === 0 || namespace === 14,
+					shareTarget = isArticleValidShareTarget ? mw.config.get('wgTitle') : Lightbox.current.key,
+					shareNamespace = isArticleValidShareTarget ? namespace : 6; // NS_FILE
+
 				$.nirvana.sendRequest({
 					controller: 'Lightbox',
 					method: 'shareFileMail',
 					type: 'POST',
 					data: {
 						type: Lightbox.current.type,
-						addresses: addresses,
-						shareUrl: Lightbox.openModal.share.shareUrl
+						fileName: Lightbox.current.key,
+						address: address,
+						shareTarget: shareTarget,
+						shareNamespace: shareNamespace,
 					},
 					callback: function (data) {
 						var errorMsg = '',
@@ -982,20 +989,19 @@
 			}
 
 			shareEmailForm.submit(function (e) {
-				var addresses = $(this).find('input').first().val(),
-					UserLoginModal = window.UserLoginModal;
+				var address = $(this).find('input').first().val();
 
 				e.preventDefault();
 
 				// make sure user is logged in
 				if (window.wgUserName) {
-					doShareEmail(addresses);
+					doShareEmail(address);
 				} else {
 					window.wikiaAuthModal.load({
 						forceLogin: true,
 						origin: 'image-lightbox',
 						onAuthSuccess: function () {
-							doShareEmail(addresses);
+							doShareEmail(address);
 							// see VID-473 - Reload page on lightbox close
 							LightboxLoader.reloadOnClose = true;
 						}

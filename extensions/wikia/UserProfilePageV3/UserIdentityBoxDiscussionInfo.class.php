@@ -40,7 +40,7 @@ class UserIdentityBoxDiscussionInfo {
 
 		if ( $this->discussionActive ) {
 			$this->discussionPostsCount = $this->fetchDiscussionPostsCount();
-			$this->discussionAllPostsByUserLink = "$wgScriptPath/d/u/{$this->userId}";
+			$this->discussionAllPostsByUserLink = "$wgScriptPath/f/u/{$this->userId}";
 		}
 	}
 

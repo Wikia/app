@@ -113,7 +113,9 @@ class PortableInfoboxBuilderService {
 	private function addGroupNode( $data, SimpleXMLElement $xml ) {
 		foreach ( $data as $item ) {
 			$type = $this->getCanonicalType( $item->type );
-			$child = $xml->addChild( $type, isset( $item->data ) && is_string( $item->data ) ? (string) $item->data : null );
+			$child = $xml->addChild( $type, isset( $item->data ) && is_string( $item->data )
+				? htmlspecialchars ( (string) $item->data )
+				: null );
 			$this->addNode( $item, $child );
 		}
 	}
@@ -136,7 +138,7 @@ class PortableInfoboxBuilderService {
 					if ( is_object( $value ) ) {
 						$this->addNode( $value, $xml->addChild( $key ) );
 					} else {
-						$xml->addChild( $key, $value );
+						$xml->addChild( $key, htmlspecialchars( $value ));
 					}
 				}
 			}

@@ -318,7 +318,6 @@ class LightboxController extends WikiaController {
 			}
 		}
 
-		$this->shareUrl = $shareUrl;
 		$this->articleUrl = $articleUrl;
 		$this->fileUrl = $fileUrl;
 		$this->networks = $networks;
@@ -332,9 +331,12 @@ class LightboxController extends WikiaController {
 
 	/**
  	 * AJAX function for sending share e-mails
-	 * @requestParam string addresses - comma-separated list of email addresses
-	 * @requestParam string shareUrl - share url being emailed
-	 * @requestParam string type - optional - if 'video', the message is customized for media type video
+	 * Request params:
+	 * - string address - e-mail to share the file with
+	 * - string fileName - name of the file being shared
+	 * - string shareTarget - article the file is included on
+	 * - int shareNamespace - namespace of the article the file is included on
+	 * - string type - optional - if 'video', the message is customized for media type video
 	 */
 	public function shareFileMail() {
 		$user = $this->wg->User;
@@ -344,13 +346,32 @@ class LightboxController extends WikiaController {
 			return;
 		}
 
-		$addresses = $this->request->getVal( 'addresses', '' );
-		$shareUrl = $this->request->getVal( 'shareUrl', '' );
+		$address = $this->request->getVal( 'address' );
+		$fileName = $this->request->getVal( 'fileName' );
+		$shareTarget = $this->request->getVal( 'shareTarget' );
+		$shareNamespace = $this->request->getVal( 'shareNamespace' );
 
-		if ( empty( $addresses ) || empty( $shareUrl ) || $user->isBlockedFromEmailuser() ) {
+		if ( !$address || $shareNamespace === null || !$shareTarget || $user->isBlockedFromEmailuser() ) {
 			$this->setShareFileMailErrorResponse( 'lightbox-share-email-error-noaddress' );
 			return;
 		}
+
+		$title = Title::makeTitleSafe( $shareNamespace, $shareTarget );
+
+		if ( !$title || $title->isExternal() ) {
+			$this->setShareFileMailErrorResponse( 'lightbox-share-email-error-noaddress' );
+			return;
+		}
+
+		// Check rate limits
+		if ( $user->pingLimiter( 'share-email' ) ) {
+			$this->setShareFileMailErrorResponse( 'actionthrottledtext' );
+			return;
+		}
+
+		$shareUrl = $title->inNamespace( NS_FILE ) ?
+			FilePageHelper::getFilePageRedirectUrl( $title ) :
+			$title->getFullURL( 'file=' . wfUrlencode( $fileName ) );
 
 		$type = $this->request->getVal( 'type', '' );
 		$subjectKey = 'lightbox-share-email-subject';
@@ -360,28 +381,25 @@ class LightboxController extends WikiaController {
 			$bodyKey = 'lightbox-share-email-body-video';
 		}
 
-		$addresses = explode( ',', $addresses );
 		$sent = [];
 		$notSent = [];
 
-		foreach ( $addresses as $address ) {
-			$response = F::app()->sendRequest(
-				Email\Controller\GenericController::class,
-				'handle',
-				[
-					'salutation' => wfMessage( 'lightbox-share-salutation' )->text(),
-					'toAddress' => $address,
-					'subject' => wfMessage( $subjectKey, $user->getName() )->text(),
-					'body' => wfMessage( $bodyKey, $shareUrl )->text(),
-					'category' => 'ImageLightboxShare',
-				]
-			);
+		$response = F::app()->sendRequest(
+			Email\Controller\GenericController::class,
+			'handle',
+			[
+				'salutation' => wfMessage( 'lightbox-share-salutation' )->escaped(),
+				'toAddress' => $address,
+				'subject' => wfMessage( $subjectKey, $user->getName() )->escaped(),
+				'body' => wfMessage( $bodyKey, htmlspecialchars( $shareUrl ) )->text(),
+				'category' => 'ImageLightboxShare',
+			]
+		);
 
-			if ( $response->getData()['result'] == 'ok' ) {
-				$sent[] = $address;
-			} else {
-				$notSent[] = $address;
-			}
+		if ( $response->getData()['result'] == 'ok' ) {
+			$sent[] = $address;
+		} else {
+			$notSent[] = $address;
 		}
 
 		$this->response->setData( [

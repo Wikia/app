@@ -289,10 +289,12 @@ class HeliosClient {
 			}
 			$responseBeacon = $this->getResponseHeader( 'x-client-beacon-id' )[0];
 
+			$wasUserIdMismatch = !$sessionUserId || $sessionUserId != $tokenInfo->user_id;
+			$wasBeaconIdMismatch = isset( $currentCtx['client_beacon_id'] ) && $currentCtx['client_beacon_id'] != $responseBeacon;
+
 			// check if Helios returned non-matching user_id. Sometimes it means user logged into a different account
 			// so we compare beacons as well just to be sure there was a mismatch
-			if ( ( empty( $sessionUserId ) || $sessionUserId != $tokenInfo->user_id ) &&
-				 $currentCtx['client_beacon_id'] != $responseBeacon ) {
+			if ( $wasUserIdMismatch && $wasBeaconIdMismatch ) {
 				// report an issue with the token mismatch
 				\Wikia\Logger\WikiaLogger::instance()->error(
 					'Helios beacon mismatch',

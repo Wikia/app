@@ -225,6 +225,8 @@ $wgHooks          [ 'LoadExtensionSchemaUpdates'      ][] = 'WikiaUpdater::updat
 $wgAutoloadClasses[ 'WikiaDataAccess'                 ] = "$IP/includes/wikia/WikiaDataAccess.class.php";
 $wgAutoloadClasses[ 'WikiaUserPropertiesController'   ] = "$IP/includes/wikia/WikiaUserPropertiesController.class.php";
 $wgAutoloadClasses[ 'TitleBatch'                      ] = "$IP/includes/wikia/cache/TitleBatch.php";
+$wgAutoloadClasses[ 'UserIdCacheKeys'                 ] = "$IP/includes/wikia/cache/UserIdCacheKeys.php";
+$wgAutoloadClasses[ 'UserNameCacheKeys'               ] = "$IP/includes/wikia/cache/UserNameCacheKeys.php";
 $wgAutoloadClasses[ 'WikiaUserPropertiesHandlerBase'  ] = "$IP/includes/wikia/models/WikiaUserPropertiesHandlerBase.class.php";
 $wgAutoloadClasses[ 'ParserPool'                      ] = "$IP/includes/wikia/parser/ParserPool.class.php";
 $wgAutoloadClasses[ 'WikiDataSource'                  ] = "$IP/includes/wikia/WikiDataSource.php";
@@ -1006,10 +1008,30 @@ $wgAdDriverUseAdsAfterInfobox = false;
 $wgAdDriverTrackState = false;
 
 /**
+ * Version of AdEngine bundle
+ * @see extensions/fandom/AdEngine
+ * @var string $wgAdEngineVersion
+ */
+$wgAdEngineVersion = null;
+
+/**
+ * Enable new bundle on mobile wiki
+ * @see extensions/fandom/AdEngine
+ * @var string $wgAdEngineExperimental
+ */
+$wgAdEngineExperimental = null;
+
+/**
  * @name $wgAdDriverEnableCheshireCat
  * Whether to use Cheshire Cat
  */
 $wgAdDriverEnableCheshireCat = true;
+
+/**
+ * @name $wgAdDriverEnableAffiliateSlot
+ * Whether to inject affiliate_slot
+ */
+$wgAdDriverEnableAffiliateSlot = false;
 
 /**
  * @name $wgDisableIncontentPlayer
@@ -1312,3 +1334,9 @@ $wgGcsConfig = [
 ];
 
 $wgThumblrUrl = 'https://thumblr-prod.c1.us-west1-a.gke.wikia.net';
+
+/**
+ * Define the base url and sampling factor for page loads for performance monitoring.
+ */
+$wgPerformanceMonitoringBaseUrl = 'https://beacon.wikia-services.com/__track';
+$wgPerformanceMonitoringSamplingFactor = 100; // sample 1/100 of requests

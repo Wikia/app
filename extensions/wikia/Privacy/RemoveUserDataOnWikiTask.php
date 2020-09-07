@@ -28,7 +28,10 @@ class RemoveUserDataOnWikiTask extends BaseTask {
 		RemovalAuditLog::addWikiTask( $auditLogId, $wgCityId, $this->taskId );
 
 		$localDataRemover = new LocalUserDataRemover();
-		$dataWasRemoved = $localDataRemover->removeLocalUserDataOnThisWiki( $auditLogId, $userId, $renameUserId );
+		$dataWasRemoved = $localDataRemover->removeLocalUserDataOnThisWiki(
+			$auditLogId,
+			array_filter( [ $userId, $renameUserId ] )
+		);
 
 		RemovalAuditLog::markTaskAsFinished( $auditLogId, $wgCityId, $dataWasRemoved );
 

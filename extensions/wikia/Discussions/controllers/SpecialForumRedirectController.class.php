@@ -2,7 +2,7 @@
 
 class SpecialForumRedirectController extends WikiaSpecialPageController {
 
-	const DISCUSSIONS_LINK = '/d/f';
+	const DISCUSSIONS_LINK = '/f';
 
 	private $legacyRedirect;
 

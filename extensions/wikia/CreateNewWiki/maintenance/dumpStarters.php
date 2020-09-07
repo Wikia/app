@@ -1,4 +1,5 @@
 <?php
+use Google\Cloud\Storage\StorageClient;
 
 /**
  * Script that prepares XML and SQL dumps with the latest revisions and *links tables rows of starter wikis
@@ -22,6 +23,9 @@ class DumpStartersException extends Exception {}
 class DumpStarters extends Maintenance {
 
 	const DUMP_MIME_TYPE = 'application/bzip2';
+	
+	const BUCKET_NAME_DEV = 'create-new-wiki-dev';
+	const BUCKET_NAME_PROD = 'create-new-wiki';
 
 	protected $mDescription = 'This script prepares XML and SQL dumps of starter wikis';
 
@@ -119,18 +123,28 @@ class DumpStarters extends Maintenance {
 	 * @throws DumpStartersException
 	 */
 	private function storeDump( $filename, $dest ) {
+		global $wgWikiaEnvironment, $wgGcsConfig;
+
+		$bucketName = self::BUCKET_NAME_PROD;
+
+		if ( $wgWikiaEnvironment == 'dev' ) {
+			$bucketName = self::BUCKET_NAME_DEV;
+		}
+
 		$this->output( sprintf( " \n\t[%s / %.2f kB]", $dest, filesize( $filename ) / 1024 ) );
 
-		$swift = \Wikia\CreateNewWiki\Starters::getStarterDumpStorage();
-		$res = $swift->store(
-			$filename,
-			$dest,
-			[],
-			self::DUMP_MIME_TYPE
-		);
+		$storage = new StorageClient( [ 'keyFile' => $wgGcsConfig['gcsCredentials'] ] );
+		$content = fopen( $filename, 'r' );
+		$bucket = $storage->bucket( $bucketName );
+		$gcsPath = sprintf( 'app/%s', $dest );
+		$object = $bucket->upload( $content, [ 'name' => $gcsPath ] );
 
-		if ( !$res->isOK() ) {
-			throw new DumpStartersException( ' upload failed - ' . json_encode( $res->getErrorsArray() ) );
+		if ( is_null( $object ) ) {
+			throw new Exception( "Unable to store a dump for {$dest}" );
+		}
+
+		if ( is_resource( $content ) ) {
+			fclose( $content );
 		}
 
 		// cleanup

@@ -11,7 +11,12 @@
 	}
 
 	var $window = $(window),
-		ArticleComments;
+		ArticleComments,
+		track;
+
+	function isReply(element) {
+		return $(element).parents('.sub-comments').length;
+	}
 
 	ArticleComments = {
 		animations: {}, // Used by MiniEditor
@@ -31,6 +36,11 @@
 				$articleCommFbMonit = $('#article-comm-fbMonit'),
 				$fbCommentMessage = $('#fbCommentMessage'),
 				newComment;
+
+			track = window.Wikia.Tracker.buildTrackingFunction({
+				category: 'article-comments',
+				trackingMethod: 'analytics'
+			});
 
 			// fire event when new article comment is/will be added to DOM
 			mw.hook('wikipage.content').fire($articleComments);
@@ -102,6 +112,13 @@
 			if (ArticleComments.processing) {
 				return;
 			}
+
+			var label = isReply(e.target) ? 'reply-edit-editor-opened' : 'comment-edit-editor-opened';
+
+			track({
+				action: window.Wikia.Tracker.ACTIONS.CLICK,
+				label: label,
+			});
 
 			// If MiniEditor is enabled, we need to determine the correct content format before making the request
 			if (ArticleComments.miniEditorEnabled && !MiniEditor.assetsLoaded) {
@@ -179,6 +196,13 @@
 
 			e.preventDefault();
 
+			var label = isReply(e.target) ? 'reply-edit-cancelled' : 'comment-edit-cancelled';
+
+			track({
+				action: window.Wikia.Tracker.ACTIONS.CLICK,
+				label: label,
+			});
+
 			if (ArticleComments.miniEditorEnabled) {
 				$('#article-comm-textfield-' + commentId).data('wikiaEditor').fire('editorDeactivated');
 			}
@@ -217,6 +241,13 @@
 				$('#article-comm-info').html('');
 				$throbber.css('visibility', 'visible');
 				$textfield.attr('readonly', 'readonly');
+
+				var label = isReply(e.target) ? 'reply-edited' : 'comment-edited';
+
+				track({
+					action: window.Wikia.Tracker.ACTIONS.CLICK,
+					label: label,
+				});
 
 				$.postJSON(wgScript, {
 					action: 'ajax',
@@ -274,6 +305,11 @@
 			if (ArticleComments.processing) {
 				return;
 			}
+
+			track({
+				action: window.Wikia.Tracker.ACTIONS.CLICK,
+				label: 'reply-create-editor-opened',
+			});
 
 			$.getJSON(wgScript, {
 				action: 'ajax',
@@ -463,6 +499,13 @@
 
 				ArticleComments.processing = true;
 			}
+
+			var label = data.parentId ? 'reply-created' : 'comment-created';
+
+			track({
+				action: window.Wikia.Tracker.ACTIONS.CLICK,
+				label: label,
+			});
 
 			if (!ArticleComments.messagesLoaded) {
 				$.getMessages('ArticleCommentsCounter', function () {

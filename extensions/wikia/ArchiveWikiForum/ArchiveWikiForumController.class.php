@@ -20,7 +20,7 @@ class ArchiveWikiForumController extends WikiaController {
 			global $wgScriptPath;
 
 			$messageKey = 'archive-wiki-forums-button-to-discussions';
-			$url = "$wgScriptPath/d/f";
+			$url = "$wgScriptPath/f";
 		}
 
 		$this->response->setValues( [

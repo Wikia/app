@@ -269,8 +269,25 @@ class ImageServingDriverMainNS extends ImageServingDriverBase {
 	}
 
 	protected function getInfoboxImagesForId( $id ) {
-		$articleImages = PortableInfoboxDataService::newFromPageID( $id )->getImages();
+		$articles = $this->getArticles();
 
-		return $articleImages;
+		if ( isset( $articles[$id] ) ) {
+			// Avoid a redundant DB query for each article ID
+			// by utilizing already loaded article data to build the title
+			$row = (object)[
+				'page_id' => $id,
+				'page_namespace' => $articles[$id]['ns'],
+				'page_title' => $articles[$id]['title'],
+				'page_latest' => $articles[$id]['page_latest'],
+			];
+
+			$title = Title::newFromRow( $row );
+
+			$articleImages = PortableInfoboxDataService::newFromTitle( $title )->getImages();
+
+			return $articleImages;
+		}
+
+		return []; // page doesn't exist
 	}
 }

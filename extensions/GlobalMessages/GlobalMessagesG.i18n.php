@@ -52,9 +52,7 @@ $messages['en'] = array(
 	'group-bot.js' => '/* Any JavaScript here will be loaded for bots only */',
 	'group-sysop.js' => '/* Any JavaScript here will be loaded for sysops only */',
 	'group-bureaucrat.js' => '/* Any JavaScript here will be loaded for bureaucrats only */',
-	'group-vstf' => 'VSTF',
-	'group-vstf-member' => 'VSTF',
-	'grouppage-vstf' => 'w:Wikia:SpamTaskForce',
+	'grouppage-soap' => 'w:Wikia:SpamTaskForce',
 	'group-helper' => 'FANDOM Helpers',
 	'group-helper-member' => 'FANDOM Helper',
 	'grouppage-helper' => 'Help:Helper Group',
@@ -86,6 +84,8 @@ $messages['en'] = array(
 	'group-wiki-manager-member' => 'Wiki Manager',
 	'group-content-team-member' => 'Content Team Members',
 	'group-content-team-member-member' => 'Content Team Member',
+	'group-soap' => 'Spam Obliteration and Prevention',
+	'group-soap-member' => 'Spam Obliteration and Prevention Member',
 );
 
 $messages['qqq'] = array(
@@ -1516,7 +1516,7 @@ $messages['de'] = array(
 	'grouppage-helper' => 'w:de:Hilfe:Helfer',
 	'grouppage-staff' => 'w:c:de.community:Fandom-Mitarbeiter',
 	'grouppage-util' => 'w:c:de.community:Hilfe:Mitarbeiter',
-	'grouppage-vstf' => 'w:c:de.community:Hilfe:VSTF',
+	'grouppage-soap' => 'w:c:de.community:Hilfe:VSTF',
 	'googlesearch' => '<form method="get" action="//www.google.com/search" id="googlesearch">
 	<input type="hidden" name="domains" value="{{SERVER}}" />
 	<input type="hidden" name="num" value="50" />
@@ -1530,8 +1530,6 @@ $messages['de'] = array(
 	<input type="radio" name="sitesearch" id="gWWW" value="" /><label for="gWWW">WWW</label>
   </div>
 </form>',
-	'group-vstf' => 'VSTF',
-	'group-vstf-member' => 'VSTF',
 	'grouppage-reviewer' => 'w:c:de.community:Hilfe:Benutzer#Andere_Gruppen',
 	'group-vanguard' => 'Vanguard-Mitglieder',
 	'group-vanguard-member' => 'Vanguard-Mitglied',
@@ -1549,9 +1547,12 @@ $messages['de'] = array(
 	'group-wiki-manager' => 'Wiki-Manager',
 	'group-wiki-manager-member' => 'Wiki-Manager',
 	'grouppage-wiki-manager' => 'Hilfe:Wiki-Manager',
-	'group-content-team-member' => 'Redaktionsmitglieder',
-	'grouppage-content-team-member' => 'Hilfe:Redaktionsmitglieder',
-	'group-content-team-member-member' => 'Redaktionsmitglied',
+	'group-content-team-member' => 'Fandom-Artikel-Team',
+	'grouppage-content-team-member' => 'Hilfe:Fandom-Artikel-Team',
+	'group-content-team-member-member' => 'Fandom-Artikel-Team',
+	'group-vstf' => 'VSTF',
+	'grouppage-vstf' => 'w:c:de.community:Hilfe:VSTF',
+	'group-vstf-member' => 'VSTF',
 );
 
 $messages['de-formal'] = array(
@@ -1773,10 +1774,9 @@ $messages['es'] = array(
 	'group-util-member' => 'Utilidades de FANDOM',
 	'group-sysop.css' => '/* Cualquier código CSS escrito aquí será cargado solamente para los administradores */',
 	'group-sysop.js' => '/* Cualquier código JavaScript escrito aquí será cargado solamente para los administradores */',
-	'group-vstf-member' => 'VSTF',
 	'grouppage-helper' => 'w:c:comunidad:Comunidad Central:Voluntarios y Helpers',
 	'grouppage-staff' => 'w:c:comunidad:Comunidad Central:Staff',
-	'grouppage-vstf' => 'w:c:comunidad:Comunidad Central:SpamTaskForce',
+	'grouppage-soap' => 'w:c:comunidad:Comunidad Central:SpamTaskForce',
 	'googlesearch' => '<form method="get" action="//www.google.com/search" id="googlesearch">
 	<input type="hidden" name="domains" value="{{SERVER}}" />
 	<input type="hidden" name="num" value="50" />
@@ -1796,7 +1796,6 @@ $messages['es'] = array(
 	'group-autoconfirmed.js' => '/* Cualquier código JavaScript escrito aquí será cargado solamente para los usuarios auto-confirmados */',
 	'group-bot.js' => '/* Cualquier código JavaScript escrito aquí será cargado solamente para los bots */',
 	'group-bureaucrat.js' => '/* Cualquier código JavaScript escrito aquí será cargado solamente para los burócratas */',
-	'group-vstf' => 'VSTF',
 	'grouppage-util' => 'w:c:comunidad:Comunidad Central:Staff',
 	'group-reviewer' => 'Revisores de imagen',
 	'group-reviewer-member' => 'Revisores de imagen',
@@ -1820,6 +1819,9 @@ $messages['es'] = array(
 	'group-content-team-member' => 'Content Team Members',
 	'grouppage-content-team-member' => 'Ayuda:Content Team Members',
 	'group-content-team-member-member' => 'Content Team Member',
+	'group-vstf' => 'VSTF',
+	'grouppage-vstf' => 'w:c:comunidad:Comunidad Central:SpamTaskForce',
+	'group-vstf-member' => 'VSTF',
 );
 
 $messages['et'] = array(
@@ -2105,7 +2107,7 @@ $messages['fr'] = array(
 	'grouppage-reviewer' => "w:c:communaute:Aide:Niveaux d'accès utilisateur",
 	'grouppage-staff' => "w:c:communaute:Aide:Niveaux d'accès utilisateur#Staff",
 	'grouppage-util' => 'w:c:communaute:Staff',
-	'grouppage-vstf' => "w:c:communaute:Aide:Niveaux d'accès utilisateur#VSTF",
+	'grouppage-soap' => "w:c:communaute:Aide:Niveaux d'accès utilisateur#VSTF",
 	'googlesearch' => '<form method="get" action="//www.google.com/search" id="googlesearch">
 	<input type="hidden" name="domains" value="{{SERVER}}" />
 	<input type="hidden" name="num" value="50" />
@@ -2119,8 +2121,6 @@ $messages['fr'] = array(
 	<input type="radio" name="sitesearch" id="gWWW" value="" /><label for="gWWW">WWW</label>
   </div>
 </form>',
-	'group-vstf' => 'VSTF',
-	'group-vstf-member' => 'VSTF',
 	'group-vanguard' => 'Vanguards',
 	'group-vanguard-member' => 'Vanguard',
 	'grouppage-voldev' => 'w:c:dev:Volunteer_Developers',
@@ -2138,6 +2138,9 @@ $messages['fr'] = array(
 	'group-content-team-member' => "Membres de l'équipe Contenu",
 	'grouppage-content-team-member' => "Aide:Membres de l'équipe Contenu",
 	'group-content-team-member-member' => "Membre de l'équipe Contenu",
+	'group-vstf' => 'VSTF',
+	'grouppage-vstf' => "w:c:communaute:Aide:Niveaux d'accès utilisateur#VSTF",
+	'group-vstf-member' => 'VSTF',
 );
 
 $messages['frc'] = array(
@@ -3049,9 +3052,7 @@ $messages['iris-4622'] = array(
 	'group-bot.js' => '/* 這裡所有的JavaScript只對機器人帳號載入 */',
 	'group-sysop.js' => '/* 這裡所有的JavaScript只對管理員載入 */',
 	'group-bureaucrat.js' => '/* 這裡所有的JavaScript只對行政員載入 */',
-	'group-vstf' => 'VSTF',
-	'group-vstf-member' => 'VSTF',
-	'grouppage-vstf' => 'w:c:zh.community:Help:反破壞小組',
+	'grouppage-soap' => 'w:c:zh.community:Help:反破壞小組',
 	'group-helper' => 'FANDOM助手',
 	'group-helper-member' => 'FANDOM助手',
 	'grouppage-helper' => 'Help:Volunteers and Helpers',
@@ -3164,9 +3165,7 @@ $messages['it'] = array(
 	<input type="radio" name="sitesearch" id="gWWW" value="" /><label for="gWWW">WWW</label>
   </div>
 </form>',
-	'group-vstf' => 'VSTF',
-	'group-vstf-member' => 'VSTF',
-	'grouppage-vstf' => 'w:it:Aiuto:Diritti degli utenti#VSTF',
+	'grouppage-soap' => 'w:it:Aiuto:Diritti degli utenti#VSTF',
 	'grouppage-helper' => 'w:it:Aiuto:Diritti degli utenti#Helper',
 	'grouppage-staff' => 'w:it:Aiuto:Diritti degli utenti#Staff',
 	'grouppage-util' => 'w:it:Aiuto:Diritti degli utenti#Utilities',
@@ -3192,6 +3191,11 @@ $messages['it'] = array(
 	'group-content-team-member' => 'Membri del team per i contenuti',
 	'grouppage-content-team-member' => 'Aiuto:Membri del team per i contenuti',
 	'group-content-team-member-member' => 'Membro del team per i contenuti',
+	'group-soap' => 'Spam Obliteration and Prevention',
+	'group-soap-member' => 'membro Spam Obliteration and Prevention',
+	'group-vstf' => 'VSTF',
+	'grouppage-vstf' => 'w:it:Aiuto:Diritti degli utenti#VSTF',
+	'group-vstf-member' => 'VSTF',
 );
 
 $messages['iu'] = array(
@@ -3281,7 +3285,7 @@ $messages['ja'] = array(
 	'group-voldev-member' => 'ボランティア・デベロッパー',
 	'group-voldev' => 'ボランティア・デベロッパー',
 	'grouppage-helper' => 'W:c:ja.community:ヘルプ:ボランティアとヘルパー',
-	'grouppage-vstf' => 'w:c:ja.community:ヘルプ:スパムタスクフォース',
+	'grouppage-soap' => 'w:c:ja.community:ヘルプ:スパムタスクフォース',
 	'googlesearch' => '<form method="get" action="//www.google.com/search" id="googlesearch">
 	<input type="hidden" name="domains" value="{{SERVER}}" />
 	<input type="hidden" name="num" value="50" />
@@ -3295,8 +3299,6 @@ $messages['ja'] = array(
 	<input type="radio" name="sitesearch" id="gWWW" value="" /><label for="gWWW">WWW</label>
   </div>
 </form>',
-	'group-vstf' => 'VSTF',
-	'group-vstf-member' => 'VSTF',
 	'grouppage-staff' => 'wikia:コミュニティセントラル:スタッフ',
 	'grouppage-util' => 'wikia:コミュニティセントラル:スタッフ',
 	'group-reviewer' => '画像審査メンバー',
@@ -3315,6 +3317,9 @@ $messages['ja'] = array(
 	'group-content-team-member' => 'コンテンツ・チーム・メンバー',
 	'grouppage-content-team-member' => 'ヘルプ:コンテンツ・チーム・メンバー',
 	'group-content-team-member-member' => 'コンテンツ・チーム・メンバー',
+	'group-vstf' => 'VSTF',
+	'grouppage-vstf' => 'w:c:ja.community:ヘルプ:スパムタスクフォース',
+	'group-vstf-member' => 'VSTF',
 );
 
 $messages['jam'] = array(
@@ -4933,7 +4938,6 @@ $messages['nl'] = array(
 	'group-bureaucrat.js' => '/* JavaScript die hier wordt geplaatst heeft alleen invloed op bureaucraten */',
 	'group-content-moderator' => 'Inhoudmoderatoren',
 	'group-content-moderator-member' => 'Inhoudmoderator',
-	'group-vstf' => 'VSTF',
 	'googlesearch' => '<form method="get" action="//www.google.com/search" id="googlesearch">
 	<input type="hidden" name="domains" value="{{SERVER}}" />
 	<input type="hidden" name="num" value="50" />
@@ -4947,8 +4951,7 @@ $messages['nl'] = array(
 	<input type="radio" name="sitesearch" id="gWWW" value="" /><label for="gWWW">WWW</label>
   </div>
 </form>',
-	'group-vstf-member' => 'VSTF',
-	'grouppage-vstf' => 'w:Wikia:SpamTaskForce',
+	'grouppage-soap' => 'w:Wikia:SpamTaskForce',
 	'group-helper' => 'FANDOM Helpers',
 	'group-helper-member' => 'FANDOM Helper',
 	'grouppage-helper' => 'Help:Helper Group',
@@ -5290,7 +5293,7 @@ $messages['pl'] = array(
 	'grouppage-helper' => 'w:pl:Pomoc:Helperzy',
 	'grouppage-staff' => 'w:pl:Pomoc:FANDOM Staff',
 	'grouppage-util' => 'w:pl:Pomoc:Utilities',
-	'grouppage-vstf' => 'w:pl:Pomoc:Volunteer_Spam_Task_Force',
+	'grouppage-soap' => 'w:pl:Pomoc:Volunteer_Spam_Task_Force',
 	'googlesearch' => '<form method="get" action="//www.google.com/search" id="googlesearch">
 	<input type="hidden" name="domains" value="{{SERVER}}" />
 	<input type="hidden" name="num" value="50" />
@@ -5304,8 +5307,6 @@ $messages['pl'] = array(
 	<input type="radio" name="sitesearch" id="gWWW" value="" /><label for="gWWW">WWW</label>
   </div>
 </form>',
-	'group-vstf' => 'VSTF',
-	'group-vstf-member' => 'VSTF',
 	'group-reviewer' => 'Kontrolerzy obrazów',
 	'group-reviewer-member' => 'kontroler obrazów',
 	'grouppage-reviewer' => 'wikia:Community_Central:Image_review',
@@ -5328,6 +5329,9 @@ $messages['pl'] = array(
 	'group-content-team-member' => 'Członkowie Zespołu Treści',
 	'grouppage-content-team-member' => 'Help:Członkowie Zespołu Treści',
 	'group-content-team-member-member' => 'Członek Zespołu Treści',
+	'group-vstf' => 'VSTF',
+	'grouppage-vstf' => 'w:pl:Pomoc:Volunteer_Spam_Task_Force',
+	'group-vstf-member' => 'VSTF',
 );
 
 $messages['pms'] = array(
@@ -5525,9 +5529,7 @@ $messages['pt'] = array(
 	'group-bot.js' => '/* Qualquer JavaScript aqui será carregado apenas para robôs */',
 	'group-sysop.js' => '/* Qualquer JavaScript aqui será carregado apenas para sysops */',
 	'group-bureaucrat.js' => '/* Qualquer JavaScript aqui será carregado apenas para burocratas */',
-	'group-vstf' => 'VSTF',
-	'group-vstf-member' => 'VSTF',
-	'grouppage-vstf' => 'w:Wikia:SpamTaskForce',
+	'grouppage-soap' => 'w:Wikia:SpamTaskForce',
 	'grouppage-helper' => 'Ajuda:Grupo de ajuda',
 	'grouppage-staff' => 'wikia:CentraldaComuidade: staff',
 	'grouppage-util' => 'wikia:CentraldaComunidade:staff',
@@ -5553,6 +5555,9 @@ $messages['pt'] = array(
 	'group-content-team-member' => 'Membros da equipe de conteúdo',
 	'grouppage-content-team-member' => 'Ajuda:Membros da equipe de conteúdo',
 	'group-content-team-member-member' => 'Membro da equipe de conteúdo',
+	'group-vstf' => 'VSTF',
+	'grouppage-vstf' => 'w:Wikia:SpamTaskForce',
+	'group-vstf-member' => 'VSTF',
 );
 
 $messages['qu'] = array(
@@ -5784,9 +5789,7 @@ $messages['ru'] = array(
 	'group-bot.js' => '/* Размещенный здесь JavaScript код будет загружаться только для ботов */',
 	'group-sysop.js' => '/* Размещенный здесь JavaScript код будет загружаться только для администраторов */',
 	'group-bureaucrat.js' => '/* Размещенный здесь JavaScript код будет загружаться только для бюрократов */',
-	'group-vstf' => 'VSTF',
-	'group-vstf-member' => 'VSTF',
-	'grouppage-vstf' => 'w:Wikia:SpamTaskForce',
+	'grouppage-soap' => 'w:Wikia:SpamTaskForce',
 	'grouppage-helper' => 'Справка:Помощники и волонтёры',
 	'grouppage-staff' => 'wikia:Community_Central:Staff',
 	'grouppage-util' => 'wikia:Community_Central:Staff',
@@ -5804,14 +5807,17 @@ $messages['ru'] = array(
 	'group-global-discussions-moderator-member' => 'Модератор Обсуждений ФЭНДОМА',
 	'group-content-volunteer' => 'Content Volunteers',
 	'group-content-volunteer-member' => 'Content Volunteer',
-	'group-request-to-be-forgotten-admin-member' => 'Администратор инструмента запроса на удаление',
-	'group-request-to-be-forgotten-admin' => 'Администратор инструмента запроса на удаление',
-	'group-wiki-manager' => 'Руководители вики',
-	'group-wiki-manager-member' => 'Руководитель вики',
-	'grouppage-wiki-manager' => 'Справка:Руководители вики',
-	'group-content-team-member' => 'Участники редакции',
-	'grouppage-content-team-member' => 'Справка:Участники редакции',
-	'group-content-team-member-member' => 'Участник редакции',
+	'group-request-to-be-forgotten-admin-member' => 'Сотрудник по RTBF',
+	'group-request-to-be-forgotten-admin' => 'Сотрудники по RTBF',
+	'group-wiki-manager' => 'Менеджеры вики',
+	'group-wiki-manager-member' => 'Менеджер вики',
+	'grouppage-wiki-manager' => 'Help:Wiki Managers',
+	'group-content-team-member' => 'Менеджеры по контенту',
+	'grouppage-content-team-member' => 'Help:Content Team Members',
+	'group-content-team-member-member' => 'Менеджер по контенту',
+	'group-vstf' => 'VSTF',
+	'grouppage-vstf' => 'w:Wikia:SpamTaskForce',
+	'group-vstf-member' => 'VSTF',
 );
 
 $messages['rue'] = array(
@@ -7562,9 +7568,7 @@ $messages['zh-hans'] = array(
 	'group-bot.js' => '/* 这里所有的JavaScript仅对机器人用户加载 */',
 	'group-sysop.js' => '/* 这里所有的JavaScript仅对管理员加载 */',
 	'group-bureaucrat.js' => '/* 这里所有的JavaScript仅对行政员加载 */',
-	'group-vstf' => 'VSTF',
-	'group-vstf-member' => 'VSTF',
-	'grouppage-vstf' => 'w:Wikia:SpamTaskForce',
+	'grouppage-soap' => 'w:Wikia:SpamTaskForce',
 	'grouppage-helper' => 'Help:志愿者和助手',
 	'grouppage-staff' => 'wikia:Community_Central:Staff',
 	'grouppage-util' => 'wikia:Community_Central:Staff',
@@ -7586,10 +7590,13 @@ $messages['zh-hans'] = array(
 	'group-request-to-be-forgotten-admin' => '被遗忘权工具管理员',
 	'group-wiki-manager' => 'Wiki主管',
 	'group-wiki-manager-member' => 'Wiki主管',
-	'grouppage-wiki-manager' => '帮助: Wiki主管',
+	'grouppage-wiki-manager' => 'w:Help:Wiki Managers',
 	'group-content-team-member' => '内容团队人员',
-	'grouppage-content-team-member' => '帮助:内容团队人员',
+	'grouppage-content-team-member' => 'w:Help:Content Team Members',
 	'group-content-team-member-member' => '内容团队人员',
+	'group-vstf' => 'VSTF',
+	'grouppage-vstf' => 'w:Wikia:SpamTaskForce',
+	'group-vstf-member' => 'VSTF',
 );
 
 $messages['zh-hant'] = array(
@@ -7649,9 +7656,7 @@ $messages['zh-hant'] = array(
 	'group-bot.js' => '/* 這裡所有的JavaScript只對機器人帳號載入 */',
 	'group-sysop.js' => '/* 這裡所有的JavaScript只對管理員載入 */',
 	'group-bureaucrat.js' => '/* 這裡所有的JavaScript只對行政員載入 */',
-	'group-vstf' => 'VSTF',
-	'group-vstf-member' => 'VSTF',
-	'grouppage-vstf' => 'w:c:zh.community:Help:反破壞小組',
+	'grouppage-soap' => 'w:c:zh.community:Help:反破壞小組',
 	'grouppage-helper' => 'Help:Volunteers and Helpers',
 	'grouppage-staff' => 'w:c:zh.community:Community_Central:Staff',
 	'grouppage-util' => 'w:c:zh.community:Community_Central:Staff',
@@ -7677,6 +7682,9 @@ $messages['zh-hant'] = array(
 	'group-content-team-member' => '內容團隊人員',
 	'grouppage-content-team-member' => '幫助:內容團隊人員',
 	'group-content-team-member-member' => '內容團隊人員',
+	'group-vstf' => 'VSTF',
+	'grouppage-vstf' => 'w:c:zh.community:Help:反破壞小組',
+	'group-vstf-member' => 'VSTF',
 );
 
 $messages['zu'] = array(

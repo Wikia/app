@@ -1774,7 +1774,7 @@ class Wikia {
 			return true;
 		}
 
-		// Allow trusted users to edit interface messages (util, vstf, select admins)
+		// Allow trusted users to edit interface messages (util, soap, select admins)
 		if ( $wgUser->isAllowed( 'editinterfacetrusted' ) ) {
 			return true;
 		}

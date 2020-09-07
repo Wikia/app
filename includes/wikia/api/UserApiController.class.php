@@ -1,4 +1,7 @@
 <?php
+
+use Wikia\Factory\ServiceFactory;
+
 /**
  * Controller to fetch information about users
  *
@@ -44,6 +47,8 @@ class UserApiController extends WikiaApiController {
 
 		$items = array();
 
+		$currentUser = $this->getContext()->getUser();
+
 		foreach ( $users as $user ) {
 			$userName = $user->getName();
 
@@ -52,7 +57,10 @@ class UserApiController extends WikiaApiController {
 				'title' => $user->getTitleKey(),
 				'name' => $userName,
 				'url' => AvatarService::getUrl( $userName ),
-				'numberofedits' => (int) $user->getEditCount()
+				'numberofedits' => (int) $user->getEditCount(),
+				'is_subject_to_ccpa' => (
+					$currentUser->equals( $user ) ? $currentUser->isSubjectToCcpa() : null
+				),
 			);
 
 			//add avatar url if size !== 0
@@ -111,14 +119,37 @@ class UserApiController extends WikiaApiController {
 		);
 
 		$users = [];
+		$userIds = [];
 
 		foreach ( $res as $row ) {
 			$users[] = [
 				'id' => $row->user_id,
 				'name' => $row->user_name_normalized,
 			];
+			$userIds[] = (int)$row->user_id;
+		}
+
+		if ( count( $userIds ) > 0 ) {
+			$avatars = $this->getAvatars( $userIds );
+
+			$users = array_map( function ( $user ) use ( $avatars ) {
+				$user['avatarUrl'] = $avatars[(int)$user['id']];
+				return $user;
+			}, $users );
 		}
 
 		$this->response->setData( [ 'users' => $users ] );
+	}
+
+	private function getAvatars( array $userIds ): array {
+		$userAttributeService = ServiceFactory::instance()->attributesFactory()->userAttributeGateway();
+		$attributesForUsers = $userAttributeService->getAllAttributesForMultipleUsers( $userIds )['users'];
+
+		$result = [];
+		foreach ( $userIds as $id ) {
+			$result[$id] = $attributesForUsers[$id]['avatar'] ?? null;
+		}
+
+		return $result;
 	}
 }

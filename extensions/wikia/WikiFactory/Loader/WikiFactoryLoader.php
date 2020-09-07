@@ -76,7 +76,11 @@ class WikiFactoryLoader {
 		 *
 		 * @see SUS-6026
 		 */
-		$this->mCommandLine = $wgCommandLineMode;
+		$this->mCommandLine = $wgCommandLineMode || (
+				// SER-3981 RTBF process has been moved to UCP, the tasks need to be run on closed wikis
+				!empty( $server['HTTP_X_DISABLE_CLOSED_WIKI_HANDLING'] )
+				&& !empty( $server['HTTP_X_WIKIA_INTERNAL_REQUEST'] )
+			);
 
 		if ( !empty( $server['HTTP_X_MW_WIKI_ID'] ) ) {
 			// SUS-5816 | a special HTTP request with wiki ID forced via request header
@@ -700,6 +704,42 @@ class WikiFactoryLoader {
 			}
 			$this->debug( "reading from database, id {$this->mWikiID}, count ".count( $this->mVariables ) );
 			wfProfileOut( __METHOD__."-varsdb" );
+		}
+
+		#Fix shared uploads to UCP wikis
+		if (
+			!empty( $this->mVariables['wgUseSharedUploads'] ) &&
+			!empty( $this->mVariables['wgSharedUploadDBname'] ) &&
+			$this->mWikiID !== Wikia::COMMUNITY_WIKI_ID
+		) {
+			$dbr = $this->getDB();
+			$partnerWikiData = $dbr->selectRow(
+				[ "city_list" ],
+				[
+					"city_id",
+					"city_url",
+					"city_dbname",
+					"city_path",
+				],
+				[ "city_dbname" => $this->mVariables[ 'wgSharedUploadDBname' ] ]
+			);
+
+			if ( !empty( $partnerWikiData ) && WikiFactory::isUCPWiki( $partnerWikiData->city_id ) ) {
+				unset( $this->mVariables[ 'wgSharedUploadDBname' ] );
+				unset( $this->mVariables[ 'wgUseSharedUploads' ] );
+
+				$url = rtrim( WikiFactory::getLocalEnvURL( $partnerWikiData->city_url ), '/' ) . '/api.php';
+
+				$this->mVariables['wgForeignFileRepos'][] = [
+					'name' => 'sharedUploadHack',
+					'class' => 'ForeignAPIRepo',
+					'apibase' => $url,
+					'hashLevels' => 2,
+					'apiThumbCacheExpiry' => 0
+				];
+
+			}
+
 		}
 
 		# take some WF variables values from city_list

@@ -39,8 +39,8 @@ class JSSnippets {
 		global $wgArticleAsJson;
 		$js = "";
 
-		// HG-97: Don't include script tags when the article is requested as Json
-		if ( !empty( $wgArticleAsJson ) ) {
+		// HG-97: Don't include script tags when the article is requested as Json or it is forum migration dump
+		if ( !empty( $wgArticleAsJson ) || !empty( getenv( 'FORUM_MIGRATION' ) ) ) {
 			return $js;
 		}
 		

@@ -47,8 +47,8 @@ class ThemeDesignerBackgroundAssets {
 			'source' => '/skins/oasis/images/themes/plated.jpg'
 		],
 		[
-			'thumbnail' => '/wikia/ThemeDesigner/images/police_swatch.jpg',
-			'source' => '/skins/oasis/images/themes/police.jpg'
+			'thumbnail' => '/wikia/ThemeDesigner/images/lights_swatch.jpg',
+			'source' => '/skins/oasis/images/themes/lights.jpg'
 		],
 		[
 			'thumbnail' => '/wikia/ThemeDesigner/images/aliencrate_swatch.jpg',

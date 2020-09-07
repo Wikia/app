@@ -28,7 +28,6 @@ $wgExtensionMessagesFiles['CloseMyAccountAliases'] = __DIR__ . '/CloseMyAccount.
 $wgSpecialPages['CloseMyAccount'] = 'CloseMyAccountSpecialController';
 $wgSpecialPageGroups['CloseMyAccount'] = 'wikia';
 
-$wgHooks['WikiaUserLoginSuccess'][] = 'CloseMyAccountHooks::onWikiaUserLoginSuccess';
 $wgHooks['UserSendConfirmationMail'][] = 'CloseMyAccountHooks::onUserSendConfirmationMail';
 
 $wgResourceModules['ext.closeMyAccount'] = [

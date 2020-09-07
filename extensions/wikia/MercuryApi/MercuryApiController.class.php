@@ -260,8 +260,6 @@ class MercuryApiController extends WikiaController {
 	 * @throws WikiaException
 	 */
 	public function getPage() {
-		global $wgServer;
-
 		try {
 			$title = $this->getTitleFromRequest();
 			$keys = array();
@@ -450,6 +448,7 @@ class MercuryApiController extends WikiaController {
 		$redirectTargetTitle = $article->getRedirectTarget();
 		$redirectTargetID = $redirectTargetTitle->getArticleID();
 		$data['redirected'] = true;
+		$data['redirectTargetUrl'] = $article->getRedirectTarget()->getLocalURL();
 
 		if ( !empty( $redirectTargetID ) ) {
 			$title = $redirectTargetTitle;

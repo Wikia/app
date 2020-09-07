@@ -1,6 +1,8 @@
 <div class="featured-video__attribution-container">
-	<img class="featured-video__attribution-avatar" src="{{userAvatarUrl}}"/>
-	<a class="featured-video__attribution-username" href="{{userUrl}}" target="_blank">
+    {{#userAvatarUrl}}
+        <img class="featured-video__attribution-avatar" src="{{userAvatarUrl}}"/>
+    {{/userAvatarUrl}}
+    <a class="featured-video__attribution-username" href="{{userUrl}}" target="_blank">
 		{{fromMsg}} {{username}}
 	</a>
 	<a class="featured-video__attribution-icon" href="{{userUrl}}" target="_blank">

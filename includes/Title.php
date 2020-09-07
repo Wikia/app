@@ -2151,7 +2151,7 @@ class Title {
 				// user groups to be displayed instead of user name
 				$groups = [
 					'staff',
-					'vstf',
+					'soap',
 					'helper',
 				];
 				$blockerGroups = $blocker->getEffectiveGroups();

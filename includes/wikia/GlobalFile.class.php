@@ -27,7 +27,8 @@ class GlobalFile extends WikiaObject implements UrlGeneratorInterface {
 	private function loadData() {
 		if (!isset($this->mData)) {
 			$dbname = WikiFactory::IDtoDB($this->mTitle->mCityId);
-			$dbr = wfGetDB( DB_SLAVE, array(), $dbname );
+			$lb = wfGetLB( $dbname );
+			$dbr = $lb->getConnection( DB_SLAVE, [], $dbname );
 
 			$this->mData = $dbr->selectRow(
 				'image',
@@ -41,6 +42,8 @@ class GlobalFile extends WikiaObject implements UrlGeneratorInterface {
 				['img_name' => $this->mTitle->getDBkey()],
 				__METHOD__
 			);
+
+			$lb->reuseConnection( $dbr );
 		}
 	}
 

@@ -2,19 +2,21 @@ import {
 	AdSlot,
 	btRec,
 	context,
+	distroScale,
 	events,
 	eventService,
 	FmrRotator,
 	scrollListener,
 	slotInjector,
+	slotDataParamsUpdater,
 	slotService,
 	utils,
 	getAdProductInfo
 } from '@wikia/ad-engine';
 import { throttle } from 'lodash';
-import { ofType } from "@wikia/post-quecast";
-import { take } from "rxjs/operators";
-import { communicator } from "./communicator";
+import { take } from 'rxjs/operators';
+import { communicationService } from "./communication/communication-service";
+import { ofType } from "./communication/of-type";
 
 const PAGE_TYPES = {
 	article: 'a',
@@ -36,6 +38,10 @@ function isHighImpactApplicable() {
 
 function isFloorAdhesionApplicable() {
 	return !context.get('custom.hasFeaturedVideo') && !context.get('slots.floor_adhesion.disabled');
+}
+
+function isAffiliateSlotApplicable() {
+	return isRightRailApplicable() && context.get('wiki.opts.enableAffiliateSlot') && !context.get('custom.hasFeaturedVideo');
 }
 
 function registerFloorAdhesionCodePriority() {
@@ -141,6 +147,20 @@ export default {
 					rv: 1,
 				},
 			},
+			affiliate_slot: {
+				adProduct: 'affiliate_slot',
+				aboveTheFold: true,
+				slotNameSuffix: '',
+				group: 'AU',
+				options: {},
+				slotShortcut: 'a',
+				defaultSizes: [[280, 120]],
+				insertBeforeSelector: '#top_boxad',
+				targeting: {
+					loc: 'top',
+					rv: 1,
+				},
+			},
 			invisible_skin: {
 				adProduct: 'invisible_skin',
 				aboveTheFold: true,
@@ -227,7 +247,7 @@ export default {
 				defaultSizes: [[1, 1]],
 				targeting: {
 					loc: 'middle',
-					pos: ['incontent_player'],
+					pos: ['outstream'],
 					rv: 1,
 				},
 				isVideo: true,
@@ -299,6 +319,7 @@ export default {
 		slotService.setState('hivi_leaderboard', false);
 		slotService.setState('top_leaderboard', true);
 		slotService.setState('top_boxad', isRightRailApplicable());
+		slotService.setState('affiliate_slot', isAffiliateSlotApplicable());
 		slotService.setState('incontent_boxad_1', isRightRailApplicable());
 		slotService.setState('bottom_leaderboard', true);
 		slotService.setState('invisible_skin', true);
@@ -306,7 +327,22 @@ export default {
 		slotService.setState('invisible_high_impact_2', isHighImpactApplicable());
 
 		slotService.setState('featured', context.get('custom.hasFeaturedVideo'));
-		slotService.setState('incontent_player', context.get('custom.hasIncontentPlayer'));
+
+		if (!context.get('services.distroScale.enabled')) {
+			slotService.setState('incontent_player', context.get('custom.hasIncontentPlayer'));
+		}
+	},
+
+	setupIncontentPlayerForDistroScale() {
+		const slotName = 'incontent_player';
+
+		slotService.setState(slotName, false, AdSlot.STATUS_COLLAPSE);
+		slotService.on(slotName, AdSlot.STATUS_COLLAPSE, () => {
+			slotDataParamsUpdater.updateOnCreate(slotService.get(slotName));
+			distroScale.call();
+		});
+
+		context.push('state.adStack', { id: slotName });
 	},
 
 	setupIdentificators() {
@@ -388,14 +424,19 @@ export default {
 	},
 
 	injectIncontentPlayer() {
+		const isDistroScaleEnabled = context.get('services.distroScale.enabled');
 		const isApplicable = !context.get('custom.hasFeaturedVideo');
-		const isInjected = !!slotInjector.inject('incontent_player');
+		const isInjected = !!slotInjector.inject('incontent_player', isDistroScaleEnabled);
+
+		if (isDistroScaleEnabled && isApplicable && isInjected) {
+			this.setupIncontentPlayerForDistroScale();
+		}
 
 		return isApplicable && isInjected;
 	},
 
 	async injectIncontentBoxad() {
-		await communicator.actions$.pipe(ofType('[Rail] Ready'), take(1)).toPromise();
+		await communicationService.action$.pipe(ofType('[Rail] Ready'), take(1)).toPromise();
 
 		const slotName = 'incontent_boxad_1';
 		const isApplicable = isIncontentBoxadApplicable();
@@ -427,5 +468,11 @@ export default {
 		);
 
 		registerFloorAdhesionCodePriority();
+	},
+
+	injectAffiliateSlot() {
+		slotInjector.inject('affiliate_slot', true);
+
+		context.push('state.adStack', { id: 'affiliate_slot' });
 	},
 };

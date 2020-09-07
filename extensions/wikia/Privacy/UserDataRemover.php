@@ -151,8 +151,9 @@ class UserDataRemover {
 			$this->info( "Adding a row in replication queue" );
 			$dbMaster->insert(
 				'user_replicate_queue',
-				['user_id' => $userId],
-				__METHOD__
+				[ 'user_id' => $userId ],
+				__METHOD__,
+				[ 'IGNORE' ]
 			);
 
 			$this->info( 'Commiting changes' );

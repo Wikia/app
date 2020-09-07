@@ -101,7 +101,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			$expiries = array_merge( array( '' => wfMsg( 'phalanx-expiries-select' ) ), $expiries );
 		}
 
-		// VSTF should not be allowed to block emails in Phalanx
+		// SOAP should not be allowed to block emails in Phalanx
 		$showEmailBlock = $this->wg->User->isAllowed( 'phalanxemailblock' );
 		$blockTypes  = Phalanx::getSupportedTypeNames();
 
@@ -177,7 +177,7 @@ class PhalanxSpecialController extends WikiaSpecialPageController {
 			$data = Phalanx::newFromId( $id );
 
 			if ( ( $data['type'] & Phalanx::TYPE_EMAIL ) && !$this->app->wg->User->isAllowed( 'phalanxemailblock' ) ) {
-				// VSTF members should not be able to view email blocks
+				// SOAP members should not be able to view email blocks
 				$data = [];
 			}
 			else {

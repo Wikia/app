@@ -13,7 +13,8 @@
 		<div class="edited-by">
 		<?= wfMessage( 'oasis-comments-added-by' )->rawParams( $comment['timestamp'], $comment['sig'] )->escaped() ?>
 		<?php if (!empty($comment['isStaff'])) { print "<span class=\"stafflogo\"><img src=\"".wfReplaceImageServer( wfGetSignatureUrl() ) . "\" title=\"This user is a member of Fandom staff\" alt=\"@fandom\" /></span>\n"; } ?>
-		<?php if (count($comment['buttons']) || $comment['replyButton']) { ?>
+		<?php global $wgArticleCommentsReadOnlyMode;
+		if (!$wgArticleCommentsReadOnlyMode && (count($comment['buttons']) || $comment['replyButton'])) { ?>
 			<div class="buttons">
 				<?php echo $comment['replyButton']; ?>
 				<span class="tools">

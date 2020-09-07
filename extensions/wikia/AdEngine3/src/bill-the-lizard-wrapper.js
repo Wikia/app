@@ -81,8 +81,10 @@ class BillTheLizardWrapper {
             }
         });
 
-        eventService.on(events.BIDS_REFRESH, () => {
-            garfieldCalled = true;
+        eventService.on(events.BIDS_REFRESH, (refreshedSlotNames) => {
+            if (refreshedSlotNames.includes(garfieldSlotsBidderAlias)) {
+                garfieldCalled = true;
+            }
         });
 
         eventService.on(billTheLizardEvents.BILL_THE_LIZARD_RESPONSE, (event) => {

@@ -16,7 +16,11 @@ class DWDimensionApiControllerSQL {
            city.city_vertical      AS vertical_id,
            IFNULL(city.city_cluster, \'c1\') AS cluster,
            city.city_created       AS created_at,
-           0                       AS deleted
+           (CASE
+    			WHEN city.city_public = 0 THEN 1 -- wiki deleted
+    			WHEN city.city_public = -1 THEN 1 -- wiki hidden (probably banned)
+    			ELSE 0
+			END) 				   AS deleted
       FROM city_list city
       LEFT JOIN city_lang lang
         ON lang.lang_code = city.city_lang

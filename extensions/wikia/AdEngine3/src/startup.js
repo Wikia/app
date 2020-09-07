@@ -3,23 +3,22 @@ import { billTheLizardConfigurator } from './ml/configuration';
 import { featuredVideoAutoPlayDisabled } from './ml/executor';
 import {
 	AdSlot,
+	audigent,
 	bidders,
 	billTheLizard,
-	btRec,
 	confiant,
 	context,
 	durationMedia,
 	events,
 	eventService,
+	facebookPixel,
+	iasPublisherOptimization,
 	InstantConfigCacheStorage,
 	JWPlayerManager,
-	moatYi,
-	moatYiEvents,
+	nielsen,
 	permutive,
 	Runner,
-	nielsen,
 	SlotTweaker,
-	taxonomyService,
 	utils
 } from '@wikia/ad-engine';
 import { wadRunner } from './wad/wad-runner';
@@ -28,7 +27,8 @@ import pageTracker from './tracking/page-tracker';
 import slots from './slots';
 import videoTracker from './tracking/video-tracking';
 import { track } from "./tracking/tracker";
-import { communicator } from "./communicator";
+import { communicationService } from "./communication/communication-service";
+import { ofType } from "./communication/of-type";
 
 const GPT_LIBRARY_URL = '//www.googletagservices.com/tag/js/gpt.js';
 
@@ -49,9 +49,6 @@ export async function setupAdEngine(
 		console.info(`Created ad slot ${slot.getSlotName()}`);
 		bidders.updateSlotTargeting(slot.getSlotName());
 	});
-	eventService.on(moatYiEvents.MOAT_YI_READY, (data) => {
-		pageTracker.trackProp('moat_yi', data);
-	});
 
 	await billTheLizardConfigurator.configure();
 
@@ -66,11 +63,9 @@ export async function setupAdEngine(
 	}
 
 	trackLabradorValues();
-	trackLikhoToDW();
 	trackTabId();
 	trackXClick();
 	trackVideoPage();
-	taxonomyService.configureComicsTargeting();
 }
 
 async function setupJWPlayer(inhibitors = []) {
@@ -85,7 +80,7 @@ async function setupJWPlayer(inhibitors = []) {
 }
 
 function dispatchJWPlayerSetupAction(showAds = true) {
-	communicator.dispatch({
+	communicationService.dispatch({
 		type: '[Ad Engine] Setup JWPlayer',
 		showAds,
 		autoplayDisabled: featuredVideoAutoPlayDisabled
@@ -103,9 +98,16 @@ function startAdEngine(inhibitors) {
 		});
 		slots.injectHighImpact();
 		slots.injectFloorAdhesion();
+		slots.injectAffiliateSlot();
 
 		eventService.on(AdSlot.SLOT_RENDERED_EVENT, (slot) => {
 			slot.getElement().classList.remove('default-height');
+		});
+
+		communicationService.action$.pipe(
+			ofType('[AdEngine] Audigent loaded')
+		).subscribe((props) => {
+			pageTracker.trackProp('audigent', 'loaded');
 		});
 	}
 }
@@ -116,17 +118,6 @@ function trackLabradorValues() {
 
 	if (labradorPropValue) {
 		pageTracker.trackProp('labrador', labradorPropValue);
-	}
-}
-
-/**
- * @private
- */
-function trackLikhoToDW() {
-	const likhoPropValue = context.get('targeting.likho') || [];
-
-	if (likhoPropValue.length) {
-		pageTracker.trackProp('likho', likhoPropValue.join(';'));
 	}
 }
 
@@ -150,10 +141,12 @@ function callExternals() {
 	inhibitors.push(bidders.requestBids());
 	inhibitors.push(wadRunner.call());
 
+	facebookPixel.call();
 	permutive.call();
+	iasPublisherOptimization.call();
+	audigent.call();
 	confiant.call();
 	durationMedia.call();
-	moatYi.call();
 	billTheLizard.call(['queen_of_hearts', 'vcr']);
 	nielsen.call({
 		type: 'static',

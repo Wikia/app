@@ -40,6 +40,9 @@ class ServiceFactory {
 	/** @var CircuitBreakerFactory $circuitBreakerFactory */
 	private $circuitBreakerFactory;
 
+	/** @var UcpTaskFactory */
+	private $ucpTaskFactory;
+
 	public function heliosFactory(): HeliosFactory {
 		if ( $this->heliosFactory === null ) {
 			$this->heliosFactory = new HeliosFactory( $this );
@@ -126,6 +129,14 @@ class ServiceFactory {
 		}
 
 		return $this->circuitBreakerFactory;
+	}
+
+	public function ucpTaskFactory(): UcpTaskFactory {
+		if ( $this->ucpTaskFactory == null ) {
+			$this->ucpTaskFactory = new UcpTaskFactory( $this );
+		}
+
+		return $this->ucpTaskFactory;
 	}
 
 	public static function clearState() {

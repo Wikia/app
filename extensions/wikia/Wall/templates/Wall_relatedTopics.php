@@ -16,12 +16,14 @@
 			</li>
 		{{/topics}}
 	</script>
+	<? if($showEditTopics): ?>
 	<li class="edit-topic">
 		<a href="#" class="edit-topic-link">
 			<img src="<?= $wg->BlankImgUrl ?>" class="sprite edit-pencil">
 			<?= wfMsg('wall-topic-edit') ?>
 		</a>
 	</li>
+	<? endif; ?>
 </ul>
 <div class="message-topic-edit">
 	<?= F::app()->renderPartialCached( 'Wall', 'messageTopic', [ ] ) ?>

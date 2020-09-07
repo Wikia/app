@@ -50,7 +50,7 @@ require([
 	function showBeforeMigrationNotification() {
 		mw.loader.using(['ext.fandomComMigration', 'mediawiki.jqueryMsg']).then(function () {
 			var banner = new BannerNotification(
-				wgFandomComMigrationCustomMessageBefore ? wgFandomComMigrationCustomMessageBefore : mw.message('fandom-com-migration-before').parse(),
+				wgFandomComMigrationCustomMessageBefore ? wgFandomComMigrationCustomMessageBefore : mw.message('fandom-ucp-migration-before').parse(),
 				'warn',
 				null
 			);

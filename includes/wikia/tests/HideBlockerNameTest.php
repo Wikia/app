@@ -24,7 +24,7 @@ class HideBlockerNameTest extends WikiaDatabaseTest {
 	public function hideBlockerNameDataProvider() {
 		yield 'user name hidden for staff' => [ 1, true ];
 		yield 'user name hidden for helpers' => [ 2, true ];
-		yield 'user name hidden for vstf' => [ 3, true ];
+		yield 'user name hidden for soap' => [ 3, true ];
 		yield 'user name shown for sysops' => [ 4, false ];
 	}
 

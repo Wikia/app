@@ -69,7 +69,6 @@ function wfFounderEmailsInit()
 	$wgAutoloadClasses['FounderEmailsViewsDigestEvent'] = $dir . 'events/FounderEmailsViewsDigestEvent.class.php';
 
 	$wgHooks['RecentChange_save'][] = 'FounderEmailsEditEvent::recentChanges';
-	$wgHooks['AddNewAccount'][] = 'FounderEmailsRegisterEvent::registerUser';
 	$wgHooks['CreateWikiLocalJob-complete'][] = 'FounderEmailsDaysPassedEvent::createWikiCompleted';
 
 	$wgHooks['GetPreferences'][] = 'FounderEmails::onGetPreferences';
