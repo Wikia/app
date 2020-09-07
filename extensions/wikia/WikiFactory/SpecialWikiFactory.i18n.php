@@ -4352,7 +4352,7 @@ $messages['pt'] = array(
 	'closed-confirm-btn' => 'Confirmar fechamento',
 	'closed-redirect-alert' => 'Por favor digite a nova URL para o redirecionamento!',
 	'closed-reason' => 'Motivo:',
-	'newwikisgraph' => 'Novo Wikis Graph',
+	'newwikisgraph' => 'Gráfico de novas wikis',
 	'newwikisgraph-report-title' => 'criações de wiki por dia',
 	'newwikisgraph-wikis-created' => 'wikis criadas',
 	'newwikisgraph-param-all' => 'Todas',
@@ -4365,7 +4365,7 @@ $messages['pt'] = array(
 	'awc-metrics-language-top-list' => 'de,en,es,fr,it,ja,pl,pt,pt-br,zh',
 	'awc-metrics-vertical' => 'e vertical:',
 	'closed-wiki-policy-url' => 'https://community.fandom.com/wiki/Community_Central:Closed_Wikia',
-	'closed-wiki-invalid-redirect-url' => 'Error: Redirect URL does not point to any existing wiki: "$1"',
+	'closed-wiki-invalid-redirect-url' => 'Erro: O URL de redirecionamento não aponta para nenhuma wiki existente:"$1"',
 	'wikifactory-wiki-config-redirect' => 'Para acessar a configuração de $1, visite [$2/Special:WikiConfig/$3 Special:WikiConfig]
 
 ',
