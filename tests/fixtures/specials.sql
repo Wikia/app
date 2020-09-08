@@ -13,3 +13,12 @@ CREATE TABLE `events_local_users` (
 );
 
 CREATE INDEX `user_edits` ON `events_local_users` (`user_id`,`edits`,`wiki_id`);
+
+CREATE TABLE IF NOT EXISTS local_user_groups (
+    user_id int(5) NOT NULL,
+	wiki_id int NOT NULL,
+	group_name varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+	expiry datetime
+) DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+CREATE INDEX ix_local_user_groups ON local_user_groups (user_id, wiki_id);
