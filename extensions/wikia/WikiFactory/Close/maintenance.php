@@ -497,6 +497,7 @@ class CloseWikiMaintenance extends Maintenance {
 		 */
 		$this->doTableCleanup( $dataware, 'pages', $city_id, 'page_wikia_id' );
 		$this->doTableCleanup( $specials, 'events_local_users', $city_id );
+		$this->doTableCleanup( $specials, 'local_user_groups', $city_id );
 	}
 
 	/**

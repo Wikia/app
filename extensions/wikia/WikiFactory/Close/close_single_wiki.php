@@ -177,6 +177,7 @@ class CloseSingleWiki extends Maintenance {
 		 */
 		$this->doTableCleanup( $dataware, 'pages', $cityId, 'page_wikia_id' );
 		$this->doTableCleanup( $specials, 'events_local_users', $cityId );
+		$this->doTableCleanup( $specials, 'local_user_groups', $cityId );
 	}
 
 	/**
