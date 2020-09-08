@@ -1173,15 +1173,6 @@
             "apps": [
                 "oasis"
             ],
-            "browsers": [
-                "Chrome"
-            ],
-            "devices": [
-                "desktop"
-            ],
-            "regions": [
-                "PL"
-            ],
             "value": {
                 "name": "just_testing",
                 "groups": [
