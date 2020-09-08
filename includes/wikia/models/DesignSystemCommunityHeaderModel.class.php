@@ -5,10 +5,12 @@ use GuzzleHttp\Exception\ClientException;
 use Wikia\Logger\WikiaLogger;
 use function GuzzleHttp\Psr7\build_query;
 
+
 class DesignSystemCommunityHeaderModel extends WikiaModel {
 	const WORDMARK_TYPE_GRAPHIC = 'graphic';
 	const MEMC_PREFIX_FANDOM_STORE = 'DesignSystemCommunityHeaderModelClass::doApiRequest';
 	const FANDOM_STORE_ERROR_MESSAGE = 'Failed to get data from Fandom Store';
+	const FANDOM_STORE_ITEM_LIMIT = 9;
 
 	private $productInstanceId;
 	private $langCode;
@@ -563,12 +565,35 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	
 				throw new WikiaException( self::FANDOM_STORE_ERROR_MESSAGE, 500, $e );
 			}
+			finally {
+				return null;
+			}
 		}	
 	}
 
 	private function formatFandomStoreData( $apiData, $shouldInclude ) {
+		// get copy of links from api data
+		$arrObj = new ArrayObject( $apiData );
+		$links = $arrObj->getArrayCopy();
+
+		// remove store item object from list
+		$firstItem = array_shift( $links );
+
+		// Only display 9 items + show more link
+		if ( count( $apiData ) > 10 ) {
+			// create a show more item
+			$showMoreItem = (object) [
+				"url" => $firstItem->url,
+				"text" => 'Show More'
+			];
+			// get the first 9 links
+			$links = array_slice( $links, null, self::FANDOM_STORE_ITEM_LIMIT );
+			// add show more item to end of links
+			array_push( $links, $showMoreItem );
+		}
+
 		return [
-			'url' => $apiData[0]->url,
+			'url' => $firstItem->url,
 			'key' => 'community-header-shop',
 			'tracking' => 'explore-shop',
 			'include' => $shouldInclude,
@@ -579,7 +604,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 					'url' => $item->url,
 					'value' => $item->text,
 				];
-			}, $apiData ),
+			}, $links ),
 		];
 	}
 
