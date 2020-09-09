@@ -29,6 +29,10 @@ class UpdateListUsersTaskIntegrationTest extends WikiaDatabaseTest {
 		$this->dbr = wfGetDB( DB_SLAVE );
 	}
 
+	protected function extraSchemaFiles() {
+		yield __DIR__ . '/fixtures/local_user_groups.sql';
+	}
+
 	public function testEditUpdateInsertsNewDataForUser() {
 		$this->editCountServiceMock->expects( $this->any() )
 			->method( 'getEditCount' )
