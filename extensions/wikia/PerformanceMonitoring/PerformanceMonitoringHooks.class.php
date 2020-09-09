@@ -24,7 +24,7 @@ class PerformanceMonitoringHooks {
 			's' => 'mobilewiki',
 			'u' => ( $wgUser->isLoggedIn() ? 1 : 0 ),
 			'a' => '0',
-			'i' => getenv('HOSTNAME_OVERRIDE') ?? $wgWikiaDatacenter . '-' . $wgWikiaEnvironment,
+			'i' => ( getenv('HOSTNAME_OVERRIDE') ?? $wgWikiaDatacenter . '-' . $wgWikiaEnvironment ) . '-app',
 		];
 
 		return $wgPerformanceMonitoringBaseUrl . '/special/performance_metrics?' . http_build_query( $params );
