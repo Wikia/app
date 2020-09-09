@@ -48,7 +48,7 @@ spec:
     - alert: mediawiki_maintenance_scripts_CleanUpWallNotifications_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="CleanUpWallNotifications"}) > 3600 * 25
       labels:
-        team: i-wing
+        team: iwing
       annotations:
         description: CleanUpWallNotifications maintenance script did not run in the last 24 hours
         summary: CleanUpWallNotifications last succeeded {{humanizeDuration $value}} ago
@@ -88,7 +88,7 @@ spec:
     - alert: mediawiki_maintenance_scripts_SendConfirmationReminder_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="SendConfirmationReminder"}) > 3600 * 25
       labels:
-        team: i-wing
+        team: iwing
       annotations:
         description: Maintenance script to send email confirmation reminder to users was not run in the last 24 hours
         summary: SendConfirmationReminder last succeeded {{humanizeDuration $value}} ago
@@ -119,7 +119,7 @@ spec:
     - alert: mediawiki_maintenance_scripts_ResetWeeklyUserContributionsCount_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="ResetWeeklyUserContributionsCount"}) > 86400 * 8
       labels:
-        team: i-wing
+        team: iwing
       annotations:
         description: Maintenance script that resets users rank with most contributions was not run in the last 7 days
         summary: ResetWeeklyUserContributionsCount last succeeded {{humanizeDuration $value}} ago
@@ -127,7 +127,7 @@ spec:
     - alert: mediawiki_maintenance_scripts_sendWeeklyDigest_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="sendWeeklyDigest"}) > 86400 * 8
       labels:
-        team: i-wing
+        team: iwing
       annotations:
         description: Maintenance script that sends the weekly digest to the users found in the global_watchlist table was not run in the last 7 days
         summary: sendWeeklyDigest last succeeded {{humanizeDuration $value}} ago
@@ -135,7 +135,7 @@ spec:
     - alert: mediawiki_maintenance_scripts_LyricsWikiCrawler_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="LyricsWikiCrawler"}) > 3600 * 25
       labels:
-        team: i-wing
+        team: iwing
       annotations:
         description: Maintenance script that is responsible for scribing Lyrics wikia articles was not run in the last 24 hours
         summary: LyricsWikiCrawler last succeeded {{humanizeDuration $value}} ago
@@ -143,7 +143,7 @@ spec:
     - alert: mediawiki_maintenance_scripts_AutomatedDeadWikisDeletionMaintenance_last_run
       expr: time() - max(mediawiki_mediawiki_maintenance_scripts_last_success{env="prod", script_class="AutomatedDeadWikisDeletionMaintenance"}) > 86400 * 4
       labels:
-        team: i-wing
+        team: iwing
       annotations:
         description: Maintenance script that marks wikis as closed was not run in the last four days
         summary: AutomatedDeadWikisDeletionMaintenance last succeeded {{humanizeDuration $value}} ago
