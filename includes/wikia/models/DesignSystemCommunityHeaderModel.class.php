@@ -311,7 +311,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 			// temporary debug param
 			$qs = $_SERVER['QUERY_STRING'];
 			 // remove after design review and enable shop
-			$wgEnableShopLink = strpos( $qs, 'enableShopLinkReview' ) ? true : false;
+			$wgEnableShopLink = strpos( $qs, 'enableShopLinkReview=true' ) ? true : false;
 			// current api url for fandom store
 			$uri = 'http://138.201.119.29:9420/ix/api/seo/v1/footer';
 
@@ -407,7 +407,10 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 						'items' => array_key_exists( 'items', $item ) ? array_map( function ( $item ) {
 							return [
 								'type' => 'link-text',
-								'value' => $item['value'],
+								'title' => [
+									'type' => 'text',
+									'value' => $item['value']
+								],
 								'href' => $item[ 'url' ],
 								'tracking_label' => $item[ 'tracking' ],
 							];

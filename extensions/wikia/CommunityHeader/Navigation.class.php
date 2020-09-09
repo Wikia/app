@@ -36,7 +36,7 @@ class Navigation {
 						$item['tracking_label'],
 						array_map( function ( $item ) {
 							return new Link(
-								new Label( $item['value'] ),
+								new Label( $item['title']['value'], Label::TYPE_TEXT ),
 								$item['href'],
 								$item['tracking_label']
 							);
