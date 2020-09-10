@@ -98,7 +98,11 @@
                 "muthead",
                 "oasis"
             ],
-            "value": false
+            "regions": [
+                "JP",
+                "NL"
+            ],
+            "value": true
         }
     ],
     "icPrebidOneVideo": [
@@ -1091,7 +1095,7 @@
                 "US"
             ],
             "sampling": 50.0,
-            "value": true
+            "value": false
         }
     ],
     "icFloorAdhesionDelay": [
@@ -1136,7 +1140,8 @@
             "regions": [
                 "JP",
                 "NL",
-                "PL"
+                "PL",
+                "SG"
             ],
             "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v4.0.18/tracking-opt-in.min.js"
         },
@@ -1198,6 +1203,32 @@
                 "XX"
             ],
             "value": 2000
+        }
+    ],
+    "icDeRecoExperiment": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "value": {
+                "name": "reco_AA",
+                "groups": [
+                    {
+                        "name": "A",
+                        "config": {
+                            
+                        },
+                        "sampling": 50
+                    },
+                    {
+                        "name": "control",
+                        "config": {
+                            
+                        },
+                        "sampling": 50
+                    }
+                ]
+            }
         }
     ]
 }
