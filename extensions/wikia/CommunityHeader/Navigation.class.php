@@ -31,7 +31,7 @@ class Navigation {
 			function ( $item ) {
 				if ( array_key_exists( 'items', $item ) && !empty( $item['items'] ) ) {
 					return new Link(
-						new Label( $item['title']['key'], Label::TYPE_TRANSLATABLE_TEXT ),
+						new Label( $item['title']['value'], Label::TYPE_TEXT ),
 						$item['href'],
 						$item['tracking_label'],
 						array_map( function ( $item ) {

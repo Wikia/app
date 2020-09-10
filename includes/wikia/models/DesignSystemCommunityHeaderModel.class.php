@@ -394,9 +394,12 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 				'items' => array_map( function ( $item ) {
 					return [
 						'type' => 'link-text',
-						'title' => [
+						'title' => array_key_exists( 'key', $item ) ? [
 							'type' => 'translatable-text',
-							'key' => $item[ 'key' ],
+							'key' => $item[ 'key' ]
+						] : [
+							'type' => 'link-text',
+							'value' => $item[ 'value' ]
 						],
 						'href' => $item[ 'url' ],
 						'tracking_label' => $item[ 'tracking' ],
@@ -593,7 +596,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 		return [
 			'url' => $firstItem->url,
-			'key' => 'community-header-shop',
+			'value' => 'Shop',
 			'tracking' => 'explore-shop',
 			'include' => true,
 			'items' => array_map( function ( $item ) {
