@@ -308,11 +308,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		global $wgCityId;
 
 		if ( $this->exploreMenu === null ) {
-			// temporary debug param
-			$qs = $_SERVER['QUERY_STRING'];
-			 // remove after design review and enable shop
-			$wgEnableShopLink = strpos( $qs, 'enableShopLinkReview=true' ) ? true : false;
-			// current api url for fandom store
+			// api for fandom store
 			$uri = 'http://138.201.119.29:9420/ix/api/seo/v1/footer';
 
 			$wgEnableCommunityPageExt =
@@ -378,7 +374,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 			// If store community add link to explore items
 			if ( $this->isFandomStoreCommunity( $wgCityId ) ) {
-				$storeData = $this->getFandomStoreData( $uri, $wgEnableShopLink );
+				$storeData = $this->getFandomStoreData( $uri );
 
 				if ( $storeData ) {
 					array_push( $exploreItems,  $storeData );
@@ -519,7 +515,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		return array_key_exists( $wikiId, $wgFandomStoreMap );
 	}
 
-	private function getFandomStoreData( $uri, $shouldInclude ) {
+	private function getFandomStoreData( $uri ) {
 		global $wgFandomStoreMap, $wgCityId;
 
 		$storeData = $this->doApiRequest( $uri, $wgCityId );
@@ -529,7 +525,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 			return null;
 		}
 
-		return $this->formatFandomStoreData( $storeData->results, $shouldInclude );
+		return $this->formatFandomStoreData( $storeData->results );
 	}
 
 	private function doApiRequest( $uri, $wikiId ) {
@@ -574,7 +570,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		}	
 	}
 
-	private function formatFandomStoreData( $apiData, $shouldInclude ) {
+	private function formatFandomStoreData( $apiData ) {
 		// get copy of links from api data
 		$arrObj = new ArrayObject( $apiData );
 		$links = $arrObj->getArrayCopy();
@@ -599,7 +595,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 			'url' => $firstItem->url,
 			'key' => 'community-header-shop',
 			'tracking' => 'explore-shop',
-			'include' => $shouldInclude,
+			'include' => true,
 			'items' => array_map( function ( $item ) {
 				$lower = strtolower( $item->text );
 				return [
