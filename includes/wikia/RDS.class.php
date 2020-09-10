@@ -3,33 +3,33 @@
 use Wikia\Logger\WikiaLogger;
 
 /**
- * This class provides access to Redshift analytics data storage on Amazon
+ * This class provides access to RDS analytics data storage on Amazon
  *
  * @author macbre
  *
  * @see https://wikia-inc.atlassian.net/browse/DE-4421
  */
-class Redshift {
+class RDS {
 
 	private static $connection = null;
 
 	/**
-	 * Lazily connect to Redshift using PostgreSQL POD client
+	 * Lazily connect to RDS using PostgreSQL POD client
 	 *
 	 * @return \PDO
 	 * @throws \PDOException
 	 */
 	private static function getConnection() : \PDO {
-		global $wgRedshiftUser, $wgRedshiftPass, $wgRedshiftHost;
+		global $wgWikiAnalyticsDatabaseUser, $wgWikiAnalyticsDatabasePass, $wgWikiAnalyticsDatabaseHost;
 
 		if ( is_null( self::$connection ) ) {
-			$dsn = "pgsql:host={$wgRedshiftHost};dbname=wikianalytics;port=5439";
+			$dsn = "pgsql:host={$wgWikiAnalyticsDatabaseHost};dbname=wikianalytics;port=5432";
 
 			// https://www.php.net/manual/en/pdo.connections.php
 			// https://www.php.net/manual/en/ref.pdo-pgsql.connection.php
 			try {
 				$then = microtime(true);
-				self::$connection = new \PDO( $dsn, $wgRedshiftUser, $wgRedshiftPass );
+				self::$connection = new \PDO( $dsn, $wgWikiAnalyticsDatabaseUser, $wgWikiAnalyticsDatabasePass );
 				// don't allow queries longer than 20s
 				// if the query times out, the result will be empty
 				self::$connection->query("set statement_timeout to 20000");
@@ -37,14 +37,14 @@ class Redshift {
 			}
 			catch ( \PDOException $e ) {
 				WikiaLogger::instance()->error( __METHOD__, [
-					'host' => $wgRedshiftHost,
+					'host' => $wgWikiAnalyticsDatabaseHost,
 					'exception' => $e,
 				] );
 				throw $e;
 			}
 
 			WikiaLogger::instance()->info( __METHOD__, [
-				'host' => $wgRedshiftHost,
+				'host' => $wgWikiAnalyticsDatabaseHost,
 				'took_sec' => $took,
 			] );
 		}
@@ -66,8 +66,8 @@ class Redshift {
 
 		// borrowed from Database::query
 		if ( !( \Profiler::instance() instanceof \ProfilerStub ) ) {
-			$queryProf = 'redshift: ' . substr( \DatabaseBase::generalizeSQL( $sql ), 0, 255 );
-			$totalProf = 'Redshift::query';
+			$queryProf = 'rds: ' . substr( \DatabaseBase::generalizeSQL( $sql ), 0, 255 );
+			$totalProf = 'RDS::query';
 			$totalProfileIn = \Profiler::instance()->scopedProfileIn( $totalProf );
 			$queryProfileIn = \Profiler::instance()->scopedProfileIn( $queryProf );
 		}
@@ -117,16 +117,14 @@ class Redshift {
 		global $wgCityId;
 
 		$sql = 'WITH dates AS (' . # generates a sequence of dates between the current date and :days before
-			'SELECT (GETDATE()::date - row_number() OVER (ORDER BY true))::date AS n ' .
-			'FROM wikianalytics.pageviews ' .
-			'LIMIT :days ' .
+			'SELECT generate_series AS n FROM generate_series((NOW()::DATE - INTERVAL \':days days\'), (NOW()::DATE), \'1 day\')' .
 			'),' .
 			'data AS (' .
 			'SELECT dt, SUM(cnt) AS views FROM wikianalytics.pageviews ' .
 			'WHERE wiki_id = :wiki_id ' .
 			'GROUP BY dt ' .
 			') ' .
-			'SELECT n AS dt, NVL(views, 0) AS views ' .
+			'SELECT n AS dt, COALESCE(views, 0) AS views ' .
 			'FROM dates ' .
 			'LEFT OUTER JOIN data ' .
 			'ON n=dt ' .
