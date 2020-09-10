@@ -33,7 +33,7 @@
 		document.cookie = 'tracking_session_id=' + window.sessionId + '; expires=' + expireDate.toGMTString() +
 			';domain=' + window.wgCookieDomain + '; path=' + window.wgCookiePath + ';';
 		document.cookie = 'pv_number=' + window.pvNumber + '; expires=' + expireDate.toGMTString() +
-            '; path=' + mw.config.get('wgCookiePath') + ';';
+             ';lang=' + mw.config.get('wgLanguageCode') + '; path=' + mw.config.get('wgCookiePath') + ';';
 		document.cookie = 'pv_number_global=' + window.pvNumberGlobal + '; expires=' + expireDate.toGMTString() +
 			';domain=' + window.wgCookieDomain + '; path=' + window.wgCookiePath + ';';
 	})();
