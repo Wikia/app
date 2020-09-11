@@ -519,7 +519,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	}
 
 	private function getFandomStoreData( $uri ) {
-		global $wgFandomStoreMap, $wgCityId;
+		global $wgCityId;
 
 		$storeData = $this->doApiRequest( $uri, $wgCityId );
 
