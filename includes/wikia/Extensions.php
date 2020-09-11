@@ -799,14 +799,14 @@ if( !empty( $wgEnableWallEngine ) ) {
 }
 
 // Enable new style forums (/wiki/Special:Forum)
-if ( !empty( $wgEnableForumExt ) ) {
+//if ( !empty( $wgEnableForumExt ) ) {
 	include( "{$IP}/extensions/wikia/Forum/Forum.setup.php" );
-	if ( is_null( $wgArchiveWikiForums ) ) {
-		$wgArchiveWikiForums = true;
-	}
-} else {
-	include( "{$IP}/extensions/wikia/Forum/ForumDisabled.setup.php" );
-}
+//	if ( is_null( $wgArchiveWikiForums ) ) {
+//		$wgArchiveWikiForums = true;
+//	}
+//} else {
+//	include( "{$IP}/extensions/wikia/Forum/ForumDisabled.setup.php" );
+//}
 
 // Archive old style wiki forums (/wiki/Forums:Index)
 if ( !empty( $wgArchiveWikiForums ) ) {

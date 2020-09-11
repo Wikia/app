@@ -26,33 +26,33 @@ $wgAutoloadClasses['DiscussionsHooksHelper'] = __DIR__ . '/DiscussionsHooksHelpe
 // register special page
 $wgSpecialPages['Discussions'] = 'SpecialDiscussionsController';
 
-// This will cause /wiki/Special:Forum to redirect to Discussions when Discussions
-// is enabled and Forums are disabled.
-if ( !empty( $wgEnableDiscussions ) && empty( $wgEnableForumExt ) ) {
-	$wgAutoloadClasses['SpecialForumRedirectController'] = __DIR__ . '/controllers/SpecialForumRedirectController.class.php';
-	$wgHooks['ArticleViewHeader'][] = 'SpecialForumRedirectController::onArticleViewHeader';
-	$wgHooks['BeforePageHistory'][] = 'SpecialForumRedirectController::onBeforePageHistory';
-	$wgHooks['LinkBegin'][] = 'DiscussionsHooksHelper::onLinkBegin';
-	$wgSpecialPages['Forum'] = 'SpecialForumRedirectController';
-
-	// IRIS-5184: Exclude outgoing links in Forum content from Special:WhatLinksHere and Special:WantedPages
-	$wgHooks['SpecialWhatLinksHere::beforeQuery'][] = 'DiscussionsHooksHelper::onSpecialWhatLinksHereBeforeQuery';
-	$wgHooks['WantedPages::getExcludedSourceNamespaces'][] = 'DiscussionsHooksHelper::onWantedPagesGetExcludedSourceNamespaces';
-
-	// Make sure we recognize the Forum namespaces so we can redirect them if requested
-	$wgExtensionNamespacesFiles['Discussions'] = __DIR__ . '/../Forum/Forum.namespaces.php';
-	wfLoadExtensionNamespaces( 'Forum', [
-		NS_WIKIA_FORUM_BOARD,
-		NS_WIKIA_FORUM_BOARD_THREAD,
-		NS_WIKIA_FORUM_TOPIC_BOARD
-		]
-	);
-	$app->registerNamespaceController(
-		NS_WIKIA_FORUM_BOARD,
-		'SpecialForumRedirectController',
-		'redirectBoardToCategory'
-	);
-}
+//// This will cause /wiki/Special:Forum to redirect to Discussions when Discussions
+//// is enabled and Forums are disabled.
+//if ( !empty( $wgEnableDiscussions ) && empty( $wgEnableForumExt ) ) {
+//	$wgAutoloadClasses['SpecialForumRedirectController'] = __DIR__ . '/controllers/SpecialForumRedirectController.class.php';
+//	$wgHooks['ArticleViewHeader'][] = 'SpecialForumRedirectController::onArticleViewHeader';
+//	$wgHooks['BeforePageHistory'][] = 'SpecialForumRedirectController::onBeforePageHistory';
+//	$wgHooks['LinkBegin'][] = 'DiscussionsHooksHelper::onLinkBegin';
+//	$wgSpecialPages['Forum'] = 'SpecialForumRedirectController';
+//
+//	// IRIS-5184: Exclude outgoing links in Forum content from Special:WhatLinksHere and Special:WantedPages
+//	$wgHooks['SpecialWhatLinksHere::beforeQuery'][] = 'DiscussionsHooksHelper::onSpecialWhatLinksHereBeforeQuery';
+//	$wgHooks['WantedPages::getExcludedSourceNamespaces'][] = 'DiscussionsHooksHelper::onWantedPagesGetExcludedSourceNamespaces';
+//
+//	// Make sure we recognize the Forum namespaces so we can redirect them if requested
+//	$wgExtensionNamespacesFiles['Discussions'] = __DIR__ . '/../Forum/Forum.namespaces.php';
+//	wfLoadExtensionNamespaces( 'Forum', [
+//		NS_WIKIA_FORUM_BOARD,
+//		NS_WIKIA_FORUM_BOARD_THREAD,
+//		NS_WIKIA_FORUM_TOPIC_BOARD
+//		]
+//	);
+//	$app->registerNamespaceController(
+//		NS_WIKIA_FORUM_BOARD,
+//		'SpecialForumRedirectController',
+//		'redirectBoardToCategory'
+//	);
+//}
 
 // message files
 $wgExtensionMessagesFiles['SpecialDiscussions'] = __DIR__ . '/i18n/SpecialDiscussions.i18n.php';
