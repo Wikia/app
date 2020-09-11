@@ -39,7 +39,9 @@ class ReportDetailsHelper {
 
 		$badges = [];
 		foreach ( $userArray as $user ) {
-			$badges[$user->getId()] = DiscussionPermissionManager::getPermissionBadge( $user );
+			$userBadge = '';
+			Hooks::run( 'BadgePermissionsRequired', [ $user, &$userBadge ] );
+			$badges[$user->getId()] = $userBadge;
 		}
 
 		return $badges;

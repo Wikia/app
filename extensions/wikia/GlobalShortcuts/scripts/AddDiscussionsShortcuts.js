@@ -33,7 +33,7 @@ require(['GlobalShortcuts', 'PageActions', 'mw', 'wikia.loader', 'wikia.window']
 			GlobalShortcuts.add(actionId, 'g d');
 
 			function openDiscussions() {
-				w.location.href = mw.config.get('location').origin + '/d';
+				w.location.href = mw.config.get('location').origin + mw.config.get('wgScriptPath') + '/f';
 			}
 		}
 
