@@ -392,25 +392,6 @@ EOL""")
       }
     }
 
-    stage("Apply cron jobs") {
-      dir("app") {
-        // SUS-5531 - apply cron jobs via auto-generated YAML file
-        sh("cd docker/maintenance && bash cronjobs-generator.sh ${imageTag} > ../prod/k8s-cronjobs.yaml")
-        sh("cat docker/prod/k8s-cronjobs.yaml")
-      }
-
-      withDockerContainer(kubectlImage) {
-        if (!params.dry_run) {
-            // cron jobs and alerting is only run on SJC
-            sh "kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/alerting.yaml"
-            sh "kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/k8s-cronjobs.yaml"
-        } else {
-          println("Dry run: kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/alerting.yaml")
-          println("Dry run: kubectl --context kube-sjc-prod -n prod apply -f app/docker/prod/k8s-cronjobs.yaml")
-        }
-      }
-    }
-
     stage('Tag Jira tickets') {
       if (!params.dry_run) {
         //TODO: uncomment when this becomes main release pipeline
