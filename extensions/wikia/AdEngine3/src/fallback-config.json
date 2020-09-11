@@ -99,8 +99,36 @@
                 "oasis"
             ],
             "regions": [
+                "AR",
+                "AT",
+                "BE",
+                "BR",
+                "CL",
+                "CN",
+                "CO",
+                "ES",
+                "FI",
+                "FR",
+                "HK",
+                "ID",
+                "IE",
+                "IN",
+                "IT",
                 "JP",
-                "NL"
+                "KR",
+                "MY",
+                "NL",
+                "NZ",
+                "PE",
+                "PH",
+                "PL",
+                "SE",
+                "SG",
+                "TH",
+                "TR",
+                "TW",
+                "UA",
+                "VN"
             ],
             "value": true
         }
@@ -666,7 +694,10 @@
                 "5461291396",
                 "5459355788",
                 "5460496953",
-                "5460497508"
+                "5460497508",
+                "5473107813",
+                "5467371078",
+                "5467370628"
             ]
         }
     ],
@@ -1138,27 +1169,9 @@
                 "oasis"
             ],
             "regions": [
-                "JP",
-                "NL",
-                "PL",
-                "SG"
-            ],
-            "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v4.0.18/tracking-opt-in.min.js"
-        },
-        {
-            "apps": [
-                "bingebot",
-                "f2",
-                "futhead",
-                "gamepedia",
-                "mobile-wiki",
-                "muthead",
-                "oasis"
-            ],
-            "regions": [
                 "XX"
             ],
-            "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v4.0.17/tracking-opt-in.min.js"
+            "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v4.1.0/tracking-opt-in.min.js"
         }
     ],
     "icPermutive": [
@@ -1215,13 +1228,6 @@
                 "groups": [
                     {
                         "name": "A",
-                        "config": {
-                            
-                        },
-                        "sampling": 50
-                    },
-                    {
-                        "name": "control",
                         "config": {
                             
                         },
