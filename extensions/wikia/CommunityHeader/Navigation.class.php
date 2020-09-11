@@ -27,6 +27,7 @@ class Navigation {
 
 	private function getExploreItems(): array {
 		$exploreItems = $this->model->getExploreMenu()['items'];
+		
 		return array_map(
 			function ( $item ) {
 				if ( array_key_exists( 'items', $item ) && !empty( $item['items'] ) ) {
