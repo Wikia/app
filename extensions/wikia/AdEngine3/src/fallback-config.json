@@ -1223,11 +1223,28 @@
             "apps": [
                 "oasis"
             ],
+            "regions": [
+                "XX"
+            ],
             "value": {
                 "name": "reco_AA",
                 "groups": [
                     {
                         "name": "A",
+                        "config": {
+                            
+                        },
+                        "sampling": 30
+                    },
+                    {
+                        "name": "B",
+                        "config": {
+                            
+                        },
+                        "sampling": 20
+                    },
+                    {
+                        "name": "control",
                         "config": {
                             
                         },
