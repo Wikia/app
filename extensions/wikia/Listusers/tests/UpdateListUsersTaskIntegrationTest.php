@@ -125,7 +125,7 @@ class UpdateListUsersTaskIntegrationTest extends WikiaDatabaseTest {
 		$this->assertEquals( 'chatmoderator', $row->all_groups );
 	}
 
-	private function selectUserRow( int $userId ) {
+	private function selectUserRow( int $userId ) { //TODO SER--
 		return $this->dbr->selectRow( 'events_local_users', '*', [ 'wiki_id' => static::TEST_WIKI_ID, 'user_id' => $userId ] );
 	}
 

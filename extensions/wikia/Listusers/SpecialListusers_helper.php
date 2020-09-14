@@ -23,7 +23,7 @@ class ListusersData {
 	private $mOrderOptions;
 	private $mDBh;
 
-	const TABLE = 'events_local_users';
+	const TABLE = 'events_local_users'; //TODO SER--
 	const CACHE_VERSION = 'v6';
 
 	function __construct( int $city_id ) {

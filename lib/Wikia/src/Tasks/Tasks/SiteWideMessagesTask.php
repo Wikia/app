@@ -741,23 +741,27 @@ class SiteWideMessagesTask extends BaseTask {
 		]);
 
 		$dbr = wfGetDB(DB_SLAVE, array(), $wgSpecialsDB);
-		$sqlValues = (new \WikiaSQL())
-			->SELECT('user_id', 'wiki_id')
-			->FROM('events_local_users')
-			->WHERE('wiki_id')->IN(array_keys($wikisDB))
-				->AND_(StaticSQL::RAW(
-					'(single_group = ? OR all_groups LIKE ?)', [$params['groupName'], "%{$params['groupName']}%"]
-				))
-			->GROUP_BY('wiki_id', 'user_id')
-			->runLoop($dbr, function(&$sqlValues, $row) USE ($params) {
-				$sqlValues []= [$row->wiki_id, $row->user_id, $params['messageId'], MSG_STATUS_UNSEEN];
-			});
+		$users = $dbr->select(
+			'local_user_groups',
+			[ 'user_id', 'wiki_id' ],
+			[
+				'wiki_id' => array_keys( $wikisDB ),
+				'group_name' => $params['groupName']
+			],
+			__METHOD__,
+			[
+				'GROUP BY' => [ 'wiki_id', 'user_id' ]
+			]
+		);
+		$values = array_map( function ( $row ) use ($params) {
+			return [ $row->wiki_id, $row->user_id, $params['messageId'], MSG_STATUS_UNSEEN ];
+		}, iterator_to_array( $users ) );
 
-		if (count($sqlValues)) {
+		if ( count( $values ) ) {
 			$this->info('add records about new message to users', [
-				'users' => count($sqlValues),
+				'users' => count( $values ),
 			]);
-			$result = $this->sendMessageHelperToUsers($sqlValues);
+			$result = $this->sendMessageHelperToUsers( $values );
 		}
 
 		return $result;

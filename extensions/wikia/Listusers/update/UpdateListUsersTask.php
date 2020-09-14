@@ -19,11 +19,7 @@ class UpdateListUsersTask extends BaseTask {
 		$editUpdate = ListUsersEditUpdate::newFromJson( $editUpdateInfo );
 		$wikiId = $this->getWikiId();
 		$userId = $editUpdate->getUserId();
-
 		$editCount = $this->editCountService->getEditCount( $userId );
-
-		$userGroups = $editUpdate->getUserGroups();
-		$groupCount = count( $userGroups );
 
 		$primaryKey = [ 'wiki_id', 'user_id' ];
 
@@ -33,9 +29,6 @@ class UpdateListUsersTask extends BaseTask {
 			'edits' => $editCount,
 			'editdate' => wfTimestamp( TS_DB, $editUpdate->getLatestRevisionTimestamp() ),
 			'last_revision' => $editUpdate->getLatestRevisionId(),
-			'cnt_groups' => $groupCount,
-			'single_group' => $groupCount ? $userGroups[$groupCount - 1] : '',
-			'all_groups' => implode( ';', $userGroups ),
 			'user_is_closed' => 0
 		];
 
@@ -48,7 +41,7 @@ class UpdateListUsersTask extends BaseTask {
 			$fieldsToUpdate,
 			__METHOD__
 		);
-		$this->updateUserGroupsTable( $wikiId, $userId, $userGroups );
+		$this->updateUserGroupsTable( $wikiId, $userId, $editUpdate->getUserGroups() );
 	}
 
 	public function updateUserGroups( array $updateInfo ) {
@@ -57,27 +50,19 @@ class UpdateListUsersTask extends BaseTask {
 		$wikiId = $this->getWikiId();
 		$userId = $groupsUpdate->getUserId();
 
-		$userGroups = $groupsUpdate->getUserGroups();
-		$groupCount = count( $userGroups );
+		$this->updateUserGroupsTable( $wikiId, $userId, $groupsUpdate->getUserGroups() );
 
-		$updatedFields = [
-			'cnt_groups' => $groupCount,
-			'single_group' => $groupCount ? $userGroups[$groupCount - 1] : '',
-			'all_groups' => implode( ';', $userGroups ),
-		];
-
-		$this->updateUserGroupsTable( $wikiId, $userId, $userGroups );
-
-		// If a row already exists for this user and this wiki, a cheap UPDATE operation is sufficient
-		$this->writeConnection()->update(
+		// If a row already exists for this user and this wiki, a cheap UPDATE of editdate operation is sufficient
+		$dbw = $this->writeConnection();
+		$dbw->update(
 			static::EVENTS_LOCAL_USERS,
-			$updatedFields,
+			[ 'editdate' => $dbw->timestamp() ],
 			[ 'wiki_id' => $wikiId, 'user_id' => $userId ],
 			__METHOD__
 		);
 
 		// No row exists yet for this user, so create one
-		if ( !$this->writeConnection()->affectedRows() ) {
+		if ( !$dbw->affectedRows() ) {
 			$dbr = wfGetDB( DB_SLAVE );
 
 			$editCount = $this->editCountService->getEditCount( $userId );
@@ -95,13 +80,10 @@ class UpdateListUsersTask extends BaseTask {
 				'edits' => $editCount,
 				'editdate' => $lastEdit ? wfTimestamp( TS_DB, $lastEdit->timestamp ) : '',
 				'last_revision' => $lastEdit ? $lastEdit->revision_id : 0,
-				'cnt_groups' => $groupCount,
-				'single_group' => $groupCount ? $userGroups[$groupCount - 1] : '',
-				'all_groups' => implode( ';', $userGroups ),
 				'user_is_closed' => 0
 			];
 
-			$this->writeConnection()->insert( static::EVENTS_LOCAL_USERS, [ $row ], __METHOD__ );
+			$dbw->insert( static::EVENTS_LOCAL_USERS, [ $row ], __METHOD__ );
 		}
 	}
 
