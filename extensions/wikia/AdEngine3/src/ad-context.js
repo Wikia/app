@@ -23,6 +23,12 @@ export default {
 						[300, 600]
 					]
 				},
+				hivi_leaderboard: {
+					sizes: [
+						[728, 90],
+						[970, 90],
+					],
+				},
 				top_leaderboard: {
 					sizes: [
 						[728, 90],
