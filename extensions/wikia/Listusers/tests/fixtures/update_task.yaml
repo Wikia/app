@@ -48,13 +48,10 @@ revision:
     rev_user: 2
     rev_user_text: ''
     rev_timestamp: '20110101000000'
-events_local_users://TODO SER--
+events_local_users:
   - wiki_id: 1299
     user_id: 1
     edits: 1
     editdate: '2009-01-01 00:00:00'
     last_revision: 1
-    cnt_groups: 0
-    single_group: ''
-    all_groups: ''
     user_is_closed: 0
