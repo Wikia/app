@@ -1,0 +1,13 @@
+{
+    "name": "sailthru/sailthru-php5-client",
+    "type": "library",
+    "description": "Sailthru PHP5 Client",
+    "homepage": "http://github.com/sailthru/sailthru-php5-client",
+    "license": "MIT",
+    "require-dev": {
+        "phpunit/phpunit": "~4.8"
+    },
+    "autoload": {
+        "classmap": ["sailthru/"]
+    }
+}

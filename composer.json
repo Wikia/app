@@ -75,7 +75,8 @@
     "google/cloud-storage": "^1.11",
     "guzzlehttp/guzzle": "^6.3",
     "ackintosh/ganesha": "^0.4.0",
-    "ext-memcached": "*"
+    "ext-memcached": "*",
+    "sailthru/sailthru-php5-client": "^1.2"
   },
   "require-dev": {
     "ext-yaml": "*",

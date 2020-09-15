@@ -1,0 +1,25 @@
+dist: trusty
+language: php
+php:
+  - 5.4
+  - 5.5
+  - 5.6
+  - 7.0
+  - 7.1
+  - hhvm
+
+env: COVERAGE=0
+
+matrix:
+  include:
+    - php: 5.6
+      env: COVERAGE=1
+
+before_script:
+  - if [[ "$COVERAGE" -eq 0 ]]; then composer install; else composer require satooshi/php-coveralls --dev; fi
+
+script:
+  - if [[ "$COVERAGE" -eq 0 ]]; then vendor/bin/phpunit; else mkdir -p build/logs; vendor/bin/phpunit --coverage-clover=build/logs/clover.xml; fi
+
+after_success:
+  - if [[ "$COVERAGE" -gt 0 ]]; then vendor/bin/coveralls; fi

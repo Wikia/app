@@ -3380,7 +3380,8 @@
         "homepage": "https://github.com/sebastianbergmann/php-token-stream/",
         "keywords": [
             "tokenizer"
-        ]
+        ],
+        "abandoned": true
     },
     {
         "name": "phpunit/phpunit",
@@ -4219,6 +4220,39 @@
             "template",
             "uri"
         ]
+    },
+    {
+        "name": "sailthru/sailthru-php5-client",
+        "version": "1.2.4",
+        "version_normalized": "1.2.4.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/sailthru/sailthru-php5-client.git",
+            "reference": "37f8ff4981b087a307de4d0c4ea09f326060da60"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/sailthru/sailthru-php5-client/zipball/37f8ff4981b087a307de4d0c4ea09f326060da60",
+            "reference": "37f8ff4981b087a307de4d0c4ea09f326060da60",
+            "shasum": ""
+        },
+        "require-dev": {
+            "phpunit/phpunit": "~4.8"
+        },
+        "time": "2017-08-02T21:34:23+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "classmap": [
+                "sailthru/"
+            ]
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "description": "Sailthru PHP5 Client",
+        "homepage": "http://github.com/sailthru/sailthru-php5-client"
     },
     {
         "name": "sebastian/code-unit-reverse-lookup",
@@ -6267,6 +6301,7 @@
             "http",
             "psr",
             "psr-7"
-        ]
+        ],
+        "abandoned": "laminas/laminas-diactoros"
     }
 ]

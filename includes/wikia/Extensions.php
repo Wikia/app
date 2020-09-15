@@ -1823,4 +1823,6 @@ include_once "$IP/extensions/wikia/WikiDescription/WikiDescription.setup.php";
 
 include_once "$IP/extensions/wikia/PerformanceMonitoring/PerformanceMonitoring.setup.php";
 
+include_once "$IP/extensions/wikia/Sailthru/Sailthru.setup.php";
+
 $wgUCPCommunityCNWAddress = 'https://ucp.fandom.com/wiki/Special:CreateNewWiki';

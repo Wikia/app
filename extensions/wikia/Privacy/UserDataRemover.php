@@ -16,6 +16,7 @@ class UserDataRemover {
 	 */
 	public function startRemovalProcess( $userId ) {
 		$user = User::newFromId( $userId );
+		Hooks::run( 'RtbfGlobalDataRemovalStart', [ $user ] );
 		if( $user->isAnon() ) {
 			$message = "Can't remove data for anon";
 			$this->warning( $message );
