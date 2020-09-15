@@ -9423,6 +9423,13 @@ $wgEnableForumMigrationMessageGlobal = false;
 $wgEnablePostForumMigrationMessage = false;
 
 /**
+ * The URL of the XHGUI instance to send profiling data to.
+ * If null, ondemand profiling is disabled.
+ * @var string|null $wgXhguiProfilerUrl
+ */
+$wgXhguiProfilerUrl = null;
+
+/**
  * Expiration timestamp for post forum migration message
  */
 $wgPostForumMigrationMessageExpiration = 0;
