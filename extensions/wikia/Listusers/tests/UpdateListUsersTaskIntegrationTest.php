@@ -52,7 +52,7 @@ class UpdateListUsersTaskIntegrationTest extends WikiaDatabaseTest {
 		$this->assertEquals( '2017-11-10 00:00:00', $row->editdate );
 		$this->assertEquals( 3, $row->last_revision );
 
-		$this->assertEquals( [ 'sysop', 'bureaucrat' ], $this->selectUserGroups( self::USER_ID_WITH_DATA ) );
+		$this->assertEquals( [ 'bureaucrat', 'sysop' ], $this->selectUserGroups( self::USER_ID_WITH_DATA ) );
 	}
 
 	public function testEditUpdateUpdatesExistingDataForUser() {
@@ -95,7 +95,7 @@ class UpdateListUsersTaskIntegrationTest extends WikiaDatabaseTest {
 		$this->assertEquals( 3, $row->last_revision );
 
 		$this->assertEquals(
-			[ 'chatmoderator', 'sysop', 'bureaucrat' ],
+			[ 'bureaucrat', 'chatmoderator', 'sysop' ],
 			$this->selectUserGroups( self::USER_ID_WITH_DATA )
 		);
 	}

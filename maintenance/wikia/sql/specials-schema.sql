@@ -43,9 +43,6 @@ CREATE TABLE `events_local_users` (
   `edits` int(11) unsigned NOT NULL DEFAULT '0',
   `editdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `last_revision` int(11) NOT NULL DEFAULT '0',
-  `cnt_groups` smallint(4) NOT NULL DEFAULT '0',
-  `single_group` varchar(255) NOT NULL DEFAULT '',
-  `all_groups` mediumtext NOT NULL,
   `user_is_closed` tinyint(1) DEFAULT '0',
   PRIMARY KEY (`wiki_id`,`user_id`),
   KEY `user_edits` (`user_id`,`edits`,`wiki_id`)
