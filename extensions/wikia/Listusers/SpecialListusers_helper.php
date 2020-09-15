@@ -25,6 +25,7 @@ class ListusersData {
 
 	const TABLE = 'events_local_users';
 	const CACHE_VERSION = 'v6';
+	private const LOCAL_USER_GROUPS_TABLE = 'local_user_groups';
 
 	function __construct( int $city_id ) {
 		global $wgSpecialsDB;
@@ -118,71 +119,114 @@ class ListusersData {
 
 			/* initial conditions for SQL query */
 			$where = [
-					'wiki_id' => $this->mCityId,
-					"user_id > 0",
+					self::TABLE . '.wiki_id' => $this->mCityId,
+					self::TABLE . ".user_id > 0",
 					'user_is_closed' => 0
 			];
 
-			/* filter: groups */
-			if ( !empty( $this->mFilterGroup ) && is_array( $this->mFilterGroup ) ) {
-				$whereGroup = array();
-				foreach ( $this->mFilterGroup as $group ) {
-					if ( !empty($group) ) {
-						if ( $group == Listusers::DEF_GROUP_NAME ) {
-							$whereGroup[] = " all_groups = '' ";
-						} else {
-							$whereGroup[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), $group );
-							$whereGroup[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), sprintf("%s;", $group), $dbs->anyString() );
-						}
-					}
-				}
-
-				if ( !empty( $whereGroup ) ) {
-					$where[] = implode( " or ", $whereGroup );
-				}
-			}
-
 			/* filter: user ID  */
 			if ( !empty( $this->mUserId ) ) {
-				$where[] = " user_id = ". intval( $this->mUserId );
+				$where[] = self::TABLE . "user_id = $this->mUserId";
 			}
 
 			/* filter: number of edits */
 			if ( !empty( $this->mEditsThreshold ) ) {
-				$where[] = " edits >= ". intval( $this->mEditsThreshold );
+				$where[] = "edits >= $this->mEditsThreshold";
 			}
 
-			/* number of records */
-			$data['cnt'] = (int) $dbs->selectField(
-				self::TABLE, // TODO SER--
-				'count(*)',
+			/* filter: groups */
+			if ( !empty( $this->mFilterGroup ) &&
+				is_array( $this->mFilterGroup ) &&
+				!in_array( Listusers::DEF_GROUP_NAME, $this->mFilterGroup ) &&
+				// mFilterGroup can be array with empty string [''], filter it out
+				( count( $this->mFilterGroup ) != 1 || !empty( $this->mFilterGroup[0] ) ) ) {
+				$where[self::LOCAL_USER_GROUPS_TABLE . '.group_name'] = $this->mFilterGroup;
+			}
+
+			$result = $dbs->select(
+				[ self::TABLE, self::LOCAL_USER_GROUPS_TABLE ],
+				[ '1' ],
 				$where,
-				__METHOD__ . '::count'
+				__METHOD__,
+				[
+					'GROUP BY' => [
+						self::TABLE . '.wiki_id',
+						self::TABLE . '.user_id',
+					]
+				],
+				[
+					self::LOCAL_USER_GROUPS_TABLE => [
+						'LEFT JOIN',
+						[
+							self::TABLE . '.wiki_id = ' . self::LOCAL_USER_GROUPS_TABLE . '.wiki_id',
+							self::TABLE . '.user_id = ' . self::LOCAL_USER_GROUPS_TABLE . '.user_id',
+						]
+					]
+				]
 			);
+			// hacky, count returned groups as selectRowCount is not supported
+			$data['cnt'] = count( iterator_to_array( $result ) );
 
 			if ( $data['cnt'] > 0 ) {
+				$orderBy = [];
+				foreach ( $this->mOrder as $order ) {
+					$orderAndDirection = explode( ' ', $order );
+					if ( $orderAndDirection[0] == 'all_groups' ) {
+						$orderBy[] = implode( ' ', [ 'GROUP_CONCAT(DISTINCT lug.group_name)', $orderAndDirection[1] ] );
+					} elseif ( $orderAndDirection[0] == 'cnt_groups' ) {
+						$orderBy[] = implode( ' ', [ 'COUNT(DISTINCT lug.group_name)', $orderAndDirection[1] ] );
+					} else {
+						$orderBy[] = $order;
+					}
+				}
+				$orderBy = implode( ',', $orderBy );
+
 				$userIsBlocked = $user->isBlocked( true, false );
 				$sk = $context->getSkin();
 				/* select records */
 				$oRes = $dbs->select(
-					array( self::TABLE ), // TODO SER--
-					array(
-						'user_id',
-						'cnt_groups',
-						'all_groups',
+					[ self::TABLE, self::LOCAL_USER_GROUPS_TABLE, 'lug' => self::LOCAL_USER_GROUPS_TABLE ],
+					[
+						self::TABLE . '.user_id',
+						'GROUP_CONCAT(DISTINCT lug.group_name) as groups',
 						'edits',
 						'last_revision',
 						'editdate',
 						'ifnull(last_revision, 0) as max_rev',
 						'ifnull(unix_timestamp(editdate), 0) as ts_edit'
-					),
+					],
 					$where,
 					__METHOD__,
-					array(
-						'ORDER BY'	=> $orderby,
-						'LIMIT'		=> $this->mLimit,
-						'OFFSET'	=> intval($this->mOffset)
-					)
+					[
+						'GROUP BY' => [
+							self::TABLE . '.wiki_id',
+							self::TABLE . '.user_id',
+							// Group by sortable fields
+							self::TABLE . '.edits',
+							self::TABLE . '.editdate'
+						],
+						'ORDER BY' => $orderBy,
+						'LIMIT' => $this->mLimit,
+						'OFFSET' => $this->mOffset,
+					],
+					[
+						// First join for filtering by groups
+						self::LOCAL_USER_GROUPS_TABLE => [
+							'LEFT JOIN',
+							[
+								self::TABLE . '.wiki_id = ' . self::LOCAL_USER_GROUPS_TABLE . '.wiki_id',
+								self::TABLE . '.user_id = ' . self::LOCAL_USER_GROUPS_TABLE . '.user_id',
+							]
+						],
+						// Join again to fetch all groups for selected users
+						'lug' => [
+							'LEFT JOIN',
+							[
+								self::TABLE . '.wiki_id = lug.wiki_id',
+								self::TABLE . '.user_id = lug.user_id',
+							]
+						],
+					]
 				);
 
 				$data['data'] = array();
@@ -194,7 +238,7 @@ class ListusersData {
 					}
 
 					/* groups */
-					$groups = explode(";", $oRow->all_groups);
+					$groups = explode(",", $oRow->groups);
 					$group = "<i>" . wfMsg('listusers-nonegroup') . "</i>";
 					if ( !empty( $groups ) ) {
 						$group = implode(", ", $groups);
@@ -247,7 +291,7 @@ class ListusersData {
 						'user_id' 			=> $oRow->user_id,
 						'user_name' 		=> $oUser->getName(),
 						'user_link'			=> $sk->makeLinkObj($oUser->getUserPage(), $oUser->getName()),
-						'groups_nbr' 		=> $oRow->cnt_groups,
+						'groups_nbr' 		=> count( $groups ),
 						'groups' 			=> $group,
 						'rev_cnt' 			=> $oRow->edits,
 						'blcked'			=> $oUser->isBlocked( true, false ),
