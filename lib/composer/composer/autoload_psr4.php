@@ -8,6 +8,7 @@ $baseDir = dirname(dirname($vendorDir));
 return array(
     'phpDocumentor\\Reflection\\' => array($vendorDir . '/phpdocumentor/reflection-common/src', $vendorDir . '/phpdocumentor/reflection-docblock/src', $vendorDir . '/phpdocumentor/type-resolver/src'),
     'Zend\\Diactoros\\' => array($vendorDir . '/zendframework/zend-diactoros/src'),
+    'Xhgui\\Profiler\\' => array($vendorDir . '/perftools/php-profiler/src'),
     'Wikimedia\\' => array($vendorDir . '/wikimedia/scoped-callback/src'),
     'Wikia\\Search\\' => array($baseDir . '/extensions/wikia/Search/classes'),
     'Wikia\\' => array($baseDir . '/lib/Wikia/src'),
