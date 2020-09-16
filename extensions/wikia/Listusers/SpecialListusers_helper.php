@@ -126,7 +126,7 @@ class ListusersData {
 
 			/* filter: user ID  */
 			if ( !empty( $this->mUserId ) ) {
-				$where[] = self::TABLE . "user_id = $this->mUserId";
+				$where[] = self::TABLE . ".user_id = $this->mUserId";
 			}
 
 			/* filter: number of edits */
@@ -135,12 +135,14 @@ class ListusersData {
 			}
 
 			/* filter: groups */
-			if ( !empty( $this->mFilterGroup ) &&
-				is_array( $this->mFilterGroup ) &&
-				!in_array( Listusers::DEF_GROUP_NAME, $this->mFilterGroup ) &&
-				// mFilterGroup can be array with empty string [''], filter it out
-				( count( $this->mFilterGroup ) != 1 || !empty( $this->mFilterGroup[0] ) ) ) {
-				$where[self::LOCAL_USER_GROUPS_TABLE . '.group_name'] = $this->mFilterGroup;
+			if ( !empty( $this->mFilterGroup ) && is_array( $this->mFilterGroup ) ) {
+				$filteredGroups = array_filter( $this->mFilterGroup, function ( $group ): bool {
+					return empty( $group ) || $group == Listusers::DEF_GROUP_NAME;
+				} );
+
+				if ( !empty( $filteredGroups ) ) {
+					$where[self::LOCAL_USER_GROUPS_TABLE . '.group_name'] = $this->mFilterGroup;
+				}
 			}
 
 			$result = $dbs->select(
@@ -169,19 +171,6 @@ class ListusersData {
 			$data['cnt'] = count( iterator_to_array( $result ) );
 
 			if ( $data['cnt'] > 0 ) {
-				$orderBy = [];
-				foreach ( $this->mOrder as $order ) {
-					$orderAndDirection = explode( ' ', $order );
-					if ( $orderAndDirection[0] == 'all_groups' ) {
-						$orderBy[] = implode( ' ', [ 'GROUP_CONCAT(DISTINCT lug.group_name)', $orderAndDirection[1] ] );
-					} elseif ( $orderAndDirection[0] == 'cnt_groups' ) {
-						$orderBy[] = implode( ' ', [ 'COUNT(DISTINCT lug.group_name)', $orderAndDirection[1] ] );
-					} else {
-						$orderBy[] = $order;
-					}
-				}
-				$orderBy = implode( ',', $orderBy );
-
 				$userIsBlocked = $user->isBlocked( true, false );
 				$sk = $context->getSkin();
 				/* select records */
@@ -206,7 +195,7 @@ class ListusersData {
 							self::TABLE . '.edits',
 							self::TABLE . '.editdate'
 						],
-						'ORDER BY' => $orderBy,
+						'ORDER BY' => $this->getOrderByString(),
 						'LIMIT' => $this->mLimit,
 						'OFFSET' => $this->mOffset,
 					],
@@ -328,6 +317,20 @@ class ListusersData {
 
 		wfProfileOut( __METHOD__ );
 		return $data;
+	}
+
+	private function getOrderByString(): string {
+		$orderBy = array_map( function ( $order ) {
+			[ $order, $direction ] = explode( ' ', $order );
+			if ( $order == 'all_groups' ) { // Change legacy 'all_groups' to group list
+				return implode( ' ', [ 'GROUP_CONCAT(DISTINCT lug.group_name)', $direction ] );
+			}
+			if ( $order == 'cnt_groups' ) { // Change legacy 'cnt_groups' to group count
+				return implode( ' ', [ 'COUNT(DISTINCT lug.group_name)', $direction ] );
+			}
+			return $order;
+		}, $this->mOrder );
+		return implode( ',', $orderBy );
 	}
 
 	/*
