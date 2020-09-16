@@ -1,7 +1,16 @@
 <?php
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
+use Wikia\Logger\WikiaLogger;
+use function GuzzleHttp\Psr7\build_query;
+
+
 class DesignSystemCommunityHeaderModel extends WikiaModel {
 	const WORDMARK_TYPE_GRAPHIC = 'graphic';
+	const MEMC_PREFIX_FANDOM_STORE = 'DesignSystemCommunityHeaderModelClass::doApiRequest';
+	const FANDOM_STORE_ERROR_MESSAGE = 'Failed to get data from Fandom Store';
+	const FANDOM_STORE_ITEM_LIMIT = 9;
 
 	private $productInstanceId;
 	private $langCode;
@@ -296,7 +305,12 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	}
 
 	public function getExploreMenu(): array {
+		global $wgCityId;
+
 		if ( $this->exploreMenu === null ) {
+			// api for fandom store
+			$uri = 'http://138.201.119.29:9420/ix/api/seo/v1/footer';
+
 			$wgEnableCommunityPageExt =
 				WikiFactory::getVarValueByName( 'wgEnableCommunityPageExt',
 					$this->productInstanceId, false, F::app()->wg->enableCommunityPageExt );
@@ -358,6 +372,15 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 				],
 			];
 
+			// If store community add link to explore items
+			if ( $this->isFandomStoreCommunity( $wgCityId ) ) {
+				$storeData = $this->getFandomStoreData( $uri );
+
+				if ( $storeData ) {
+					array_push( $exploreItems,  $storeData );
+				}
+			}
+
 			$this->exploreMenu = [
 				'type' => 'dropdown',
 				'title' => [
@@ -371,12 +394,26 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 				'items' => array_map( function ( $item ) {
 					return [
 						'type' => 'link-text',
-						'title' => [
+						'title' => array_key_exists( 'key', $item ) ? [
 							'type' => 'translatable-text',
-							'key' => $item[ 'key' ],
+							'key' => $item[ 'key' ]
+						] : [
+							'type' => 'link-text',
+							'value' => $item[ 'value' ]
 						],
 						'href' => $item[ 'url' ],
-						'tracking_label' => $item[ 'tracking' ]
+						'tracking_label' => $item[ 'tracking' ],
+						'items' => array_key_exists( 'items', $item ) ? array_map( function ( $item ) {
+							return [
+								'type' => 'link-text',
+								'title' => [
+									'type' => 'text',
+									'value' => $item['value']
+								],
+								'href' => $item[ 'url' ],
+								'tracking_label' => $item[ 'tracking' ],
+							];
+						}, $item[ 'items' ] ) : [],
 					];
 				}, array_values( array_filter( $exploreItems, function ( $item ) {
 					return $item[ 'include' ];
@@ -474,5 +511,108 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 	private function getSpecialPageURL( $name ): string {
 		return SpecialPage::getTitleFor( $name )->getLocalURL();
+	}
+
+	private function isFandomStoreCommunity( $wikiId ) {
+		global $wgFandomStoreMap;
+		return array_key_exists( $wikiId, $wgFandomStoreMap );
+	}
+
+	private function getFandomStoreData( $uri ) {
+		global $wgCityId;
+
+		$storeData = $this->doApiRequest( $uri, $wgCityId );
+
+		// if results are empty, return null
+		if ( empty( $storeData->results ) ) {
+			return null;
+		}
+
+		return $this->formatFandomStoreData( $storeData->results );
+	}
+
+	private function doApiRequest( $uri, $wikiId ) {
+		global $wgMemc;
+
+		$memcKey = wfMemcKey( self::MEMC_PREFIX_FANDOM_STORE, $wikiId );
+		$retVal = $wgMemc->get( $memcKey );
+
+		// return cached value if available
+		if ( !empty( $retVal ) ) {
+			return $retVal;
+		} else {
+			$client = new Client( [
+				'base_uri' => $uri,
+				'timeout' => 5.0,
+			] );
+			$params = [
+				'clientId' => 'fandom',
+				'relevanceKey' => $this->getRelevanceKey(),
+			];
+
+			try {
+				$response = $client->get( '', [
+					'query' => build_query( $params, PHP_QUERY_RFC1738 ),
+				] );
+				$data = json_decode( $response->getBody() );
+				// store in cache for one hour
+				$wgMemc->set( $memcKey, $data, 3600 );
+				return $data;
+			}
+			catch ( ClientException $e ) {
+				WikiaLogger::instance()->error( self::FANDOM_STORE_ERROR_MESSAGE, [
+					'error_message' => $e->getMessage(),
+					'status_code' => $e->getCode(),
+				] );
+	
+				throw new WikiaException( self::FANDOM_STORE_ERROR_MESSAGE, 500, $e );
+			}
+			finally {
+				return null;
+			}
+		}	
+	}
+
+	private function formatFandomStoreData( $apiData ) {
+		// get copy of links from api data
+		$arrObj = new ArrayObject( $apiData );
+		$links = $arrObj->getArrayCopy();
+
+		// remove store item object from list
+		$firstItem = array_shift( $links );
+
+		// Only display 9 items + show more link
+		if ( count( $apiData ) > 10 ) {
+			// create a show more item
+			$showMoreItem = (object) [
+				"url" => $firstItem->url,
+				"text" => 'Show More'
+			];
+			// get the first 9 links
+			$links = array_slice( $links, null, self::FANDOM_STORE_ITEM_LIMIT );
+			// add show more item to end of links
+			array_push( $links, $showMoreItem );
+		}
+
+		return [
+			'url' => $firstItem->url,
+			'value' => 'Shop',
+			'tracking' => 'explore-shop',
+			'include' => true,
+			'items' => array_map( function ( $item ) {
+				$lower = strtolower( $item->text );
+				return [
+					'tracking' => 'explore-shop-' . $lower,
+					'url' => $item->url,
+					'value' => $item->text,
+				];
+			}, $links ),
+		];
+	}
+
+	private function getRelevanceKey(): string {
+		global $wgCityId, $wgFandomStoreMap;
+
+		return $wgFandomStoreMap[ $wgCityId ];
 	}
 }
