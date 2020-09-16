@@ -160,6 +160,7 @@ class ListusersData {
 						[
 							self::TABLE . '.wiki_id = ' . self::LOCAL_USER_GROUPS_TABLE . '.wiki_id',
 							self::TABLE . '.user_id = ' . self::LOCAL_USER_GROUPS_TABLE . '.user_id',
+							self::LOCAL_USER_GROUPS_TABLE . '.expiry IS NULL OR ' . self::LOCAL_USER_GROUPS_TABLE . '.expiry > NOW()'
 						]
 					]
 				]
@@ -216,6 +217,7 @@ class ListusersData {
 							[
 								self::TABLE . '.wiki_id = ' . self::LOCAL_USER_GROUPS_TABLE . '.wiki_id',
 								self::TABLE . '.user_id = ' . self::LOCAL_USER_GROUPS_TABLE . '.user_id',
+								self::LOCAL_USER_GROUPS_TABLE . '.expiry IS NULL OR ' . self::LOCAL_USER_GROUPS_TABLE . '.expiry > NOW()'
 							]
 						],
 						// Join again to fetch all groups for selected users
@@ -224,6 +226,7 @@ class ListusersData {
 							[
 								self::TABLE . '.wiki_id = lug.wiki_id',
 								self::TABLE . '.user_id = lug.user_id',
+								'lug.expiry IS NULL OR lug.expiry > NOW()'
 							]
 						],
 					]
@@ -411,7 +414,11 @@ class ListusersData {
 		$groups = $dbr->selectFieldValues(
 			'local_user_groups',
 			'group_name',
-			[ 'user_id' => $user_id, 'wiki_id' => $this->mCityId ]
+			[
+				'user_id' => $user_id,
+				'wiki_id' => $this->mCityId,
+				'expiry IS NULL OR expiry > NOW()'
+			]
 		);
 
 		$central_groups = array();

@@ -746,7 +746,8 @@ class SiteWideMessagesTask extends BaseTask {
 			[ 'user_id', 'wiki_id' ],
 			[
 				'wiki_id' => array_keys( $wikisDB ),
-				'group_name' => $params['groupName']
+				'group_name' => $params['groupName'],
+				'expiry IS NULL OR expiry > NOW()'
 			],
 			__METHOD__,
 			[
