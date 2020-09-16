@@ -392,10 +392,8 @@ class SpecialAnalytics extends \SpecialPage {
 			$this->content = "
 			<div id='analytics_wrapper'>
 				<div id='analytics_confidential_header'>
-					<div id='analytics_confidential'>
-					We're having trouble retrieving analytics data at the moment.
-					Please try again in a couple of minutes.
-					We're sorry for the inconvenience.
+					<div id='analytics_confidential' class='analytics_confidential_{$skinKey}'>
+					" . wfMessage( 'db_error' )->escaped() . "
 					</div>
 				</div>
 			</div>
