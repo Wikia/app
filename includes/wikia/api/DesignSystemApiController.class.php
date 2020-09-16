@@ -213,7 +213,6 @@ class DesignSystemApiController extends WikiaApiController {
 
 		// api for fandom store
 		$uri = 'http://138.201.119.29:9420/ix/api/seo/v1/footer'; // https://shop.fandom.com/ix/api/seo/v1/footer 500 - Internal Server Error
-		
 		$memcKey = wfMemcKey( self::MEMC_PREFIX_FANDOM_STORE, $wgCityId );
 
 		// do api request
@@ -241,9 +240,6 @@ class DesignSystemApiController extends WikiaApiController {
 				'status_code' => $e->getCode(),
 			] );
 
-			throw new WikiaException( self::FANDOM_STORE_ERROR_MESSAGE, 500, $e );
-		}
-		finally {
 			return null;
 		}
 	}

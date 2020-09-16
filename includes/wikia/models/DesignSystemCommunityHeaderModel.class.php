@@ -363,7 +363,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 			// If store community add link to explore items
 			if ( $this->isFandomStoreCommunity( $wgCityId ) ) {
-				$storeData = $this->getFandomStoreData();
+				$storeData = $this->getFandomStoreDataFromCache();
 
 				if ( $storeData ) {
 					array_push( $exploreItems,  $storeData );
@@ -507,7 +507,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		return array_key_exists( $wikiId, $wgFandomStoreMap );
 	}
 
-	private function getFandomStoreData() {
+	private function getFandomStoreDataFromCache() {
 		global $wgMemc, $wgCityId;
 	
 		$memcKey = wfMemcKey( DesignSystemApiController::MEMC_PREFIX_FANDOM_STORE, $wgCityId );
@@ -519,7 +519,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 			return null;
 		}
 
-		return $this->formatFandomStoreData( $storeData->results );
+		return $this->formatFandomStoreData( $cachedStoreData->results );
 	}
 
 	private function formatFandomStoreData( $apiData ) {
