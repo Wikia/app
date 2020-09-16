@@ -1,10 +1,18 @@
 <?php
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
+use Wikia\Logger\WikiaLogger;
+use function GuzzleHttp\Psr7\build_query;
+
 class DesignSystemApiController extends WikiaApiController {
 	const PARAM_PRODUCT = 'product';
 	const PARAM_ID = 'id';
 	const PARAM_LANG = 'lang';
 	const PRODUCT_WIKIS = 'wikis';
+	const MEMC_PREFIX_FANDOM_STORE = 'DesignSystemCommunityHeaderModelClass::doApiRequest';
+	const FANDOM_STORE_ERROR_MESSAGE = 'Failed to get data from Fandom Store';
+	const TTL_INFINITE = 0; // setting to 0 never expires
 
 	protected $cors;
 
@@ -194,5 +202,49 @@ class DesignSystemApiController extends WikiaApiController {
 		global $wgServer, $wgWikiaOrgBaseDomain;
 
 		return wfGetBaseDomainForHost( parse_url( $wgServer, PHP_URL_HOST ) ) === $wgWikiaOrgBaseDomain;
+	}
+
+
+	/**
+	 * External API request to fandom store
+	 */
+	public function getFandomStoreData() {
+		global $wgCityId, $wgMemc, $wgFandomStoreMap;
+
+		// api for fandom store
+		$uri = 'http://138.201.119.29:9420/ix/api/seo/v1/footer'; // https://shop.fandom.com/ix/api/seo/v1/footer 500 - Internal Server Error
+		
+		$memcKey = wfMemcKey( self::MEMC_PREFIX_FANDOM_STORE, $wgCityId );
+
+		// do api request
+		$client = new Client( [
+			'base_uri' => $uri,
+			'timeout' => 30.0
+		] );
+		$params = [
+			'clientId' => 'fandom',
+			'relevanceKey' => $wgFandomStoreMap[ $wgCityId ],
+		];
+
+		try {
+			$response = $client->get( '', [
+				'query' => build_query( $params, PHP_QUERY_RFC1738 ),
+			] );
+			$data = json_decode( $response->getBody() );
+			// store in cache indefinitely
+			$wgMemc->set( $memcKey, $data, self::TTL_INFINITE );
+			return $data;
+		}
+		catch ( ClientException $e ) {
+			WikiaLogger::instance()->error( self::FANDOM_STORE_ERROR_MESSAGE, [
+				'error_message' => $e->getMessage(),
+				'status_code' => $e->getCode(),
+			] );
+
+			throw new WikiaException( self::FANDOM_STORE_ERROR_MESSAGE, 500, $e );
+		}
+		finally {
+			return null;
+		}
 	}
 }

@@ -1,15 +1,7 @@
 <?php
 
-use GuzzleHttp\Client;
-use GuzzleHttp\Exception\ClientException;
-use Wikia\Logger\WikiaLogger;
-use function GuzzleHttp\Psr7\build_query;
-
-
 class DesignSystemCommunityHeaderModel extends WikiaModel {
 	const WORDMARK_TYPE_GRAPHIC = 'graphic';
-	const MEMC_PREFIX_FANDOM_STORE = 'DesignSystemCommunityHeaderModelClass::doApiRequest';
-	const FANDOM_STORE_ERROR_MESSAGE = 'Failed to get data from Fandom Store';
 	const FANDOM_STORE_ITEM_LIMIT = 9;
 
 	private $productInstanceId;
@@ -308,9 +300,6 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		global $wgCityId;
 
 		if ( $this->exploreMenu === null ) {
-			// api for fandom store
-			$uri = 'http://138.201.119.29:9420/ix/api/seo/v1/footer';
-
 			$wgEnableCommunityPageExt =
 				WikiFactory::getVarValueByName( 'wgEnableCommunityPageExt',
 					$this->productInstanceId, false, F::app()->wg->enableCommunityPageExt );
@@ -374,7 +363,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 			// If store community add link to explore items
 			if ( $this->isFandomStoreCommunity( $wgCityId ) ) {
-				$storeData = $this->getFandomStoreData( $uri );
+				$storeData = $this->getFandomStoreData();
 
 				if ( $storeData ) {
 					array_push( $exploreItems,  $storeData );
@@ -518,59 +507,19 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		return array_key_exists( $wikiId, $wgFandomStoreMap );
 	}
 
-	private function getFandomStoreData( $uri ) {
-		global $wgCityId;
+	private function getFandomStoreData() {
+		global $wgMemc, $wgCityId;
+	
+		$memcKey = wfMemcKey( DesignSystemApiController::MEMC_PREFIX_FANDOM_STORE, $wgCityId );
 
-		$storeData = $this->doApiRequest( $uri, $wgCityId );
+		$cachedStoreData = $wgMemc->get( $memcKey );
 
 		// if results are empty, return null
-		if ( empty( $storeData->results ) ) {
+		if ( empty( $cachedStoreData->results ) ) {
 			return null;
 		}
 
 		return $this->formatFandomStoreData( $storeData->results );
-	}
-
-	private function doApiRequest( $uri, $wikiId ) {
-		global $wgMemc;
-
-		$memcKey = wfMemcKey( self::MEMC_PREFIX_FANDOM_STORE, $wikiId );
-		$retVal = $wgMemc->get( $memcKey );
-
-		// return cached value if available
-		if ( !empty( $retVal ) ) {
-			return $retVal;
-		} else {
-			$client = new Client( [
-				'base_uri' => $uri,
-				'timeout' => 5.0,
-			] );
-			$params = [
-				'clientId' => 'fandom',
-				'relevanceKey' => $this->getRelevanceKey(),
-			];
-
-			try {
-				$response = $client->get( '', [
-					'query' => build_query( $params, PHP_QUERY_RFC1738 ),
-				] );
-				$data = json_decode( $response->getBody() );
-				// store in cache for one hour
-				$wgMemc->set( $memcKey, $data, 3600 );
-				return $data;
-			}
-			catch ( ClientException $e ) {
-				WikiaLogger::instance()->error( self::FANDOM_STORE_ERROR_MESSAGE, [
-					'error_message' => $e->getMessage(),
-					'status_code' => $e->getCode(),
-				] );
-	
-				throw new WikiaException( self::FANDOM_STORE_ERROR_MESSAGE, 500, $e );
-			}
-			finally {
-				return null;
-			}
-		}	
 	}
 
 	private function formatFandomStoreData( $apiData ) {
@@ -608,11 +557,5 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 				];
 			}, $links ),
 		];
-	}
-
-	private function getRelevanceKey(): string {
-		global $wgCityId, $wgFandomStoreMap;
-
-		return $wgFandomStoreMap[ $wgCityId ];
 	}
 }
