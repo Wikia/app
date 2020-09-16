@@ -392,7 +392,7 @@ class SpecialAnalytics extends \SpecialPage {
 			$this->content = "
 			<div id='analytics_wrapper'>
 				<div id='analytics_confidential_header'>
-					<div id='analytics_confidential' class='analytics_confidential_{$skinKey}'>
+					<div id='analytics_confidential'>
 					" . wfMessage( 'db_error' )->escaped() . "
 					</div>
 				</div>
