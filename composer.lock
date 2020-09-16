@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "95afa8916293b5568ca1576d6be3c5ce",
+    "content-hash": "3bf1209ec142baa2a2aa26523e35cca1",
     "packages": [
         {
             "name": "ackintosh/ganesha",
@@ -2579,6 +2579,63 @@
             "time": "2015-02-10T20:07:52+00:00"
         },
         {
+            "name": "perftools/php-profiler",
+            "version": "0.11.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/perftools/php-profiler.git",
+                "reference": "5305e8545c8616ae465a8096a6493941fd3c77cd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/perftools/php-profiler/zipball/5305e8545c8616ae465a8096a6493941fd3c77cd",
+                "reference": "5305e8545c8616ae465a8096a6493941fd3c77cd",
+                "shasum": ""
+            },
+            "require": {
+                "ext-json": "*",
+                "php": "^5.3.0 || ^7.0 || ^8.0"
+            },
+            "conflict": {
+                "perftools/xhgui-collector": "<1.8"
+            },
+            "require-dev": {
+                "perftools/xhgui-collector": "^1.8"
+            },
+            "suggest": {
+                "alcaeus/mongo-php-adapter": "Adapter to provide ext-mongo interface on top of mongo-php-libary (PHP>=5.6)",
+                "ext-curl": "cURL extension for upload saver",
+                "ext-mongo": "mongo extension (PHP>=5.3,<7.0)",
+                "ext-mongodb": "mongodb extension (PHP>=5.4)",
+                "ext-tideways": "Use tideways to profile",
+                "ext-uprofiler": "Use uprofiler to profile",
+                "ext-xhprof": "Use xhprof to profile",
+                "perftools/xhgui-collector": "For mongodb or pdo savers"
+            },
+            "type": "library",
+            "autoload": {
+                "psr-4": {
+                    "Xhgui\\Profiler\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Lauri Piisang",
+                    "email": "lauri.piisang@eesti.ee"
+                },
+                {
+                    "name": "Elan Ruusamäe",
+                    "email": "glen@pld-linux.org"
+                }
+            ],
+            "description": "PHP Profiling based on XHGUI",
+            "time": "2020-09-04T10:03:22+00:00"
+        },
+        {
             "name": "phar-io/manifest",
             "version": "1.0.1",
             "source": {
@@ -3269,6 +3326,7 @@
             "keywords": [
                 "tokenizer"
             ],
+            "abandoned": true,
             "time": "2017-11-27T05:48:46+00:00"
         },
         {
@@ -5766,6 +5824,7 @@
                 "psr",
                 "psr-7"
             ],
+            "abandoned": "laminas/laminas-diactoros",
             "time": "2018-01-04T18:21:48+00:00"
         }
     ],
@@ -6073,10 +6132,12 @@
         "ext-sockets": "*",
         "ext-tideways": "*",
         "ext-tidy": "*",
-        "ext-wikidiff2": "*"
+        "ext-wikidiff2": "*",
+        "ext-memcached": "*"
     },
     "platform-dev": {
         "ext-yaml": "*",
         "ext-xdebug": "*"
-    }
+    },
+    "plugin-api-version": "1.1.0"
 }
