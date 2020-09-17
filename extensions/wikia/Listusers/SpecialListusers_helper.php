@@ -135,7 +135,7 @@ class ListusersData {
 			}
 
 			/* filter: groups */
-			if ( !empty( $this->mFilterGroup ) && is_array( $this->mFilterGroup ) ) {
+			if ( is_array( $this->mFilterGroup ) ) {
 				$filteredGroups = array_filter( $this->mFilterGroup, function ( $group ): bool {
 					return empty( $group ) || $group == Listusers::DEF_GROUP_NAME;
 				} );
