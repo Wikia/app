@@ -206,9 +206,9 @@ class DesignSystemApiController extends WikiaApiController {
 
 
 	/**
-	 * External API request to fandom store
+	 * External API request to IntentX
 	 */
-	public function getFandomStoreData() {
+	public function getFandomShopDataFromIntentX() {
 		global $wgCityId, $wgMemc, $wgFandomStoreMap;
 
 		// api for fandom store
@@ -232,6 +232,7 @@ class DesignSystemApiController extends WikiaApiController {
 			$data = json_decode( $response->getBody() );
 			// store in cache indefinitely
 			$wgMemc->set( $memcKey, $data, self::TTL_INFINITE );
+
 			return $data;
 		}
 		catch ( ClientException $e ) {

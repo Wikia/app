@@ -514,12 +514,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 		$cachedStoreData = $wgMemc->get( $memcKey );
 
-		// if results are empty, return null
-		if ( empty( $cachedStoreData->results ) ) {
-			return null;
-		}
-
-		return $this->formatFandomStoreData( $cachedStoreData->results );
+		return !empty( $cachedStoreData->results ) ? $this->formatFandomStoreData( $cachedStoreData->results ) : null;
 	}
 
 	private function formatFandomStoreData( $apiData ) {
