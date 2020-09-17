@@ -4,7 +4,7 @@
  * Get data from intentX API and update memcache 
  *
  * @group cronjobs
- * @see phrase-alerts.yaml
+ * @see update-fandom-shop-cache.yaml
  *
  */
 
@@ -22,6 +22,7 @@ class updateFandomStoreCache extends Maintenance {
         foreach( $wgFandomShopMap as $key => $value) {
             $handle = curl_init();
             curl_setopt($handle, CURLOPT_URL, $url);
+            curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
             $data = curl_exec($handle);
             $allCommunitiesUpdated = true;
 
