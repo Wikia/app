@@ -27,3 +27,5 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'FeedsAndPostsHooks::onMakeGlobalVaria
 
 // Add new API controller to API controllers list
 $wgWikiaApiControllers['FeedsAndPostsController'] = $dir . 'FeedsAndPostsController.class.php';
+
+$wgExtensionMessagesFiles['FeedsAndPosts'] = $dir . 'FeedsAndPosts.i18n.php';
