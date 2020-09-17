@@ -216,7 +216,6 @@ class DesignSystemApiController extends WikiaApiController {
 		$memcKey = wfMemcKey( self::MEMC_PREFIX_FANDOM_STORE, $id );
 
 		// don't make api call if not fandom store community
-		// I believe we can skip this if we create a cache warming maintenance script
 		if ( !array_key_exists( $id, $wgFandomShopMap ) ) {
 			return null;
 		}

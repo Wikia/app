@@ -17,8 +17,7 @@ class updateFandomStoreCache extends Maintenance {
 
         $logger = \Wikia\Logger\WikiaLogger::instance();
         $logger->info( 'Updating Fandom Shop Cache' );
-
-        $url = "https://community.chris.fandom-dev.us/wikia.php?controller=DesignSystemApi&method=getFandomShopDataFromIntentX&id=$key"
+        $url = "https://community.fandom.com/wikia.php?controller=DesignSystemApi&method=getFandomShopDataFromIntentX&id=$key"
 
         foreach( $wgFandomShopMap as $key => $value) {
             $handle = curl_init();
