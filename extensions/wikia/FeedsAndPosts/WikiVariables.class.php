@@ -5,6 +5,7 @@ namespace Wikia\FeedsAndPosts;
 use CommunityDataService;
 use Title;
 use WikiaDataAccess;
+use WikiFactory;
 
 class WikiVariables {
 	public function get() {
@@ -23,6 +24,16 @@ class WikiVariables {
 			],
 			'enableDiscussions' => $wgEnableDiscussions,
 			'gamepediaRedirectUrl' => $this->getGamepediaRedirect(),
+		];
+
+		$wgDiscussionMaintenanceNotification =
+			WikiFactory::getVarValueByName( 'wgDiscussionMaintenanceNotification',
+				WikiFactory::COMMUNITY_CENTRAL );
+
+		$wikiVariables['discussionMaintenanceNotification'] = [
+			'enabled' => $wgDiscussionMaintenanceNotification,
+			'lockedMessage' => wfMessage( 'discussion-contribution-locked' )->text(),
+			'willBeLockedMessage' => wfMessage( 'discussion-contribution-will-be-locked' )->text(),
 		];
 
 		\Hooks::run( 'MercuryWikiVariables', [ &$wikiVariables ] );
