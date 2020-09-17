@@ -211,12 +211,6 @@ class DesignSystemApiController extends WikiaApiController {
 	public function getFandomShopDataFromIntentX() {
 		global $wgCityId, $wgMemc, $wgFandomStoreMap;
 
-		// // get mock data
-		// $data = file_get_contents("mockdata/fandomstore.json", true);
-		// $json = json_decode($data);
-
-		// var_dump($json->results);
-
 		// don't make api call if not fandom store community
 		if ( !array_key_exists( $wgCityId, $wgFandomStoreMap ) ) {
 			return null;
@@ -243,7 +237,6 @@ class DesignSystemApiController extends WikiaApiController {
 			$data = json_decode( $response->getBody() );
 			// store in cache indefinitely
 			$wgMemc->set( $memcKey, $data, self::TTL_INFINITE );
-			var_dump( $data->results );
 			return $data;
 		}
 		catch ( ClientException $e ) {
