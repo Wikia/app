@@ -1,4 +1,4 @@
-schedule: "0 14 * * *"
+schedule: @hourly
 args:
 - php
 - /usr/wikia/slot1/current/src/maintenance/wikia/cronjobs/updateFandomShopCache.php
