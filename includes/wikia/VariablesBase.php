@@ -2638,7 +2638,7 @@ $wgEnableFandomAppSmartBanner = false;
 $wgFandomAppSmartBannerText = null;
 
 /**
- * Used to map IntentX API endpoints to prod wiki id
+ * Used to map IntentX API wiki id to relevance key
  */
 $wgFandomShopMap = [
 	'3510' => 'Assassin\'s Creed',

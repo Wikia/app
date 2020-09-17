@@ -211,32 +211,38 @@ class DesignSystemApiController extends WikiaApiController {
 	public function getFandomShopDataFromIntentX() {
 		global $wgCityId, $wgMemc, $wgFandomShopMap, $wgFandomShopUrl;
 
+		// get id from parameter or default to city id
+		$id = intval( $this->getVal(static::PARAM_ID, $wgCityId));
+		$memcKey = wfMemcKey( self::MEMC_PREFIX_FANDOM_STORE, $id );
+
 		// don't make api call if not fandom store community
-		if ( !array_key_exists( $wgCityId, $wgFandomShopMap ) ) {
+		// I believe we can skip this if we create a cache warming maintenance script
+		if ( !array_key_exists( $id, $wgFandomShopMap ) ) {
 			return null;
 		}
 
-		// api for fandom store will be replaced with $wgFandomShopUrl
-		$uri = 'http://138.201.119.29:9420/ix/api/seo/v1/footer'; // https://shop.fandom.com/ix/api/seo/v1/footer 500 - Internal Server Error
-		$memcKey = wfMemcKey( self::MEMC_PREFIX_FANDOM_STORE, $wgCityId );
-
 		// do api request
 		$client = new Client( [
-			'base_uri' => $uri,
+			'base_uri' => $wgFandomShopUrl,
 			'timeout' => 30.0
 		] );
 		$params = [
 			'clientId' => 'fandom',
-			'relevanceKey' => $wgFandomShopMap[ $wgCityId ],
+			'relevanceKey' => $wgFandomShopMap[ $id ],
 		];
 
 		try {
 			$response = $client->get( '', [
 				'query' => build_query( $params, PHP_QUERY_RFC1738 ),
 			] );
-			$data = json_decode( $response->getBody() );
+			$body = $response->getBody();
+			$data = json_decode( $body );
 			// store in cache indefinitely
 			$wgMemc->set( $memcKey, $data, self::TTL_INFINITE );
+			// set header and output to screen
+			header('Content-Type: application/json');
+			echo json_encode($data, JSON_PRETTY_PRINT);
+
 			return $data;
 		}
 		catch ( ClientException $e ) {
