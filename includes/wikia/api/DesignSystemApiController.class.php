@@ -209,14 +209,14 @@ class DesignSystemApiController extends WikiaApiController {
 	 * External API request to IntentX
 	 */
 	public function getFandomShopDataFromIntentX() {
-		global $wgCityId, $wgMemc, $wgFandomStoreMap;
+		global $wgCityId, $wgMemc, $wgFandomShopMap, $wgFandomShopUrl;
 
 		// don't make api call if not fandom store community
-		if ( !array_key_exists( $wgCityId, $wgFandomStoreMap ) ) {
+		if ( !array_key_exists( $wgCityId, $wgFandomShopMap ) ) {
 			return null;
 		}
 
-		// api for fandom store
+		// api for fandom store will be replaced with $wgFandomShopUrl
 		$uri = 'http://138.201.119.29:9420/ix/api/seo/v1/footer'; // https://shop.fandom.com/ix/api/seo/v1/footer 500 - Internal Server Error
 		$memcKey = wfMemcKey( self::MEMC_PREFIX_FANDOM_STORE, $wgCityId );
 
@@ -227,7 +227,7 @@ class DesignSystemApiController extends WikiaApiController {
 		] );
 		$params = [
 			'clientId' => 'fandom',
-			'relevanceKey' => $wgFandomStoreMap[ $wgCityId ],
+			'relevanceKey' => $wgFandomShopMap[ $wgCityId ],
 		];
 
 		try {

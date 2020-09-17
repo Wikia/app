@@ -2640,7 +2640,7 @@ $wgFandomAppSmartBannerText = null;
 /**
  * Used to map IntentX API endpoints to prod wiki id
  */
-$wgFandomStoreMap = [
+$wgFandomShopMap = [
 	'3510' => 'Assassin\'s Creed',
 	'532' => 'Avatar',
 	'613320' => 'Danganronpa',
