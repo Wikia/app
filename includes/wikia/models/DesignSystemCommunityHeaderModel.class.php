@@ -299,6 +299,8 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	public function getExploreMenu(): array {
 		global $wgCityId;
 
+		$storeData = $this->getFandomStoreDataFromCache();
+
 		if ( $this->exploreMenu === null ) {
 			$wgEnableCommunityPageExt =
 				WikiFactory::getVarValueByName( 'wgEnableCommunityPageExt',
@@ -361,13 +363,9 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 				],
 			];
 
-			// If store community add link to explore items
-			if ( $this->isFandomStoreCommunity( $wgCityId ) ) {
-				$storeData = $this->getFandomStoreDataFromCache();
-
-				if ( $storeData ) {
-					array_push( $exploreItems,  $storeData );
-				}
+			// if community has store data, add to explore dropdown
+			if ( $storeData ) {
+				array_push( $exploreItems,  $storeData );
 			}
 
 			$this->exploreMenu = [
@@ -500,11 +498,6 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 	private function getSpecialPageURL( $name ): string {
 		return SpecialPage::getTitleFor( $name )->getLocalURL();
-	}
-
-	private function isFandomStoreCommunity( $wikiId ) {
-		global $wgFandomStoreMap;
-		return array_key_exists( $wikiId, $wgFandomStoreMap );
 	}
 
 	private function getFandomStoreDataFromCache() {

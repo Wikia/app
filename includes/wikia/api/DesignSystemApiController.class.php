@@ -211,6 +211,17 @@ class DesignSystemApiController extends WikiaApiController {
 	public function getFandomShopDataFromIntentX() {
 		global $wgCityId, $wgMemc, $wgFandomStoreMap;
 
+		// // get mock data
+		// $data = file_get_contents("mockdata/fandomstore.json", true);
+		// $json = json_decode($data);
+
+		// var_dump($json->results);
+
+		// don't make api call if not fandom store community
+		if ( !array_key_exists( $wgCityId, $wgFandomStoreMap ) ) {
+			return null;
+		}
+
 		// api for fandom store
 		$uri = 'http://138.201.119.29:9420/ix/api/seo/v1/footer'; // https://shop.fandom.com/ix/api/seo/v1/footer 500 - Internal Server Error
 		$memcKey = wfMemcKey( self::MEMC_PREFIX_FANDOM_STORE, $wgCityId );
@@ -232,7 +243,7 @@ class DesignSystemApiController extends WikiaApiController {
 			$data = json_decode( $response->getBody() );
 			// store in cache indefinitely
 			$wgMemc->set( $memcKey, $data, self::TTL_INFINITE );
-
+			var_dump( $data->results );
 			return $data;
 		}
 		catch ( ClientException $e ) {
@@ -243,5 +254,6 @@ class DesignSystemApiController extends WikiaApiController {
 
 			return null;
 		}
+		return null;
 	}
 }
