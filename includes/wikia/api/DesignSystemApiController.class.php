@@ -243,6 +243,7 @@ class DesignSystemApiController extends WikiaApiController {
 				return $this->setResponseData( $data->results );
 			} 
 			// if no data return empty array
+			WikiaLogger::instance()->info( 'Unable to retrieve valid response data', [] );
 			return $this->setResponseData( [] );
 		}
 		catch ( ClientException $e ) {
