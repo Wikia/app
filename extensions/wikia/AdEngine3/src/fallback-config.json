@@ -87,6 +87,35 @@
             "value": true
         }
     ],
+    "icDeRecoExperimentDev": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "browsers": [
+                "Chrome"
+            ],
+            "devices": [
+                "desktop"
+            ],
+            "regions": [
+                "PL"
+            ],
+            "value": {
+                "name": "dev_reco_test",
+                "groups": [
+                    {
+                        "name": "all",
+                        "config": {
+                            "wikiStrategy": "TOP_VERTICAL",
+                            "number_articles": 2
+                        },
+                        "sampling": 100
+                    }
+                ]
+            }
+        }
+    ],
     "icTrackingOptInGoogleMove": [
         {
             "apps": [
@@ -678,7 +707,11 @@
                 "5473107813",
                 "5467371078",
                 "5467370628",
-                "5354274880"
+                "5354274880",
+                "5468068234",
+                "5468068237",
+                "5467186974",
+                "5468067817"
             ]
         }
     ],
@@ -857,6 +890,22 @@
             "regions": [
                 "XX"
             ],
+            "value": true
+        }
+    ],
+    "icServicesSpecialSearchTooltipForScopeChange": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "devices": [
+                "desktop"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "sampling": 50.0,
+            "samplingCache": true,
             "value": true
         }
     ],
@@ -1216,28 +1265,38 @@
                 "XX"
             ],
             "value": {
-                "name": "reco_AA",
+                "name": "reco_4x4_mix_wiki_algos",
                 "groups": [
                     {
-                        "name": "A",
+                        "name": "w_arl",
                         "config": {
-                            
+                            "wikiStrategy": "ARL",
+                            "number_articles": 4
                         },
-                        "sampling": 30
+                        "sampling": 25
                     },
                     {
-                        "name": "B",
+                        "name": "w_cv",
                         "config": {
-                            
+                            "wikiStrategy": "CV",
+                            "number_articles": 4
                         },
-                        "sampling": 20
+                        "sampling": 25
+                    },
+                    {
+                        "name": "w_tv",
+                        "config": {
+                            "wikiStrategy": "TOP_VERTICAL",
+                            "number_articles": 4
+                        },
+                        "sampling": 25
                     },
                     {
                         "name": "control",
                         "config": {
                             
                         },
-                        "sampling": 50
+                        "sampling": 25
                     }
                 ]
             }
