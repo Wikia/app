@@ -213,11 +213,7 @@ class DesignSystemApiController extends WikiaApiController {
 
 		// get id from parameter or default to city id
 		$id = $this->getVal( static::PARAM_ID, $wgCityId );
-
-		$memcKey = wfMemcKey( self::MEMC_PREFIX_FANDOM_STORE, $id );
-		$slicePos = strpos( $memcKey, ':' );
-		// remove previx from memckey
-		$memcKey = substr( $memcKey, $slicePos + 1 );
+		$memcKey = wfSharedMemcKey( self::MEMC_PREFIX_FANDOM_STORE, $id );
 
 		// don't make api call if not fandom store community
 		if ( !array_key_exists( $id, $wgFandomShopMap ) ) {

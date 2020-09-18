@@ -504,9 +504,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	private function getFandomStoreDataFromCache() {
 		global $wgMemc, $wgCityId;
 
-		$memcKey = wfMemcKey( DesignSystemApiController::MEMC_PREFIX_FANDOM_STORE, $wgCityId );
-		$slicePos = strpos( $memcKey, ':' );
-		$memcKey = substr( $memcKey, $slicePos + 1 );
+		$memcKey = wfSharedMemcKey( DesignSystemApiController::MEMC_PREFIX_FANDOM_STORE, $wgCityId );
 		$cachedStoreData = $wgMemc->get( $memcKey );
 
 		return !empty( $cachedStoreData->results ) ? $this->formatFandomStoreData( $cachedStoreData->results ) : null;
