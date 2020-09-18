@@ -368,6 +368,10 @@ $wgGroupPermissions['reviewer']['deletedhistory'] = true;
 $wgGroupPermissions['reviewer']['deletedtext'] = true;
 $wgGroupPermissions['reviewer']['edit'] = false;
 
+$wgGroupPermissions['imagereviewer']['deletedhistory'] = true;
+$wgGroupPermissions['imagereviewer']['deletedtext'] = true;
+$wgGroupPermissions['imagereviewer']['edit'] = false;
+
 $wgGroupPermissions['util']['imagereviewstats'] = true;
 $wgGroupPermissions['staff']['imagereviewstats'] = true;
 
