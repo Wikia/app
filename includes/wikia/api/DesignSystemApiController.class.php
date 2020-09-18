@@ -10,7 +10,7 @@ class DesignSystemApiController extends WikiaApiController {
 	const PARAM_ID = 'id';
 	const PARAM_LANG = 'lang';
 	const PRODUCT_WIKIS = 'wikis';
-	const MEMC_PREFIX_FANDOM_STORE = 'DesignSystemCommunityHeaderModelClass::doApiRequest';
+	const MEMC_PREFIX_FANDOM_STORE = 'DesignSystemCommunityHeaderModelClass::getFandomShopDataFromIntentX';
 	const FANDOM_STORE_ERROR_MESSAGE = 'Failed to get data from Fandom Store';
 	const TTL_INFINITE = 0; // setting to 0 never expires
 
@@ -211,9 +211,11 @@ class DesignSystemApiController extends WikiaApiController {
 	public function getFandomShopDataFromIntentX() {
 		global $wgCityId, $wgMemc, $wgFandomShopMap, $wgFandomShopUrl;
 
+		$key = self::MEMC_PREFIX_FANDOM_STORE;
 		// get id from parameter or default to city id
-		$id = intval( $this->getVal(static::PARAM_ID, $wgCityId));
-		$memcKey = wfMemcKey( self::MEMC_PREFIX_FANDOM_STORE, $id );
+		$id = intval( $this->getVal( static::PARAM_ID, $wgCityId) );
+		// not using wfMemcKey here to avoid prefix conflicts
+		$memcKey = "intentX:$key:$id";
 
 		// don't make api call if not fandom store community
 		if ( !array_key_exists( $id, $wgFandomShopMap ) ) {

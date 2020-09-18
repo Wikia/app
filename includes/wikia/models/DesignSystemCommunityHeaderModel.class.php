@@ -500,9 +500,9 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 	private function getFandomStoreDataFromCache() {
 		global $wgMemc, $wgCityId;
-	
-		$memcKey = wfMemcKey( DesignSystemApiController::MEMC_PREFIX_FANDOM_STORE, $wgCityId );
 
+		$key = DesignSystemApiController::MEMC_PREFIX_FANDOM_STORE;
+		$memcKey = "intentX:$key:$wgCityId";
 		$cachedStoreData = $wgMemc->get( $memcKey );
 
 		return !empty( $cachedStoreData->results ) ? $this->formatFandomStoreData( $cachedStoreData->results ) : null;
