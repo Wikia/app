@@ -10,7 +10,7 @@
 
 require_once __DIR__ . '/../../Maintenance.php';
 
-class updateFandomStoreCache extends Maintenance {
+class updateFandomShopCache extends Maintenance {
 
     public function execute() {
         global $wgFandomShopMap;
