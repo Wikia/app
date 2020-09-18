@@ -518,8 +518,13 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		// remove store item object from list
 		$firstItem = array_shift( $links );
 
+		// if no links or not url data, return null
+		if ( !$links ??  count( $links ) < 1 ?? !$firstItem->url) {
+			return null;
+		}
+
 		// Only display 9 items + show more link
-		if ( count( $apiData ) > self::FANDOM_STORE_ITEM_LIMIT ) {
+		if ( count( $links ) > self::FANDOM_STORE_ITEM_LIMIT ) {
 			// create a show more item
 			$showMoreItem = (object) [
 				"url" => $firstItem->url,
@@ -537,11 +542,11 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 			'tracking' => 'explore-shop',
 			'include' => true,
 			'items' => array_map( function ( $item ) {
-				$lower = strtolower( $item->text );
+				$lower = strtolower( $item->text ? $item->text : null );
 				return [
 					'tracking' => 'explore-shop-' . $lower,
-					'url' => $item->url,
-					'value' => $item->text,
+					'url' => $item->url ? $item->url : '#',
+					'value' => $item->text ? $item->text : null,
 				];
 			}, $links ),
 		];
