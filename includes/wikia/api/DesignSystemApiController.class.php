@@ -240,9 +240,14 @@ class DesignSystemApiController extends WikiaApiController {
 			] );
 			$body = $response->getBody();
 			$data = json_decode( $body );
-			// store in cache indefinitely
-			$wgMemc->set( $memcKey, $data, self::TTL_INFINITE );
-			return $this->setResponseData( $data->results );
+
+			// if valid json store in cache and return
+			if ( $data && $data->results ) {
+				$wgMemc->set( $memcKey, $data, self::TTL_INFINITE );
+				return $this->setResponseData( $data->results );
+			} 
+			// if no data return empty array
+			return $this->setResponseData( [] );
 		}
 		catch ( ClientException $e ) {
 			WikiaLogger::instance()->error( self::FANDOM_STORE_ERROR_MESSAGE, [
