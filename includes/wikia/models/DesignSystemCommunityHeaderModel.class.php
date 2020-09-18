@@ -297,8 +297,6 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	}
 
 	public function getExploreMenu(): array {
-		global $wgCityId;
-
 		$storeData = $this->getFandomStoreDataFromCache();
 
 		if ( $this->exploreMenu === null ) {

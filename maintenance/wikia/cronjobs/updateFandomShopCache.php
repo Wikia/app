@@ -42,10 +42,10 @@ class updateFandomShopCache extends Maintenance {
                 $logger->error( "There has been an error updating $value shop cache" );
                 $allCommunitiesUpdated = false;
             } else {
-             if ( $responseCode == "200") {
-                echo "The $value community store has been updated.";
-             } 
-            
+                if ( $responseCode == "200") {
+                    echo "The $value community store has been updated.";
+                } 
+
                 curl_close($handle);
             }
         }
