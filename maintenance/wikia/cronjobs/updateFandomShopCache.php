@@ -14,11 +14,12 @@ class updateFandomShopCache extends Maintenance {
 
     public function execute() {
         global $wgFandomShopMap, $wgFandomShopMapDev;
-
-        echo 'Running maintenence script';
+        
+        echo 'Running updateFandomShopCache maintenance script';
 
         $logger = \Wikia\Logger\WikiaLogger::instance();
         $logger->info( 'Updating Fandom Shop Cache' );
+        $allCommunitiesUpdated = true;
 
         if ( Wikia::isDevEnv() ) {
             $url = "https://community.chris.fandom-dev.us/wikia.php?controller=DesignSystemApi&method=getFandomShopDataFromIntentX&id=$key";
@@ -28,25 +29,22 @@ class updateFandomShopCache extends Maintenance {
             $shopMap = $wgFandomShopMap;
         }
 
-        foreach ( $shopMap as $key => $value) {
+        foreach ( $shopMap as $key => $value ) {
             $handle = curl_init();
-            curl_setopt($handle, CURLOPT_URL, $url);
-            curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
-            $data = curl_exec($handle);
-            $allCommunitiesUpdated = true;
+            curl_setopt( $handle, CURLOPT_URL, $url );
+            curl_setopt( $handle, CURLOPT_RETURNTRANSFER, true );
+            $data = curl_exec( $handle );
+            $responseCode   = curl_getinfo( $handle, CURLINFO_HTTP_CODE );
 
-            $responseCode   = curl_getinfo($handle, CURLINFO_HTTP_CODE);
-
-            if ( curl_errno($handle) ) {
-                print curl_error($handle);
+            if ( curl_errno( $handle) ) {
+                print curl_error( $handle );
                 $logger->error( "There has been an error updating $value shop cache" );
                 $allCommunitiesUpdated = false;
             } else {
-                if ( $responseCode == "200") {
+                if ( $responseCode == "200" ) {
                     echo "The $value community store has been updated.";
                 } 
-
-                curl_close($handle);
+                curl_close( $handle );
             }
         }
 

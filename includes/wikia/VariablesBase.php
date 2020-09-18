@@ -2637,6 +2637,12 @@ $wgEnableFandomAppSmartBanner = false;
  */
 $wgFandomAppSmartBannerText = null;
 
+
+/**
+ * community wiki factory variable to enable fandom shop feature
+ */
+$wgEnableFandomShop = false;
+
 /**
  * Used to map IntentX API wiki id to relevance key
  */

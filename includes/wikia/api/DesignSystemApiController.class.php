@@ -211,11 +211,13 @@ class DesignSystemApiController extends WikiaApiController {
 	public function getFandomShopDataFromIntentX() {
 		global $wgCityId, $wgMemc, $wgFandomShopMap, $wgFandomShopUrl;
 
-		$key = self::MEMC_PREFIX_FANDOM_STORE;
 		// get id from parameter or default to city id
-		$id = intval( $this->getVal( static::PARAM_ID, $wgCityId) );
-		// not using wfMemcKey here to avoid prefix conflicts
-		$memcKey = "intentX:$key:$id";
+		$id = $this->getVal( static::PARAM_ID, $wgCityId );
+
+		$memcKey = wfMemcKey( self::MEMC_PREFIX_FANDOM_STORE, $id );
+		$slicePos = strpos( $memcKey, ':' );
+		// remove previx from memckey
+		$memcKey = substr( $memcKey, $slicePos + 1 );
 
 		// don't make api call if not fandom store community
 		if ( !array_key_exists( $id, $wgFandomShopMap ) ) {
@@ -240,11 +242,7 @@ class DesignSystemApiController extends WikiaApiController {
 			$data = json_decode( $body );
 			// store in cache indefinitely
 			$wgMemc->set( $memcKey, $data, self::TTL_INFINITE );
-			// set header and output to screen
-			header('Content-Type: application/json');
-			echo json_encode($data, JSON_PRETTY_PRINT);
-
-			return $data;
+			return $this->setResponseData( $data->results );
 		}
 		catch ( ClientException $e ) {
 			WikiaLogger::instance()->error( self::FANDOM_STORE_ERROR_MESSAGE, [

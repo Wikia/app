@@ -2,7 +2,8 @@
 
 class DesignSystemCommunityHeaderModel extends WikiaModel {
 	const WORDMARK_TYPE_GRAPHIC = 'graphic';
-	const FANDOM_STORE_ITEM_LIMIT = 9;
+	const FANDOM_STORE_ITEM_LIMIT = 10;
+	const ENABLE_FANDOM_STORE_VAR = 'wgEnableFandomShop';
 
 	private $productInstanceId;
 	private $langCode;
@@ -298,6 +299,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 	public function getExploreMenu(): array {
 		$storeData = $this->getFandomStoreDataFromCache();
+		$enableShop = WikiFactory::getVarValueByName( self::ENABLE_FANDOM_STORE_VAR, Wikia::COMMUNITY_WIKI_ID );
 
 		if ( $this->exploreMenu === null ) {
 			$wgEnableCommunityPageExt =
@@ -361,8 +363,9 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 				],
 			];
 
+			// $enableShop serves as feature flag set to wiki factory variable
 			// if community has store data, add to explore dropdown
-			if ( $storeData ) {
+			if ( $enableShop && $storeData ) {
 				array_push( $exploreItems,  $storeData );
 			}
 
@@ -501,8 +504,9 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 	private function getFandomStoreDataFromCache() {
 		global $wgMemc, $wgCityId;
 
-		$key = DesignSystemApiController::MEMC_PREFIX_FANDOM_STORE;
-		$memcKey = "intentX:$key:$wgCityId";
+		$memcKey = wfMemcKey( DesignSystemApiController::MEMC_PREFIX_FANDOM_STORE, $wgCityId );
+		$slicePos = strpos( $memcKey, ':' );
+		$memcKey = substr( $memcKey, $slicePos + 1 );
 		$cachedStoreData = $wgMemc->get( $memcKey );
 
 		return !empty( $cachedStoreData->results ) ? $this->formatFandomStoreData( $cachedStoreData->results ) : null;
@@ -517,14 +521,14 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		$firstItem = array_shift( $links );
 
 		// Only display 9 items + show more link
-		if ( count( $apiData ) > 10 ) {
+		if ( count( $apiData ) > self::FANDOM_STORE_ITEM_LIMIT ) {
 			// create a show more item
 			$showMoreItem = (object) [
 				"url" => $firstItem->url,
 				"text" => 'Show More'
 			];
 			// get the first 9 links
-			$links = array_slice( $links, null, self::FANDOM_STORE_ITEM_LIMIT );
+			$links = array_slice( $links, null, self::FANDOM_STORE_ITEM_LIMIT - 1 );
 			// add show more item to end of links
 			array_push( $links, $showMoreItem );
 		}
