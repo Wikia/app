@@ -364,7 +364,6 @@ $wgGroupPermissions['staff']['gameguidessponsored'] = true;
 $wgGroupPermissions['bot']['welcomeexempt'] = true;
 $wgGroupPermissions['staff']['welcomeexempt'] = true;
 
-$wgGroupPermissions['reviewer']['imagereview'] = true;
 $wgGroupPermissions['reviewer']['deletedhistory'] = true;
 $wgGroupPermissions['reviewer']['deletedtext'] = true;
 $wgGroupPermissions['reviewer']['edit'] = false;
