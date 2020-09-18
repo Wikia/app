@@ -22,16 +22,16 @@ class updateFandomShopCache extends Maintenance {
         $allCommunitiesUpdated = true;
 
         if ( Wikia::isDevEnv() ) {
-            $url = sprintf( 'https://community.chris.fandom-dev.us/wikia.php?ontroller=DesignSystemApi&method=getFandomShopDataFromIntentX&id=%s', $key);
+            $url = 'https://community.chris.fandom-dev.us/wikia.php?ontroller=DesignSystemApi&method=getFandomShopDataFromIntentX&id=%s';
             $shopMap = $wgFandomShopMapDev;
         } else {
-            $url = sprintf( 'https://community.fandom.com/wikia.php?ontroller=DesignSystemApi&method=getFandomShopDataFromIntentX&id=%s', $key);
+            $url = 'https://community.fandom.com/wikia.php?ontroller=DesignSystemApi&method=getFandomShopDataFromIntentX&id=%s';
             $shopMap = $wgFandomShopMap;
         }
 
         foreach ( $shopMap as $key => $value ) {
             $handle = curl_init();
-            curl_setopt( $handle, CURLOPT_URL, $url );
+            curl_setopt( $handle, CURLOPT_URL, sprintf( $url, $key );
             curl_setopt( $handle, CURLOPT_RETURNTRANSFER, true );
             $data = curl_exec( $handle );
             $responseCode   = curl_getinfo( $handle, CURLINFO_HTTP_CODE );
