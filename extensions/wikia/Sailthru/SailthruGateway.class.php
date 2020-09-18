@@ -14,7 +14,6 @@ class SailthruGateway {
 	private $client;
 
 	private function __construct() {
-		// TODO: Get API key and secret from vault when secrets.php is removed
 		global $wgSailthruApiKey, $wgSailthruApiSecret;
 
 		$this->client = new Sailthru_Client($wgSailthruApiKey, $wgSailthruApiSecret);
