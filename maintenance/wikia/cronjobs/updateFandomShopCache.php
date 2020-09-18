@@ -22,10 +22,10 @@ class updateFandomShopCache extends Maintenance {
         $allCommunitiesUpdated = true;
 
         if ( Wikia::isDevEnv() ) {
-            $url = "https://community.chris.fandom-dev.us/wikia.php?controller=DesignSystemApi&method=getFandomShopDataFromIntentX&id=$key";
+            $url = sprintf( 'https://community.chris.fandom-dev.us/wikia.php?ontroller=DesignSystemApi&method=getFandomShopDataFromIntentX&id=%s', $key);
             $shopMap = $wgFandomShopMapDev;
         } else {
-            $url = "https://community.fandom.com/wikia.php?controller=DesignSystemApi&method=getFandomShopDataFromIntentX&id=$key";
+            $url = sprintf( 'https://community.fandom.com/wikia.php?ontroller=DesignSystemApi&method=getFandomShopDataFromIntentX&id=%s', $key);
             $shopMap = $wgFandomShopMap;
         }
 
@@ -38,7 +38,7 @@ class updateFandomShopCache extends Maintenance {
 
             if ( curl_errno( $handle) ) {
                 print curl_error( $handle );
-                $logger->error( "There has been an error updating $value shop cache" );
+                $logger->error( "There has been an error updating $value shop cache", $responseCode );
                 $allCommunitiesUpdated = false;
             } else {
                 if ( $responseCode == "200" ) {
