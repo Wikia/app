@@ -2666,6 +2666,11 @@ $wgFandomShopMap = [
 	'13346' => 'The Walking Dead',
 ];
 
+$wgFandomShopMapDev = [
+	'831' => 'Muppets',
+	'147' => 'Star Wars',
+];
+
 /**
  * configures smart banner to display custom text/link/image and target it by country an OS
  * example value:

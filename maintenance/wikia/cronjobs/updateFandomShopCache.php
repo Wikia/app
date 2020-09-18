@@ -13,18 +13,22 @@ require_once __DIR__ . '/../../Maintenance.php';
 class updateFandomShopCache extends Maintenance {
 
     public function execute() {
-        global $wgFandomShopMap;
+        global $wgFandomShopMap, $wgFandomShopMapDev;
+
+        echo 'Running maintenence script';
 
         $logger = \Wikia\Logger\WikiaLogger::instance();
         $logger->info( 'Updating Fandom Shop Cache' );
 
         if ( Wikia::isDevEnv() ) {
             $url = "https://community.chris.fandom-dev.us/wikia.php?controller=DesignSystemApi&method=getFandomShopDataFromIntentX&id=$key";
+            $shopMap = $wgFandomShopMapDev;
         } else {
             $url = "https://community.fandom.com/wikia.php?controller=DesignSystemApi&method=getFandomShopDataFromIntentX&id=$key";
+            $shopMap = $wgFandomShopMap;
         }
 
-        foreach ( $wgFandomShopMap as $key => $value) {
+        foreach ( $shopMap as $key => $value) {
             $handle = curl_init();
             curl_setopt($handle, CURLOPT_URL, $url);
             curl_setopt($handle, CURLOPT_RETURNTRANSFER, true);
