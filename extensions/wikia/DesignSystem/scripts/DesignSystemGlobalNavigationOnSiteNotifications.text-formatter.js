@@ -37,6 +37,8 @@ define('ext.wikia.design-system.on-site-notifications.text-formatter', [
 					return this._getThreadAtMentionText(notification)
 				} else if (notification.type === c.notificationTypes.postAtMention) {
 					return this._getPostAtMentionText(notification)
+				} else if (notification.type = c.notificationTypes.talkPageMessage) {
+					return this._getTalkPageMessageText(notification);
 				} else {
 					return notification.title;
 				}
@@ -130,6 +132,12 @@ define('ext.wikia.design-system.on-site-notifications.text-formatter', [
 				return title ?
 					'notifications-reply-upvote-multiple-users-with-title' :
 					'notifications-reply-upvote-multiple-users-no-title';
+			};
+
+			this._getTalkPageMessageText = function (notification) {
+				return fillArgs(getMessage('notifications-talk-page-message'), args = {
+					user: escape(notification.latestActors[0].name),
+				});
 			};
 		}
 
