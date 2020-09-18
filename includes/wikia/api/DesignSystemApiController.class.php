@@ -239,11 +239,9 @@ class DesignSystemApiController extends WikiaApiController {
 
 			// if valid json store in cache and return
 			if ( $data && $data->results ) {
-				var_dump( $memcKey );
-				return $this->setResponseData( $memcKey );
 				$wgMemc->set( $memcKey, $data, self::TTL_INFINITE );
 				return $this->setResponseData( $data->results );
-			} 
+			}
 			// if no data return empty array
 			WikiaLogger::instance()->info( 'Unable to retrieve valid response data', [] );
 			return $this->setResponseData( [] );
