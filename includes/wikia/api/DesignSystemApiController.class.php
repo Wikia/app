@@ -1,10 +1,18 @@
 <?php
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
+use Wikia\Logger\WikiaLogger;
+use function GuzzleHttp\Psr7\build_query;
+
 class DesignSystemApiController extends WikiaApiController {
 	const PARAM_PRODUCT = 'product';
 	const PARAM_ID = 'id';
 	const PARAM_LANG = 'lang';
 	const PRODUCT_WIKIS = 'wikis';
+	const MEMC_PREFIX_FANDOM_STORE = 'DesignSystemCommunityHeaderModelClass::getFandomShopDataFromIntentX';
+	const FANDOM_STORE_ERROR_MESSAGE = 'Failed to get data from Fandom Store';
+	const TTL_INFINITE = 0; // setting to 0 never expires
 
 	protected $cors;
 
@@ -194,5 +202,58 @@ class DesignSystemApiController extends WikiaApiController {
 		global $wgServer, $wgWikiaOrgBaseDomain;
 
 		return wfGetBaseDomainForHost( parse_url( $wgServer, PHP_URL_HOST ) ) === $wgWikiaOrgBaseDomain;
+	}
+
+
+	/**
+	 * External API request to IntentX
+	 */
+	public function getFandomShopDataFromIntentX() {
+		global $wgCityId, $wgMemc, $wgFandomShopMap, $wgFandomShopUrl;
+
+		// get id from parameter or default to city id
+		$id = $this->getVal( static::PARAM_ID, $wgCityId );
+		$memcKey = wfSharedMemcKey( self::MEMC_PREFIX_FANDOM_STORE, $id );
+
+		// don't make api call if not fandom store community
+		if ( !array_key_exists( $id, $wgFandomShopMap ) ) {
+			return null;
+		}
+
+		// do api request
+		$client = new Client( [
+			'base_uri' => $wgFandomShopUrl,
+			'timeout' => 30.0
+		] );
+		$params = [
+			'clientId' => 'fandom',
+			'relevanceKey' => $wgFandomShopMap[ $id ],
+		];
+
+		try {
+			$response = $client->get( '', [
+				'query' => build_query( $params, PHP_QUERY_RFC1738 ),
+			] );
+			$body = $response->getBody();
+			$data = json_decode( $body );
+
+			// if valid json store in cache and return
+			if ( $data && $data->results ) {
+				$wgMemc->set( $memcKey, $data, self::TTL_INFINITE );
+				return $this->setResponseData( $data->results );
+			}
+			// if no data return empty array
+			WikiaLogger::instance()->info( 'Unable to retrieve valid response data', [] );
+			return $this->setResponseData( [] );
+		}
+		catch ( ClientException $e ) {
+			WikiaLogger::instance()->error( self::FANDOM_STORE_ERROR_MESSAGE, [
+				'error_message' => $e->getMessage(),
+				'status_code' => $e->getCode(),
+			] );
+
+			return null;
+		}
+		return null;
 	}
 }
