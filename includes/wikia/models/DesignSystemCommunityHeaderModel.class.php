@@ -506,14 +506,14 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 		$memcKey = wfSharedMemcKey( DesignSystemApiController::MEMC_PREFIX_FANDOM_STORE, $wgCityId );
 		$cachedStoreData = $wgMemc->get( $memcKey );
-		$canBeFormatted = $this->formatFandomStoreData( $cachedStoreData );
+		$canBeFormatted = $cachedStoreData && $cachedStoreData->results && $this->formatFandomStoreData( $cachedStoreData->results );
 
-		return !empty( $cachedStoreData->results ) && $canBeFormatted ? $this->formatFandomStoreData( $cachedStoreData ) : null;
+		return !empty( $cachedStoreData->results ) && $canBeFormatted ? $this->formatFandomStoreData( $cachedStoreData->results ) : null;
 	}
 
 	private function formatFandomStoreData( $apiData ) {
 		// get copy of links from api data
-		$arrObj = new ArrayObject( $apiData->results );
+		$arrObj = new ArrayObject( $apiData );
 		$links = $arrObj->getArrayCopy();
 
 		// remove store item object from list
