@@ -506,7 +506,9 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 
 		$memcKey = wfSharedMemcKey( DesignSystemApiController::MEMC_PREFIX_FANDOM_STORE, $wgCityId );
 		$cachedStoreData = $wgMemc->get( $memcKey );
-		return !empty( $cachedStoreData->results ) ? $this->formatFandomStoreData( $cachedStoreData->results ) : null;
+		$canBeFormatted = $this->formatFandomStoreData( $cachedStoreData->results );
+
+		return !empty( $cachedStoreData->results ) && $canBeFormatted ? $this->formatFandomStoreData( $cachedStoreData->results ) : null;
 	}
 
 	private function formatFandomStoreData( $apiData ) {
@@ -518,7 +520,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		$firstItem = array_shift( $links );
 
 		// if no links or not url data, return null
-		if ( !$links ??  count( $links ) < 1 ?? !$firstItem->url) {
+		if ( !$links || (count( $links ) < 1) || !$firstItem->url) {
 			return null;
 		}
 
