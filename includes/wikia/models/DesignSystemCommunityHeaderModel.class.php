@@ -301,8 +301,6 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		$storeData = $this->getFandomStoreDataFromCache();
 		$enableShop = WikiFactory::getVarValueByName( self::ENABLE_FANDOM_STORE_VAR, Wikia::COMMUNITY_WIKI_ID );
 
-		var_dump( $enableShop );
-
 		if ( $this->exploreMenu === null ) {
 			$wgEnableCommunityPageExt =
 				WikiFactory::getVarValueByName( 'wgEnableCommunityPageExt',
