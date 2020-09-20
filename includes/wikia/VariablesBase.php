@@ -2658,7 +2658,7 @@ $wgFandomShopMap = [
 	'509' => 'Harry Potter',
 	'2233' => 'Marvel',
 	'113' => 'Star Trek',
-	'2125819' => 'Muppets',
+	'831' => 'Muppets',
 	'1242' => 'Nintendo',
 	'1081' => 'One Piece',
 	'74' => 'Pokemon',
@@ -2667,7 +2667,7 @@ $wgFandomShopMap = [
 	'4396' => 'Roblox',
 	'147' => 'Star Wars',
 	'621556' => 'Steven Universe',
-	'1006948' => 'Doctor Who',
+	'351' => 'Tibia',
 	'2569' => 'Thomas the Tank Engine',
 	'13346' => 'The Walking Dead',
 ];
