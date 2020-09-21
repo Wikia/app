@@ -33,6 +33,7 @@ class PermissionsConfiguration {
 		'content-volunteer',
 		'council',
 		'helper',
+		'imagereviewer',
 		'restricted-login',
 		'restricted-login-exempt',
 		'reviewer',
