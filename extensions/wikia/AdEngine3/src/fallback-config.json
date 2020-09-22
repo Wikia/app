@@ -1263,9 +1263,6 @@
             "apps": [
                 "oasis"
             ],
-            "regions": [
-                "XX"
-            ],
             "value": {
                 "name": "reco_4x4_mix_wiki_algos",
                 "groups": [
