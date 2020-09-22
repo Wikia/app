@@ -1,6 +1,5 @@
 <?php
 
-
 use GuzzleHttp\Psr7\Uri;
 use function GuzzleHttp\Psr7\build_query;
 use function GuzzleHttp\Psr7\parse_query;
@@ -26,7 +25,8 @@ class ReportedPostsHelper {
 				->isThreadEditable( $postData['_embedded']['thread'][0]['isEditable'] )
 				->build();
 
-			$rights = DiscussionPermissionManager::getRights( $user, $post );
+			$rights = [];
+			Hooks::run( 'UserPermissionsRequired', [ $user, $post, &$rights ] );
 
 			if ( !empty( $rights ) ) {
 				$postData['_embedded']['userData'][0]['permissions'] = $rights;

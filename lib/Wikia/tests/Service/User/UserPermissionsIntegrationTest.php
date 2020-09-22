@@ -215,7 +215,7 @@ class UserPermissionsIntegrationTest extends \WikiaDatabaseTest {
 
 			$this->permissionsService()->removeFromGroup( $this->staffUser, $this->staffUser, 'fandom-editor' );
 			$groups = $this->permissionsService()->getExplicitGlobalGroups( $this->staffUser );
-			$this->assertNotContains( 'reviewer', $groups );
+			$this->assertNotContains( 'imagereviewer', $groups );
 
 			$groups = $this->permissionsService()->getExplicitGlobalGroups( $this->staffUser );
 			$this->assertNotContains( 'content-reviewer', $groups );

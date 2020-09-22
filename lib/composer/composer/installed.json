@@ -2664,6 +2664,65 @@
         ]
     },
     {
+        "name": "perftools/php-profiler",
+        "version": "0.11.0",
+        "version_normalized": "0.11.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/perftools/php-profiler.git",
+            "reference": "5305e8545c8616ae465a8096a6493941fd3c77cd"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/perftools/php-profiler/zipball/5305e8545c8616ae465a8096a6493941fd3c77cd",
+            "reference": "5305e8545c8616ae465a8096a6493941fd3c77cd",
+            "shasum": ""
+        },
+        "require": {
+            "ext-json": "*",
+            "php": "^5.3.0 || ^7.0 || ^8.0"
+        },
+        "conflict": {
+            "perftools/xhgui-collector": "<1.8"
+        },
+        "require-dev": {
+            "perftools/xhgui-collector": "^1.8"
+        },
+        "suggest": {
+            "alcaeus/mongo-php-adapter": "Adapter to provide ext-mongo interface on top of mongo-php-libary (PHP>=5.6)",
+            "ext-curl": "cURL extension for upload saver",
+            "ext-mongo": "mongo extension (PHP>=5.3,<7.0)",
+            "ext-mongodb": "mongodb extension (PHP>=5.4)",
+            "ext-tideways": "Use tideways to profile",
+            "ext-uprofiler": "Use uprofiler to profile",
+            "ext-xhprof": "Use xhprof to profile",
+            "perftools/xhgui-collector": "For mongodb or pdo savers"
+        },
+        "time": "2020-09-04T10:03:22+00:00",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-4": {
+                "Xhgui\\Profiler\\": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Lauri Piisang",
+                "email": "lauri.piisang@eesti.ee"
+            },
+            {
+                "name": "Elan Ruusamäe",
+                "email": "glen@pld-linux.org"
+            }
+        ],
+        "description": "PHP Profiling based on XHGUI"
+    },
+    {
         "name": "phar-io/manifest",
         "version": "1.0.1",
         "version_normalized": "1.0.1.0",
@@ -3380,7 +3439,8 @@
         "homepage": "https://github.com/sebastianbergmann/php-token-stream/",
         "keywords": [
             "tokenizer"
-        ]
+        ],
+        "abandoned": true
     },
     {
         "name": "phpunit/phpunit",
@@ -6267,6 +6327,7 @@
             "http",
             "psr",
             "psr-7"
-        ]
+        ],
+        "abandoned": "laminas/laminas-diactoros"
     }
 ]

@@ -87,6 +87,52 @@
             "value": true
         }
     ],
+    "icDeRecoExperimentDev": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "browsers": [
+                "Chrome"
+            ],
+            "devices": [
+                "desktop"
+            ],
+            "regions": [
+                "PL"
+            ],
+            "value": {
+                "name": "dev_reco_test",
+                "groups": [
+                    {
+                        "name": "all",
+                        "config": {
+                            "wikiStrategy": "TOP_VERTICAL",
+                            "number_articles": 2
+                        },
+                        "sampling": 100
+                    }
+                ]
+            }
+        }
+    ],
+    "icTrackingOptInGoogleMove": [
+        {
+            "apps": [
+                "bingebot",
+                "f2",
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
+                "oasis"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "value": true
+        }
+    ],
     "icPrebidOneVideo": [
         {
             "apps": [
@@ -486,6 +532,14 @@
             "value": true
         }
     ],
+    "icA9HiviLeaderboard": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "value": true
+        }
+    ],
     "icPrebidAol": [
         {
             "apps": [
@@ -522,6 +576,7 @@
                 "5439915753",
                 "4949392740",
                 "5093231180",
+                "5477131836",
                 "5096621951",
                 "5108026783",
                 "5439914790",
@@ -648,7 +703,17 @@
                 "5461291396",
                 "5459355788",
                 "5460496953",
-                "5460497508"
+                "5460497508",
+                "5473107813",
+                "5467371078",
+                "5467370628",
+                "5354274880",
+                "5468068234",
+                "5468068237",
+                "5467186974",
+                "5468067817",
+                "5480727970",
+                "5481032081"
             ]
         }
     ],
@@ -737,7 +802,7 @@
             "regions": [
                 "XX"
             ],
-            "value": 1
+            "value": 3
         }
     ],
     "wgAdDriverBillTheLizardConfig": {
@@ -827,6 +892,22 @@
             "regions": [
                 "XX"
             ],
+            "value": true
+        }
+    ],
+    "icServicesSpecialSearchTooltipForScopeChange": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "devices": [
+                "desktop"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "sampling": 50.0,
+            "samplingCache": true,
             "value": true
         }
     ],
@@ -1058,6 +1139,14 @@
             "value": true
         }
     ],
+    "icInterventionTracking": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "value": true
+        }
+    ],
     "icFeaturedVideoMidroll": [
         {
             "apps": [
@@ -1076,8 +1165,8 @@
                 "CA",
                 "US"
             ],
-            "sampling": 20.0,
-            "value": true
+            "sampling": 50.0,
+            "value": false
         }
     ],
     "icFloorAdhesionDelay": [
@@ -1111,6 +1200,7 @@
     "icTrackingOptInLibraryUrl": [
         {
             "apps": [
+                "bingebot",
                 "f2",
                 "futhead",
                 "gamepedia",
@@ -1121,7 +1211,7 @@
             "regions": [
                 "XX"
             ],
-            "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v4.0.17/tracking-opt-in.min.js"
+            "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v4.2.0/tracking-opt-in.min.js"
         }
     ],
     "icPermutive": [
@@ -1173,39 +1263,37 @@
             "apps": [
                 "oasis"
             ],
-            "browsers": [
-                "Chrome"
-            ],
-            "devices": [
-                "desktop"
-            ],
-            "regions": [
-                "PL"
-            ],
             "value": {
-                "name": "just_testing",
+                "name": "reco_4x4_mix_wiki_algos",
                 "groups": [
                     {
-                        "name": "A",
+                        "name": "w_arl",
                         "config": {
                             "wikiStrategy": "ARL",
-                            "articleStrategy": "CV"
+                            "number_articles": 4
                         },
                         "sampling": 25
                     },
                     {
-                        "name": "B",
+                        "name": "w_cv",
                         "config": {
-                            "wikiStrategy": "ARL",
-                            "articleStrategy": "CV"
+                            "wikiStrategy": "CV",
+                            "number_articles": 4
                         },
                         "sampling": 25
                     },
                     {
-                        "name": "X",
+                        "name": "w_tv",
                         "config": {
-                            "wikiStrategy": "ARL",
-                            "articleStrategy": "CV"
+                            "wikiStrategy": "TOP_VERTICAL",
+                            "number_articles": 4
+                        },
+                        "sampling": 25
+                    },
+                    {
+                        "name": "control",
+                        "config": {
+                            
                         },
                         "sampling": 25
                     }
