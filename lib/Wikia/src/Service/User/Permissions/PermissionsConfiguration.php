@@ -36,7 +36,6 @@ class PermissionsConfiguration {
 		'imagereviewer',
 		'restricted-login',
 		'restricted-login-exempt',
-		'reviewer',
 		'staff',
 		'translator',
 		'util',
