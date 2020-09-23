@@ -98,17 +98,13 @@
             "devices": [
                 "desktop"
             ],
-            "regions": [
-                "PL"
-            ],
             "value": {
                 "name": "dev_reco_test",
                 "groups": [
                     {
                         "name": "all",
                         "config": {
-                            "wikiStrategy": "TOP_VERTICAL",
-                            "number_articles": 2
+                            "articleLimit": 1
                         },
                         "sampling": 100
                     }
@@ -536,6 +532,9 @@
         {
             "apps": [
                 "oasis"
+            ],
+            "regions": [
+                "CA"
             ],
             "value": true
         }
@@ -1144,6 +1143,9 @@
             "apps": [
                 "oasis"
             ],
+            "regions": [
+                "PL"
+            ],
             "value": true
         }
     ],
@@ -1165,8 +1167,8 @@
                 "CA",
                 "US"
             ],
-            "sampling": 50.0,
-            "value": false
+            "sampling": 8.0,
+            "value": true
         }
     ],
     "icFloorAdhesionDelay": [
@@ -1263,39 +1265,25 @@
             "apps": [
                 "oasis"
             ],
+            "regions": [
+                "XX"
+            ],
             "value": {
-                "name": "reco_4x4_mix_wiki_algos",
+                "name": "reco_AA_redo",
                 "groups": [
                     {
-                        "name": "w_arl",
+                        "name": "A",
                         "config": {
-                            "wikiStrategy": "ARL",
-                            "number_articles": 4
+                            
                         },
-                        "sampling": 25
-                    },
-                    {
-                        "name": "w_cv",
-                        "config": {
-                            "wikiStrategy": "CV",
-                            "number_articles": 4
-                        },
-                        "sampling": 25
-                    },
-                    {
-                        "name": "w_tv",
-                        "config": {
-                            "wikiStrategy": "TOP_VERTICAL",
-                            "number_articles": 4
-                        },
-                        "sampling": 25
+                        "sampling": 50
                     },
                     {
                         "name": "control",
                         "config": {
                             
                         },
-                        "sampling": 25
+                        "sampling": 50
                     }
                 ]
             }
