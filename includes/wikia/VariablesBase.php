@@ -2667,7 +2667,6 @@ $wgFandomShopMap = [
 	'4396' => 'Roblox',
 	'147' => 'Star Wars',
 	'621556' => 'Steven Universe',
-	'1006948' => 'Doctor Who',
 	'2569' => 'Thomas the Tank Engine',
 	'13346' => 'The Walking Dead',
 	'38969' => 'Vampire Diaries',
