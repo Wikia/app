@@ -2698,7 +2698,7 @@ $wgFandomShopMap = [
 	'2860' => 'Spongebob',
 	'544934' => 'Warframe',
 	'501' => 'Warhammer',
-	'3443' => 'Witcher'
+	'3443' => 'The Witcher'
 ];
 
 /**
