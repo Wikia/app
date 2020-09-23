@@ -135,7 +135,7 @@ define('ext.wikia.design-system.on-site-notifications.text-formatter', [
 			};
 
 			this._getTalkPageMessageText = function (notification) {
-				return fillArgs(getMessage('notifications-talk-page-message'), args = {
+				return fillArgs(getMessage('notifications-talk-page-message'), {
 					user: escape(notification.latestActors[0].name),
 				});
 			};
