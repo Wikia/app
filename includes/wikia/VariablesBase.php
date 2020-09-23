@@ -2684,6 +2684,7 @@ $wgFandomShopMap = [
 	'10150' => 'Dragon Age',
 	'530' => 'Dragon Ball',
 	'1706' => 'Elder Scrolls',
+	'691' => 'Dungeons and Dragons',
 	'130814' => 'Game of Thrones',
 	'2180' => 'Grey\'s Anatomy',
 	'4541' => 'Grand Theft Auto',
