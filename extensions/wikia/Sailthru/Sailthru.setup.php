@@ -17,4 +17,5 @@ $wgHooks['AddNewAccount'][] = 'SailthruHooks::onAddNewAccount';
 $wgHooks['CloseAccount'][] = 'SailthruHooks::onCloseAccount';
 $wgHooks['ReactivateAccount'][] = 'SailthruHooks::onReactivateAccount';
 $wgHooks['RtbfGlobalDataRemovalStart'][] = 'SailthruHooks::onRtbfGlobalDataRemovalStart';
+$wgHooks['UserRenamed'][] = 'SailthruHooks::onUserRenamed';
 $wgHooks['UserSaveSettings'][] = 'SailthruHooks::onUserSaveSettings';

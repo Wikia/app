@@ -46,4 +46,13 @@ class SailthruHooks {
 	public static function onReactivateAccount( User $user ) {
 		SailthruGateway::getInstance()->saveUser( $user );
 	}
+
+	/**
+	 * When a username is changed
+	 *
+	 * @param \User $user
+	 */
+	public static function onUserRenamed( User $user, $oldName, $newName ) {
+		SailthruGateway::getInstance()->saveUser( $user );
+	}
 }
