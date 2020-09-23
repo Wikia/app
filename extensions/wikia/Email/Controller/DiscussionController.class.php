@@ -356,3 +356,57 @@ class DiscussionAtMentionController extends DiscussionController {
         return array_merge_recursive( parent::getEmailSpecificFormFields(), $formFields );
     }
 }
+
+class DiscussionArticleCommentController extends DiscussionController {
+
+	private $contentType;
+	private $articleTitle;
+	private $threadCreatorId;
+
+	const ARTICLE_COMMENT_REPLY = 'article-comment-reply';
+	const ARTICLE_COMMENT_AT_MENTION = 'article-comment-at-mention';
+    const ARTICLE_COMMENT_REPLY_AT_MENTION = 'article-comment-reply-at-mention';
+
+    public function initEmail() {
+		$this->articleTitle = $this->request->getVal( 'threadTitle' );
+		$this->contentType = $this->request->getVal( 'contentType' );
+		$this->threadCreatorId = $this->request->getVal( 'threadCreatorId' );
+
+		parent::initEmail();
+	}
+
+	protected function getSummary() {
+		$this->getMessage(
+			$this->getTranslationKey(),
+			$this->getCurrentUserName(),
+			$this->articleTitle
+		);
+	}
+
+	protected function getSubject()
+	{
+		return $this->getSummary();
+	}
+
+	private function getTranslationKey() {
+    	$currentUserId = strval( $this->currentUser->getId() );
+
+    	if ( $this->contentType == self::ARTICLE_COMMENT_AT_MENTION ) {
+    		return 'emailext-discussion-post-article-comment-at-mention';
+		}
+
+    	if ( $this->contentType == self::ARTICLE_COMMENT_REPLY_AT_MENTION ) {
+    		return 'emailext-discussion-post-article-comment-reply-at-mention';
+		}
+
+    	if ( $this->contentType === self::ARTICLE_COMMENT_REPLY ) {
+    		if ( $this->threadCreatorId === $currentUserId ) {
+				return 'emailext-discussion-post-article-comment-reply';
+			}
+
+    		return 'emailext-discussion-post-article-comment-reply-followed';
+		}
+
+    	throw new Check( 'Incorrect contentType "' . $this->contentType . '"' );
+	}
+}

@@ -83,6 +83,7 @@ $wgAutoloadClasses['Email\Controller\AppleDisconnectController'] = $dir . 'Contr
 $wgAutoloadClasses['Email\Controller\DiscussionReplyController'] = $dir . 'Controller/DiscussionController.class.php';
 $wgAutoloadClasses['Email\Controller\DiscussionUpvoteController'] = $dir . 'Controller/DiscussionController.class.php';
 $wgAutoloadClasses['Email\Controller\DiscussionAtMentionController'] = $dir . 'Controller/DiscussionController.class.php';
+$wgAutoloadClasses['Email\Controller\DiscussionArticleCommentController'] = $dir . 'Controller/DiscussionController.class.php';
 $wgAutoloadClasses['Email\SpecialSendEmailController'] = $dir . 'SpecialSendEmailController.class.php';
 
 /**
