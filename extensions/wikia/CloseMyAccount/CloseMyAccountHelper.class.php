@@ -75,6 +75,7 @@ class CloseMyAccountHelper {
 		$user->setGlobalPreference( self::REQUEST_CLOSURE_PREF, null );
 		$user->saveSettings();
 
+		Hooks::run( 'ReactivateAccount', [ $user ] );
 		$this->track( $user, 'account-reactivated' );
 
 		return true;

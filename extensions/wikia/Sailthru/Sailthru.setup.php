@@ -14,5 +14,7 @@ $wgAutoloadClasses['SailthruHooks'] = $dir . 'SailthruHooks.class.php';
 
 // Hooks
 $wgHooks['AddNewAccount'][] = 'SailthruHooks::onAddNewAccount';
+$wgHooks['CloseAccount'][] = 'SailthruHooks::onCloseAccount';
+$wgHooks['ReactivateAccount'][] = 'SailthruHooks::onReactivateAccount';
 $wgHooks['RtbfGlobalDataRemovalStart'][] = 'SailthruHooks::onRtbfGlobalDataRemovalStart';
 $wgHooks['UserSaveSettings'][] = 'SailthruHooks::onUserSaveSettings';
