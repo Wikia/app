@@ -543,7 +543,12 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 			'tracking' => 'explore-shop',
 			'include' => true,
 			'items' => array_map( function ( $item ) {
-				$lower = strtolower( $item->text ? $item->text : null );
+				// reformat text string for hyphenated tracking
+				// (http://www.mendoweb.be/blog/php-convert-string-to-hyphenated-string/)
+				$lower = preg_replace( '/[^a-z0-9]+/i', ' ', $item->text );
+				$lower = trim( $lower );
+				$lower = str_replace( " ", "-", $lower );
+				$lower = strtolower( $lower );
 				return [
 					'tracking' => 'explore-shop-' . $lower,
 					'url' => $item->url ? $item->url : '#',
