@@ -533,9 +533,6 @@
             "apps": [
                 "oasis"
             ],
-            "regions": [
-                "CA"
-            ],
             "value": true
         }
     ],
@@ -1144,7 +1141,7 @@
                 "oasis"
             ],
             "regions": [
-                "PL"
+                "XX"
             ],
             "value": true
         }
