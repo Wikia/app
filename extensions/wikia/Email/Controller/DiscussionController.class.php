@@ -379,7 +379,8 @@ class DiscussionArticleCommentController extends DiscussionController {
 		$this->getMessage(
 			$this->getTranslationKey(),
 			$this->getCurrentUserName(),
-			$this->articleTitle
+			$this->articleTitle,
+			$this->wiki->city_title
 		);
 	}
 

@@ -20,10 +20,10 @@ $messages['en'] = array(
 	'emailext-discussion-100-upvote-summary' => 'Your post on [$1 $2] just reached 100 upvotes!',
 	'emailext-discussion-thread-at-mention' => '$1 mentioned you in $2 on $3',
 	'emailext-discussion-post-at-mention' => '$1 mentioned you in a reply to $2 on $3',
-	'emailext-discussion-post-article-comment-at-mention' => '$1 replied to your comment on the article: $2',
-	'emailext-discussion-post-article-comment-reply-at-mention' => '$1 replied to a comment you are following on the article: $2',
-	'emailext-discussion-post-article-comment-reply' => '$1 mentioned you in a comment on the article: $2',
-	'emailext-discussion-post-article-comment-reply-followed' => '$1 mentioned you in a reply on the article: $2'
+	'emailext-discussion-post-article-comment-at-mention' => '$1 replied to your comment on the article $2 on $3',
+	'emailext-discussion-post-article-comment-reply-at-mention' => '$1 replied to a comment you are following on the article $2 on $3',
+	'emailext-discussion-post-article-comment-reply' => '$1 mentioned you in a comment on the article $2 on $3',
+	'emailext-discussion-post-article-comment-reply-followed' => '$1 mentioned you in a reply on the article $2 on $3'
 );
 
 $messages['qqq'] = array(
