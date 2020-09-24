@@ -16,9 +16,6 @@ class DesignSystemHelper {
 		'global-navigation-search-placeholder-in-wiki' => [
 			'sitename',
 		],
-		'global-footer-site-overview-link-wikia-inc' => [
-			'year',
-		],
 		'license-description' => [
 			'license',
 		],
