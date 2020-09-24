@@ -520,7 +520,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		$firstItem = array_shift( $links );
 
 		// if no links or not url data, return null
-		if ( !$links || (count( $links ) < 1) || !$firstItem->url) {
+		if ( empty( $links ) || (count( $links ) < 1) || empty( $firstItem->url ) ) {
 			return null;
 		}
 
