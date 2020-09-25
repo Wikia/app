@@ -12,8 +12,7 @@ class CoppaToolSpecialController extends WikiaSpecialPageController {
 
 	public function index() {
 		global $wgCentralWikiId;
-		$target = $this->getVal( 'username', $this->getPar() );
 		$title = GlobalTitle::newFromText( 'CoppaTool', NS_SPECIAL, $wgCentralWikiId );
-		$this->getOutput()->redirect( $title->getFullURL( [ 'usernameOrIp' => $target ] ) );
+		$this->getOutput()->redirect( $title->getFullURL() );
 	}
 }

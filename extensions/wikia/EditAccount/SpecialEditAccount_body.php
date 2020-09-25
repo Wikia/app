@@ -42,10 +42,215 @@ class EditAccount extends SpecialPage {
 	 * @throws UserBlockedError
 	 */
 	public function execute( $par ) {
-		global $wgCentralWikiId;
-		$target = $this->getRequest()->getText( 'wpUserName', $par );
-		$title = GlobalTitle::newFromText( 'EditAccount', NS_SPECIAL, $wgCentralWikiId );
-		$this->getOutput()->redirect( $title->getFullURL( [ 'target' => $target ] ) );
+
+		// Set page title and other stuff
+		$this->setHeaders();
+		$user = $this->getUser();
+		$output = $this->getOutput();
+
+		# If the user isn't permitted to access this special page, display an error
+		if ( !$user->isAllowed( 'editaccount' ) ) {
+			throw new PermissionsError( 'editaccount' );
+		}
+
+		# Show a message if the database is in read-only mode
+		if ( wfReadOnly() ) {
+			$output->readOnlyPage();
+			return;
+		}
+
+		# If user is blocked, s/he doesn't need to access this page
+		if ( $user->isBlocked() ) {
+			throw new UserBlockedError( $this->getUser()->mBlock );
+		}
+
+		$output->addModuleStyles( 'ext.editAccount' );
+
+		$request = $this->getRequest();
+
+		$action = $request->getVal( 'wpAction' );
+		#get name to work on. subpage is supported, but form submit name trumps
+		$userName = $request->getVal( 'wpUserName', $par );
+
+		if( $userName !== null ) {
+			#got a name, clean it up
+			$userName = str_replace("_", " ", trim($userName));
+			$userName = ucfirst( $userName ); # user names begin with a capital letter
+
+			// check if user name is an existing user
+			if ( User::isValidUserName( $userName ) ) {
+
+				// BugId:CE-11
+				// If the user account has just been enabled with Special:EditAccount
+				// and the 'wikicities_c1' database (local for Community Central)
+				// has lagged compared to the 'wikicities' database (the shared one)
+				// the next action done with Special:EditAccount will fail and the
+				// correct user data will be replaced by the temp user cache.
+				// In other words: LOST.
+				//
+				// In order to prevent that we have to do the following two steps:
+				//
+				// 1) REMOVED: invalidate temp user cache
+				//
+				// 2) and copy the data from the shared to the local database
+				$oUser = User::newFromName( $userName );
+				Hooks::run( 'UserNameLoadFromId', array( $userName, &$oUser, true ) );
+
+				$id = 0;
+				$this->mUser = $oUser;
+				if ( !empty( $this->mUser ) ) {
+					$id = $this->mUser->getId();
+				}
+
+				if( empty($action) ) {
+					$action = 'displayuser';
+				}
+
+				if ( empty( $id ) ) {
+					$this->mUser = null;
+					$this->mStatus = false;
+					$this->mStatusMsg = wfMsg( 'editaccount-nouser', $userName );
+				}
+			}
+		}
+
+		// FB:23860
+		if ( !( $this->mUser instanceof User ) ) $action = '';
+
+		// CSRF protection for EditAccount (CE-774)
+		if ( ( $action !== '' && $action !== 'displayuser' && $action !== 'closeaccount' )
+			&& ( !$request->wasPosted()
+				|| !$user->matchEditToken( $request->getVal( 'wpToken' ) ) )
+		) {
+			$output->addHTML(
+				Xml::element( 'p', [ 'class' => 'error' ], $this->msg( 'sessionfailure' )->text() )
+			);
+			return;
+		}
+
+		// Displays a log of email changes for the selected user
+		if ($par && $par == "log") {
+			$this->displayLogData();
+			return;
+		}
+
+		$changeReason = $request->getVal( 'wpReason' );
+
+		switch( $action ) {
+			case 'setemail':
+				$newEmail = $request->getVal( 'wpNewEmail' );
+				$this->mStatus = $this->setEmail( $newEmail, $changeReason );
+				$template = 'displayuser';
+				break;
+			case 'setpass':
+				$newPass = $request->getVal( 'wpNewPass' );
+				$this->mStatus = $this->setPassword( $newPass, $changeReason );
+				$template = 'displayuser';
+				break;
+			case 'setrealname':
+				$newRealName = $request->getVal( 'wpNewRealName' );
+				$this->mStatus = $this->setRealName( $newRealName, $changeReason );
+				$template = 'displayuser';
+				break;
+			case 'fan-contributor':
+				$this->mStatus = $this->addFanContributor();
+				$template = 'displayuser';
+				break;
+			case 'logout':
+				$this->mStatus = $this->logOut();
+				$template = 'displayuser';
+				break;
+			case 'closeaccount':
+				$template = 'closeaccount';
+				$this->mStatus = (bool) $this->mUser->getGlobalPreference( CloseMyAccountHelper::REQUEST_CLOSURE_PREF, 0 );
+				$this->mStatusMsg = $this->mStatus ? wfMsg( 'editaccount-requested' ) : wfMsg( 'editaccount-not-requested' );
+				break;
+			case 'closeaccountconfirm':
+				$keepEmail = !$request->getBool( 'clearemail', false );
+				$this->mStatus = self::closeAccount( $this->mUser, $changeReason, $this->mStatusMsg, $this->mStatusMsg2, $keepEmail );
+				$template = $this->mStatus ? 'selectuser' : 'displayuser';
+				break;
+			case 'clearunsub':
+				$this->mStatus = $this->clearUnsubscribe();
+				$template = 'displayuser';
+				break;
+			case 'cleardisable':
+				$this->mStatus = $this->clearDisable();
+				$template = 'displayuser';
+				break;
+			case 'clearclosurerequest':
+				$this->mStatus = $this->clearClosureRequest();
+				$template = 'displayuser';
+				break;
+			case 'displayuser':
+				$template = 'displayuser';
+				break;
+			default:
+				$template = 'selectuser';
+		}
+
+		$output->setPageTitle( $this->msg( 'editaccount-title' )->plain() );
+
+		$oTmpl = new EasyTemplate( dirname( __FILE__ ) . '/templates/' );
+		$oTmpl->set_Vars( [
+			'status'	=> $this->mStatus,
+			'statusMsg' => $this->mStatusMsg,
+			'statusMsg2' => $this->mStatusMsg2,
+			'user'	  => $userName,
+			'userEmail' => null,
+			'userRealName' => null,
+			'userEncoded' => urlencode( $userName ),
+			'user_hsc' => htmlspecialchars( $userName ),
+			'userId'  => null,
+			'userReg' => null,
+			'isUnsub' => null,
+			'isDisabled' => null,
+			'isAdopter' => null,
+			'isFanContributor' => null,
+			'returnURL' => $this->getTitle()->getFullURL(),
+			'logLink' => Linker::linkKnown(
+				SpecialPage::getTitleFor( 'Log', 'editaccnt' ),
+				$this->msg( 'editaccount-log' )->escaped()
+			),
+			'userStatus' => null,
+			'emailStatus' => null,
+			'disabled' => null,
+			'changeEmailRequested' => null,
+			'editToken' => $user->getEditToken(),
+		] );
+
+		if( is_object( $this->mUser ) ) {
+			$userStatus = wfMsg( 'editaccount-status-realuser' );
+			$this->mUser->load();
+
+			// get new email (unconfirmed)
+			$optionNewEmail = $this->mUser->getNewEmail();
+			$changeEmailRequested = ( empty($optionNewEmail) ) ? '' : wfMsg( 'editaccount-email-change-requested', $optionNewEmail ) ;
+
+			// emailStatus is the status of the email in the "Set new email address" field
+			$emailStatus = ( $this->mUser->isEmailConfirmed() ) ? wfMsg('editaccount-status-confirmed') : wfMsg('editaccount-status-unconfirmed') ;
+			$oTmpl->set_Vars( [
+				'userEmail' => $this->mUser->getEmail(),
+				'userRealName' => $this->mUser->getRealName(),
+				'userId'  => $this->mUser->getID(),
+				'userReg' => date( 'r', strtotime( $this->mUser->getRegistration() ) ),
+				'isUnsub' => $this->mUser->getGlobalPreference('unsubscribed'),
+				'isDisabled' => $this->mUser->getGlobalFlag('disabled'),
+				'isClosureRequested' => $this->isClosureRequested(),
+				'isFanContributor' => $this->isFanContributor(),
+				'userStatus' => $userStatus,
+				'emailStatus' => $emailStatus,
+				'changeEmailRequested' => $changeEmailRequested,
+				'mailLogLink' => Linker::linkKnown(
+					SpecialPage::getTitleFor( 'EditAccount', 'log' ),
+					"Mail change log",	// TODO: i18n this
+					array(),			// attribs
+					array('user_id' => $this->mUser->getID())),
+			] );
+		}
+
+		// HTML output
+		$output->addHTML( $oTmpl->render( $template ) );
 	}
 
 	/**
