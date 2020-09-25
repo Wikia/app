@@ -4,6 +4,7 @@ namespace Email\Controller;
 
 use Email\Check;
 use Email\EmailController;
+use Wikia\Logger\WikiaLogger;
 
 abstract class DiscussionController extends EmailController {
 
@@ -372,10 +373,19 @@ class DiscussionArticleCommentController extends DiscussionController {
 		$this->contentType = $this->request->getVal( 'contentType' );
 		$this->threadCreatorId = $this->request->getVal( 'threadCreatorId' );
 
+		WikiaLogger::instance()->info('Initializing ArticleComment email', [
+			'articleTitle' => $this->articleTitle,
+			'contentType' => $this->contentType
+		]);
+
 		parent::initEmail();
 	}
 
 	protected function getSummary() {
+    	WikiaLogger::instance()->info('Creating email summary', [
+    		'translationKey' => $this->getTranslationKey(),
+		]);
+
 		$this->getMessage(
 			$this->getTranslationKey(),
 			$this->getCurrentUserName(),
@@ -392,11 +402,11 @@ class DiscussionArticleCommentController extends DiscussionController {
 	private function getTranslationKey() {
     	$currentUserId = strval( $this->currentUser->getId() );
 
-    	if ( $this->contentType == self::ARTICLE_COMMENT_AT_MENTION ) {
+    	if ( $this->contentType === self::ARTICLE_COMMENT_AT_MENTION ) {
     		return 'emailext-discussion-post-article-comment-at-mention';
 		}
 
-    	if ( $this->contentType == self::ARTICLE_COMMENT_REPLY_AT_MENTION ) {
+    	if ( $this->contentType === self::ARTICLE_COMMENT_REPLY_AT_MENTION ) {
     		return 'emailext-discussion-post-article-comment-reply-at-mention';
 		}
 
