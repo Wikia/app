@@ -1,6 +1,25 @@
 <?php
 
 class SailthruHooks {
+	protected static function getUsersBirthdayFromMaster( $userId ) {
+		global $wgExternalSharedDB;
+
+		$dbr = wfGetDB( DB_MASTER, [], $wgExternalSharedDB );
+		$res = $dbr->select(
+			[ 'user' ],
+			[ 'user_birthdate' ],
+			[ 'user_id' => $userId ],
+			__METHOD__
+		);
+
+		if ( !empty( $res->numRows() ) ) {
+			$updatedUserObject = $res->fetchObject();
+			$birthdate = $updatedUserObject->user_birthdate;
+		}
+
+		return $birthdate ?? null;
+	}
+
 	/**
 	 * When a new user is registered, send their info to Sailthru
 	 *
@@ -8,7 +27,7 @@ class SailthruHooks {
 	 * @param bool $byEmail
 	 */
 	public static function onAddNewAccount( User $user, $byEmail ) {
-		SailthruGateway::getInstance()->saveUser( $user );
+		SailthruGateway::getInstance()->createUser( $user, self::getUsersBirthdayFromMaster( $user->getId() ) );
 	}
 
 	/**
@@ -17,7 +36,7 @@ class SailthruHooks {
 	 * @param User $user
 	 */
 	public static function onUserSaveSettings( User $user ) {
-		SailthruGateway::getInstance()->saveUser( $user );
+		SailthruGateway::getInstance()->updateUser( $user );
 	}
 
 	/**
@@ -35,7 +54,7 @@ class SailthruHooks {
 	 * @param User $user
 	 */
 	public static function onCloseAccount( User $user ) {
-		SailthruGateway::getInstance()->deleteUser( $user );
+		SailthruGateway::getInstance()->updateUser( $user, [ 'status' => 'disabled' ] );
 	}
 
 	/**
@@ -44,7 +63,7 @@ class SailthruHooks {
 	 * @param User $user
 	 */
 	public static function onReactivateAccount( User $user ) {
-		SailthruGateway::getInstance()->saveUser( $user );
+		SailthruGateway::getInstance()->updateUser( $user, [ 'status' => 'active' ] );
 	}
 
 	/**
@@ -53,6 +72,6 @@ class SailthruHooks {
 	 * @param \User $user
 	 */
 	public static function onUserRenamed( User $user, $oldName, $newName ) {
-		SailthruGateway::getInstance()->saveUser( $user );
+		SailthruGateway::getInstance()->renameUser( $user );
 	}
 }
