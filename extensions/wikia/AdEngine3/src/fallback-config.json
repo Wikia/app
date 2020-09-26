@@ -799,7 +799,7 @@
             "regions": [
                 "XX"
             ],
-            "value": 3
+            "value": 1
         }
     ],
     "wgAdDriverBillTheLizardConfig": {
@@ -1211,7 +1211,7 @@
             "regions": [
                 "XX"
             ],
-            "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v4.2.0/tracking-opt-in.min.js"
+            "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v4.5.0/tracking-opt-in.min.js"
         }
     ],
     "icPermutive": [
@@ -1264,21 +1264,46 @@
                 "oasis"
             ],
             "value": {
-                "name": "reco_AA_redo",
+                "name": "reco_6x2_mix",
                 "groups": [
                     {
-                        "name": "A",
+                        "name": "w_arl",
                         "config": {
-                            
+                            "articleLimit": 6,
+                            "wikiStrategy": "ARL"
                         },
-                        "sampling": 50
+                        "sampling": 20
+                    },
+                    {
+                        "name": "w_cv",
+                        "config": {
+                            "articleLimit": 6,
+                            "wikiStrategy": "CV"
+                        },
+                        "sampling": 20
+                    },
+                    {
+                        "name": "w_tv",
+                        "config": {
+                            "articleLimit": 6,
+                            "wikiStrategy": "TOP_VERTICAL"
+                        },
+                        "sampling": 20
+                    },
+                    {
+                        "name": "w_cf",
+                        "config": {
+                            "articleLimit": 6,
+                            "wikiStrategy": "CF"
+                        },
+                        "sampling": 20
                     },
                     {
                         "name": "control",
                         "config": {
                             
                         },
-                        "sampling": 50
+                        "sampling": 20
                     }
                 ]
             }
