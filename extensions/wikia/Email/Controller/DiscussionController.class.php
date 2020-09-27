@@ -373,19 +373,10 @@ class DiscussionArticleCommentController extends DiscussionController {
 		$this->contentType = $this->request->getVal( 'contentType' );
 		$this->threadCreatorId = $this->request->getVal( 'threadCreatorId' );
 
-		WikiaLogger::instance()->info('Initializing ArticleComment email', [
-			'articleTitle' => $this->articleTitle,
-			'contentType' => $this->contentType
-		]);
-
 		parent::initEmail();
 	}
 
 	protected function getSummary() {
-    	WikiaLogger::instance()->info('Creating email summary', [
-    		'translationKey' => $this->getTranslationKey(),
-		]);
-
 		return $this->getMessage(
 			$this->getTranslationKey(),
 			$this->getCurrentUserName(),
@@ -411,6 +402,12 @@ class DiscussionArticleCommentController extends DiscussionController {
 		}
 
     	if ( $this->contentType === self::ARTICLE_COMMENT_REPLY ) {
+    		WikiaLogger::instance()->info('Handling Comment Reply', [
+				'threadCreatorId' => $this->threadCreatorId,
+				'currentUserId' => $this->currentUser->getId(),
+				'currentUserIdParsed' => $currentUserId,
+			]);
+
     		if ( $this->threadCreatorId === $currentUserId ) {
 				return 'emailext-article-comment-reply';
 			}
