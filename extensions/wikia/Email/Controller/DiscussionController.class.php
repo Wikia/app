@@ -4,7 +4,6 @@ namespace Email\Controller;
 
 use Email\Check;
 use Email\EmailController;
-use Wikia\Logger\WikiaLogger;
 
 abstract class DiscussionController extends EmailController {
 
@@ -362,7 +361,6 @@ class DiscussionArticleCommentController extends DiscussionController {
 
 	private $contentType;
 	private $articleTitle;
-	private $threadCreatorId;
 
 	const ARTICLE_COMMENT_REPLY = 'article-comment-reply';
 	const ARTICLE_COMMENT_AT_MENTION = 'article-comment-at-mention';
@@ -371,7 +369,6 @@ class DiscussionArticleCommentController extends DiscussionController {
     public function initEmail() {
 		$this->articleTitle = $this->request->getVal( 'threadTitle' );
 		$this->contentType = $this->request->getVal( 'contentType' );
-		$this->threadCreatorId = $this->request->getVal( 'threadCreatorId' );
 
 		parent::initEmail();
 	}
@@ -385,36 +382,21 @@ class DiscussionArticleCommentController extends DiscussionController {
 		);
 	}
 
-	protected function getSubject()
-	{
+	protected function getSubject() {
 		return $this->getSummary();
 	}
 
 	private function getTranslationKey() {
-    	$currentUserId = strval( $this->currentUser->getId() );
-
-    	if ( $this->contentType === self::ARTICLE_COMMENT_AT_MENTION ) {
-    		return 'emailext-article-comment-at-mention';
-		}
-
-    	if ( $this->contentType === self::ARTICLE_COMMENT_REPLY_AT_MENTION ) {
-    		return 'emailext-article-comment-reply-at-mention';
-		}
-
-    	if ( $this->contentType === self::ARTICLE_COMMENT_REPLY ) {
-    		WikiaLogger::instance()->info('Handling Comment Reply', [
-				'threadCreatorId' => $this->threadCreatorId,
-				'currentUserId' => $this->currentUser->getId(),
-				'currentUserIdParsed' => $currentUserId,
-			]);
-
-    		if ( $this->threadCreatorId === $currentUserId ) {
+    	// TODO: Follower email
+    	switch ( $this->contentType ) {
+			case self::ARTICLE_COMMENT_AT_MENTION:
+				return 'emailext-article-comment-at-mention';
+			case self::ARTICLE_COMMENT_REPLY_AT_MENTION:
+				return 'emailext-article-comment-reply-at-mention';
+			case self::ARTICLE_COMMENT_REPLY:
 				return 'emailext-article-comment-reply';
-			}
-
-    		return 'emailext-article-comment-reply-followed';
+			default:
+				throw new Check( 'Incorrect contentType "' . $this->contentType . '"' );
 		}
-
-    	throw new Check( 'Incorrect contentType "' . $this->contentType . '"' );
 	}
 }
