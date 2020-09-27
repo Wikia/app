@@ -386,7 +386,7 @@ class DiscussionArticleCommentController extends DiscussionController {
     		'translationKey' => $this->getTranslationKey(),
 		]);
 
-		$this->getMessage(
+		return $this->getMessage(
 			$this->getTranslationKey(),
 			$this->getCurrentUserName(),
 			$this->articleTitle,
@@ -403,19 +403,19 @@ class DiscussionArticleCommentController extends DiscussionController {
     	$currentUserId = strval( $this->currentUser->getId() );
 
     	if ( $this->contentType === self::ARTICLE_COMMENT_AT_MENTION ) {
-    		return 'emailext-discussion-post-article-comment-at-mention';
+    		return 'emailext-article-comment-at-mention';
 		}
 
     	if ( $this->contentType === self::ARTICLE_COMMENT_REPLY_AT_MENTION ) {
-    		return 'emailext-discussion-post-article-comment-reply-at-mention';
+    		return 'emailext-article-comment-reply-at-mention';
 		}
 
     	if ( $this->contentType === self::ARTICLE_COMMENT_REPLY ) {
     		if ( $this->threadCreatorId === $currentUserId ) {
-				return 'emailext-discussion-post-article-comment-reply';
+				return 'emailext-article-comment-reply';
 			}
 
-    		return 'emailext-discussion-post-article-comment-reply-followed';
+    		return 'emailext-article-comment-reply-followed';
 		}
 
     	throw new Check( 'Incorrect contentType "' . $this->contentType . '"' );
