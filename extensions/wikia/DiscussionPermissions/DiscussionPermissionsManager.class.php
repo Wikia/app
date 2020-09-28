@@ -93,7 +93,8 @@ class DiscussionPermissionsManager {
 	}
 
 	private static function canEdit( User $user, Post $post ) : bool {
-		return self::canEditPost( $user, $post ) && $post->isEditable() && $post->isThreadEditable();
+		return ( self::canEditPost( $user, $post ) && $post->isEditable() &&
+			$post->isThreadEditable() ) || $user->isAllowed( 'threads:superedit' );
 	}
 
 	private static function canEditThread( User $user, Post $post ): bool {
