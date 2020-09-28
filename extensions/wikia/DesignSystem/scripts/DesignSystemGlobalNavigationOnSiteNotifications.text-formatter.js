@@ -135,8 +135,11 @@ define('ext.wikia.design-system.on-site-notifications.text-formatter', [
 			};
 
 			this._getTalkPageMessageText = function (notification) {
+				var userName = ( notification.latestActors[0] && notification.latestActors[0].name ) ?
+					escape(notification.latestActors[0].name) :
+					getMessage('oasis-anon-user');
 				return fillArgs(getMessage('notifications-talk-page-message'), {
-					user: escape(notification.latestActors[0].name),
+					user: userName,
 				});
 			};
 		}
