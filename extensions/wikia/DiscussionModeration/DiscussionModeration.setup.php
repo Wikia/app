@@ -14,8 +14,10 @@ $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['ReportedPostsHelper'] =  $dir . 'ReportedPostsHelper.class.php';
 $wgAutoloadClasses['DiscussionGateway'] =  $dir . 'DiscussionGateway.class.php';
 $wgAutoloadClasses['DiscussionModerationController'] =  $dir . 'DiscussionModerationController.class.php';
+$wgAutoloadClasses['DiscussionLeaderboardController'] =  $dir . 'DiscussionLeaderboardController.class.php';
 $wgAutoloadClasses['FeedsReportedPageController'] =  $dir . 'DiscussionModerationController.class.php';
 $wgAutoloadClasses['ReportDetailsHelper'] =  $dir . 'ReportDetailsHelper.class.php';
+$wgAutoloadClasses['LeaderboardHelper'] =  $dir . 'LeaderboardHelper.class.php';
 
 $wgGroupPermissions['*']['posts:report']                               = false;
 $wgGroupPermissions['user']['posts:report']                            = true;
@@ -99,3 +101,13 @@ $wgGroupPermissions['global-discussions-moderator']['threads:superedit']    = tr
 $wgGroupPermissions['helper']['threads:superedit']                          = false;
 $wgGroupPermissions['vstf']['threads:superedit']                            = false;
 $wgGroupPermissions['soap']['threads:superedit']                            = false;
+
+$wgGroupPermissions['*']['leaderboard:view']                               = false;
+$wgGroupPermissions['threadmoderator']['leaderboard:view']                 = true;
+$wgGroupPermissions['wiki-manager']['leaderboard:view']                    = true;
+$wgGroupPermissions['sysop']['leaderboard:view']                           = true;
+$wgGroupPermissions['staff']['leaderboard:view']                           = true;
+$wgGroupPermissions['global-discussions-moderator']['leaderboard:view']    = true;
+$wgGroupPermissions['helper']['leaderboard:view']                          = true;
+$wgGroupPermissions['vstf']['leaderboard:view']                            = true;
+$wgGroupPermissions['soap']['leaderboard:view']                            = true;

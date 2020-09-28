@@ -3514,6 +3514,7 @@ Quando este terminar, receberá uma notificação por e-mail.',
 	'userrenametool-error-password-not-match' => 'Senha incorreta. Você deve inserir a senha atual.',
 	'userrenametool-understand-consequences' => 'Eu entendo as consequências da renomeação descritas acima',
 	'userrenametool-error-too-long' => 'Este nome de usuário excede 50 caracteres.',
+	'userrenametool-error-token-not-exists' => 'O token de edição do usuário não existe.',
 );
 
 $messages['qu'] = array(

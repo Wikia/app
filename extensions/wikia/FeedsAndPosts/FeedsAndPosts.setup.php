@@ -33,3 +33,5 @@ $wgWikiaApiControllers['FeedsAndPostsController'] = $dir . 'FeedsAndPostsControl
 
 $wgGroupPermissions['*']['polls:vote']           = false;
 $wgGroupPermissions['user']['polls:vote']        = true;
+
+$wgExtensionMessagesFiles['FeedsAndPosts'] = $dir . 'FeedsAndPosts.i18n.php';

@@ -131,6 +131,54 @@ class DiscussionGateway {
 		} );
 	}
 
+	public function getPostsLeaderboard( int $userId, int $days ) {
+		return $this->makeCall( function () use ( $userId, $days ) {
+			return $this->httpClient->get(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/leaderboard/posts",
+				[
+					RequestOptions::HEADERS => [
+						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+						Constants::HELIOS_AUTH_HEADER => $userId,
+					],
+					RequestOptions::QUERY => [ 'days' => $days ],
+					// I know it is big, but this api really sucks
+					RequestOptions::TIMEOUT => 7.0,
+				] );
+		} );
+	}
+
+	public function getModeratorLeaderboard( int $userId, int $days ) {
+		return $this->makeCall( function () use ( $userId, $days ) {
+			return $this->httpClient->get(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/leaderboard/moderator-actions",
+				[
+					RequestOptions::HEADERS => [
+						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+						Constants::HELIOS_AUTH_HEADER => $userId,
+					],
+					RequestOptions::QUERY => [ 'days' => $days ],
+					// I know it is big, but this api really sucks
+					RequestOptions::TIMEOUT => 7.0,
+				] );
+		} );
+	}
+
+	public function getReportsLeaderboard( int $userId, int $days ) {
+		return $this->makeCall( function () use ( $userId, $days ) {
+			return $this->httpClient->get(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/leaderboard/reports",
+				[
+					RequestOptions::HEADERS => [
+						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+						Constants::HELIOS_AUTH_HEADER => $userId,
+					],
+					RequestOptions::QUERY => [ 'days' => $days ],
+					// I know it is big, but this api really sucks
+					RequestOptions::TIMEOUT => 7.0,
+				] );
+		} );
+	}
+
 	private function makeCall( callable $callback ): array {
 		try {
 			$response = $callback();

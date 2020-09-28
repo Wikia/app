@@ -48,6 +48,7 @@ class UpdateListUsersTask extends BaseTask {
 			$fieldsToUpdate,
 			__METHOD__
 		);
+		$this->updateUserGroupsTable( $wikiId, $userId, $userGroups );
 	}
 
 	public function updateUserGroups( array $updateInfo ) {
@@ -64,6 +65,8 @@ class UpdateListUsersTask extends BaseTask {
 			'single_group' => $groupCount ? $userGroups[$groupCount - 1] : '',
 			'all_groups' => implode( ';', $userGroups ),
 		];
+
+		$this->updateUserGroupsTable( $wikiId, $userId, $userGroups );
 
 		// If a row already exists for this user and this wiki, a cheap UPDATE operation is sufficient
 		$this->writeConnection()->update(
@@ -100,6 +103,20 @@ class UpdateListUsersTask extends BaseTask {
 
 			$this->writeConnection()->insert( static::EVENTS_LOCAL_USERS, [ $row ], __METHOD__ );
 		}
+	}
+
+	private function updateUserGroupsTable( int $wikiId, int $userId, array $groups ): void {
+		$dbw = $this->writeConnection();
+		$dbw->delete( 'local_user_groups', [ 'user_id' => $userId, 'wiki_id' => $wikiId ] );
+
+		$groupRows = array_map( function ( $group ) use ( $wikiId, $userId ) {
+			return [
+				'user_id' => $userId,
+				'wiki_id' => $wikiId,
+				'group_name' => $group,
+			];
+		}, $groups );
+		$dbw->insert( 'local_user_groups', $groupRows );
 	}
 
 	private function writeConnection(): DatabaseBase {

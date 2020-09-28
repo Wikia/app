@@ -414,6 +414,8 @@ class ListusersData {
 		$allgroups = ( $elements > 0 ) ? implode(";", $groups) : "";
 
 		$dbw = wfGetDB( DB_MASTER, array(), $this->mDBh );
+		$this->updateUserGroupsTable( $dbw, $this->mCityId, $user_id, $groups );
+
 		if ( empty($oRow) ) {
 			$edits = $user->getEditCount();
 			list( $editdate, $lastrev ) = self::getEditDateAndLastRevision( $user_id );
@@ -542,6 +544,19 @@ class ListusersData {
 				__METHOD__ . '::update'
 			);
 		}
+	}
+
+	private function updateUserGroupsTable( DatabaseBase $dbw, int $wikiId, int $userId, array $groups ): void {
+		$dbw->delete( 'local_user_groups', [ 'user_id' => $userId, 'wiki_id' => $wikiId ] );
+
+		$groupRows = array_map( function ( $group ) use ( $wikiId, $userId ) {
+			return [
+				'user_id' => $userId,
+				'wiki_id' => $wikiId,
+				'group_name' => $group,
+			];
+		}, $groups );
+		$dbw->insert( 'local_user_groups', $groupRows );
 	}
 
 	/**

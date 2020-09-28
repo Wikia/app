@@ -87,6 +87,31 @@
             "value": true
         }
     ],
+    "icDeRecoExperimentDev": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "browsers": [
+                "Chrome"
+            ],
+            "devices": [
+                "desktop"
+            ],
+            "value": {
+                "name": "dev_reco_test",
+                "groups": [
+                    {
+                        "name": "all",
+                        "config": {
+                            "articleLimit": 1
+                        },
+                        "sampling": 100
+                    }
+                ]
+            }
+        }
+    ],
     "icTrackingOptInGoogleMove": [
         {
             "apps": [
@@ -539,6 +564,7 @@
                 "4366940064",
                 "4916913597",
                 "5447862918",
+                "5485505474",
                 "5447985268",
                 "4913869429",
                 "5443340780",
@@ -678,7 +704,13 @@
                 "5473107813",
                 "5467371078",
                 "5467370628",
-                "5354274880"
+                "5354274880",
+                "5468068234",
+                "5468068237",
+                "5467186974",
+                "5468067817",
+                "5480727970",
+                "5481032081"
             ]
         }
     ],
@@ -767,7 +799,7 @@
             "regions": [
                 "XX"
             ],
-            "value": 3
+            "value": 1
         }
     ],
     "wgAdDriverBillTheLizardConfig": {
@@ -857,6 +889,22 @@
             "regions": [
                 "XX"
             ],
+            "value": true
+        }
+    ],
+    "icServicesSpecialSearchTooltipForScopeChange": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "devices": [
+                "desktop"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "sampling": 50.0,
+            "samplingCache": true,
             "value": true
         }
     ],
@@ -1093,6 +1141,9 @@
             "apps": [
                 "oasis"
             ],
+            "regions": [
+                "XX"
+            ],
             "value": true
         }
     ],
@@ -1114,8 +1165,8 @@
                 "CA",
                 "US"
             ],
-            "sampling": 50.0,
-            "value": false
+            "sampling": 8.0,
+            "value": true
         }
     ],
     "icFloorAdhesionDelay": [
@@ -1160,7 +1211,7 @@
             "regions": [
                 "XX"
             ],
-            "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v4.2.0/tracking-opt-in.min.js"
+            "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v4.5.0/tracking-opt-in.min.js"
         }
     ],
     "icPermutive": [
@@ -1212,23 +1263,38 @@
             "apps": [
                 "oasis"
             ],
-            "regions": [
-                "XX"
-            ],
             "value": {
-                "name": "reco_AA",
+                "name": "reco_6x2_mix",
                 "groups": [
                     {
-                        "name": "A",
+                        "name": "w_arl",
                         "config": {
-                            
+                            "articleLimit": 6,
+                            "wikiStrategy": "ARL"
                         },
-                        "sampling": 30
+                        "sampling": 20
                     },
                     {
-                        "name": "B",
+                        "name": "w_cv",
                         "config": {
-                            
+                            "articleLimit": 6,
+                            "wikiStrategy": "CV"
+                        },
+                        "sampling": 20
+                    },
+                    {
+                        "name": "w_tv",
+                        "config": {
+                            "articleLimit": 6,
+                            "wikiStrategy": "TOP_VERTICAL"
+                        },
+                        "sampling": 20
+                    },
+                    {
+                        "name": "w_cf",
+                        "config": {
+                            "articleLimit": 6,
+                            "wikiStrategy": "CF"
                         },
                         "sampling": 20
                     },
@@ -1237,7 +1303,7 @@
                         "config": {
                             
                         },
-                        "sampling": 50
+                        "sampling": 20
                     }
                 ]
             }
