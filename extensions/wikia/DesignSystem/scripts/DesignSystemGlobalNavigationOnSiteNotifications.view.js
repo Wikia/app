@@ -118,6 +118,8 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 						return 'wds-icons-comment-small';
 					} else if (type === common.notificationTypes.announcement) {
 						return 'wds-icons-flag-small';
+					} else if (type === common.notificationTypes.talkPageMessage) {
+						return 'wds-icons-bubble-small';
 					} else {
 						return 'wds-icons-heart-small';
 					}
