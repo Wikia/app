@@ -7,7 +7,8 @@ define('ext.wikia.design-system.on-site-notifications.common', [], function () {
 			discussionReply: 'discussion-reply',
 			announcement: 'announcement',
 			postAtMention: 'post-at-mention',
-			threadAtMention: 'thread-at-mention'
+			threadAtMention: 'thread-at-mention',
+			talkPageMessage: 'talk-page-message'
 		}, logTag = 'on-site-notifications';
 
 		return {
