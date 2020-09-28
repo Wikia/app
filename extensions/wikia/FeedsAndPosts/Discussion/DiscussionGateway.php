@@ -59,6 +59,32 @@ class DiscussionGateway {
 		} );
 	}
 
+	public function upVotePost( string $postId, int $userId, array $userTraceHeaders ) {
+		return $this->makeCall( function () use ( $postId, $userId, $userTraceHeaders ) {
+			return $this->httpClient->post(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/votes/post/{$postId}",
+				[
+					RequestOptions::HEADERS => [ WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+												 Constants::HELIOS_AUTH_HEADER => $userId ] +
+											   $userTraceHeaders,
+					RequestOptions::TIMEOUT => 3.0,
+				] );
+		} );
+	}
+
+	public function downVotePost( string $postId, int $userId, array $userTraceHeaders ) {
+		return $this->makeCall( function () use ( $postId, $userId, $userTraceHeaders ) {
+			return $this->httpClient->delete(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/votes/post/{$postId}",
+				[
+					RequestOptions::HEADERS => [ WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+												 Constants::HELIOS_AUTH_HEADER => $userId ] +
+											   $userTraceHeaders,
+					RequestOptions::TIMEOUT => 3.0,
+				] );
+		} );
+	}
+
 	private function makeCall( callable $callback ): array {
 		try {
 			$response = $callback();
