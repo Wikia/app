@@ -270,7 +270,6 @@ class WikiaFileHelper {
 			'exists' => false,
 			'isAdded' => true,
 			'extraHeight' => 0,
-			'externalUrl' => '',
 		);
 
 		if ( !empty( $fileTitle ) ) {
@@ -331,11 +330,6 @@ class WikiaFileHelper {
 				$data['articles'] = $articleList;
 				$data['width'] = $width;
 				$data['height'] = $height;
-
-				// this covers eg. images added via InstantCommons
-				if ( !$file->isLocal() ) {
-					$data['externalUrl'] = $file->getDescriptionUrl();
-				}
 			}
 		}
 

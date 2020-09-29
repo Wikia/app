@@ -217,7 +217,6 @@ class LightboxController extends WikiaController {
 		$this->exists = $data['exists'];
 		$this->isAdded = $data['isAdded'];
 		$this->extraHeight = $data['extraHeight'];
-		$this->externalUrl = $data['externalUrl'];
 		$this->isUserAnon = $this->wg->User->isAnon();
 		$parserOptions = new ParserOptions();
 		$parserOptions->setEditSection( false );
