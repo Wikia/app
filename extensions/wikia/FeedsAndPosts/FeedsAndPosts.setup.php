@@ -16,10 +16,13 @@ $wgAutoloadClasses['Wikia\FeedsAndPosts\WikiVariables'] = $dir . 'WikiVariables.
 $wgAutoloadClasses['Wikia\FeedsAndPosts\ArticleData'] = $dir . 'ArticleData.class.php';
 $wgAutoloadClasses['Wikia\FeedsAndPosts\WikiDetails'] = $dir . 'WikiDetails.class.php';
 $wgAutoloadClasses['Wikia\FeedsAndPosts\ArticleTags'] = $dir . 'ArticleTags.class.php';
+$wgAutoloadClasses['Wikia\FeedsAndPosts\Discussion\DiscussionGateway'] = $dir . 'Discussion/DiscussionGateway.php';
+$wgAutoloadClasses['Wikia\FeedsAndPosts\Discussion\UserInfoHelper'] = $dir . 'Discussion/UserInfoHelper.php';
 
 
 // Controllers
 $wgAutoloadClasses['FeedsAndPostsController'] = $dir . 'FeedsAndPostsController.class.php';
+$wgAutoloadClasses['DiscussionPollController'] = $dir . 'Discussion/DiscussionPollController.php';
 
 // Hooks
 $wgHooks['BeforePageDisplay'][] = 'FeedsAndPostsHooks::onBeforePageDisplay';
@@ -27,5 +30,8 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'FeedsAndPostsHooks::onMakeGlobalVaria
 
 // Add new API controller to API controllers list
 $wgWikiaApiControllers['FeedsAndPostsController'] = $dir . 'FeedsAndPostsController.class.php';
+
+$wgGroupPermissions['*']['polls:vote']           = false;
+$wgGroupPermissions['user']['polls:vote']        = true;
 
 $wgExtensionMessagesFiles['FeedsAndPosts'] = $dir . 'FeedsAndPosts.i18n.php';
