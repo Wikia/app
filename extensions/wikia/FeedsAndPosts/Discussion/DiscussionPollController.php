@@ -45,7 +45,7 @@ class DiscussionPollController extends \WikiaController {
 		[ 'statusCode' => $statusCode, 'body' => $body ] =
 			$this->gateway->castPollVote( $pollId, $answerIds, $user->getId() );
 
-		$this->response->setCode( $statusCode );
+		$this->response->setCode( $statusCode == 204 ? 200 : $statusCode );
 		$this->response->setData( $body );
 	}
 
