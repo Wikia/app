@@ -14,6 +14,8 @@ use Wikia\Service\Constants;
 class DiscussionGateway {
 	use Loggable;
 
+	const API_TIMEOUT = 3.0;
+
 	/** @var Client $httpClient */
 	private $httpClient;
 	/** @var string $serviceUrl */
@@ -37,7 +39,7 @@ class DiscussionGateway {
 						Constants::HELIOS_AUTH_HEADER => $userId,
 						'Content-Type' => 'application/json',
 					],
-					RequestOptions::TIMEOUT => 3.0,
+					RequestOptions::TIMEOUT => self::API_TIMEOUT,
 					RequestOptions::BODY => json_encode( $answerIds ),
 				] );
 		} );
@@ -54,7 +56,7 @@ class DiscussionGateway {
 					RequestOptions::QUERY => [
 						'answerId' => $answerId,
 					],
-					RequestOptions::TIMEOUT => 3.0,
+					RequestOptions::TIMEOUT => self::API_TIMEOUT,
 				] );
 		} );
 	}
@@ -67,7 +69,7 @@ class DiscussionGateway {
 					RequestOptions::HEADERS => [ WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
 												 Constants::HELIOS_AUTH_HEADER => $userId ] +
 											   $userTraceHeaders,
-					RequestOptions::TIMEOUT => 3.0,
+					RequestOptions::TIMEOUT => self::API_TIMEOUT,
 				] );
 		} );
 	}
@@ -80,7 +82,7 @@ class DiscussionGateway {
 					RequestOptions::HEADERS => [ WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
 												 Constants::HELIOS_AUTH_HEADER => $userId ] +
 											   $userTraceHeaders,
-					RequestOptions::TIMEOUT => 3.0,
+					RequestOptions::TIMEOUT => self::API_TIMEOUT,
 				] );
 		} );
 	}
