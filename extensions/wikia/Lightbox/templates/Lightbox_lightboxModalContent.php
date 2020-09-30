@@ -56,9 +56,8 @@
 		{{/imageDescription}}
 		{{^imageDescription}}
 			{{#externalUrl}}
-			<a href="{{externalUrl}}" class="more-info-button wds-button wds-is-secondary">
-				<?= DesignSystemHelper::renderSvg( 'wds-icons-question', 'wds-icon wds-icon-small' ); ?>
-				<span><?= wfMessage( 'lightbox-header-more-info-button' )->escaped() ?></span>
+			<a href="{{externalUrl}}" class="wikia-button more-info-button secondary">
+				<?= wfMessage('lightbox-header-more-info-button')->escaped() ?>
 			</a>
 			{{/externalUrl}}
 		{{/imageDescription}}
