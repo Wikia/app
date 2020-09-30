@@ -1,7 +1,6 @@
 <?php
 
 class DesignSystemCommunityHeaderModelTest extends WikiaBaseTest {
-    private $fandomStoreData;
     private $communityHeaderModel;
 
     /**
@@ -16,51 +15,62 @@ class DesignSystemCommunityHeaderModelTest extends WikiaBaseTest {
 
 
     /**
-     * @dataProvider getApiProvider
+     *  Test formatting of fandom store data
      */
-    public function testFormatFandomStoreData( $apiData, $expected ) {
-        var_dump( $apiData );
-        $formattedData = $this->communityHeaderModel->formatFandomStoreData( $apiData );
-
-        $this->assertArrayEquals( $formattedData, $expected );
-    }
-
-    public function getApiProvider() {
-        return [
-            [
-                (object)[
-                'text' => 'Shop',
-                'url' => 'www.fandom.shop.com'
-                ],
-                (object)[
-                    'text' => 'Apparel',
-                    'url' => 'www.fandom.shop.com/apparel'
-                ],
-                (object)[
-                    'text' => 'Games',
-                    'url' => 'www.fandom.shop.com/games'
-                ]
+    public function testFormatFandomStoreData() {
+        $mockApiData = array(
+            (object)[
+            'text' => 'Shop',
+            'url' => 'www.fandom.shop.com'
             ],
-            [
-                'url' => 'www.fandom.shop.com',
-                'value' => 'Shop',
-                'tracking' => 'explore-shop',
-                'include' => true,
-                'items' => [
-                    [ 
-                        'tracking' => 'explore-shop-apparel',
-                        'url' => 'www.fandom.shop.com/apparel',
-                        'value' => 'Apparel'
-                    ],
-                    [
-                        'tracking' => 'explore-shop-games',
-                        'url' => 'www.fandom.shop.com/games',
-                        'value' => 'Games'
-                    ]
-                ]
+            (object)[
+                'text' => 'Apparel',
+                'url' => 'www.fandom.shop.com/apparel'
+            ],
+            (object)[
+                'text' => 'Games',
+                'url' => 'www.fandom.shop.com/games'
             ]
-        ];
+        );
+
+        $expected = array(
+            'url' => 'www.fandom.shop.com',
+            'value' => 'Shop',
+            'tracking' => 'explore-shop',
+            'include' => true,
+            'items' => array(
+                [
+                    'tracking' => 'explore-shop-apparel',
+                    'url' => 'www.fandom.shop.com/apparel',
+                    'value' => 'Apparel'
+                ],
+                [
+                    'tracking' => 'explore-shop-games',
+                    'url' => 'www.fandom.shop.com/games',
+                    'value' => 'Games'
+                ]
+            )
+        );
+
+        $formattedData = $this->communityHeaderModel->formatFandomStoreData( $mockApiData );
+
+        // test function returns properly formatted data
+        $this->assertArrayEquals( $formattedData, $expected );
+
+        $noDataPassedIn = $this->communityHeaderModel->formatFandomStoreData( [] );
+
+        // test returns null when no data is passed in
+        $this->assertEquals( $noDataPassedIn, NULL );
     }
+
+    protected function objectAssociativeSort( array &$array ) {
+		uasort(
+			$array,
+			function ( $a, $b ) {
+				return serialize( $a ) > serialize( $b ) ? 1 : -1;
+			}
+		);
+	}
 
     protected function assertArrayEquals( array $expected, array $actual, $ordered = false, $named = false ) {
 		if ( !$ordered ) {
