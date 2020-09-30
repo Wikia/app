@@ -3,9 +3,6 @@
 class DesignSystemCommunityHeaderModelTest extends WikiaBaseTest {
     private $communityHeaderModel;
 
-    /**
-	 * Test IntentX API
-	 */
     public function setUp() {
         parent::setUp();
         require_once __DIR__ . '/../DesignSystemCommunityHeaderModel.class.php';
