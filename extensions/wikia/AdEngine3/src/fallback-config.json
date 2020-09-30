@@ -63,7 +63,6 @@
         {
             "apps": [
                 "futhead",
-                "gamepedia",
                 "mobile-wiki",
                 "muthead",
                 "oasis"
@@ -710,7 +709,9 @@
                 "5467186974",
                 "5468067817",
                 "5480727970",
-                "5481032081"
+                "5481032081",
+                "5488108263",
+                "5488108266"
             ]
         }
     ],
@@ -1263,47 +1264,25 @@
             "apps": [
                 "oasis"
             ],
+            "regions": [
+                "XX"
+            ],
             "value": {
-                "name": "reco_6x2_mix",
+                "name": "reco_articles_cf_vs_cv_prerun_0.2",
                 "groups": [
                     {
-                        "name": "w_arl",
+                        "name": "article_cv",
                         "config": {
-                            "articleLimit": 6,
-                            "wikiStrategy": "ARL"
+                            "articleStrategy": "CV"
                         },
-                        "sampling": 20
+                        "sampling": 90
                     },
                     {
-                        "name": "w_cv",
+                        "name": "article_cf",
                         "config": {
-                            "articleLimit": 6,
-                            "wikiStrategy": "CV"
+                            "articleStrategy": "CF"
                         },
-                        "sampling": 20
-                    },
-                    {
-                        "name": "w_tv",
-                        "config": {
-                            "articleLimit": 6,
-                            "wikiStrategy": "TOP_VERTICAL"
-                        },
-                        "sampling": 20
-                    },
-                    {
-                        "name": "w_cf",
-                        "config": {
-                            "articleLimit": 6,
-                            "wikiStrategy": "CF"
-                        },
-                        "sampling": 20
-                    },
-                    {
-                        "name": "control",
-                        "config": {
-                            
-                        },
-                        "sampling": 20
+                        "sampling": 10
                     }
                 ]
             }
