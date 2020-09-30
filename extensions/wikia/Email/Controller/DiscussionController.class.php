@@ -364,7 +364,7 @@ class DiscussionArticleCommentController extends DiscussionController {
 
 	const ARTICLE_COMMENT_REPLY = 'article-comment-reply';
 	const ARTICLE_COMMENT_AT_MENTION = 'article-comment-at-mention';
-    const ARTICLE_COMMENT_REPLY_AT_MENTION = 'article-comment-reply-at-mention';
+	const ARTICLE_COMMENT_REPLY_AT_MENTION = 'article-comment-reply-at-mention';
 
     public function initEmail() {
 		$this->articleTitle = $this->request->getVal( 'threadTitle' );
