@@ -197,10 +197,15 @@ require([
 
 	$(function () {
 		$('.embeddable-discussions-module').on('click', '.upvote', function (event) {
-			var upvoteUrl = getBaseUrl() + event.currentTarget.getAttribute('href'),
-				hasUpvoted = event.currentTarget.getAttribute('data-hasUpvoted') === '1',
-				$svg = $($(event.currentTarget).children()[0]),
-				verb = hasUpvoted ? 'DELETE' : 'POST';
+			var postId = event.currentTarget.getAttribute('data-id');
+			var hasUpvoted = event.currentTarget.getAttribute('data-hasUpvoted') === '1';
+			var method = hasUpvoted ? 'downVotePost' : 'upVotePost';
+			var $svg = $($(event.currentTarget).children()[0]);
+			var query = new URLSearchParams('controller=DiscussionVote');
+			query.append('method', method);
+			query.append('postId', postId);
+
+			var upvoteUrl = mw.config.get('wgScriptPath') + '/wikia.php?' + query.toString();
 
 			if (!mw.user.anonymous()) {
 				if (hasUpvoted) {
@@ -212,7 +217,7 @@ require([
 				}
 
 				$.ajax({
-					type: verb,
+					type: 'POST',
 					url: upvoteUrl,
 					xhrFields: {
 						withCredentials: true

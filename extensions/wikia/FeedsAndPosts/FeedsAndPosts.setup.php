@@ -23,6 +23,7 @@ $wgAutoloadClasses['Wikia\FeedsAndPosts\Discussion\UserInfoHelper'] = $dir . 'Di
 // Controllers
 $wgAutoloadClasses['FeedsAndPostsController'] = $dir . 'FeedsAndPostsController.class.php';
 $wgAutoloadClasses['DiscussionPollController'] = $dir . 'Discussion/DiscussionPollController.php';
+$wgAutoloadClasses['DiscussionVoteController'] = $dir . 'Discussion/DiscussionVoteController.php';
 
 // Hooks
 $wgHooks['BeforePageDisplay'][] = 'FeedsAndPostsHooks::onBeforePageDisplay';
@@ -33,5 +34,8 @@ $wgWikiaApiControllers['FeedsAndPostsController'] = $dir . 'FeedsAndPostsControl
 
 $wgGroupPermissions['*']['polls:vote']           = false;
 $wgGroupPermissions['user']['polls:vote']        = true;
+
+$wgGroupPermissions['*']['posts:vote']           = false;
+$wgGroupPermissions['user']['posts:vote']        = true;
 
 $wgExtensionMessagesFiles['FeedsAndPosts'] = $dir . 'FeedsAndPosts.i18n.php';
