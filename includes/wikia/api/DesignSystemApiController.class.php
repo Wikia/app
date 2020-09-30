@@ -251,8 +251,6 @@ class DesignSystemApiController extends WikiaApiController {
 				'error_message' => $e->getMessage(),
 				'status_code' => $e->getCode(),
 			] );
-
-			return null;
 		}
 		return null;
 	}
