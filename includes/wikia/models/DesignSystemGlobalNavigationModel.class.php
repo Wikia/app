@@ -320,6 +320,7 @@ class DesignSystemGlobalNavigationModel extends WikiaModel {
 
 		return [
 			'header' => [
+				'id' => strval( $user->getId() ),
 				'type' => 'avatar',
 				'username' => [
 					'type' => 'text',
