@@ -30,6 +30,61 @@ class DesignSystemCommunityHeaderModelTest extends WikiaBaseTest {
             ]
         );
 
+        $mockApiDataWithMoreThanTenLinks = array(
+            (object)[
+            'text' => 'Shop',
+            'url' => 'www.fandom.shop.com'
+            ],
+            (object)[
+                'text' => 'Apparel',
+                'url' => 'www.fandom.shop.com/apparel'
+            ],
+            (object)[
+                'text' => 'Games',
+                'url' => 'www.fandom.shop.com/games'
+            ],
+            (object)[
+                'text' => 'Apparel',
+                'url' => 'www.fandom.shop.com/apparel'
+            ],
+            (object)[
+                'text' => 'Games',
+                'url' => 'www.fandom.shop.com/games'
+            ],
+            (object)[
+                'text' => 'Apparel',
+                'url' => 'www.fandom.shop.com/apparel'
+            ],
+            (object)[
+                'text' => 'Games',
+                'url' => 'www.fandom.shop.com/games'
+            ],
+            (object)[
+                'text' => 'Apparel',
+                'url' => 'www.fandom.shop.com/apparel'
+            ],
+            (object)[
+                'text' => 'Games',
+                'url' => 'www.fandom.shop.com/games'
+            ],
+            (object)[
+                'text' => 'Apparel',
+                'url' => 'www.fandom.shop.com/apparel'
+            ],
+            (object)[
+                'text' => 'Games',
+                'url' => 'www.fandom.shop.com/games'
+            ],
+            (object)[
+                'text' => 'Apparel',
+                'url' => 'www.fandom.shop.com/apparel'
+            ],
+            (object)[
+                'text' => 'Games',
+                'url' => 'www.fandom.shop.com/games'
+            ]
+        );
+
         $expected = array(
             'url' => 'www.fandom.shop.com',
             'value' => 'Shop',
@@ -58,6 +113,13 @@ class DesignSystemCommunityHeaderModelTest extends WikiaBaseTest {
 
         // test returns null when no data is passed in
         $this->assertEquals( $noDataPassedIn, NULL );
+
+        $formattedData = $this->communityHeaderModel->formatFandomStoreData( $mockApiDataWithMoreThanTenLinks );
+        // returns only  9 links plus show more
+        $this->assertEquals( count( $formattedData[ 'items' ] ), 10 );
+
+        // test that the last item is 'Show More'
+        $this->assertEquals( $formattedData[ 'items' ][ count( $formattedData[ 'items' ] ) - 1 ][ 'value' ], 'Show More' );
     }
 
     protected function objectAssociativeSort( array &$array ) {
