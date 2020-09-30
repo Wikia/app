@@ -5,8 +5,7 @@
  * if they fail before giving up.
  */
 class DesperatePhalanxService implements PhalanxService {
-	const RETRY_COUNT = 3;
-	const DELAY_BETWEEN_RETRIES = 20000;
+	const RETRY_COUNT = 2;
 
 	/** @var PhalanxService $phalanxService */
 	private $phalanxService;
@@ -28,12 +27,10 @@ class DesperatePhalanxService implements PhalanxService {
 		try {
 			return $this->phalanxService->doMatch( $phalanxMatchParams );
 		} catch ( PhalanxServiceException $phalanxServiceException ) {
-			if ( ++$retryCount > static::RETRY_COUNT ) {
+			if ( $retryCount >= static::RETRY_COUNT ) {
 				throw $phalanxServiceException;
 			}
-
-			usleep( static::DELAY_BETWEEN_RETRIES );
-			return $this->doMatchWithRetries( $phalanxMatchParams, $retryCount );
+			return $this->doMatchWithRetries( $phalanxMatchParams, $retryCount + 1 );
 		}
 	}
 
@@ -51,12 +48,11 @@ class DesperatePhalanxService implements PhalanxService {
 		try {
 			return $this->phalanxService->doRegexValidation( $regex );
 		} catch ( PhalanxServiceException $phalanxServiceException ) {
-			if ( ++$retryCount > static::RETRY_COUNT ) {
+			if ( $retryCount >= static::RETRY_COUNT ) {
 				throw $phalanxServiceException;
 			}
 
-			usleep( static::DELAY_BETWEEN_RETRIES );
-			return $this->doRegexValidationWithRetries( $regex, $retryCount );
+			return $this->doRegexValidationWithRetries( $regex, $retryCount + 1 );
 		}
 	}
 }
