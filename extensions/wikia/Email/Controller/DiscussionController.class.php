@@ -356,3 +356,47 @@ class DiscussionAtMentionController extends DiscussionController {
         return array_merge_recursive( parent::getEmailSpecificFormFields(), $formFields );
     }
 }
+
+class DiscussionArticleCommentController extends DiscussionController {
+
+	private $contentType;
+	private $articleTitle;
+
+	const ARTICLE_COMMENT_REPLY = 'article-comment-reply';
+	const ARTICLE_COMMENT_AT_MENTION = 'article-comment-at-mention';
+	const ARTICLE_COMMENT_REPLY_AT_MENTION = 'article-comment-reply-at-mention';
+
+    public function initEmail() {
+		$this->articleTitle = $this->request->getVal( 'threadTitle' );
+		$this->contentType = $this->request->getVal( 'contentType' );
+
+		parent::initEmail();
+	}
+
+	protected function getSummary() {
+		return $this->getMessage(
+			$this->getTranslationKey(),
+			$this->getCurrentUserName(),
+			$this->articleTitle,
+			$this->wiki->city_title
+		);
+	}
+
+	protected function getSubject() {
+		return $this->getSummary();
+	}
+
+	private function getTranslationKey() {
+    	// TODO: Follower email
+    	switch ( $this->contentType ) {
+			case self::ARTICLE_COMMENT_AT_MENTION:
+				return 'emailext-article-comment-at-mention';
+			case self::ARTICLE_COMMENT_REPLY_AT_MENTION:
+				return 'emailext-article-comment-reply-at-mention';
+			case self::ARTICLE_COMMENT_REPLY:
+				return 'emailext-article-comment-reply';
+			default:
+				throw new Check( 'Incorrect contentType "' . $this->contentType . '"' );
+		}
+	}
+}
