@@ -47,6 +47,36 @@
             "value": true
         }
     ],
+    "icServicesSpecialSearchTestDefaultScopeInGlobalNav": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "devices": [
+                "desktop"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "sampling": 0.0,
+            "samplingCache": true,
+            "value": "cross-wiki"
+        },
+        {
+            "apps": [
+                "oasis"
+            ],
+            "devices": [
+                "desktop"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "sampling": 0.0,
+            "samplingCache": true,
+            "value": "this-wiki"
+        }
+    ],
     "icPrebidRubicon": [
         {
             "apps": [
@@ -711,7 +741,8 @@
                 "5480727970",
                 "5481032081",
                 "5488108263",
-                "5488108266"
+                "5488108266",
+                "5490139362"
             ]
         }
     ],
@@ -904,7 +935,7 @@
             "regions": [
                 "XX"
             ],
-            "sampling": 50.0,
+            "sampling": 0.0,
             "samplingCache": true,
             "value": true
         }
@@ -1212,7 +1243,7 @@
             "regions": [
                 "XX"
             ],
-            "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v4.5.0/tracking-opt-in.min.js"
+            "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v4.5.1/tracking-opt-in.min.js"
         }
     ],
     "icPermutive": [
