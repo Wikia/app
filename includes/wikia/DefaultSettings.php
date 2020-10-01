@@ -960,7 +960,8 @@ $wgWAMPageConfig = array(
 $wgPhalanxService = true;
 $wgPhalanxServiceOptions = [
 	'noProxy' => true, # PLATFORM-1744: do not use the default HTTP proxy (defined in $wgHTTPProxy) for Phalanx requests
-	'timeout' => 2, # [sec] PLATFORM-2385 / SUS-890: prevent Phalanx slowness from affecting the site performance
+	'timeout' => 3, # [sec] PLATFORM-2385 / SUS-890 / SER-4295: prevent Phalanx slowness from affecting the site
+	# performance
 	'internalRequest' => true
 ];
 
