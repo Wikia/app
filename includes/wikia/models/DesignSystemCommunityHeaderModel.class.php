@@ -401,7 +401,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 								'href' => $item[ 'url' ],
 								'tracking_label' => $item[ 'tracking' ],
 							];
-						}, $item[ 'items' ] ) : [],
+						}, $item[ 'items' ] ) : null,
 					];
 				}, array_values( array_filter( $exploreItems, function ( $item ) {
 					return $item[ 'include' ];
