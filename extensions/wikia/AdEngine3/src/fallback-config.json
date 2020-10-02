@@ -59,8 +59,7 @@
                 "XX"
             ],
             "sampling": 0.0,
-            "samplingCache": true,
-            "value": "cross-wiki"
+            "value": "this-wiki"
         },
         {
             "apps": [
@@ -73,7 +72,6 @@
                 "XX"
             ],
             "sampling": 0.0,
-            "samplingCache": true,
             "value": "this-wiki"
         }
     ],
@@ -92,9 +90,7 @@
     "icPrebidOpenX": [
         {
             "apps": [
-                "futhead",
                 "mobile-wiki",
-                "muthead",
                 "oasis"
             ],
             "regions": [
@@ -237,7 +233,7 @@
             "regions": [
                 "XX"
             ],
-            "sampling": 50.0,
+            "sampling": 0.0,
             "samplingCache": true,
             "value": true
         }
@@ -562,6 +558,9 @@
             "apps": [
                 "oasis"
             ],
+            "regions": [
+                "CA"
+            ],
             "value": true
         }
     ],
@@ -742,7 +741,8 @@
                 "5481032081",
                 "5488108263",
                 "5488108266",
-                "5490139362"
+                "5490139362",
+                "5491791785"
             ]
         }
     ],
@@ -831,7 +831,7 @@
             "regions": [
                 "XX"
             ],
-            "value": 1
+            "value": 3
         }
     ],
     "wgAdDriverBillTheLizardConfig": {
@@ -958,7 +958,8 @@
                 "5393163252",
                 "5393163249",
                 "5441231927",
-                "5441231924"
+                "5441231924",
+                "5492427980"
             ]
         }
     ],
