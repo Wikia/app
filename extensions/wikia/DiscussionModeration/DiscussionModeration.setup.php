@@ -19,24 +19,6 @@ $wgAutoloadClasses['FeedsReportedPageController'] =  $dir . 'DiscussionModeratio
 $wgAutoloadClasses['ReportDetailsHelper'] =  $dir . 'ReportDetailsHelper.class.php';
 $wgAutoloadClasses['LeaderboardHelper'] =  $dir . 'LeaderboardHelper.class.php';
 
-$wgGroupPermissions['*']['badge:global-discussions-moderator'] = false;
-$wgGroupPermissions['global-discussions-moderator']['badge:global-discussions-moderator'] = true;
-
-$wgGroupPermissions['*']['badge:helper'] = false;
-$wgGroupPermissions['helper']['badge:helper'] = true;
-
-$wgGroupPermissions['*']['badge:staff'] = false;
-$wgGroupPermissions['staff']['badge:staff'] = true;
-
-$wgGroupPermissions['*']['badge:sysop'] = false;
-$wgGroupPermissions['sysop']['badge:sysop'] = true;
-
-$wgGroupPermissions['*']['badge:threadmoderator'] = false;
-$wgGroupPermissions['threadmoderator']['badge:threadmoderator'] = true;
-
-$wgGroupPermissions['*']['badge:vstf'] = false;
-$wgGroupPermissions['vstf']['badge:vstf'] = true;
-
 $wgGroupPermissions['*']['discussionslog:view'] = false;
 $wgGroupPermissions['helper']['discussionslog:view'] = true;
 $wgGroupPermissions['soap']['discussionslog:view'] = true;
