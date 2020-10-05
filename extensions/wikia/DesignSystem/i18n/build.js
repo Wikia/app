@@ -15,9 +15,6 @@ var fs = require('fs'),
 		'global-footer-copyright-wikia': {
 			date: '$1'
 		},
-		'global-footer-site-overview-link-wikia-inc': {
-			year: '$1'
-		},
 		'license-description': {
 			license: '$1'
 		}
