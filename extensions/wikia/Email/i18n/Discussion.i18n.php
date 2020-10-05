@@ -23,7 +23,7 @@ $messages['en'] = array(
 	'emailext-article-comment-at-mention' => '$1 mentioned you in a comment on the article $2 on $3',
 	'emailext-article-comment-reply-at-mention' => '$1 mentioned you in a reply on the article $2 on $3',
 	'emailext-article-comment-reply' => '$1 replied to your comment on the article $2 on $3',
-	'emailext-article-comment-reply-followed' => '$1 replied to a comment you are following on the article $2 on $3'
+	'emailext-article-comment-reply-followed' => '$1 replied to a comment you are following on the article $2 on $3',
 );
 
 $messages['qqq'] = array(
@@ -66,6 +66,10 @@ $messages['de'] = array(
 	'emailext-discussion-100-upvote-summary' => 'Dein Beitrag auf [$1 $2] hat 100 Zustimmungen erhalten!',
 	'emailext-discussion-thread-at-mention' => '$1 hat dich erwähnt im Beitrag $2 auf $3',
 	'emailext-discussion-post-at-mention' => '$1 hat dich erwähnt in einer Antwort auf den Beitrag $2 auf $3',
+	'emailext-article-comment-at-mention' => '$1 hat dich in einem Kommentar zu Artikel $2 auf $3 erwähnt',
+	'emailext-article-comment-reply-followed' => '$1 hat auf einen Kommentar, den du auf Artikel $2 im $3 verfolgst, geantwortet',
+	'emailext-article-comment-reply-at-mention' => '$1 hat dich in einer Antwort auf Artikel $2 auf $3 erwähnt',
+	'emailext-article-comment-reply' => '$1 hat auf deinen Kommentar zu Artikel $2 auf $3 geantwortet',
 );
 
 $messages['es'] = array(
@@ -87,6 +91,10 @@ $messages['es'] = array(
 	'emailext-discussion-100-upvote-summary' => '¡Tu discusión en [$1 $2] alcanzó los 100 votos!',
 	'emailext-discussion-thread-at-mention' => '$1 te mencionó en $2 en $3',
 	'emailext-discussion-post-at-mention' => '$1 te mencionó en una respuesta a $2 en $3',
+	'emailext-article-comment-at-mention' => '$1 te mencionó en un comentario en el artículo $2 en $3',
+	'emailext-article-comment-reply-followed' => '$1 respondió a un comentario que estás siguiendo en el artículo $2 en $3',
+	'emailext-article-comment-reply-at-mention' => '$1 te mencionó en una respuesta en el artículo $2 en $3',
+	'emailext-article-comment-reply' => '$1 respondió a tu comentario en el artículo $2 en $3',
 );
 
 $messages['fr'] = array(
@@ -108,6 +116,10 @@ $messages['fr'] = array(
 	'emailext-discussion-100-upvote-summary' => "Votre publication sur [$1 $2] vient d'atteindre 100 votes !",
 	'emailext-discussion-thread-at-mention' => '$1 a fait mention de vous dans $2 sur $3',
 	'emailext-discussion-post-at-mention' => '$1 a fait mention de vous dans une réponse à $2 sur $3',
+	'emailext-article-comment-at-mention' => "$1 vous a mentionné dans un commentaire sur l'article $2 de $3",
+	'emailext-article-comment-reply-followed' => "$1 a répondu à un commentaire que vous suivez sur l'article $2 de $3",
+	'emailext-article-comment-reply-at-mention' => "$1 vous a mentionné dans une réponse sur l'article $2 de $3",
+	'emailext-article-comment-reply' => "$1 a répondu à votre commentaire sur l'article $2 de $3",
 );
 
 $messages['it'] = array(
@@ -129,6 +141,10 @@ $messages['it'] = array(
 	'emailext-discussion-100-upvote-summary' => 'Il tuo post su [$1 $2] ha appena raggiunto 100 upvote!',
 	'emailext-discussion-thread-at-mention' => '$1 ti ha menzionato in $2 su $3',
 	'emailext-discussion-post-at-mention' => '$1 ti ha menzionato in una risposta a $2 su $3',
+	'emailext-article-comment-at-mention' => "$1 ti ha menzionato in un commento sull'articolo $2 su $3",
+	'emailext-article-comment-reply-followed' => "$1 ha risposto ad un commento che stai seguendo sull'articolo $2 su $3",
+	'emailext-article-comment-reply-at-mention' => "$1 ti ha menzionato in una risposta sull'articolo $2 su $3",
+	'emailext-article-comment-reply' => "$1 ha risposto al tuo commento sull'articolo $2 su $3",
 );
 
 $messages['ja'] = array(
@@ -150,6 +166,10 @@ $messages['ja'] = array(
 	'emailext-discussion-100-upvote-summary' => '[$1 $2] のあなたの投稿への「イイね！」が100件に達しました！',
 	'emailext-discussion-thread-at-mention' => '$1さんが「$3」の投稿「$2」にあなたの名前を追加しました',
 	'emailext-discussion-post-at-mention' => '$1さんが「$3」の投稿「$2」への返信にあなたの名前を追加しました',
+	'emailext-article-comment-at-mention' => '$1さんが$3の記事「$2」のコメントにあなたの名前を書き込みました',
+	'emailext-article-comment-reply-followed' => '$1さんが$3の記事「$2」であなたがフォローしているコメントに返信しました',
+	'emailext-article-comment-reply-at-mention' => '$1さんが$3の記事「$2」の返信にあなたの名前を書き込みました',
+	'emailext-article-comment-reply' => '$1さんが$3の記事「$2」のあなたのコメントに返信しました',
 );
 
 $messages['ko'] = array(
@@ -193,6 +213,10 @@ $messages['pl'] = array(
 	'emailext-discussion-100-upvote-summary' => 'Twój post na [$1 {{GRAMMAR:MS.lp|$2}}] ma już 100 głosów!',
 	'emailext-discussion-thread-at-mention' => '$1 {{GENDER:$1|wspomniał|wspomniała|wspomniał(a)}} o Tobie w poście $2 na {{GRAMMAR:MS.lp|$3}}',
 	'emailext-discussion-post-at-mention' => '$1 {{GENDER:$1|wspomniał|wspomniała|wspomniał(a)}} o Tobie w odpowiedzi na post $2 na {{GRAMMAR:MS.lp|$3}}',
+	'emailext-article-comment-at-mention' => '$1 wspomniał(a) Ciebie w komentarzu w artykule $2 na $3 ',
+	'emailext-article-comment-reply-followed' => '$1 odpowiedział(a) na obserwowany komentarz w artykule $2 na $3',
+	'emailext-article-comment-reply-at-mention' => '$1 wspomniał(a) Ciebie w odpowiedzi w artykule $2 na $3 ',
+	'emailext-article-comment-reply' => '$1 odpowiedział(a) na Twój komentarz w artykule $2 na $3 ',
 );
 
 $messages['pt'] = array(
@@ -214,6 +238,10 @@ $messages['pt'] = array(
 	'emailext-discussion-100-upvote-summary' => 'A postagem na [$1 $2] já atingiu 100 votos!',
 	'emailext-discussion-thread-at-mention' => '$1 mencionou você em $2 em $3',
 	'emailext-discussion-post-at-mention' => '$1 mencionou você em uma resposta a $2 em $3',
+	'emailext-article-comment-at-mention' => 'Você foi mencionado por $1 em um comentário no artigo $2 em $3',
+	'emailext-article-comment-reply-followed' => '$1 respondeu ao comentário que você está seguindo no artigo $2 em $3',
+	'emailext-article-comment-reply-at-mention' => 'Você foi mencionado por $1 em uma resposta no artigo $2 em $3',
+	'emailext-article-comment-reply' => '$1 respondeu ao seu comentário no artigo $2 em $3',
 );
 
 $messages['ru'] = array(
@@ -235,6 +263,10 @@ $messages['ru'] = array(
 	'emailext-discussion-100-upvote-summary' => 'Ваше сообщение на [$1 $2] оценили 100 участников!',
 	'emailext-discussion-thread-at-mention' => '$1 упомянул(а) вас в сообщении «$2» на $3',
 	'emailext-discussion-post-at-mention' => '$1 упомянул(а) вас в ответе на сообщение «$2» на $3',
+	'emailext-article-comment-at-mention' => ' $1 упомянул(а) вас в комментарии к статье «$2» на $3',
+	'emailext-article-comment-reply-followed' => '$1 ответил(а) на комментарий, который вы отслеживаете, к статье «$2» на $3',
+	'emailext-article-comment-reply-at-mention' => ' $1 упомянул(а) вас в ответе к статье «$2» на $3',
+	'emailext-article-comment-reply' => '$1 ответил(а) на ваш комментарий к статье «$2» в $3',
 );
 
 $messages['zh-hans'] = array(
