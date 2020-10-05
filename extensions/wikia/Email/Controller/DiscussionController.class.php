@@ -367,6 +367,7 @@ class DiscussionArticleCommentController extends DiscussionController {
 	const ARTICLE_COMMENT_REPLY_AT_MENTION = 'article-comment-reply-at-mention';
 
     public function initEmail() {
+    	// For AC related notifications, threadTitle means article title (comments don't have titles)
 		$this->articleTitle = $this->request->getVal( 'threadTitle' );
 		$this->contentType = $this->request->getVal( 'contentType' );
 
@@ -387,7 +388,7 @@ class DiscussionArticleCommentController extends DiscussionController {
 	}
 
 	private function getTranslationKey() {
-    	// TODO: Follower email
+    	// TODO: Follower email - update following (or discussion) pandora service to send out notifications for followers
     	switch ( $this->contentType ) {
 			case self::ARTICLE_COMMENT_AT_MENTION:
 				return 'emailext-article-comment-at-mention';
