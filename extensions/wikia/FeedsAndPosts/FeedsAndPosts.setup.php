@@ -32,10 +32,4 @@ $wgHooks['MakeGlobalVariablesScript'][] = 'FeedsAndPostsHooks::onMakeGlobalVaria
 // Add new API controller to API controllers list
 $wgWikiaApiControllers['FeedsAndPostsController'] = $dir . 'FeedsAndPostsController.class.php';
 
-$wgGroupPermissions['*']['polls:vote']           = false;
-$wgGroupPermissions['user']['polls:vote']        = true;
-
-$wgGroupPermissions['*']['posts:vote']           = false;
-$wgGroupPermissions['user']['posts:vote']        = true;
-
 $wgExtensionMessagesFiles['FeedsAndPosts'] = $dir . 'FeedsAndPosts.i18n.php';
