@@ -272,6 +272,7 @@ $wgAutoloadClasses['TemplateDataExtractor'] = "$IP/includes/wikia/TemplateDataEx
 $wgAutoloadClasses['WikiaHtmlTitle'] = "$IP/includes/wikia/WikiaHtmlTitle.class.php";
 $wgAutoloadClasses['FandomCreator\\CommunitySetup'] = "$IP/extensions/wikia/FandomCreator/CommunitySetup.php";
 $wgAutoloadClasses['Redshift'] = "$IP/includes/wikia/Redshift.class.php";
+$wgAutoloadClasses['RDS'] = "$IP/includes/wikia/RDS.class.php";
 
 /**
  * Resource Loader enhancements
