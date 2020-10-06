@@ -48,7 +48,7 @@ class SpecialAnalytics extends \SpecialPage {
 	 * @throws \ErrorPageError
 	 */
 	public function execute($subpage) {
-		$this->checkPermissions();
+//		$this->checkPermissions();
 
 		$this->getOutput()->addModuleStyles(['ext.hydralytics.styles']);
 		$this->getOutput()->addModules(['ext.hydralytics.scripts']);
