@@ -70,7 +70,7 @@ class SpecialAnalytics extends \SpecialPage {
 		global $wgLang;
 
 		// use $wgLang to differ the cache based on user language
-		$memcKey = wfMemcKey( __CLASS__, self::CACHE_VERSION, $wgLang->getCode() );
+		$memcKey = wfMemcKey( __CLASS__, self::CACHE_VERSION, $wgLang->getCode() ) . '2';
 
 		$redshiftError = false;
 
