@@ -83,7 +83,7 @@ class RDS {
 				);
 				// don't allow queries longer than 20s
 				// if the query times out, the result will be empty
-				self::$connection->query( "set statement_timeout to 20000" );
+				self::$connection->query( "set statement_timeout to 120000" );
 				$took = microtime( true ) - $then;
 			} catch ( \PDOException $e ) {
 				WikiaLogger::instance()->error( __METHOD__, [
