@@ -29,9 +29,9 @@ class Information {
 	static public function getEditsLoggedInOut($days = self::LAST_DAYS) {
 		global $wgCityId;
 
-		$res = \Redshift::query(
+		$res = \RDS::query(
 			'SELECT dt, COUNT(*) AS total_edits, ' .
-			 'SUM(case when user_id = 0 then 1 else 0 end) as edits_anons ' . '
+			'SUM(case when user_id = 0 then 1 else 0 end) as edits_anons ' . '
 			 FROM wikianalytics.edits ' .
 			'WHERE wiki_id = :wiki_id GROUP BY dt ' .
 			'ORDER BY dt DESC LIMIT :days',
@@ -68,9 +68,9 @@ class Information {
 	static public function getTopSearchTerms($limit = 10) {
 		global $wgCityId;
 
-		$res = \Redshift::query(
-			'SELECT search_phrase, COUNT(*) as search_count FROM wikianalytics.searches ' .
-			'WHERE wiki_id = :wiki_id  AND search_phrase <> \'\' GROUP BY search_phrase  ' .
+		$res = \RDS::query(
+			'SELECT search_phrase, SUM(search_count) as search_count FROM wikianalytics.searches_by_wiki_and_phrase ' .
+			'WHERE wiki_id = :wiki_id  GROUP BY search_phrase ' .
 			'ORDER BY search_count DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
 		);
@@ -94,7 +94,7 @@ class Information {
 	static public function getGeolocation($limit = 10) {
 		global $wgCityId;
 
-		$res = \Redshift::query(
+		$res = \RDS::query(
 			'SELECT country, SUM(cnt) as views FROM wikianalytics.sessions ' .
 			'WHERE wiki_id = :wiki_id GROUP BY country ' .
 			'ORDER BY views DESC LIMIT :limit',
@@ -120,9 +120,9 @@ class Information {
 	static public function getTopViewedPages($limit = 10) {
 		global $wgCityId;
 
-		$res = \Redshift::query(
-			'SELECT url, SUM(cnt) as views FROM wikianalytics.pageviews ' .
-			'WHERE wiki_id = :wiki_id AND url <> \'/\' AND url LIKE \'%/wiki/%\'  GROUP BY url ' .
+		$res = \RDS::query(
+			'SELECT url, SUM(cnt) as views FROM wikianalytics.viewedpages ' .
+			'WHERE wiki_id = :wiki_id GROUP BY url ' .
 			'ORDER BY views DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
 		);
@@ -146,10 +146,9 @@ class Information {
 	static public function getTopViewedFiles($limit = 10) {
 		global $wgCityId;
 
-		$res = \Redshift::query(
-			'SELECT url, SUM(cnt) as views FROM wikianalytics.pageviews ' .
-			// TODO: find out why '/', '/index.php', and '/wiki/' are marked as files
-			"WHERE wiki_id = :wiki_id AND is_file=True AND url NOT IN ('/',  '/index.php', '/wiki/') " .
+		$res = \RDS::query(
+			'SELECT url, SUM(cnt) as views FROM wikianalytics.viewedfiles ' .
+			"WHERE wiki_id = :wiki_id " .
 			'GROUP BY url ' .
 			'ORDER BY views DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
@@ -171,7 +170,7 @@ class Information {
 	 */
 	static public function getDailyTotals() {
 		return [
-			'pageviews' => \Redshift::getDailyTotals(self::LAST_DAYS)
+			'pageviews' => \RDS::getDailyTotals(self::LAST_DAYS)
 		];
 	}
 
@@ -188,7 +187,7 @@ class Information {
 		global $wgCityId;
 
 		// by browser
-		$res = \Redshift::query(
+		$res = \RDS::query(
 			'SELECT browser, SUM(cnt) AS views FROM wikianalytics.sessions ' .
 			'WHERE wiki_id = :wiki_id GROUP BY browser ' .
 			'ORDER BY views DESC LIMIT :limit',
@@ -202,7 +201,7 @@ class Information {
 		}
 
 		// by device type (filter out bots)
-		$res = \Redshift::query(
+		$res = \RDS::query(
 			'SELECT device_type, SUM(cnt) AS views FROM wikianalytics.sessions ' .
 			'WHERE wiki_id = :wiki_id AND device_type <> \'bot\' GROUP BY device_type ' .
 			'ORDER BY views DESC LIMIT :limit',
