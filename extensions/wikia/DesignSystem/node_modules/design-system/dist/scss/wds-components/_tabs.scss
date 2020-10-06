@@ -1,5 +1,5 @@
 .wds-tabs {
-	@include tabs-theming($wds-fandom-color-link, $wds-fandom-color-link-hover);
+	@include tabs-theming($wds-fandom-color-black, $wds-fandom-color-link);
 
 	align-items: flex-end;
 	display: flex;
@@ -35,6 +35,7 @@
 
 		> a {
 			align-items: center;
+			color: inherit;
 			display: inline-flex;
 			height: 100%;
 			text-decoration: none;
