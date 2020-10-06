@@ -47,6 +47,34 @@
             "value": true
         }
     ],
+    "icServicesSpecialSearchTestDefaultScopeInGlobalNav": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "devices": [
+                "desktop"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "sampling": 0.0,
+            "value": "this-wiki"
+        },
+        {
+            "apps": [
+                "oasis"
+            ],
+            "devices": [
+                "desktop"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "sampling": 0.0,
+            "value": "this-wiki"
+        }
+    ],
     "icPrebidRubicon": [
         {
             "apps": [
@@ -62,9 +90,7 @@
     "icPrebidOpenX": [
         {
             "apps": [
-                "futhead",
                 "mobile-wiki",
-                "muthead",
                 "oasis"
             ],
             "regions": [
@@ -207,7 +233,7 @@
             "regions": [
                 "XX"
             ],
-            "sampling": 50.0,
+            "sampling": 0.0,
             "samplingCache": true,
             "value": true
         }
@@ -532,6 +558,9 @@
             "apps": [
                 "oasis"
             ],
+            "regions": [
+                "CA"
+            ],
             "value": true
         }
     ],
@@ -711,7 +740,10 @@
                 "5480727970",
                 "5481032081",
                 "5488108263",
-                "5488108266"
+                "5488108266",
+                "5490139362",
+                "5491791785",
+                "5493031115"
             ]
         }
     ],
@@ -800,7 +832,7 @@
             "regions": [
                 "XX"
             ],
-            "value": 1
+            "value": 3
         }
     ],
     "wgAdDriverBillTheLizardConfig": {
@@ -904,7 +936,7 @@
             "regions": [
                 "XX"
             ],
-            "sampling": 50.0,
+            "sampling": 0.0,
             "samplingCache": true,
             "value": true
         }
@@ -927,7 +959,10 @@
                 "5393163252",
                 "5393163249",
                 "5441231927",
-                "5441231924"
+                "5441231924",
+                "5492427980",
+                "5492807412",
+                "5493719719"
             ]
         }
     ],
@@ -1212,7 +1247,7 @@
             "regions": [
                 "XX"
             ],
-            "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v4.5.0/tracking-opt-in.min.js"
+            "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v4.5.1/tracking-opt-in.min.js"
         }
     ],
     "icPermutive": [
@@ -1263,9 +1298,6 @@
         {
             "apps": [
                 "oasis"
-            ],
-            "regions": [
-                "XX"
             ],
             "value": {
                 "name": "reco_articles_cf_vs_cv_prerun_0.2",

@@ -401,7 +401,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 								'href' => $item[ 'url' ],
 								'tracking_label' => $item[ 'tracking' ],
 							];
-						}, $item[ 'items' ] ) : [],
+						}, $item[ 'items' ] ) : null,
 					];
 				}, array_values( array_filter( $exploreItems, function ( $item ) {
 					return $item[ 'include' ];
@@ -501,7 +501,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		return SpecialPage::getTitleFor( $name )->getLocalURL();
 	}
 
-	private function getFandomStoreDataFromCache() {
+	public function getFandomStoreDataFromCache() {
 		global $wgMemc, $wgCityId;
 
 		$memcKey = wfSharedMemcKey( DesignSystemApiController::MEMC_PREFIX_FANDOM_STORE, $wgCityId );
@@ -511,7 +511,7 @@ class DesignSystemCommunityHeaderModel extends WikiaModel {
 		return !empty( $cachedStoreData->results ) && $canBeFormatted ? $this->formatFandomStoreData( $cachedStoreData->results ) : null;
 	}
 
-	private function formatFandomStoreData( $apiData ) {
+	public function formatFandomStoreData( $apiData ) {
 		// get copy of links from api data
 		$arrObj = new ArrayObject( $apiData );
 		$links = $arrObj->getArrayCopy();
