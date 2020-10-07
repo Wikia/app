@@ -223,7 +223,7 @@ class DesignSystemApiController extends WikiaApiController {
 		// do api request
 		$client = new Client( [
 			'base_uri' => $wgFandomShopUrl,
-			'timeout' => 30.0
+			'timeout' => 300.0
 		] );
 		$params = [
 			'clientId' => 'fandom',
