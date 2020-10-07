@@ -207,9 +207,14 @@ class DesignSystemApiController extends WikiaApiController {
 
 	/**
 	 * External API request to IntentX
+	 * @throws UnauthorizedException
 	 */
 	public function getFandomShopDataFromIntentX() {
 		global $wgCityId, $wgMemc, $wgFandomShopMap, $wgFandomShopUrl;
+
+		if ( !$this->request->isInternal() ) {
+			throw new UnauthorizedException();
+		}
 
 		// get id from parameter or default to city id
 		$id = $this->getVal( static::PARAM_ID, $wgCityId );
