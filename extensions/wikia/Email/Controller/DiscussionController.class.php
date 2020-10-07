@@ -4,6 +4,7 @@ namespace Email\Controller;
 
 use Email\Check;
 use Email\EmailController;
+use Wikia\Logger\WikiaLogger;
 
 abstract class DiscussionController extends EmailController {
 
@@ -40,6 +41,15 @@ abstract class DiscussionController extends EmailController {
 	 * @template avatarLayout
 	 */
 	public function body() {
+		WikiaLogger::instance()->info(
+			'ArticleComment notification email body',
+			[
+				'issue' => 'IW-3264',
+				'editorAvatarURL' => $this->getCurrentAvatarURL(),
+				'buttonLink' => $this->postUrl,
+			]
+		);
+
 		$this->response->setData(
 			[
 				'salutation' => $this->getSalutation(),

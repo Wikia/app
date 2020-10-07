@@ -169,6 +169,7 @@ abstract class EmailController extends \WikiaController {
 
 			if ( !$this->test ) {
 				$this->trackEmailEvent();
+				$this->trackEmailBody( $body );
 
 				$status = \UserMailer::send(
 					$toAddress,
@@ -748,6 +749,14 @@ abstract class EmailController extends \WikiaController {
 			'currentUser' => $this->getCurrentUserName(),
 			'targetUser' => $this->getTargetUserName(),
 			'targetLang' => $this->targetLang,
+		] );
+	}
+
+	private function trackEmailBody( $body ) {
+		WikiaLogger::instance()->info( '', [
+			'issue' => 'IW-3264',
+			'bodyHtml' => $body['html'],
+			'bodyText' => $body['text'],
 		] );
 	}
 
