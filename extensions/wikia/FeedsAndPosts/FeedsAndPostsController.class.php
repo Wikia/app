@@ -26,6 +26,7 @@ class FeedsAndPostsController extends WikiaApiController {
 			'theme' => ( new ThemeSettings() )->get(),
 			'wikiVariables' => ( new WikiVariables() )->get(),
 			'wikiDetails' => ( new WikiDetails() )->get(),
+			'rights' => $this->getContext()->getUser()->getRights(),
 		] );
 		$this->response->setFormat( WikiaResponse::FORMAT_JSON );
 	}
