@@ -162,7 +162,10 @@ class DesignSystemApiController extends WikiaApiController {
 		global $wgCityId;
 
 		$product = $this->getRequiredParam( static::PARAM_PRODUCT );
-		$lang = $this->getRequiredParam( static::PARAM_LANG );
+		$lang = $this->getRequest()->getVal(
+			static::PARAM_LANG,
+			$this->wg->ContLang->getCode()
+		);
 
 		if ($product === static::PRODUCT_WIKIS) {
 			$id = intval( $this->getVal(static::PARAM_ID, $wgCityId));
