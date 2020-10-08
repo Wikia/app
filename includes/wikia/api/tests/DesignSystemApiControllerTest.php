@@ -4,70 +4,72 @@ class DesignSystemApiControllerTest extends WikiaBaseTest {
 	/**
 	 * Test IntentX API
 	 */
-    public function setUp() {
-        parent::setUp();
+	public function setUp() {
+		parent::setUp();
 
-        require_once __DIR__ . '/../DesignSystemApiController.class.php';
-    }
-    
-    public function testGetValidRepsonse() {
-        $validCityId = 147;
+		require_once __DIR__ . '/../DesignSystemApiController.class.php';
+	}
 
-        $client = new GuzzleHttp\Client( [
-            'base_uri' => 'https://community.fandom.com/wikia.php'
-        ] );
+	public function testGetValidRepsonse() {
+		$validCityId = 147;
 
-        $params = [
-            'controller' => 'DesignSystemApi',
-            'method' => 'getFandomShopDataFromIntentX',
-            'id' => $validCityId
-        ];
-        
-        $response = $client->get( '', [
-            'query' => GuzzleHttp\Psr7\build_query( $params, PHP_QUERY_RFC1738 ),
-        ] );
+		$client = new GuzzleHttp\Client([
+			'base_uri' => 'https://community.fandom.com/wikia.php'
+		]);
 
-        $body = $response->getBody();
-        $data = json_decode( $body );
+		$params = [
+			'controller' => 'DesignSystemApi',
+			'method' => 'getFandomShopDataFromIntentX',
+			'id' => $validCityId
+		];
+		$response = $client->get('', [
+			'query' => GuzzleHttp\Psr7\build_query($params, PHP_QUERY_RFC1738),
+			'headers' => [
+				'X-Wikia-Internal-Request' => '1',
+			]
+		]);
 
-        // check for successful response
-        $this->assertEquals(200, $response->getStatusCode());
+		$body = $response->getBody();
+		$data = json_decode($body);
 
-        // check for proper content type
-        $contentType = $response->getHeaders()["Content-Type"][0];
-        $this->assertEquals("application/json; charset=utf-8", $contentType);
+		// check for successful response
+		$this->assertEquals(200, $response->getStatusCode());
 
-        // check for links
-        $this->assertGreaterThan( 0, count( $data ) );
+		// check for proper content type
+		$contentType = $response->getHeaders()["Content-Type"][0];
+		$this->assertEquals("application/json; charset=utf-8", $contentType);
 
-        // check links have valid properties
-        foreach ( $data as $link ) {
-            $this->assertObjectHasAttribute( 'text', $link );
-            $this->assertObjectHasAttribute( 'url', $link );
-        }
-    }
+		// check for links
+		$this->assertGreaterThan(0, count($data));
 
-    public function testReturnsEmptyForInvalidCommunity() {
-        $invalidCityId = 999;
+		// check links have valid properties
+		foreach ($data as $link) {
+			$this->assertObjectHasAttribute('text', $link);
+			$this->assertObjectHasAttribute('url', $link);
+		}
+	}
 
-        $client = new GuzzleHttp\Client( [
-            'base_uri' => 'https://community.fandom.com/wikia.php'
-        ] );
+	public function testReturnsEmptyForInvalidCommunity() {
+		$invalidCityId = 999;
 
-        $params = [
-            'controller' => 'DesignSystemApi',
-            'method' => 'getFandomShopDataFromIntentX',
-            'id' => $invalidCityId
-        ];
+		$client = new GuzzleHttp\Client([
+			'base_uri' => 'https://community.fandom.com/wikia.php'
+		]);
 
-        $response = $client->get( '', [
-            'query' => GuzzleHttp\Psr7\build_query( $params, PHP_QUERY_RFC1738 ),
-        ] );
+		$params = [
+			'controller' => 'DesignSystemApi',
+			'method' => 'getFandomShopDataFromIntentX',
+			'id' => $invalidCityId
+		];
 
-        $body = $response->getBody();
-        $data = json_decode( $body );
+		$response = $client->get('', [
+			'query' => GuzzleHttp\Psr7\build_query($params, PHP_QUERY_RFC1738),
+		]);
 
-        // test for empty result
-        $this->assertEquals( $data, [] );
-    }
+		$body = $response->getBody();
+		$data = json_decode($body);
+
+		// test for empty result
+		$this->assertEquals($data, []);
+	}
 }
