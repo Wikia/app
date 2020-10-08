@@ -398,13 +398,26 @@ class DiscussionArticleCommentController extends DiscussionController {
 	}
 
 	private function getArticleTitleLink() {
-    	// TODO: Second argument is namespace. What is it?
-    	$articleUrl = \Title::newFromText( $this->articleTitle );
-    	return '[' . $articleUrl . ' ' . $this->articleTitle . ']';
+    	$articleUrl = \Title::newFromText( $this->articleTitle )->getFullURL();
+    	$link = '[' . $articleUrl . ' ' . $this->articleTitle . ']';
+
+    	WikiaLogger::instance()->info('getArticleTitleLink', [
+    		'issue' => 'IW-3264',
+			'link' => $link,
+		]);
+
+    	return $link;
 	}
 
 	private function getWikiNameLink() {
-		return '[' . $this->wiki->city_url . ' ' . $this->wiki->city_title . ']';
+    	$link = '[' . $this->wiki->city_url . ' ' . $this->wiki->city_title . ']';
+
+		WikiaLogger::instance()->info('getWikiNameLink', [
+    		'issue' => 'IW-3264',
+			'link' => $link,
+		]);
+
+		return $link;
 	}
 
 	private function getTranslationKey() {
