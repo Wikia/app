@@ -4,6 +4,7 @@ namespace Email\Controller;
 
 use Email\Check;
 use Email\EmailController;
+use Wikia\Logger\WikiaLogger;
 
 abstract class DiscussionController extends EmailController {
 
@@ -28,6 +29,15 @@ abstract class DiscussionController extends EmailController {
 		if ( !$this->wiki ) {
 			throw new Check( "Unable to find wiki information for siteId $siteId" );
 		}
+
+		WikiaLogger::instance()->info(
+			'Wiki instance created',
+			[
+				'issue' => 'IW-3264',
+				'city_id' => $this->wiki->city_id,
+				'city_url' => $this->wiki->city_url
+			]
+		);
 	}
 
 	protected function assertValidParams() {
@@ -76,7 +86,7 @@ abstract class DiscussionController extends EmailController {
 		];
 	}
 
-	private function getDiscussionsLink() {
+	protected function getDiscussionsLink() {
 		return $this->wiki->city_url . 'f';
 	}
 
@@ -378,13 +388,23 @@ class DiscussionArticleCommentController extends DiscussionController {
 		return $this->getMessage(
 			$this->getTranslationKey(),
 			$this->getCurrentUserName(),
-			$this->articleTitle,
-			$this->wiki->city_title
+			$this->getArticleTitleLink(),
+			$this->getWikiNameLink()
 		);
 	}
 
 	protected function getSubject() {
 		return $this->getSummary();
+	}
+
+	private function getArticleTitleLink() {
+    	// TODO: Second argument is namespace. What is it?
+    	$articleUrl = \Title::newFromText( $this->articleTitle );
+    	return '[' . $articleUrl . ' ' . $this->articleTitle . ']';
+	}
+
+	private function getWikiNameLink() {
+		return '[' . $this->wiki->city_url . ' ' . $this->wiki->city_title . ']';
 	}
 
 	private function getTranslationKey() {
@@ -399,5 +419,9 @@ class DiscussionArticleCommentController extends DiscussionController {
 			default:
 				throw new Check( 'Incorrect contentType "' . $this->contentType . '"' );
 		}
+	}
+
+	protected function getDiscussionsLink() {
+		return $this->wiki->city_url;
 	}
 }
