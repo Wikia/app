@@ -1314,22 +1314,34 @@
             "apps": [
                 "oasis"
             ],
+            "regions": [
+                "XX"
+            ],
             "value": {
-                "name": "reco_articles_cf_vs_cv_prerun_0.2",
+                "name": "reco_wiki_algos_arl_vs_cf",
                 "groups": [
                     {
-                        "name": "article_cv",
+                        "name": "w_arl",
                         "config": {
-                            "articleStrategy": "CV"
+                            "wikiStrategy": "ARL",
+                            "number_articles": 4
                         },
-                        "sampling": 90
+                        "sampling": 25
                     },
                     {
-                        "name": "article_cf",
+                        "name": "w_cf",
                         "config": {
-                            "articleStrategy": "CF"
+                            "wikiStrategy": "CF",
+                            "number_articles": 4
                         },
-                        "sampling": 10
+                        "sampling": 25
+                    },
+                    {
+                        "name": "control",
+                        "config": {
+                            
+                        },
+                        "sampling": 50
                     }
                 ]
             }
