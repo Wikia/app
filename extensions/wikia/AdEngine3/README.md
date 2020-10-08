@@ -1,4 +1,4 @@
-This extensions runs ad stack using [@Wikia/ad-engine](https://github.com/Wikia/ad-engine) codebase.
+This extensions runs ad stack using [@Wikia/ad-engine](https://github.com/Wikia/ad-engine) codebase
 
 ## How does it work?
 

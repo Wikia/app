@@ -10,6 +10,7 @@ import {
 	slotInjector,
 	slotDataParamsUpdater,
 	slotService,
+	templateService,
 	utils,
 	getAdProductInfo
 } from '@wikia/ad-engine';
@@ -474,5 +475,12 @@ export default {
 		slotInjector.inject('affiliate_slot', true);
 
 		context.push('state.adStack', { id: 'affiliate_slot' });
+		this.injectAffiliateDisclaimer();
 	},
+
+	injectAffiliateDisclaimer() {
+	slotService.on('affiliate_slot', AdSlot.STATUS_SUCCESS, () => {
+		templateService.init('affiliateDisclaimer', slotService.get('affiliate_slot'));
+	});
+}
 };
