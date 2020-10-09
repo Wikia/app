@@ -147,9 +147,14 @@ class ArticleCommentsAjax {
 	 * axReply -- static hook/entry for ajax request post -- reply a comment
 	 *
 	 * @return String -- html -> textarea
+	 * @throws ForbiddenException if the user should be logged in to contribute
 	 */
 	static public function axReply() {
-		global $wgRequest, $wgStylePath;
+		global $wgRequest, $wgStylePath, $wgDisableAnonymousEditing;
+
+		if ( $wgDisableAnonymousEditing && F::app()->wg->User->isAnon() ) {
+			throw new \ForbiddenException();
+		}
 
 		$articleId = $wgRequest->getVal( 'article', false );
 		$commentId = $wgRequest->getVal( 'id', false );
@@ -180,9 +185,14 @@ class ArticleCommentsAjax {
 	 * axPost -- static hook/entry for ajax request post
 	 *
 	 * @return array
+	 * @throws ForbiddenException if the user should be logged in to contribute
 	 */
 	static public function axPost() {
-		global $wgRequest, $wgUser, $wgLang, $wgArticleCommentsReadOnlyMode;
+		global $wgRequest, $wgUser, $wgLang, $wgArticleCommentsReadOnlyMode, $wgDisableAnonymousEditing;
+
+		if ( $wgDisableAnonymousEditing && F::app()->wg->User->isAnon() ) {
+			throw new \ForbiddenException();
+		}
 
 		$result = [ 'error' => 1 ];
 
