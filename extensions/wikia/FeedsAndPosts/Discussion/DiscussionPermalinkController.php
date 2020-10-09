@@ -213,7 +213,7 @@ class DiscussionPermalinkController extends WikiaController {
 		$postId = end( $urlParts );
 
 		$controllerQueryParams = [
-			'controller' => 'DiscussionPermalinkController',
+			'controller' => 'DiscussionPermalink',
 			'method' => 'getThreadByPostId',
 			'postId' => $postId
 		];

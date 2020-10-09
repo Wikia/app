@@ -57,7 +57,7 @@ class ReportedPostsHelper {
 	private function buildNewLink( Uri $uri ) {
 		$serviceQueryParams = parse_query( $uri->getQuery() );
 		$controllerQueryParams = [
-			'controller' => 'DiscussionModerationController',
+			'controller' => 'DiscussionModeration',
 			'method' => 'getReportedPosts',
 		];
 
@@ -73,7 +73,7 @@ class ReportedPostsHelper {
 		$postId = end( $urlParts );
 
 		$controllerQueryParams = [
-			'controller' => 'DiscussionPermalinkController',
+			'controller' => 'DiscussionPermalink',
 			'method' => 'getThreadByPostId',
 			'postId' => $postId
 		];
