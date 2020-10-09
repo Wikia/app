@@ -206,6 +206,36 @@
             "value": true
         }
     ],
+    "icServicesSpecialSearchScopeDropdownInGlobalNav": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "devices": [
+                "desktop"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "sampling": 0.0,
+            "samplingCache": true,
+            "value": "internal"
+        },
+        {
+            "apps": [
+                "oasis"
+            ],
+            "devices": [
+                "desktop"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "sampling": 0.0,
+            "samplingCache": true,
+            "value": "cross-wiki"
+        }
+    ],
     "icPrebidSizePriceFloorRule": [
         {
             "apps": [
@@ -1262,7 +1292,7 @@
             "regions": [
                 "XX"
             ],
-            "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v4.5.1/tracking-opt-in.min.js"
+            "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v5.1.0/tracking-opt-in.min.js"
         }
     ],
     "icPermutive": [
