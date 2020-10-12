@@ -10,6 +10,25 @@ class EditorPreference {
 	const OPTION_EDITOR_VISUAL = 2;
 	const OPTION_EDITOR_CK = 3;
 
+	const LEGACY_EDITOR_PREFERENCE = 'editor';
+	const EDITOR_PREFERENCE = 'editortype';
+
+	static public function onSavePreferences( &$formData, &$error ) {
+		$legacyEditorPreference = (int)$formData[self::LEGACY_EDITOR_PREFERENCE];
+
+		// map legacy VE source (1) mode
+		if ( $legacyEditorPreference == 1 ) {
+			$formData[self::EDITOR_PREFERENCE] = 1;
+		}
+
+		// map legacy VE visual (2) and CK (3) mode to VE visual mode
+		if ( $legacyEditorPreference == 2 || $legacyEditorPreference == 3 ) {
+			$formData[self::EDITOR_PREFERENCE] = 2;
+		}
+
+		return true;
+	}
+
 	/**
 	 * Adds the editor dropdown to the top of Editing preferences.
 	 *
@@ -20,7 +39,7 @@ class EditorPreference {
 	 */
 	public static function onEditingPreferencesBefore( $user, &$preferences ) {
 		global $wgVisualEditorNeverPrimary;
-		$preferences[PREFERENCE_EDITOR] = array(
+		$preferences[self::LEGACY_EDITOR_PREFERENCE] = array(
 			'type' => 'select',
 			'label-message' => 'editor-preference',
 			'section' => 'editing/editing-experience',

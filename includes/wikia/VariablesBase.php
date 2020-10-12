@@ -4710,6 +4710,7 @@ $wgGlobalUserPreferenceWhiteList = [
 		'editfont',
 		'editondblclick',
 		'editor',
+		'editortype',
 		'editsection',
 		'editsectiononrightclick',
 		'editwidth',
