@@ -87,6 +87,21 @@ class DiscussionGateway {
 		} );
 	}
 
+	public function getThreadByPostId( string $postId, int $userId, array $queryParams ) {
+		return $this->makeCall( function () use ( $postId, $userId, $queryParams ) {
+			return $this->httpClient->get(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/permalinks/posts/{$postId}",
+				[
+					RequestOptions::HEADERS => [
+						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+						Constants::HELIOS_AUTH_HEADER => $userId
+					],
+					RequestOptions::QUERY => $queryParams,
+					RequestOptions::TIMEOUT => self::API_TIMEOUT,
+				] );
+		} );
+	}
+
 	private function makeCall( callable $callback ): array {
 		try {
 			$response = $callback();
