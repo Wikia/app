@@ -217,7 +217,7 @@
             "regions": [
                 "XX"
             ],
-            "sampling": 0.0,
+            "sampling": 33.0,
             "samplingCache": true,
             "value": "internal"
         },
@@ -231,7 +231,7 @@
             "regions": [
                 "XX"
             ],
-            "sampling": 0.0,
+            "sampling": 50.0,
             "samplingCache": true,
             "value": "cross-wiki"
         }
@@ -263,7 +263,7 @@
             "regions": [
                 "XX"
             ],
-            "sampling": 0.0,
+            "sampling": 100.0,
             "samplingCache": true,
             "value": true
         }
@@ -621,6 +621,7 @@
             "value": [
                 "4366940064",
                 "4916913597",
+                "5504547254",
                 "5501992516",
                 "5447862918",
                 "5485505474",
@@ -1344,9 +1345,6 @@
         {
             "apps": [
                 "oasis"
-            ],
-            "regions": [
-                "XX"
             ],
             "value": {
                 "name": "reco_wiki_algos_arl_vs_cf",
