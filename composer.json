@@ -75,7 +75,8 @@
     "google/cloud-storage": "^1.11",
     "guzzlehttp/guzzle": "^6.3",
     "ackintosh/ganesha": "^0.4.0",
-    "ext-memcached": "*"
+    "ext-memcached": "*",
+    "perftools/php-profiler": "^0.11.0"
   },
   "require-dev": {
     "ext-yaml": "*",

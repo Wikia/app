@@ -9,7 +9,6 @@ import {
 	PorvataFiller,
 	setupNpaContext,
 	setupRdpContext,
-	setupTCFv2Context,
 	utils,
 	setupBidders
 } from '@wikia/ad-engine';
@@ -210,6 +209,15 @@ async function setupAdContext(wikiContext, consents) {
 		context.set('bidders.prebid.priceFloor', priceFloorRule || null);
 	}
 
+	if (instantConfig.get('icA9HiviLeaderboard')) {
+		context.set('bidders.a9.slots.hivi_leaderboard', {
+			sizes: [
+				[728, 90],
+				[970, 90],
+			],
+		});
+	}
+
 	if (instantConfig.get('icAdditionalVastSize')) {
 		context.push('slots.featured.videoSizes', [480, 360]);
 	}
@@ -253,9 +261,6 @@ async function setupAdContext(wikiContext, consents) {
 async function configure(adsContext, consents) {
 	await setupAdContext(adsContext, consents);
 
-	const instantConfig = await InstantConfigService.init();
-
-	setupTCFv2Context(instantConfig);
 	setupNpaContext();
 	setupRdpContext();
 
@@ -265,6 +270,8 @@ async function configure(adsContext, consents) {
 	registerBidderTracker();
 	registerViewabilityTracker();
 	registerPostmessageTrackingTracker();
+
+	const instantConfig = await InstantConfigService.init();
 
 	billTheLizardWrapper.configureBillTheLizard(instantConfig.get('wgAdDriverBillTheLizardConfig', {}));
 }

@@ -1,6 +1,5 @@
 <?php
 
-
 use GuzzleHttp\Psr7\Uri;
 use function GuzzleHttp\Psr7\build_query;
 use function GuzzleHttp\Psr7\parse_query;
@@ -26,7 +25,8 @@ class ReportedPostsHelper {
 				->isThreadEditable( $postData['_embedded']['thread'][0]['isEditable'] )
 				->build();
 
-			$rights = DiscussionPermissionManager::getRights( $user, $post );
+			$rights = [];
+			Hooks::run( 'UserPermissionsRequired', [ $user, $post, &$rights ] );
 
 			if ( !empty( $rights ) ) {
 				$postData['_embedded']['userData'][0]['permissions'] = $rights;
@@ -45,12 +45,19 @@ class ReportedPostsHelper {
 				$reportedPosts['_links'][$linkName][0]['href'] = $this->buildNewLink( $uri );
 			}
 		}
+
+		foreach ( $reportedPosts['_embedded']['doc:posts'] as &$post ) {
+			if ( isset( $post['_links']['permalink'][0]['href'] ) ) {
+				$uri = new Uri( $post['_links']['permalink'][0]['href'] );
+				$post['_links']['permalink'][0]['href'] = $this->buildPermalink( $uri );
+			}
+		}
 	}
 
 	private function buildNewLink( Uri $uri ) {
 		$serviceQueryParams = parse_query( $uri->getQuery() );
 		$controllerQueryParams = [
-			'controller' => 'DiscussionModerationController',
+			'controller' => 'DiscussionModeration',
 			'method' => 'getReportedPosts',
 		];
 
@@ -58,6 +65,23 @@ class ReportedPostsHelper {
 			$controllerQueryParams[$paramName] = $value;
 		}
 
-		return $this->baseDomain . $this->scriptPath . '/wikia.php' . build_query( $controllerQueryParams );
+		return $this->baseDomain . $this->scriptPath . '/wikia.php?' . build_query( $controllerQueryParams );
+	}
+
+	private function buildPermalink( Uri $uri ) {
+		$urlParts = explode( "/", $uri->getPath() );
+		$postId = end( $urlParts );
+
+		$controllerQueryParams = [
+			'controller' => 'DiscussionPermalink',
+			'method' => 'getThreadByPostId',
+			'postId' => $postId
+		];
+
+		foreach ( parse_query( $uri->getQuery() ) as $paramName => $value ) {
+			$controllerQueryParams[$paramName] = $value;
+		}
+
+		return $this->baseDomain . $this->scriptPath . '/wikia.php?' . build_query( $controllerQueryParams );
 	}
 }

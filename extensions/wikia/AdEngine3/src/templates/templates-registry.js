@@ -1,5 +1,6 @@
 import {
 	templateService,
+	AffiliateDisclaimer,
 	BigFancyAdAbove,
 	BigFancyAdBelow,
 	FloorAdhesion,
@@ -31,5 +32,6 @@ export const templateRegistry = {
 		templateService.register(SafeFanTakeoverElement);
 		templateService.register(Skin);
 		templateService.register(StickyTLB, getStickyTLBConfig());
+		templateService.register(AffiliateDisclaimer);
 	},
 };

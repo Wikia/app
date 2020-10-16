@@ -3424,8 +3424,7 @@ $messages['ps'] = array(
 $messages['pt'] = array(
 	'userrenametool' => 'Alterar o nome de um usuário',
 	'renameuser' => 'Renomear usuário',
-	'userrenametool-warning' => '<strong>Por favor, leia cuidadosamente as informações a seguir</strong>: <p>no FANDOM, permitimos que os usuários renomeiem sua conta uma vez. Antes de fazer uma solicitação para renomear uma conta, certifique-se de que o novo nome é o que você tem certeza que vai querer usar no FANDOM. Isso pode ser feito através do formulário abaixo. Uma vez que o formulário for preenchido, a renomeação será final e não será possível fazer outra.
-< br /><br />Você não pode renomear sua conta usando:
+	'userrenametool-warning' => '<strong>Por favor, leia cuidadosamente as informações a seguir</strong>: <p>no FANDOM, permitimos que os usuários renomeiem sua conta uma vez. Antes de fazer uma solicitação para renomear uma conta, certifique-se de que o novo nome é o que você tem certeza que vai querer usar no FANDOM. Isso pode ser feito através do formulário abaixo. Uma vez que o formulário for preenchido, a renomeação será final e não será possível fazer outra.<br /><br />Você não pode renomear sua conta usando:
 <ul>
 <li>um nome de usuário já registrado por outra pessoa</li>
 <li>um nome de usuário ofensivo</li>
@@ -3515,6 +3514,7 @@ Quando este terminar, receberá uma notificação por e-mail.',
 	'userrenametool-error-password-not-match' => 'Senha incorreta. Você deve inserir a senha atual.',
 	'userrenametool-understand-consequences' => 'Eu entendo as consequências da renomeação descritas acima',
 	'userrenametool-error-too-long' => 'Este nome de usuário excede 50 caracteres.',
+	'userrenametool-error-token-not-exists' => 'O token de edição do usuário não existe.',
 );
 
 $messages['qu'] = array(

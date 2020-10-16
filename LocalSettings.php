@@ -291,6 +291,9 @@ $wgConf->localVHosts = array_merge(
  */
 require_once "$IP/../config/$wgWikiaEnvironment.php";
 
+/** Load ondemand profiler configuration */
+require_once "$IP/includes/wikia/Profiler.php";
+
 /**
  * Example read-only settings.
  * @see $wgLBFactoryConf

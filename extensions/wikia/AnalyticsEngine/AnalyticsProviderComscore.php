@@ -31,10 +31,8 @@ require(["wikia.trackingOptIn"], function (trackingOptIn) {
 		document.head.appendChild(s);
 	}
 
-	trackingOptIn.pushToUserConsentQueue(function (optIn) {
-		if (optIn) {
-			loadComscoreScript();
-		}
+	trackingOptIn.pushToUserConsentQueue(function () {
+		loadComscoreScript();
 	});
 });
 </script>

@@ -68,9 +68,11 @@ define('ext.wikia.recirculation.helpers.recommendedContent', [
             url: w.wgServicesExternalDomain + 'recommendations/recommendations',
             data: {
                 wikiId: w.wgCityId,
-                articleId: w.wgArticleId,
-                beacon: w.beacon_id
-            }
+                articleId: w.wgArticleId
+            },
+			headers: {
+				'X-Beacon': w.beacon_id
+			}
         }).done(function (result) {
             deferred.resolve(mapExperimentalDataResponse(result));
         }).fail(function (err) {

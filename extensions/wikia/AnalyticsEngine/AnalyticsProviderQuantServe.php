@@ -53,10 +53,8 @@ class AnalyticsProviderQuantServe implements iAnalyticsProvider
 			document.head.appendChild(elem);
 		}
 
-		trackingOptIn.pushToUserConsentQueue(function (optIn) {
-			if (optIn) {
-				loadQuantServeScript();
-			}
+		trackingOptIn.pushToUserConsentQueue(function () {
+			loadQuantServeScript();
 		});
 	});
 </script>

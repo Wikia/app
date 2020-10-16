@@ -364,38 +364,12 @@ $wgGroupPermissions['staff']['gameguidessponsored'] = true;
 $wgGroupPermissions['bot']['welcomeexempt'] = true;
 $wgGroupPermissions['staff']['welcomeexempt'] = true;
 
-
-$wgGroupPermissions['util']['coppaimagereview'] = true;
-
-$wgGroupPermissions['util']['imagereview'] = true;
-$wgGroupPermissions['soap']['imagereview'] = true;
-
-$wgGroupPermissions['reviewer']['imagereview'] = true;
-$wgGroupPermissions['reviewer']['deletedhistory'] = true;
-$wgGroupPermissions['reviewer']['deletedtext'] = true;
-$wgGroupPermissions['reviewer']['edit'] = false;
-
-$wgGroupPermissions['util']['questionableimagereview'] = true;
-
-$wgGroupPermissions['util']['rejectedimagereview'] = true;
+$wgGroupPermissions['imagereviewer']['deletedhistory'] = true;
+$wgGroupPermissions['imagereviewer']['deletedtext'] = true;
+$wgGroupPermissions['imagereviewer']['edit'] = false;
 
 $wgGroupPermissions['util']['imagereviewstats'] = true;
-
-$wgGroupPermissions['util']['imagereviewcontrols'] = true;
-
 $wgGroupPermissions['staff']['imagereviewstats'] = true;
-
-
-$wgGroupPermissions['util']['promoteimagereview'] = true;
-$wgGroupPermissions['soap']['promoteimagereview'] = true;
-
-$wgGroupPermissions['util']['promoteimagereviewquestionableimagereview'] = true;
-
-$wgGroupPermissions['util']['promoteimagereviewrejectedimagereview'] = true;
-
-$wgGroupPermissions['util']['promoteimagereviewstats'] = true;
-
-$wgGroupPermissions['util']['promoteimagereviewcontrols'] = true;
 
 $wgGroupPermissions['*']['insights'] = true;
 

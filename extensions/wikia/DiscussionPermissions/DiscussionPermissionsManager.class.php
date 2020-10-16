@@ -1,6 +1,6 @@
 <?php
 
-class DiscussionPermissionManager {
+class DiscussionPermissionsManager {
 
 	const CAN_DELETE_PERMISSION = "canDelete";
 	const CAN_UNDELETE_PERMISSION = "canUndelete";
@@ -93,7 +93,8 @@ class DiscussionPermissionManager {
 	}
 
 	private static function canEdit( User $user, Post $post ) : bool {
-		return self::canEditPost( $user, $post ) && $post->isEditable() && $post->isThreadEditable();
+		return ( self::canEditPost( $user, $post ) && $post->isEditable() &&
+			$post->isThreadEditable() ) || $user->isAllowed( 'threads:superedit' );
 	}
 
 	private static function canEditThread( User $user, Post $post ): bool {

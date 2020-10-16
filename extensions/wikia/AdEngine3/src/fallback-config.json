@@ -47,6 +47,34 @@
             "value": true
         }
     ],
+    "icServicesSpecialSearchTestDefaultScopeInGlobalNav": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "devices": [
+                "desktop"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "sampling": 0.0,
+            "value": "this-wiki"
+        },
+        {
+            "apps": [
+                "oasis"
+            ],
+            "devices": [
+                "desktop"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "sampling": 0.0,
+            "value": "this-wiki"
+        }
+    ],
     "icPrebidRubicon": [
         {
             "apps": [
@@ -62,10 +90,7 @@
     "icPrebidOpenX": [
         {
             "apps": [
-                "futhead",
-                "gamepedia",
                 "mobile-wiki",
-                "muthead",
                 "oasis"
             ],
             "regions": [
@@ -85,6 +110,31 @@
                 "US"
             ],
             "value": true
+        }
+    ],
+    "icDeRecoExperimentDev": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "browsers": [
+                "Chrome"
+            ],
+            "devices": [
+                "desktop"
+            ],
+            "value": {
+                "name": "dev_reco_test",
+                "groups": [
+                    {
+                        "name": "all",
+                        "config": {
+                            "articleLimit": 1
+                        },
+                        "sampling": 100
+                    }
+                ]
+            }
         }
     ],
     "icPrebidOneVideo": [
@@ -139,6 +189,36 @@
             "value": true
         }
     ],
+    "icServicesSpecialSearchScopeDropdownInGlobalNav": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "devices": [
+                "desktop"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "sampling": 33.0,
+            "samplingCache": true,
+            "value": "internal"
+        },
+        {
+            "apps": [
+                "oasis"
+            ],
+            "devices": [
+                "desktop"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "sampling": 50.0,
+            "samplingCache": true,
+            "value": "cross-wiki"
+        }
+    ],
     "icPrebidSizePriceFloorRule": [
         {
             "apps": [
@@ -166,7 +246,7 @@
             "regions": [
                 "XX"
             ],
-            "sampling": 50.0,
+            "sampling": 100.0,
             "samplingCache": true,
             "value": true
         }
@@ -486,6 +566,17 @@
             "value": true
         }
     ],
+    "icA9HiviLeaderboard": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "value": true
+        }
+    ],
     "icPrebidAol": [
         {
             "apps": [
@@ -513,7 +604,11 @@
             "value": [
                 "4366940064",
                 "4916913597",
+                "5457489354",
+                "5504547254",
+                "5501992516",
                 "5447862918",
+                "5485505474",
                 "5447985268",
                 "4913869429",
                 "5443340780",
@@ -522,6 +617,7 @@
                 "5439915753",
                 "4949392740",
                 "5093231180",
+                "5477131836",
                 "5096621951",
                 "5108026783",
                 "5439914790",
@@ -648,7 +744,28 @@
                 "5461291396",
                 "5459355788",
                 "5460496953",
-                "5460497508"
+                "5460497508",
+                "5473107813",
+                "5467371078",
+                "5467370628",
+                "5354274880",
+                "5468068234",
+                "5468068237",
+                "5467186974",
+                "5468067817",
+                "5480727970",
+                "5481032081",
+                "5488108263",
+                "5488108266",
+                "5490139362",
+                "5491791785",
+                "5493031115",
+                "5484452297",
+                "5491672941",
+                "5492875154",
+                "5504518465",
+                "5508974840",
+                "5507745828"
             ]
         }
     ],
@@ -830,6 +947,22 @@
             "value": true
         }
     ],
+    "icServicesSpecialSearchTooltipForScopeChange": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "devices": [
+                "desktop"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "sampling": 0.0,
+            "samplingCache": true,
+            "value": true
+        }
+    ],
     "icSafeFanTakeoverLineItemIds": [
         {
             "apps": [
@@ -848,7 +981,13 @@
                 "5393163252",
                 "5393163249",
                 "5441231927",
-                "5441231924"
+                "5441231924",
+                "5492427980",
+                "5492807412",
+                "5493719719",
+                "5499901083",
+                "5500931404",
+                "5494026389"
             ]
         }
     ],
@@ -1016,22 +1155,6 @@
             "value": true
         }
     ],
-    "icTcf2Enabled": [
-        {
-            "apps": [
-                "f2",
-                "futhead",
-                "gamepedia",
-                "mobile-wiki",
-                "muthead",
-                "oasis"
-            ],
-            "regions": [
-                "XX"
-            ],
-            "value": true
-        }
-    ],
     "icPrebid": [
         {
             "apps": [
@@ -1058,6 +1181,17 @@
             "value": true
         }
     ],
+    "icInterventionTracking": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "value": true
+        }
+    ],
     "icFeaturedVideoMidroll": [
         {
             "apps": [
@@ -1073,10 +1207,22 @@
                 "oasis"
             ],
             "regions": [
+                "AT",
+                "AU",
+                "BR",
                 "CA",
+                "DE",
+                "ES",
+                "FR",
+                "GB",
+                "IT",
+                "PH",
+                "SG",
+                "TW",
+                "UK",
                 "US"
             ],
-            "sampling": 20.0,
+            "sampling": 13.0,
             "value": true
         }
     ],
@@ -1111,6 +1257,7 @@
     "icTrackingOptInLibraryUrl": [
         {
             "apps": [
+                "bingebot",
                 "f2",
                 "futhead",
                 "gamepedia",
@@ -1121,7 +1268,7 @@
             "regions": [
                 "XX"
             ],
-            "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v4.0.17/tracking-opt-in.min.js"
+            "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v5.1.0/tracking-opt-in.min.js"
         }
     ],
     "icPermutive": [
@@ -1173,41 +1320,31 @@
             "apps": [
                 "oasis"
             ],
-            "browsers": [
-                "Chrome"
-            ],
-            "devices": [
-                "desktop"
-            ],
-            "regions": [
-                "PL"
-            ],
             "value": {
-                "name": "just_testing",
+                "name": "reco_wiki_algos_arl_vs_cf",
                 "groups": [
                     {
-                        "name": "A",
+                        "name": "w_arl",
                         "config": {
                             "wikiStrategy": "ARL",
-                            "articleStrategy": "CV"
+                            "number_articles": 4
                         },
                         "sampling": 25
                     },
                     {
-                        "name": "B",
+                        "name": "w_cf",
                         "config": {
-                            "wikiStrategy": "ARL",
-                            "articleStrategy": "CV"
+                            "wikiStrategy": "CF",
+                            "number_articles": 4
                         },
                         "sampling": 25
                     },
                     {
-                        "name": "X",
+                        "name": "control",
                         "config": {
-                            "wikiStrategy": "ARL",
-                            "articleStrategy": "CV"
+                            
                         },
-                        "sampling": 25
+                        "sampling": 50
                     }
                 ]
             }

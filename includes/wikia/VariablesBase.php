@@ -2637,6 +2637,69 @@ $wgEnableFandomAppSmartBanner = false;
  */
 $wgFandomAppSmartBannerText = null;
 
+
+/**
+ * community wiki factory variable to enable fandom shop feature
+ */
+$wgEnableFandomShop = false;
+
+/**
+ * Used to map IntentX API wiki id to relevance key
+ */
+$wgFandomShopMap = [
+	'3510' => 'Assassin\'s Creed',
+	'532' => 'Avatar',
+	'613320' => 'Danganronpa',
+	'208733' => 'Dark Souls',
+	'599420' => 'Don\'t Starve',
+	'3035' => 'Fallout',
+	'1241752' => 'Fate/Grand Order',
+	'525179	' => 'Haikyuu!!',
+	'509' => 'Harry Potter',
+	'2233' => 'Marvel',
+	'113' => 'Star Trek',
+	'2125819' => 'Muppets',
+	'1242' => 'Nintendo',
+	'1081' => 'One Piece',
+	'74' => 'Pokemon',
+	'30404' => 'Red Dead',
+	'1249' => 'Resident Evil',
+	'4396' => 'Roblox',
+	'147' => 'Star Wars',
+	'621556' => 'Steven Universe',
+	'2569' => 'Thomas the Tank Engine',
+	'13346' => 'The Walking Dead',
+	'38969' => 'Vampire Diaries',
+	'490' => 'World of Warcraft',
+	'252435' => 'Xenoblade',
+	'410' => 'Yu-Gi-Oh!',
+	'1451243' => 'Animal Jam',
+	'583' => 'Animal Crossing',
+	'11954' => 'Borderlands',
+	'3125' => 'Call of Duty',
+	'12114' => 'Criminal Minds',
+	'2237' => 'DC',
+	'374' => 'Disney',
+	'10150' => 'Dragon Age',
+	'530' => 'Dragon Ball',
+	'1706' => 'Elder Scrolls',
+	'691' => 'Dungeons and Dragons',
+	'130814' => 'Game of Thrones',
+	'2180' => 'Grey\'s Anatomy',
+	'4541' => 'Grand Theft Auto',
+	'1358984' => 'Kimetsu no Yaiba',
+	'14764' => 'League of Legends',
+	'159' => 'Lord of the Rings',
+	'5813' => 'Megami Tensei',
+	'44732' => 'Minecraft',
+	'1318' => 'Naruto',
+	'277' => 'Power Rangers',
+	'2860' => 'Spongebob',
+	'544934' => 'Warframe',
+	'501' => 'Warhammer',
+	'3443' => 'The Witcher'
+];
+
 /**
  * configures smart banner to display custom text/link/image and target it by country an OS
  * example value:
@@ -4647,6 +4710,7 @@ $wgGlobalUserPreferenceWhiteList = [
 		'editfont',
 		'editondblclick',
 		'editor',
+		'editortype',
 		'editsection',
 		'editsectiononrightclick',
 		'editwidth',
@@ -9392,6 +9456,13 @@ $wgEnableForumMigrationMessageGlobal = false;
  * Variable for enabling/disabling message that appears after forum migration
  */
 $wgEnablePostForumMigrationMessage = false;
+
+/**
+ * The URL of the XHGUI instance to send profiling data to.
+ * If null, ondemand profiling is disabled.
+ * @var string|null $wgXhguiProfilerUrl
+ */
+$wgXhguiProfilerUrl = null;
 
 /**
  * Expiration timestamp for post forum migration message

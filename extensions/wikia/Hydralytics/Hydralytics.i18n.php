@@ -55,6 +55,7 @@ $messages['en'] = array(
 	'active_month' => 'Month',
 	'admin_views' => 'Views per admin',
 	'right-analytics' => 'Access wiki analytics',
+	'db_error' => 'Something went wrong. Please try again later.',
 );
 
 $messages['qqq'] = array(
@@ -115,6 +116,7 @@ $messages['de'] = array(
 	'device_other' => 'Andere',
 	'device_tablet' => 'Tablet',
 	'device_desktop' => 'Desktop-Ansicht',
+	'db_error' => 'Es ist etwas schief gelaufen. Versuche es bitte später noch einmal.',
 );
 
 $messages['es'] = array(
@@ -171,6 +173,7 @@ $messages['es'] = array(
 	'device_other' => 'Otro',
 	'device_tablet' => 'Tableta',
 	'device_desktop' => 'Escritorio',
+	'db_error' => 'Algo salió mal. Por favor inténtalo de nuevo más tarde.',
 );
 
 $messages['fr'] = array(
@@ -228,6 +231,7 @@ $messages['fr'] = array(
 	'device_other' => 'Autre',
 	'device_tablet' => 'Tablette',
 	'device_desktop' => 'Bureau',
+	'db_error' => 'Un problème est survenu. Veuillez réessayer ultérieurement.',
 );
 
 $messages['it'] = array(
@@ -284,6 +288,7 @@ $messages['it'] = array(
 	'device_other' => 'Altro',
 	'device_tablet' => 'Tablet',
 	'device_desktop' => 'Desktop',
+	'db_error' => 'Qualcosa è andato storto. Riprova più tardi.',
 );
 
 $messages['ja'] = array(
@@ -340,6 +345,7 @@ $messages['ja'] = array(
 	'device_other' => 'その他',
 	'device_tablet' => 'タブレット',
 	'device_desktop' => 'デスクトップ',
+	'db_error' => '問題が発生したようです。しばらくしてから、もう一度お試しください。',
 );
 
 $messages['pl'] = array(
@@ -396,6 +402,7 @@ $messages['pl'] = array(
 	'device_mobile' => 'Mobilne',
 	'device_tablet' => 'Tablet',
 	'device_desktop' => 'Desktop',
+	'db_error' => 'Coś poszło nie tak. Spróbuj ponownie później.',
 );
 
 $messages['pt'] = array(
@@ -452,6 +459,7 @@ $messages['pt'] = array(
 	'device_other' => 'Outros',
 	'device_tablet' => 'Tablet',
 	'device_desktop' => 'Área de Trabalho',
+	'db_error' => 'Algo deu errado. Por favor, tente novamente.',
 );
 
 $messages['ru'] = array(
@@ -508,6 +516,7 @@ $messages['ru'] = array(
 	'device_other' => 'Другое',
 	'device_tablet' => 'Планшеты',
 	'device_desktop' => 'Компьютеры',
+	'db_error' => 'Что-то пошло не так. Повторите попытку позже.',
 );
 
 $messages['zh-hans'] = array(
@@ -564,6 +573,7 @@ $messages['zh-hans'] = array(
 	'device_other' => '其他',
 	'device_tablet' => '平板电脑',
 	'device_desktop' => '桌面',
+	'db_error' => '出错了。请稍后再试。',
 );
 
 $messages['zh-hant'] = array(
@@ -620,5 +630,6 @@ $messages['zh-hant'] = array(
 	'device_other' => '其他',
 	'device_tablet' => '平板電腦',
 	'device_desktop' => '桌上電腦',
+	'db_error' => '出錯了。請稍後再試。',
 );
 
