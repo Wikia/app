@@ -208,7 +208,7 @@ async function setupAdContext(wikiContext, consents) {
 		const priceFloorRule = instantConfig.get('icPrebidSizePriceFloorRule');
 		context.set('bidders.prebid.priceFloor', priceFloorRule || null);
 
-		context.set('bidders.LiveRampId.enabled', instantConfig.get('icLiveRampId'));
+		context.set('bidders.liveRampId.enabled', instantConfig.get('icLiveRampId'));
 	}
 
 	if (instantConfig.get('icA9HiviLeaderboard')) {
