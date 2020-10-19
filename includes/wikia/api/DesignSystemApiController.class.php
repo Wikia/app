@@ -162,7 +162,10 @@ class DesignSystemApiController extends WikiaApiController {
 		global $wgCityId;
 
 		$product = $this->getRequiredParam( static::PARAM_PRODUCT );
-		$lang = $this->getRequiredParam( static::PARAM_LANG );
+		$lang = $this->getRequest()->getVal(
+			static::PARAM_LANG,
+			$this->wg->ContLang->getCode()
+		);
 
 		if ($product === static::PRODUCT_WIKIS) {
 			$id = intval( $this->getVal(static::PARAM_ID, $wgCityId));
@@ -207,9 +210,14 @@ class DesignSystemApiController extends WikiaApiController {
 
 	/**
 	 * External API request to IntentX
+	 * @throws UnauthorizedException
 	 */
 	public function getFandomShopDataFromIntentX() {
 		global $wgCityId, $wgMemc, $wgFandomShopMap, $wgFandomShopUrl;
+
+		if ( !$this->request->isInternal() ) {
+			throw new UnauthorizedException();
+		}
 
 		// get id from parameter or default to city id
 		$id = $this->getVal( static::PARAM_ID, $wgCityId );
@@ -223,7 +231,7 @@ class DesignSystemApiController extends WikiaApiController {
 		// do api request
 		$client = new Client( [
 			'base_uri' => $wgFandomShopUrl,
-			'timeout' => 30.0
+			'timeout' => 300.0
 		] );
 		$params = [
 			'clientId' => 'fandom',

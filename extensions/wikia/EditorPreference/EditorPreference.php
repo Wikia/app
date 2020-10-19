@@ -24,3 +24,4 @@ $wgHooks['EditingPreferencesBefore'][] = 'EditorPreference::onEditingPreferences
 $wgHooks['SkinTemplateNavigation'][] = 'EditorPreference::onSkinTemplateNavigation';
 $wgHooks['MakeGlobalVariablesScript'][] = 'EditorPreference::onMakeGlobalVariablesScript';
 $wgHooks['UserProfilePageAfterGetActionButtonData'][] = 'EditorPreference::onUserProfilePageAfterGetActionButtonData';
+$wgHooks['SavePreferences'][] = 'EditorPreference::onSavePreferences';

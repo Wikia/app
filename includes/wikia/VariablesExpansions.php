@@ -304,9 +304,10 @@ $wgLBFactoryConf = [
             'geo-db-h-master.query.consul' => 0,
             'geo-db-h-slave.query.consul' => 1000,
         ],
-		'c9' => [
-			'ucp-dbmigration-s1' => 0,
-		],
+        'c9' => [
+            'geo-db-i-master.query.consul' => 0,
+            'geo-db-i-slave.query.consul' => 1000,
+        ],
 
         'ext1' => $wgDBArchiveCluster,
         'specials' => [

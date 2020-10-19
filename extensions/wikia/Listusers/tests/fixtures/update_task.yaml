@@ -54,7 +54,4 @@ events_local_users:
     edits: 1
     editdate: '2009-01-01 00:00:00'
     last_revision: 1
-    cnt_groups: 0
-    single_group: ''
-    all_groups: ''
     user_is_closed: 0

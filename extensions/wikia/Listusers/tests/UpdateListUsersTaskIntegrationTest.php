@@ -52,9 +52,7 @@ class UpdateListUsersTaskIntegrationTest extends WikiaDatabaseTest {
 		$this->assertEquals( '2017-11-10 00:00:00', $row->editdate );
 		$this->assertEquals( 3, $row->last_revision );
 
-		$this->assertEquals( 2, $row->cnt_groups );
-		$this->assertEquals( 'bureaucrat', $row->single_group );
-		$this->assertEquals( 'sysop;bureaucrat', $row->all_groups );
+		$this->assertEquals( [ 'bureaucrat', 'sysop' ], $this->selectUserGroups( self::USER_ID_WITHOUT_DATA ) );
 	}
 
 	public function testEditUpdateUpdatesExistingDataForUser() {
@@ -76,9 +74,7 @@ class UpdateListUsersTaskIntegrationTest extends WikiaDatabaseTest {
 		$this->assertEquals( '2010-01-01 00:00:00', $row->editdate );
 		$this->assertEquals( 2, $row->last_revision );
 
-		$this->assertEquals( 1, $row->cnt_groups );
-		$this->assertEquals( 'rollback', $row->single_group );
-		$this->assertEquals( 'rollback', $row->all_groups );
+		$this->assertEquals( [ 'rollback' ], $this->selectUserGroups( self::USER_ID_WITH_DATA ) );
 	}
 
 	public function testGroupsUpdateInsertsNewDataForUser() {
@@ -98,9 +94,10 @@ class UpdateListUsersTaskIntegrationTest extends WikiaDatabaseTest {
 		$this->assertEquals( '2011-01-01 00:00:00', $row->editdate );
 		$this->assertEquals( 3, $row->last_revision );
 
-		$this->assertEquals( 3, $row->cnt_groups );
-		$this->assertEquals( 'chatmoderator', $row->single_group );
-		$this->assertEquals( 'sysop;bureaucrat;chatmoderator', $row->all_groups );
+		$this->assertEquals(
+			[ 'bureaucrat', 'chatmoderator', 'sysop' ],
+			$this->selectUserGroups( self::USER_ID_WITHOUT_DATA )
+		);
 	}
 
 	public function testGroupsUpdateUpdatesExistingDataForUser() {
@@ -120,9 +117,15 @@ class UpdateListUsersTaskIntegrationTest extends WikiaDatabaseTest {
 		$this->assertEquals( '2009-01-01 00:00:00', $row->editdate );
 		$this->assertEquals( 1, $row->last_revision );
 
-		$this->assertEquals( 1, $row->cnt_groups );
-		$this->assertEquals( 'chatmoderator', $row->single_group );
-		$this->assertEquals( 'chatmoderator', $row->all_groups );
+		$this->assertEquals( [ 'chatmoderator' ], $this->selectUserGroups( self::USER_ID_WITH_DATA ) );
+	}
+
+	private function selectUserGroups( int $userId ): array {
+		return $this->dbr->selectFieldValues(
+			'local_user_groups',
+			'group_name',
+			[ 'wiki_id' => static::TEST_WIKI_ID, 'user_id' => $userId ]
+		);
 	}
 
 	private function selectUserRow( int $userId ) {
