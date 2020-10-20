@@ -112,8 +112,8 @@ function startAdEngine(inhibitors) {
 
 		communicationService.action$.pipe(
 			ofType('[AdEngine] LiveRamp Prebid ids loaded')
-		).subscribe(() => {
-			pageTracker.trackProp('live_ramp_prebid_ids', 'ids-placeholder');
+		).subscribe((props) => {
+			pageTracker.trackProp('live_ramp_prebid_ids', props.userId);
 		});
 	}
 }
