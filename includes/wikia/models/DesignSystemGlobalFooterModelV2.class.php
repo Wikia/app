@@ -272,6 +272,15 @@ class DesignSystemGlobalFooterModelV2 extends WikiaModel {
 						'type' => 'link-text',
 						'title' => [
 							'type' => 'text',
+							'value' => 'Cortex RPG'
+						],
+						'href' => 'https://www.cortexrpg.com/',
+						'tracking_label' => 'explore.dnd-beyond',
+					],
+					[
+						'type' => 'link-text',
+						'title' => [
+							'type' => 'text',
 							'value' => 'Muthead'
 						],
 						'href' => 'https://www.muthead.com/',

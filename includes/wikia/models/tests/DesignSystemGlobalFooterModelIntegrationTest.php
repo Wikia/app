@@ -148,12 +148,12 @@ class DesignSystemGlobalFooterModelIntegrationTest extends WikiaDatabaseTest {
 		$footerModel = new DesignSystemGlobalFooterModelV2( DesignSystemGlobalFooterModelV2::PRODUCT_WIKIS, 1, false, 'en' );
 		$result = $footerModel->getData();
 
-		$this->assertCount( 5, $result['fandom_overview']['links'] );
+		$this->assertCount( 6, $result['fandom_overview']['links'] );
 
 		$footerModel = new DesignSystemGlobalFooterModelV2( DesignSystemGlobalFooterModelV2::PRODUCT_WIKIS, 1, false, 'pl' );
 		$result = $footerModel->getData();
 
-		$this->assertCount( 5, $result['fandom_overview']['links'] );
+		$this->assertCount( 6, $result['fandom_overview']['links'] );
 	}
 
 	public function testCorrectMobileAppsTranslationKeys() {
