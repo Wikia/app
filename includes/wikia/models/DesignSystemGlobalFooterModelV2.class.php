@@ -275,7 +275,7 @@ class DesignSystemGlobalFooterModelV2 extends WikiaModel {
 							'value' => 'Cortex RPG'
 						],
 						'href' => 'https://www.cortexrpg.com/',
-						'tracking_label' => 'explore.dnd-beyond',
+						'tracking_label' => 'explore.cortexrpg',
 					],
 					[
 						'type' => 'link-text',
