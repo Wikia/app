@@ -3578,69 +3578,69 @@ FANDOM社区团队<br /></p>',
 );
 
 $messages['zh-hant'] = array(
-	'createnewwiki-desc' => 'Wiki創建嚮導',
+	'createnewwiki-desc' => 'Wiki建立精靈',
 	'cnw-next' => '下一步',
 	'cnw-back' => '前一步',
-	'cnw-title' => '創建新的Wiki',
-	'cnw-name-wiki-headline' => '創建',
+	'cnw-title' => '建立新的wiki',
+	'cnw-name-wiki-headline' => '建立',
 	'cnw-name-wiki-creative' => '無論這個社區關注的是世界級的娛樂焦點或者是個人專案，它都需要一個獨特的名稱：',
-	'cnw-name-wiki-label' => '命名你的Wiki',
-	'cnw-name-wiki-domain-label' => '給你的Wiki一個網址',
+	'cnw-name-wiki-label' => '命名您的wiki',
+	'cnw-name-wiki-domain-label' => '給您的wiki一個網址',
 	'cnw-name-wiki-submit-error' => '抱歉！需要填寫上面兩欄才能繼續。',
-	'cnw-desc-headline' => '你的Wiki的主題是什麼？',
-	'cnw-desc-creative' => '用精確的描述幫助網友找到你的。',
-	'cnw-desc-placeholder' => '寫好一些！您的文字會顯示在您的Wiki首頁上。',
+	'cnw-desc-headline' => '您的wiki的主題是什麼？',
+	'cnw-desc-creative' => '用精確的描述幫助網友找到您的。',
+	'cnw-desc-placeholder' => '寫好一些！您的文字會顯示在您的wiki首頁上。',
 	'cnw-desc-select-one' => '選擇一項',
 	'cnw-desc-all-ages' => '這個社區的主題主要針對13歲以下的兒童嗎？',
-	'cnw-desc-lang' => '你的Wiki的語言',
-	'cnw-desc-wiki-submit-error' => '請選擇一個類別',
+	'cnw-desc-lang' => '您的wiki的語言',
+	'cnw-desc-wiki-submit-error' => '請選擇一個分類',
 	'cnw-theme-headline' => '選擇一個樣式',
-	'cnw-theme-creative' => '選擇最適合你的Wiki的樣式。',
-	'cnw-theme-instruction' => '您可以隨意在主題設計器中自訂您的Wiki外觀！',
-	'cnw-welcome-headline' => '恭喜你！已成功創建$1！',
-	'cnw-welcome-instruction1' => '按下面的按鈕在你的Wiki增加新頁面。',
-	'cnw-welcome-help' => '繼續你的粉絲體驗。在<a href="http://zh.community.wikia.com">社區中心</a>查找答案、建議和更多其他訊息。',
+	'cnw-theme-creative' => '選擇最適合您的wiki的樣式。',
+	'cnw-theme-instruction' => '您可以隨意在主題設計器中自訂您的wiki外觀！',
+	'cnw-welcome-headline' => '恭喜您！已成功建立$1！',
+	'cnw-welcome-instruction1' => '點擊下方的按鈕在您的wiki新增頁面。',
+	'cnw-welcome-help' => '繼續您的粉絲體驗。在<a href="https://community.fandom.com/zh">社群中心</a>尋找答案、建議和更多資訊。',
 	'cnw-error-general' => '糟糕，我們這邊發生問題！請再試一次，或[[Special:Contact|聯繫我們]]以得到幫助。',
 	'cnw-error-general-heading' => '我們很抱歉。',
 	'cnw-badword-header' => '請注意',
-	'cnw-badword-msg' => '你好，請不要在你的Wiki描述中使用下列不恰當或禁用的詞語：$1',
-	'cnw-error-wiki-limit-header' => '已達到允許的Wiki數上限。',
-	'cnw-error-wiki-limit' => '你好，你每天最多只能創建{{PLURAL:$1|$1個Wiki|$1個Wiki}}。 請等待24小時後再創建另一個Wiki。',
-	'cnw-error-blocked-header' => '帳號已被封禁。',
-	'cnw-error-blocked' => '你已被$1封禁。封禁原因是：$2。（參考封禁ID：$3）',
+	'cnw-badword-msg' => '您好，請不要在您的wiki描述中使用下列不恰當或禁用的詞語：$1',
+	'cnw-error-wiki-limit-header' => '已達到允許的wiki數上限。',
+	'cnw-error-wiki-limit' => '您好，您每天最多只能建立{{PLURAL:$1|$1個wiki|$1個wiki}}。 請等待24小時後再建立另一個wiki。',
+	'cnw-error-blocked-header' => '帳號已被封鎖。',
+	'cnw-error-blocked' => '您已被$1封鎖。封鎖原因是：$2。（參考封鎖ID：$3）',
 	'cnw-error-anon-user-header' => '請登入',
-	'cnw-error-anon-user' => '無法由匿名用戶創建Wiki。請先[[Special:UserLogin|登入]]，然後再試。',
-	'cnw-error-torblock' => '不允許透過Tor創建Wiki。',
+	'cnw-error-anon-user' => '無法由匿名用戶建立wiki。請先[[Special:UserLogin|登入]]，然後再試。',
+	'cnw-error-torblock' => '不允許透過Tor建立wiki。',
 	'cnw-desc-select-vertical' => '選擇一個主題︰',
-	'cnw-theme-loading-state' => '正在創建您的Wiki。在此期間，您可以更改您的設計樣式。',
-	'cnw-theme-show-wiki' => '顯示我的Wiki',
-	'cnw-next-create-wiki' => '創建我的Wiki',
+	'cnw-theme-loading-state' => '正在建立您的wiki。在此期間，您可以變更wiki的主題樣式。',
+	'cnw-theme-show-wiki' => '顯示我的wiki',
+	'cnw-next-create-wiki' => '建立我的wiki',
 	'cnw-name-wiki-language' => '',
-	'cnw-desc-select-categories' => '選擇其它類別',
-	'autocreatewiki' => '創建新的 Wiki',
-	'createwiki' => '創建新的 Wiki',
+	'cnw-desc-select-categories' => '選擇額外的分類',
+	'autocreatewiki' => '建立新的wiki',
+	'createwiki' => '建立新的wiki',
 	'autocreatewiki-language-top' => '支援語言',
 	'autocreatewiki-language-all' => '所有語言',
 	'autocreatewiki-title-template' => '$1 Wiki',
 	'autocreatewiki-empty-field' => '請填寫此欄位。',
 	'autocreatewiki-bad-name' => '名稱不能包含特殊字元 （如 $ 或 @），並且必須是一個小寫字母無空格的字詞。',
 	'autocreatewiki-invalid-wikiname' => '名稱不能包含特殊字元 （如 $ 或 @） 且不能為空白',
-	'autocreatewiki-violate-policy' => '此 Wiki 名稱中包含了違反我們的命名政策的詞語',
-	'autocreatewiki-name-taken' => '已經有用此網址創建的Wiki。可在$1進行編輯或選擇另一個網址。',
+	'autocreatewiki-violate-policy' => '此wiki名稱中包含了違反我們的命名政策的詞語',
+	'autocreatewiki-name-taken' => '已經有用此網址建立的wiki。可在$1進行編輯或選擇另一個網址。',
 	'autocreatewiki-name-too-short' => '此網址太短，選擇一個具有至少 3 個字元的網址。',
 	'autocreatewiki-name-too-long' => '此網址太長，請另選擇一個不超過50 個字元的網址 。',
-	'autocreatewiki-empty-wikiname' => 'Wiki 的名稱不能為空白。',
+	'autocreatewiki-empty-wikiname' => 'wiki的名稱不能為空白。',
 	'autocreatewiki-category-label' => '類別：',
 	'autocreatewiki-welcometalk-log' => '歡迎留言',
-	'autocreatewiki-regex-error-comment' => '在 Wiki 中使用 $1 （全文：  $2 ）',
+	'autocreatewiki-regex-error-comment' => '在wiki中使用 $1 （全文：  $2 ）',
 	'autocreatewiki-protect-reason' => '官方界面的一部分',
-	'autocreatewiki-welcometalk' => '==歡迎==
+	'autocreatewiki-welcometalk' => '== 歡迎 ==
 
 您好！
 
-我們很高興$4能成為FANDOM社群的一分子！接下來還有很多事情要做；這裡有一些有用的提示和連結，希望能幫助您的Wiki運轉起來：
+我們很高興$4能成為FANDOM社群的一分子！接下來還有很多事情要做；這裡有一些有用的提示和連結，希望能幫助您的wiki運轉起來：
 
-*查看[[Special:WikiFeatures|Wiki功能]]，看看您可以在您的上開啟哪些功能，包括聊天、成就及更多功能。
+*查看[[Special:wikiFeatures|wiki功能]]，看看您可以在您的上開啟哪些功能，包括聊天、成就及更多功能。
 *到[[w:c:zh.community|社區中心]]來看看，透過我們的[[w:c:zh.community:Category:社区中心博客|社區中心網誌]]來了解最新訊息、在我們的[[w:c:zh.community:Special:Forum|社區論壇]]提問、觀看我們的[[w:c:zh.community:FANDOM课堂|FANDOM課堂影片]]或與其他FANDOM社群用戶線上聊天。
 *最後，請訪問我們的[[Help:Contents|幫助頁面]]了解如何使用FANDOM的所有功能。
 
@@ -3649,21 +3649,21 @@ $messages['zh-hant'] = array(
 -- [[User:$2|$3]] <staff />',
 	'autocreatewiki-welcometalk-wall' => '您好，我是FANDOM社區支援團隊的員工。我們非常高興{{subst:SITENAME}}成為FANDOM社區中的新成員！
 
-看起來似乎有許多工作要做，我們將幫助您盡快地掌握一切。這裡有一些有幫助的提示和連接，希望能幫助您的Wiki運轉起來：
+看起來似乎有許多工作要做，我們將幫助您盡快地掌握一切。這裡有一些有幫助的提示和連接，希望能幫助您的wiki運轉起來：
 
-*查看[[Special:WikiFeatures|Wiki功能]]，看看您可以在您的Wiki上開啟哪些功能，包括社區聊天功能等。
+*查看[[Special:wikiFeatures|wiki功能]]，看看您可以在您的wiki上開啟哪些功能，包括社區聊天功能等。
 *使用[[Special:ThemeDesigner|主題設計器]]對自訂您的社區樣式並進行獨特設計。
 *到[[w:c:zh.community|社區中心]]來看看，透過我們的[[w:c:zh.community:Category:社區中心博客|社區中心網誌]]了解最新訊息，或在我們的[[w:c:zh.community:Special:Forum|社區論壇]]進行提問。
 *最後，請訪問我們的[[Help:Contents|幫助頁面]]了解如何使用FANDOM的所有功能，或者觀看我們的[[w:c:zh.community:FANDOM课堂|FANDOM課堂影片]]了解如何快速進行編輯。
 
 祝您玩得開心！',
-	'autocreatewiki-welcometalk-wall-title' => '歡迎你！',
+	'autocreatewiki-welcometalk-wall-title' => '歡迎您！',
 	'autocreatewiki-welcomebody-HTML' => '<p>您好$2，<br /><br />
-您所創建的Wiki已經存在於<a href="$1">$1</a>。我們希望看快能看到您在那裡編輯！<br /><br />
-同時，我們已經在您的<a href="$5">用戶對話頁</a>放了一些入門訊息和技巧供您查看。如果您有任何問題，可以回覆這封郵件或者訪問<a href="zh.community.wikia.com/wiki/Help:Contents/">FANDOM幫助</a>瀏覽相關說明。<br /><br />
+您的wiki已建立於<a href="$1">$1</a>。我們希望能儘快看到您在那裡編輯！<br /><br />
+同時，我們已經在您的<a href="$5">使用者討論頁</a>放了一些入門資訊和技巧供您查閱。如果您有任何問題，可以回覆這封郵件或造訪<a href="https://community.fandom.com/zh/wiki/Help:Contents">Fandom說明中心</a>瀏覽相關說明。<br /><br />
 祝您編輯一切順利！<br /><br />
-<a href="http://zh.community.wikia.com/wiki/User:$4">$3</a><br />
-FANDOM社區團隊<br /></p>',
+<a href="https://community.fandom.com/zh/wiki/User:$4">$3</a><br />
+Fandom社群支援團隊<br /></p>',
 	'cnw-error-unconfirmed-email' => '必須先認證你的電子郵件才能創建Wiki。',
 	'cnw-error-unconfirmed-email-header' => '你的電子郵件尚未認證。',
 );

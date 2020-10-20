@@ -14,7 +14,7 @@ spec:
         spec:
           containers:
           - name: php
-            image: artifactory.wikia-inc.com/sus/mediawiki-php:${label}
+            image: artifactory.wikia-inc.com/platform/unified-platform/mediawiki-prod-php:${label}
             env:
               # SUS-5499 | this env variable is used to set up HTTP proxy for internal MediaWiki requests
               - name: KUBERNETES_DEPLOYMENT_NAME

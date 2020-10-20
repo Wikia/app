@@ -25,6 +25,7 @@ class ListusersData {
 
 	const TABLE = 'events_local_users';
 	const CACHE_VERSION = 'v6';
+	private const LOCAL_USER_GROUPS_TABLE = 'local_user_groups';
 
 	function __construct( int $city_id ) {
 		global $wgSpecialsDB;
@@ -118,71 +119,106 @@ class ListusersData {
 
 			/* initial conditions for SQL query */
 			$where = [
-					'wiki_id' => $this->mCityId,
-					"user_id > 0",
+					self::TABLE . '.wiki_id' => $this->mCityId,
+					self::TABLE . ".user_id > 0",
 					'user_is_closed' => 0
 			];
 
-			/* filter: groups */
-			if ( !empty( $this->mFilterGroup ) && is_array( $this->mFilterGroup ) ) {
-				$whereGroup = array();
-				foreach ( $this->mFilterGroup as $group ) {
-					if ( !empty($group) ) {
-						if ( $group == Listusers::DEF_GROUP_NAME ) {
-							$whereGroup[] = " all_groups = '' ";
-						} else {
-							$whereGroup[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), $group );
-							$whereGroup[] = " all_groups " . $dbs->buildLike( $dbs->anyString(), sprintf("%s;", $group), $dbs->anyString() );
-						}
-					}
-				}
-
-				if ( !empty( $whereGroup ) ) {
-					$where[] = implode( " or ", $whereGroup );
-				}
-			}
-
 			/* filter: user ID  */
 			if ( !empty( $this->mUserId ) ) {
-				$where[] = " user_id = ". intval( $this->mUserId );
+				$where[] = self::TABLE . ".user_id = $this->mUserId";
 			}
 
 			/* filter: number of edits */
 			if ( !empty( $this->mEditsThreshold ) ) {
-				$where[] = " edits >= ". intval( $this->mEditsThreshold );
+				$where[] = "edits >= $this->mEditsThreshold";
 			}
 
-			/* number of records */
-			$data['cnt'] = (int) $dbs->selectField(
-				self::TABLE,
-				'count(*)',
+			/* filter: groups */
+			if ( is_array( $this->mFilterGroup ) ) {
+				$filteredGroups = array_filter( $this->mFilterGroup, function ( $group ): bool {
+					return empty( $group ) || $group == Listusers::DEF_GROUP_NAME;
+				} );
+
+				if ( !empty( $filteredGroups ) ) {
+					$where[self::LOCAL_USER_GROUPS_TABLE . '.group_name'] = $this->mFilterGroup;
+				}
+			}
+
+			$result = $dbs->select(
+				[ self::TABLE, self::LOCAL_USER_GROUPS_TABLE ],
+				[ '1' ],
 				$where,
-				__METHOD__ . '::count'
+				__METHOD__,
+				[
+					'GROUP BY' => [
+						self::TABLE . '.wiki_id',
+						self::TABLE . '.user_id',
+					]
+				],
+				[
+					self::LOCAL_USER_GROUPS_TABLE => [
+						'LEFT JOIN',
+						[
+							self::TABLE . '.wiki_id = ' . self::LOCAL_USER_GROUPS_TABLE . '.wiki_id',
+							self::TABLE . '.user_id = ' . self::LOCAL_USER_GROUPS_TABLE . '.user_id',
+							self::LOCAL_USER_GROUPS_TABLE . '.expiry IS NULL OR ' . self::LOCAL_USER_GROUPS_TABLE . '.expiry > NOW()'
+						]
+					]
+				]
 			);
+			// hacky, count returned groups as selectRowCount is not supported
+			$data['cnt'] = count( iterator_to_array( $result ) );
 
 			if ( $data['cnt'] > 0 ) {
 				$userIsBlocked = $user->isBlocked( true, false );
 				$sk = $context->getSkin();
 				/* select records */
 				$oRes = $dbs->select(
-					array( self::TABLE ),
-					array(
-						'user_id',
-						'cnt_groups',
-						'all_groups',
+					[ self::TABLE, self::LOCAL_USER_GROUPS_TABLE, 'lug' => self::LOCAL_USER_GROUPS_TABLE ],
+					[
+						self::TABLE . '.user_id',
+						'GROUP_CONCAT(DISTINCT lug.group_name) as groups',
 						'edits',
 						'last_revision',
 						'editdate',
 						'ifnull(last_revision, 0) as max_rev',
 						'ifnull(unix_timestamp(editdate), 0) as ts_edit'
-					),
+					],
 					$where,
 					__METHOD__,
-					array(
-						'ORDER BY'	=> $orderby,
-						'LIMIT'		=> $this->mLimit,
-						'OFFSET'	=> intval($this->mOffset)
-					)
+					[
+						'GROUP BY' => [
+							self::TABLE . '.wiki_id',
+							self::TABLE . '.user_id',
+							// Group by sortable fields
+							self::TABLE . '.edits',
+							self::TABLE . '.editdate'
+						],
+						'ORDER BY' => $this->getOrderByString(),
+						'LIMIT' => $this->mLimit,
+						'OFFSET' => $this->mOffset,
+					],
+					[
+						// First join for filtering by groups
+						self::LOCAL_USER_GROUPS_TABLE => [
+							'LEFT JOIN',
+							[
+								self::TABLE . '.wiki_id = ' . self::LOCAL_USER_GROUPS_TABLE . '.wiki_id',
+								self::TABLE . '.user_id = ' . self::LOCAL_USER_GROUPS_TABLE . '.user_id',
+								self::LOCAL_USER_GROUPS_TABLE . '.expiry IS NULL OR ' . self::LOCAL_USER_GROUPS_TABLE . '.expiry > NOW()'
+							]
+						],
+						// Join again to fetch all groups for selected users
+						'lug' => [
+							'LEFT JOIN',
+							[
+								self::TABLE . '.wiki_id = lug.wiki_id',
+								self::TABLE . '.user_id = lug.user_id',
+								'lug.expiry IS NULL OR lug.expiry > NOW()'
+							]
+						],
+					]
 				);
 
 				$data['data'] = array();
@@ -194,7 +230,7 @@ class ListusersData {
 					}
 
 					/* groups */
-					$groups = explode(";", $oRow->all_groups);
+					$groups = explode(",", $oRow->groups);
 					$group = "<i>" . wfMsg('listusers-nonegroup') . "</i>";
 					if ( !empty( $groups ) ) {
 						$group = implode(", ", $groups);
@@ -247,7 +283,7 @@ class ListusersData {
 						'user_id' 			=> $oRow->user_id,
 						'user_name' 		=> $oUser->getName(),
 						'user_link'			=> $sk->makeLinkObj($oUser->getUserPage(), $oUser->getName()),
-						'groups_nbr' 		=> $oRow->cnt_groups,
+						'groups_nbr' 		=> count( $groups ),
 						'groups' 			=> $group,
 						'rev_cnt' 			=> $oRow->edits,
 						'blcked'			=> $oUser->isBlocked( true, false ),
@@ -281,6 +317,20 @@ class ListusersData {
 
 		wfProfileOut( __METHOD__ );
 		return $data;
+	}
+
+	private function getOrderByString(): string {
+		$orderBy = array_map( function ( $order ) {
+			[ $order, $direction ] = explode( ' ', $order );
+			if ( $order == 'all_groups' ) { // Change legacy 'all_groups' to group list
+				return implode( ' ', [ 'GROUP_CONCAT(DISTINCT lug.group_name)', $direction ] );
+			}
+			if ( $order == 'cnt_groups' ) { // Change legacy 'cnt_groups' to group count
+				return implode( ' ', [ 'COUNT(DISTINCT lug.group_name)', $direction ] );
+			}
+			return $order;
+		}, $this->mOrder );
+		return implode( ',', $orderBy );
 	}
 
 	/*
@@ -364,28 +414,15 @@ class ListusersData {
 
 		$user_id = $user->getID();
 		$dbr = wfGetDB(DB_SLAVE, array(), $this->mDBh);
-		$where = array(
-			"user_id" 	=> $user_id,
-			"wiki_id" 	=> $this->mCityId
+		$groups = $dbr->selectFieldValues(
+			'local_user_groups',
+			'group_name',
+			[
+				'user_id' => $user_id,
+				'wiki_id' => $this->mCityId,
+				'expiry IS NULL OR expiry > NOW()'
+			]
 		);
-
-		$oRow = $dbr->selectRow(
-			array( self::TABLE ),
-			array( "all_groups" ),
-			$where,
-			__METHOD__
-		);
-		$groups = array();
-		if ( $oRow !== false ) {
-			$tmp = explode( ";", $oRow->all_groups );
-			if ( !empty($tmp) ) {
-				foreach ( $tmp as $g ) {
-					if ( !empty($g) ) {
-						$groups[] = $g;
-					}
-				}
-			}
-		}
 
 		$central_groups = array();
 		global $wgWikiaIsCentralWiki;
@@ -406,49 +443,23 @@ class ListusersData {
 			$groups = array_unique( array_merge($groups, $central_groups) );
 		}
 
-		if ( !empty($groups) ) {
-			sort( $groups );
-		}
-		$elements = count($groups);
-		$singlegroup = ( $elements > 0 ) ? $groups[$elements-1] : "";
-		$allgroups = ( $elements > 0 ) ? implode(";", $groups) : "";
+		$edits = $user->getEditCount();
+		list( $editdate, $lastrev ) = self::getEditDateAndLastRevision( $user_id );
 
 		$dbw = wfGetDB( DB_MASTER, array(), $this->mDBh );
 		$this->updateUserGroupsTable( $dbw, $this->mCityId, $user_id, $groups );
-
-		if ( empty($oRow) ) {
-			$edits = $user->getEditCount();
-			list( $editdate, $lastrev ) = self::getEditDateAndLastRevision( $user_id );
-
-			$dbw->replace(
-				self::TABLE,
-				array( 'wiki_id', 'user_id' ),
-				array(
-					"wiki_id"        => $this->mCityId,
-					"user_id"        => $user_id,
-					"edits"			 => $edits,
-					"editdate"		 => $editdate,
-					"last_revision"  => $lastrev,
-					"cnt_groups"	 => $elements,
-					"single_group"   => $singlegroup,
-					"all_groups"	 => $allgroups
-				),
-				__METHOD__
-			);
-		} else {
-			$dbw->update(
-				self::TABLE,
-				array(
-					// editdate will be set to a current timestamp on this update
-					// `editdate` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
-					"cnt_groups"	=> $elements,
-					"single_group"	=> $singlegroup,
-					"all_groups"	=> $allgroups
-				),
-				$where,
-				__METHOD__
-			);
-		}
+		$dbw->replace(
+			self::TABLE,
+			[ 'wiki_id', 'user_id' ],
+			[
+				'wiki_id' => $this->mCityId,
+				'user_id' => $user_id,
+				'edits' => $edits,
+				'editdate' => $editdate,
+				'last_revision' => $lastrev,
+			],
+			__METHOD__
+		);
 		wfProfileOut( __METHOD__ );
 	}
 
