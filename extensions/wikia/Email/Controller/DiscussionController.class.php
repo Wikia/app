@@ -72,7 +72,7 @@ abstract class DiscussionController extends EmailController {
 		return $this->postContent;
 	}
 
-	private function getButtonText() {
+	protected function getButtonText() {
 		return $this->getMessage( 'emailext-discussion-button-text' )->text();
 	}
 
@@ -397,27 +397,26 @@ class DiscussionArticleCommentController extends DiscussionController {
 		return $this->getSummary();
 	}
 
+	protected function getContentFooterMessages() {
+    	$seeCommentLink = sprintf( '[%s %s]', $this->getArticleUrl(), $this->getMessage( 'emailext-discussion-see-comment' )->text() );
+
+		return [ $seeCommentLink ];
+	}
+
+	protected function getButtonText() {
+		return $this->getMessage( 'emailext-discussion-see-comment' )->text();
+	}
+
 	private function getArticleTitleLink() {
-    	$articleUrl = \Title::newFromText( $this->articleTitle )->getFullURL();
-    	$link = '[' . $articleUrl . ' ' . $this->articleTitle . ']';
-
-    	WikiaLogger::instance()->info('getArticleTitleLink', [
-    		'issue' => 'IW-3264',
-			'link' => $link,
-		]);
-
-    	return $link;
+    	return sprintf( '[%s %s]', $this->getArticleUrl(), $this->articleTitle );
 	}
 
 	private function getWikiNameLink() {
-    	$link = '[' . $this->wiki->city_url . ' ' . $this->wiki->city_title . ']';
+    	return sprintf( '[%s %s]', $this->wiki->city_url, $this->wiki->city_title );
+	}
 
-		WikiaLogger::instance()->info('getWikiNameLink', [
-    		'issue' => 'IW-3264',
-			'link' => $link,
-		]);
-
-		return $link;
+	private function getArticleUrl() {
+    	return \Title::newFromText( $this->articleTitle )->getFullURL();
 	}
 
 	private function getTranslationKey() {
@@ -432,9 +431,5 @@ class DiscussionArticleCommentController extends DiscussionController {
 			default:
 				throw new Check( 'Incorrect contentType "' . $this->contentType . '"' );
 		}
-	}
-
-	protected function getDiscussionsLink() {
-		return $this->wiki->city_url;
 	}
 }
