@@ -273,58 +273,58 @@ $wgLBFactoryConf = [
     ],
     'sectionLoads' => [
         'c1' => [
-            'geo-db-a-master.query.consul' => 0,
-            'geo-db-a-slave.query.consul' => 1000,
+            'geo-db-a-master.query.consul.' => 0,
+            'geo-db-a-slave.query.consul.' => 1000,
         ],
         'c2' => [
-            'geo-db-b-master.query.consul' => 0,
-            'geo-db-b-slave.query.consul' => 1000,
+            'geo-db-b-master.query.consul.' => 0,
+            'geo-db-b-slave.query.consul.' => 1000,
         ],
         'c3' => [
-            'geo-db-c-master.query.consul' => 0,
-            'geo-db-c-slave.query.consul' => 1000,
+            'geo-db-c-master.query.consul.' => 0,
+            'geo-db-c-slave.query.consul.' => 1000,
         ],
         'c4' => [
-            'geo-db-d-master.query.consul' => 0,
-            'geo-db-d-slave.query.consul' => 1000,
+            'geo-db-d-master.query.consul.' => 0,
+            'geo-db-d-slave.query.consul.' => 1000,
         ],
         'c5' => [
-            'geo-db-e-master.query.consul' => 0,
-            'geo-db-e-slave.query.consul' => 1000,
+            'geo-db-e-master.query.consul.' => 0,
+            'geo-db-e-slave.query.consul.' => 1000,
         ],
         'c6' => [
-            'geo-db-f-master.query.consul' => 0,
-            'geo-db-f-slave.query.consul' => 1000,
+            'geo-db-f-master.query.consul.' => 0,
+            'geo-db-f-slave.query.consul.' => 1000,
         ],
         'c7' => [
-            'geo-db-g-master.query.consul' => 0,
-            'geo-db-g-slave.query.consul' => 1000,
+            'geo-db-g-master.query.consul.' => 0,
+            'geo-db-g-slave.query.consul.' => 1000,
         ],
         'c8' => [
-            'geo-db-h-master.query.consul' => 0,
-            'geo-db-h-slave.query.consul' => 1000,
+            'geo-db-h-master.query.consul.' => 0,
+            'geo-db-h-slave.query.consul.' => 1000,
         ],
         'c9' => [
-            'geo-db-i-master.query.consul' => 0,
-            'geo-db-i-slave.query.consul' => 1000,
+            'geo-db-i-master.query.consul.' => 0,
+            'geo-db-i-slave.query.consul.' => 1000,
         ],
 
         'ext1' => $wgDBArchiveCluster,
         'specials' => [
-            'geo-db-specials-master.query.consul' => 0,
-            'geo-db-specials-slave.query.consul' => 1000,
+            'geo-db-specials-master.query.consul.' => 0,
+            'geo-db-specials-slave.query.consul.' => 1000,
         ],
         'datawarehouse' => [
-            'geo-db-dataware-master.query.consul' => 0,
-            'geo-db-dataware-slave.query.consul' => 1000,
+            'geo-db-dataware-master.query.consul.' => 0,
+            'geo-db-dataware-slave.query.consul.' => 1000,
         ],
         'semanticdb' => [
-            'geo-db-smw-master.query.consul' => 0,
-            'geo-db-smw-slave.query.consul' => 1000,
+            'geo-db-smw-master.query.consul.' => 0,
+            'geo-db-smw-slave.query.consul.' => 1000,
         ],
         'central' => [
-            'geo-db-sharedb-master.query.consul' => 0,
-            'geo-db-sharedb-slave.query.consul'	=> 1000,
+            'geo-db-sharedb-master.query.consul.' => 0,
+            'geo-db-sharedb-slave.query.consul.'	=> 1000,
         ],
         'blobs001' => $wgBlobs001Cluster,
     ],
@@ -369,7 +369,7 @@ $wgLyricsApiSolrariumConfig = [
     'adapter' => 'Solarium_Client_Adapter_Curl',
     'adapteroptions' => [
         'core' => 'lyricsapi',
-        'host' => 'prod.search-fulltext.service.consul',
+        'host' => 'prod.search-fulltext.service.consul.',
         'path' => '/solr/',
         'port' => $wgSolrPort,
         'proxy' => false,
