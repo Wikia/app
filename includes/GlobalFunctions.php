@@ -3604,13 +3604,13 @@ function wfSplitWikiID( $wiki ) {
  */
 function &wfGetDB( int $db, $groups = array(), $wiki = false ) {
 	// wikia change begin -- SMW DB separation project, @author Krzysztof Krzyżaniak (eloy)
-	global $smwgUseExternalDB, $wgDBname;
+	global $smwgUseExternalDB, $wgDBname, $smwgExternalDBName;;
 	if( $smwgUseExternalDB === true ) {
 		if( ( is_array( $groups ) && in_array( 'smw', $groups ) ) || $groups === 'smw' ) {
 			if( $wiki === false ) {
 				$wiki = $wgDBname;
 			}
-			$wiki = "smw+" . $wiki;
+			$wiki = !empty( $smwgExternalDBName ) ? $smwgExternalDBName : "smw+" . $wiki;
 			wfDebugLog( "connect", __METHOD__ . ": smw+ cluster is active, requesting $wiki\n", true );
 		}
 	}

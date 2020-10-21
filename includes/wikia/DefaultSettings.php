@@ -817,6 +817,14 @@ $wgMaxCommentsToMove = 50;
 $smwgUseExternalDB = false;
 
 /**
+ * Semantic Mediawiki external cluster DB Name
+ * @name $smwgExternalDBName
+ *
+ * @see \SMW\MediaWiki\LazyDBConnectionProvider
+ */
+$smwgExternalDBName = false;
+
+/**
  * Default value for AB testing array
  */
 
