@@ -50,4 +50,27 @@ class UserInfoHelper {
 
 		return $userInfoList;
 	}
+
+	public static function applyBadgesMultipleUserInfoLists(
+		array $objectsWithUserInfo, string $key
+	): array {
+		$userIds = [];
+
+		foreach ( $objectsWithUserInfo as $obj ) {
+			foreach ( $obj[$key] as $userInfo ) {
+				$userIds[] = (int)$userInfo['id'];
+			}
+		}
+
+		$usersMap = PermissionsHelper::getUsersMap( $userIds );
+		$badges = PermissionsHelper::getBadgesMap( $usersMap );
+
+		foreach ( $objectsWithUserInfo as &$obj ) {
+			foreach ( $obj[$key] as &$userInfo ) {
+				$userInfo['badgePermission'] = $badges[(int)$userInfo['id']] ?? '';
+			}
+		}
+
+		return $objectsWithUserInfo;
+	}
 }

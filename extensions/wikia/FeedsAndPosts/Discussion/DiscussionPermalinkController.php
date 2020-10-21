@@ -4,9 +4,9 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Uri;
 use Wikia\Factory\ServiceFactory;
 use Wikia\FeedsAndPosts\Discussion\PermissionsHelper;
-use function GuzzleHttp\Psr7\build_query;
-use function GuzzleHttp\Psr7\parse_query;
+use Wikia\FeedsAndPosts\Discussion\LinkHelper;
 use Wikia\FeedsAndPosts\Discussion\DiscussionGateway;
+use Wikia\FeedsAndPosts\Discussion\QueryParamsHelper;
 
 class DiscussionPermalinkController extends WikiaController {
 	/*** @var DiscussionGateway */
@@ -15,6 +15,8 @@ class DiscussionPermalinkController extends WikiaController {
 	private $baseDomain;
 	/** @var string $scriptPath */
 	private $scriptPath;
+	/*** @var LinkHelper */
+	private $linkHelper;
 
 	public function __construct() {
 		parent::__construct();
@@ -29,6 +31,8 @@ class DiscussionPermalinkController extends WikiaController {
 
 		$this->baseDomain = $this->wg->Server;
 		$this->scriptPath = $this->wg->ScriptPath;
+		$this->linkHelper = new LinkHelper( $this->baseDomain, $this->scriptPath );
+
 	}
 
 	public function init() {
@@ -39,7 +43,7 @@ class DiscussionPermalinkController extends WikiaController {
 		$request = $this->getRequest();
 		$user = $this->context->getUser();
 		$postId = $request->getVal( 'postId' );
-		$queryParams = $this->getQueryParams( $request );
+		$queryParams = QueryParamsHelper::getQueryParams( $request, [ 'postId' ] );
 		$queryParams['canViewHidden'] = $user->isAllowed( 'threads:viewhidden' );
 
 		[ 'statusCode' => $statusCode, 'body' => $body ] =
@@ -139,99 +143,36 @@ class DiscussionPermalinkController extends WikiaController {
 	}
 
 	private function addPermissions( array &$body, User $user ) {
-
-		$post = ( new PostBuilder() )
-			->position( 1 )
-			->author( isset( $body['createdBy']['id'] ) && !empty( $body['createdBy']['id'] )
-				? (int)$body['createdBy']['id'] : 0 )
-			->creationDate( $body['creationDate']['epochSecond'] )
-			->isEditable( $body['isEditable'] )
-			->isThreadEditable( $body['isEditable'] )
-			->build();
-
-		$rights = [];
-		Hooks::run( 'UserPermissionsRequired', [ $user, $post, &$rights ] );
-
-		if ( !empty( $rights ) ) {
-			$body['_embedded']['userData'][0]['permissions'] = $rights;
-		}
+		$body = PermissionsHelper::applyPermissionsForPost( $body, $body, $user );
 
 		foreach ( $body['_embedded']['doc:posts'] as &$postData ) {
-			$post = ( new PostBuilder() )
-				->position( $postData['position'] )
-				->author( empty( $postData['creatorId'] ) ? 0 : (int)$postData['creatorId'] )
-				->creationDate( $postData['creationDate']['epochSecond'] )
-				->isEditable( $postData['isEditable'] )
-				->isThreadEditable( $body['isEditable'] )
-				->build();
-
-			$rights = [];
-			Hooks::run( 'UserPermissionsRequired', [ $user, $post, &$rights ] );
-
-			if ( !empty( $rights ) ) {
-				$postData['_embedded']['userData'][0]['permissions'] = $rights;
-			}
+			$postData = PermissionsHelper::applyPermissionsForPost( $postData, $body, $user );
 		}
 
-		$post = ( new PostBuilder() )
-			->position( 1 )
-			->author( empty( $body['_embedded']['firstPost'][0]['creatorId'] )
-				? 0 : (int)$body['_embedded']['firstPost'][0]['creatorId'] )
-			->creationDate( $body['_embedded']['firstPost'][0]['creationDate']['epochSecond'] )
-			->isEditable( $body['_embedded']['firstPost'][0]['isEditable'] )
-			->isThreadEditable( $body['isEditable'] )
-			->build();
-
-		$rights = [];
-		Hooks::run( 'UserPermissionsRequired', [ $user, $post, &$rights ] );
-
-		if ( !empty( $rights ) ) {
-			$body['_embedded']['firstPost'][0]['_embedded']['userData'][0]['permissions'] = $rights;
-		}
+		$body['_embedded']['firstPost'][0] = PermissionsHelper::applyPermissionsForPost(
+			$body['_embedded']['firstPost'][0],
+			$body,
+			$user
+		);
 
 		return $body;
 	}
 
-	public function mapLinks( array &$body, IContextSource $requestContext ) {
+	private function mapLinks( array &$body, IContextSource $requestContext ) {
 		foreach ( $body['_embedded']['doc:posts'] as &$post ) {
 			if ( isset( $post['_links']['permalink'][0]['href'] ) ) {
 				$uri = new Uri( $post['_links']['permalink'][0]['href'] );
-				$post['_links']['permalink'][0]['href'] = $this->buildNewLink( $uri, $requestContext );
+				$post['_links']['permalink'][0]['href'] =
+					$this->linkHelper->buildPermalink( $uri, $requestContext );
 			}
 		}
 
 		if ( isset( $body['_embedded']['firstPost'][0]['_links']['permalink'][0]['href'] ) ) {
 			$uri = new Uri( $body['_embedded']['firstPost'][0]['_links']['permalink'][0]['href'] );
-			$body['_embedded']['firstPost'][0]['_links']['permalink'][0]['href'] = $this->buildNewLink( $uri, $requestContext );
+			$body['_embedded']['firstPost'][0]['_links']['permalink'][0]['href'] =
+				$this->linkHelper->buildPermalink( $uri, $requestContext );
 		}
 
 		return $body;
-	}
-
-	private function buildNewLink( Uri $uri, IContextSource $requestContext ) {
-		$urlParts = explode( "/", $uri->getPath() );
-		$postId = end( $urlParts );
-
-		$controllerQueryParams = [
-			'controller' => 'DiscussionPermalink',
-			'method' => 'getThreadByPostId',
-			'postId' => $postId
-		];
-
-		foreach ( parse_query( $uri->getQuery() ) as $paramName => $value ) {
-			$controllerQueryParams[$paramName] = $value;
-		}
-
-		return $this->baseDomain . $this->scriptPath . '/wikia.php?' . build_query( $controllerQueryParams );
-	}
-
-	private function getQueryParams( \WikiaRequest $request ): array {
-		$queryParams = $request->getParams();
-		unset( $queryParams['method'] );
-		unset( $queryParams['controller'] );
-		unset( $queryParams['format'] );
-		unset( $queryParams['postId'] );
-
-		return $queryParams;
 	}
 }
