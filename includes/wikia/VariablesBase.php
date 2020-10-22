@@ -746,8 +746,8 @@ $wgBiggestCategoriesBlacklist = [
  * @var Array $wgBlobs001Cluster
  */
 $wgBlobs001Cluster = [
-	'geo-db-blobs-a-master.query.consul' => 0,
-	'geo-db-blobs-a-slave.query.consul' => 1000
+	'geo-db-blobs-a-master.query.consul.' => 0,
+	'geo-db-blobs-a-slave.query.consul.' => 1000
 ];
 
 /**
@@ -1312,8 +1312,8 @@ $wgDBAhandler = 'db3';
  * @var Array $wgDBArchiveCluster
  */
 $wgDBArchiveCluster = [
-	'geo-db-archive-master.query.consul' => 0,
-	'geo-db-archive-slave.query.consul' => 1000
+	'geo-db-archive-master.query.consul.' => 0,
+	'geo-db-archive-slave.query.consul.' => 1000
 ];
 
 /**
@@ -5948,8 +5948,8 @@ $wgMemCachedPersistent = true;
  * @var Array $wgMemCachedServers
  */
 $wgMemCachedServers = [
-	0 => 'prod.twemproxy.service.consul:21000',
-	1 => 'prod.twemproxy.service.consul:31000',
+	0 => 'prod.twemproxy.service.consul.:21000',
+	1 => 'prod.twemproxy.service.consul.:31000',
 ];
 
 /**
@@ -6699,7 +6699,7 @@ $wgQueryPageDefaultLimit = 50;
  * Hostname of the datacenter-local Rabbit cluster.
  * @var string $wgRabbitHost
  */
-$wgRabbitHost = 'prod.rabbit.service.consul';
+$wgRabbitHost = 'prod.rabbit.service.consul.';
 
 /**
  * Port used by the datacenter-local Rabbit cluster.
@@ -7292,8 +7292,8 @@ $wgSessionHandler = null;
  * @var Array $wgSessionMemCachedServers
  */
 $wgSessionMemCachedServers = [
-	0 => 'prod.twemproxy.service.consul:31001',
-	1 => 'prod.twemproxy.service.consul:21001',
+	0 => 'prod.twemproxy.service.consul.:31001',
+	1 => 'prod.twemproxy.service.consul.:21001',
 ];
 
 /**
@@ -7580,7 +7580,7 @@ $wgSortSpecialPages = true;
  * @var Array $wgSMTP
  */
 $wgSMTP = [
-	'host'   => 'prod.smtp.service.consul',
+	'host'   => 'prod.smtp.service.consul.',
 	'port'   => 25,
 	'auth'   => false,
 	'IDHost' => ''
@@ -7592,7 +7592,7 @@ $wgSMTP = [
  * @see extensions/wikia/Search
  * @var string $wgSolrHost
  */
-$wgSolrHost = 'prod.search-fulltext.service.consul';
+$wgSolrHost = 'prod.search-fulltext.service.consul.';
 
 
 /**
@@ -7600,7 +7600,7 @@ $wgSolrHost = 'prod.search-fulltext.service.consul';
  * @see includes/wikia/services/ArticleService.class.php
  * @var string $wgSolrKvHost
  */
-$wgSolrKvHost = 'prod.search-kv.service.consul';
+$wgSolrKvHost = 'prod.search-kv.service.consul.';
 
 
 /**
@@ -9090,7 +9090,7 @@ $wgCircuitBreakerType = 'noop';
  * @see lib/Wikia/src/CircuitBreaker/RedisCircuitBreakerStorage.php
  * @var string $wgCircuitBreakerRedisHost
  */
-$wgCircuitBreakerRedisHost = 'geo-redisshared-prod-master.query.consul';
+$wgCircuitBreakerRedisHost = 'geo-redisshared-prod-master.query.consul.';
 
 
 /**

@@ -96,7 +96,7 @@ class Client {
 	 * Helper method for getting IP addresses of all nodes hidden behind consul
 	 *
 	 * $consul->getNodesFromHostname( 'slave.db-smw.service.consul' )
-	 * $consul->getNodesFromHostname( 'geo-db-g-slave.query.consul' )
+	 * $consul->getNodesFromHostname( 'geo-db-g-slave.query.consul.' )
 	 *
 	 * @param string $hostname
 	 * @return array list of IP addresses
@@ -106,7 +106,7 @@ class Client {
 		Assert::true( self::isConsulAddress( $hostname ), __METHOD__ . ' should get a Consul address', $this->getLoggerContext() );
 
 		if ( self::isConsulQuery($hostname) ) {
-			// e.g. geo-db-g-slave.query.consul
+			// e.g. geo-db-g-slave.query.consul.
 			$query = self::parseConsulQuery( $hostname );
 			return $this->getNodesFromConsulQuery( $query );
 		}
@@ -135,7 +135,7 @@ class Client {
 	 * @return string
 	 */
 	static function getConsulBaseUrl() : string {
-		return sprintf( 'http://consul.service.consul:8500' );
+		return sprintf( 'http://consul.service.consul.:8500' );
 	}
 
 	/**
@@ -145,27 +145,29 @@ class Client {
 	 * @return string
 	 */
 	static function getConsulBaseUrlForDC( string $dc ) : string {
-		return sprintf( 'http://consul.service.%s.consul:8500', $dc );
+		return sprintf( 'http://consul.service.%s.consul.:8500', $dc );
 	}
 
 	/**
 	 * Example: Wikia\Consul\Client::isConsulAddress( 'slave.db-smw.service.consul' )
+	 * Example: Wikia\Consul\Client::isConsulAddress( 'slave.db-smw.service.consul.' )
 	 *
 	 * @param string $address
 	 * @return bool true if the given address is a consul one
 	 */
 	static function isConsulAddress( string $address ) : bool {
-		return endsWith( $address, '.consul' );
+		return endsWith( $address, '.consul' ) || endsWith( $address, '.consul.' );
 	}
 
 	/**
 	 * Example: Wikia\Consul\Client::isConsulServiceAddress( 'slave.db-smw.service.consul' )
+	 * Example: Wikia\Consul\Client::isConsulServiceAddress( 'slave.db-smw.service.consul.' )
 	 *
 	 * @param string $address
 	 * @return bool true if the given address is a consul service one
 	 */
 	static function isConsulServiceAddress( string $address ) : bool {
-		return endsWith( $address, '.service.consul' );
+		return endsWith( $address, '.service.consul' ) || endsWith( $address, '.service.consul.' );
 	}
 
 	/**
@@ -188,6 +190,7 @@ class Client {
 
 	/**
 	 * Example: Wikia\Consul\Client::isConsulQuery( 'geo-db-g-slave.query.consul' )
+	 * Example: Wikia\Consul\Client::isConsulQuery( 'geo-db-h-slave.query.consul.' )
 	 *
 	 * @see https://www.consul.io/api/query.html
 	 *
@@ -195,7 +198,7 @@ class Client {
 	 * @return bool true if the given address is a consul query
 	 */
 	static function isConsulQuery( string $address ) : bool {
-		return endsWith( $address, '.query.consul' );
+		return endsWith( $address, '.query.consul' ) || endsWith( $address, '.query.consul.' );
 	}
 
 	/**
