@@ -154,7 +154,7 @@ class DiscussionGateway {
 	) {
 		return $this->makeCall( function () use ( $payload, $userId, $queryParams, $forumId ) {
 			return $this->httpClient->post(
-				"{$this->serviceUrl}/internal/{$this->wikiId}/forums/{$forumId}",
+				"{$this->serviceUrl}/internal/{$this->wikiId}/forums/{$forumId}/movethreads",
 				[
 					RequestOptions::HEADERS => [
 						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
