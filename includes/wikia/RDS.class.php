@@ -23,7 +23,7 @@ class RDS {
 	 */
 	public static function query( string $sql, array $params = [] ) {
 		$dbh = self::getConnection();
-		$sth = $dbh->prepare( $sql );
+		$queryStatement = $dbh->prepare( $sql );
 		// borrowed from Database::query
 		if ( !( Profiler::instance() instanceof ProfilerStub ) ) {
 			$queryProf = 'rds: ' . substr( DatabaseBase::generalizeSQL( $sql ), 0, 255 );
@@ -34,7 +34,7 @@ class RDS {
 		// @see https://www.php.net/manual/en/pdostatement.execute.php
 		try {
 			$then = microtime( true );
-			$sth->execute( $params );
+			$queryStatement->execute( $params );
 			$took = microtime( true ) - $then;
 		} catch ( \PDOException $e ) {
 			WikiaLogger::instance()->error( __METHOD__, [
@@ -51,15 +51,15 @@ class RDS {
 		WikiaLogger::instance()->info( __METHOD__, [
 			'sql' => $sql,
 			'params' => $params,
-			'rows' => $sth->rowCount(),
+			'rows' => $queryStatement->rowCount(),
 			'took_sec' => $took,
 		] );
 
-		while ( $row = $sth->fetchObject() ) {
+		while ( $row = $queryStatement->fetchObject() ) {
 			yield $row;
 		}
 		// release the results
-		$sth = null;
+		$queryStatement = null;
 	}
 
 	/**
