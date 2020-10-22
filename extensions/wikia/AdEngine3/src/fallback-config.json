@@ -765,7 +765,11 @@
                 "5492875154",
                 "5504518465",
                 "5508974840",
-                "5507745828"
+                "5507745828",
+                "5477813014",
+                "5480579974",
+                "2751698780",
+                "2752034395"
             ]
         }
     ],
@@ -992,6 +996,19 @@
         }
     ],
     "icPrebidVersion": [
+        {
+            "apps": [
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
+                "oasis"
+            ],
+            "regions": [
+                "CA"
+            ],
+            "value": "//static.wikia.nocookie.net/fandom-ae-assets/prebid.js/v3.27.1/20201020.min.js"
+        },
         {
             "apps": [
                 "futhead",
