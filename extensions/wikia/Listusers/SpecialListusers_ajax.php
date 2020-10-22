@@ -29,6 +29,13 @@ class ListusersAjax {
 		$loop		= $request->getVal('loop');
 		$orders     = explode("|", $request->getVal('order') );
 
+		if ( $limit < 0 || $offset < 0) {
+			$response = new AjaxResponse( json_encode( 'invalid value of limit or offset' ) );
+			$response->setContentType( 'application/json; charset=utf-8' );
+			$response->setResponseCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
+			return $response;
+		}
+
 		if ( $request->getVal( 'username' ) ) {
 			$user_id = User::idFromName( $request->getVal( 'username' ) );
 		}
@@ -51,8 +58,8 @@ class ListusersAjax {
 		$data->setFilterGroup ( $filterGroups );
 		$data->setUserId ( $user_id );
 		$data->setEditsThreshold( $edits );
-		$limit > 0 ? $data->setLimit ( $limit ) : $data->setLimit();
-		$offset > 0 ? $data->setOffset( $offset ) : $data->setOffset();
+		$data->setLimit ( $limit );
+		$data->setOffset( $offset );
 		$data->setOrder( $orders );
 		$records = $data->loadData();
 
