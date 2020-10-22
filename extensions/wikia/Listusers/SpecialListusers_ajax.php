@@ -51,8 +51,8 @@ class ListusersAjax {
 		$data->setFilterGroup ( $filterGroups );
 		$data->setUserId ( $user_id );
 		$data->setEditsThreshold( $edits );
-		$data->setLimit ( $limit );
-		$data->setOffset( $offset );
+		$limit > 0 ? $data->setLimit ( $limit ) : $data->setLimit();
+		$offset > 0 ? $data->setOffset( $offset ) : $data->setOffset();
 		$data->setOrder( $orders );
 		$records = $data->loadData();
 

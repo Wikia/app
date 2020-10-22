@@ -137,11 +137,15 @@ class ListusersData {
 			/* filter: groups */
 			if ( is_array( $this->mFilterGroup ) ) {
 				$filteredGroups = array_filter( $this->mFilterGroup, function ( $group ): bool {
-					return empty( $group ) || $group == Listusers::DEF_GROUP_NAME;
+					return !empty( $group );
 				} );
 
-				if ( !empty( $filteredGroups ) ) {
-					$where[self::LOCAL_USER_GROUPS_TABLE . '.group_name'] = $this->mFilterGroup;
+				if ( in_array( Listusers::DEF_GROUP_NAME, $filteredGroups ) ) {
+					$where[] = $dbs->makeList( [ self::LOCAL_USER_GROUPS_TABLE . '.group_name' => $filteredGroups ], LIST_AND ) . ' OR ' . self::LOCAL_USER_GROUPS_TABLE . '.group_name IS NULL';
+				} else {
+					if ( !empty( $filteredGroups ) ) {
+						$where[self::LOCAL_USER_GROUPS_TABLE . '.group_name'] = $filteredGroups;
+					}
 				}
 			}
 
