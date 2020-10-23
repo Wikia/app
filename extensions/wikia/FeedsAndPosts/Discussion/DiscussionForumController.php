@@ -42,7 +42,7 @@ class DiscussionForumController extends WikiaController {
 		$request = $this->getRequest();
 		$user = $this->context->getUser();
 		$queryParams = QueryParamsHelper::getQueryParams( $request );
-		$queryParams['canViewHidden'] = $user->isAllowed( 'forums:viewhidden' );
+		$queryParams['canViewHidden'] = $user->isAllowed( 'forums:viewhidden' ) ? 'true' : 'false';
 
 		[ 'statusCode' => $statusCode, 'body' => $body ] =
 			$this->gateway->getForums( $user->getId(), $queryParams );
@@ -64,7 +64,7 @@ class DiscussionForumController extends WikiaController {
 		$user = $this->context->getUser();
 		$forumId = $request->getVal( 'forumId' );
 		$queryParams = QueryParamsHelper::getQueryParams( $request, [ 'forumId' ] );
-		$queryParams['canViewHidden'] = $user->isAllowed( 'forums:viewhidden' );
+		$queryParams['canViewHidden'] = $user->isAllowed( 'forums:viewhidden' ) ? 'true' : 'false';
 
 		if ( empty( $forumId ) ) {
 			$this->response->setCode( 400 );
@@ -102,7 +102,7 @@ class DiscussionForumController extends WikiaController {
 			return;
 		}
 
-		$queryParams = [ 'canViewHidden' => $user->isAllowed( 'forums:viewhidden' ) ];
+		$queryParams = [ 'canViewHidden' => $user->isAllowed( 'forums:viewhidden' ) ? 'true' : 'false' ];
 		$payload = $this->getRawInput();
 
 		[ 'statusCode' => $statusCode, 'body' => $body ] =
@@ -135,10 +135,10 @@ class DiscussionForumController extends WikiaController {
 		}
 
 		$queryParams = [
-			'canMoveThreads' => $user->isAllowed( 'threads:move' ),
-			'canSuperEditThreads' => $user->isAllowed( 'threads:superedit' ),
-			'canViewHiddenThread' => $user->isAllowed( 'threads:viewhidden' ),
-			'canViewHiddenForum' => $user->isAllowed( 'forums:viewhidden' ),
+			'canMoveThreads' => $user->isAllowed( 'threads:move' ) ? 'true' : 'false',
+			'canSuperEditThreads' => $user->isAllowed( 'threads:superedit' ) ? 'true' : 'false',
+			'canViewHiddenThread' => $user->isAllowed( 'threads:viewhidden' ) ? 'true' : 'false',
+			'canViewHiddenForum' => $user->isAllowed( 'forums:viewhidden' ) ? 'true' : 'false',
 		];
 
 		$payload = $this->getRawInput();
@@ -176,7 +176,7 @@ class DiscussionForumController extends WikiaController {
 			return;
 		}
 
-		$queryParams = [ 'canViewHidden' => $user->isAllowed( 'forums:viewhidden' ) ];
+		$queryParams = [ 'canViewHidden' => $user->isAllowed( 'forums:viewhidden' ) ? 'true' : 'false' ];
 		$payload = $this->getRawInput();
 
 		[ 'statusCode' => $statusCode, 'body' => $body ] =
@@ -212,7 +212,7 @@ class DiscussionForumController extends WikiaController {
 			return;
 		}
 
-		$queryParams = [ 'canViewHidden' => $user->isAllowed( 'forums:viewhidden' ) ];
+		$queryParams = [ 'canViewHidden' => $user->isAllowed( 'forums:viewhidden' ) ? 'true' : 'false' ];
 		$payload = $this->getRawInput();
 
 		[ 'statusCode' => $statusCode, 'body' => $body ] =
@@ -239,7 +239,7 @@ class DiscussionForumController extends WikiaController {
 			return;
 		}
 
-		$queryParams = [ 'canViewHidden' => $user->isAllowed( 'forums:viewhidden' ) ];
+		$queryParams = [ 'canViewHidden' => $user->isAllowed( 'forums:viewhidden' )  ? 'true' : 'false' ];
 		$payload = $this->getRawInput();
 
 		[ 'statusCode' => $statusCode, 'body' => $body ] =
