@@ -40,7 +40,7 @@ class DiscussionPermalinkController extends WikiaController {
 		$user = $this->context->getUser();
 		$postId = $request->getVal( 'postId' );
 		$queryParams = $this->getQueryParams( $request );
-		$queryParams['canViewHidden'] = $user->isAllowed( 'threads:viewhidden' );
+		$queryParams['canViewHidden'] = $user->isAllowed( 'threads:viewhidden' ) ? 'true' : 'false';
 
 		[ 'statusCode' => $statusCode, 'body' => $body ] =
 			$this->gateway->getThreadByPostId( $postId, $user->getId(), $queryParams );
