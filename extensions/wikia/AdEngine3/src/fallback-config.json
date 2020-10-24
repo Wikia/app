@@ -200,7 +200,7 @@
             "regions": [
                 "XX"
             ],
-            "sampling": 33.0,
+            "sampling": 0.0,
             "samplingCache": true,
             "value": "internal"
         },
@@ -214,7 +214,7 @@
             "regions": [
                 "XX"
             ],
-            "sampling": 50.0,
+            "sampling": 0.0,
             "samplingCache": true,
             "value": "cross-wiki"
         }
@@ -246,7 +246,7 @@
             "regions": [
                 "XX"
             ],
-            "sampling": 100.0,
+            "sampling": 0.0,
             "samplingCache": true,
             "value": true
         }
