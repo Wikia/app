@@ -418,8 +418,7 @@ class DiscussionArticleCommentController extends DiscussionController {
 	}
 
 	private function getWikiNameLink() {
-    	// TODO: Maybe replace with wiki url
-    	return sprintf( '[%s %s]', $this->articleUrl, $this->wiki->city_title );
+    	return sprintf( '[%s %s]', $this->wiki->city_url, $this->wiki->city_title );
 	}
 
 	private function getTranslationKey() {
