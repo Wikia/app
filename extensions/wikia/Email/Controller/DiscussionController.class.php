@@ -394,7 +394,12 @@ class DiscussionArticleCommentController extends DiscussionController {
 	}
 
 	protected function getSubject() {
-		return $this->getSummary()->text();
+		return $this->getMessage(
+			$this->getTranslationKey(),
+			$this->getCurrentUserName(),
+			$this->articleTitle,
+			$this->wiki->city_title
+		)->text();
 	}
 
 	protected function getContentFooterMessages() {
