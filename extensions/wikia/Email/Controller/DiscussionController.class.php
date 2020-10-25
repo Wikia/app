@@ -394,13 +394,13 @@ class DiscussionArticleCommentController extends DiscussionController {
 	}
 
 	protected function getSubject() {
-		return $this->getSummary();
+		return $this->getSummary()->text();
 	}
 
 	protected function getContentFooterMessages() {
-    	$seeCommentLink = sprintf( '[%s %s]', $this->getArticleUrl(), $this->getMessage( 'emailext-discussion-see-comment' )->text() );
-
-		return [ $seeCommentLink ];
+    	return [
+    		$this->getMessage( 'emailext-discussion-view-all-comments', $this->getArticleUrl() )
+		];
 	}
 
 	protected function getButtonText() {
