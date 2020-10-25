@@ -368,9 +368,9 @@ class DiscussionAtMentionController extends DiscussionController {
 }
 
 class DiscussionArticleCommentController extends DiscussionController {
-
 	private $contentType;
 	private $articleTitle;
+	private $articleUrl;
 
 	const ARTICLE_COMMENT_REPLY = 'article-comment-reply';
 	const ARTICLE_COMMENT_AT_MENTION = 'article-comment-at-mention';
@@ -379,6 +379,7 @@ class DiscussionArticleCommentController extends DiscussionController {
     public function initEmail() {
     	// For AC related notifications, threadTitle means article title (comments don't have titles)
 		$this->articleTitle = $this->request->getVal( 'threadTitle' );
+		$this->articleUrl = $this->request->getVal( 'threadUrl' );
 		$this->contentType = $this->request->getVal( 'contentType' );
 
 		parent::initEmail();
@@ -404,7 +405,7 @@ class DiscussionArticleCommentController extends DiscussionController {
 
 	protected function getContentFooterMessages() {
     	return [
-    		$this->getMessage( 'emailext-discussion-view-all-comments', $this->getArticleUrl() )
+    		$this->getMessage( 'emailext-discussion-view-all-comments', $this->articleUrl )
 		];
 	}
 
@@ -413,15 +414,12 @@ class DiscussionArticleCommentController extends DiscussionController {
 	}
 
 	private function getArticleTitleLink() {
-    	return sprintf( '[%s %s]', $this->getArticleUrl(), $this->articleTitle );
+    	return sprintf( '[%s %s]', $this->articleUrl, $this->articleTitle );
 	}
 
 	private function getWikiNameLink() {
-    	return sprintf( '[%s %s]', $this->wiki->city_url, $this->wiki->city_title );
-	}
-
-	private function getArticleUrl() {
-    	return \Title::newFromText( $this->articleTitle )->getFullURL();
+    	// TODO: Maybe replace with wiki url
+    	return sprintf( '[%s %s]', $this->articleUrl, $this->wiki->city_title );
 	}
 
 	private function getTranslationKey() {
