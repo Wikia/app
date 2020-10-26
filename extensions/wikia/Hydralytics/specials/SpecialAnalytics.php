@@ -72,7 +72,7 @@ class SpecialAnalytics extends \SpecialPage {
 		// use $wgLang to differ the cache based on user language
 		$memcKey = wfMemcKey( __CLASS__, self::CACHE_VERSION, $wgLang->getCode() );
 
-		$redshiftError = false;
+		$databaseError = false;
 
 		try {
 			$sections = \WikiaDataAccess::cacheWithLock($memcKey, \WikiaResponse::CACHE_SHORT, function () {
@@ -380,14 +380,14 @@ class SpecialAnalytics extends \SpecialPage {
 				return $sections;
 			});
 		} catch ( \PDOException $e ) {
-			// Redshift database connection / query issue
-			WikiaLogger::instance()->error( 'Redshift backend error', [
+			// Database connection / query issue
+			WikiaLogger::instance()->error( 'Database error', [
 				'exception' => $e,
 			] );
-			$redshiftError = true;
+			$databaseError = true;
 		}
 
-		if ( $redshiftError ) {
+		if ( $databaseError ) {
 			$this->getOutput()->setPageTitle(wfMessage('analytics_dashboard')->escaped());
 			$this->content = "
 			<div id='analytics_wrapper'>
