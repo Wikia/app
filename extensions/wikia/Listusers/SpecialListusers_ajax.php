@@ -29,6 +29,13 @@ class ListusersAjax {
 		$loop		= $request->getVal('loop');
 		$orders     = explode("|", $request->getVal('order') );
 
+		if ( $limit < 0 || $offset < 0) {
+			$response = new AjaxResponse( json_encode( 'invalid value of limit or offset' ) );
+			$response->setContentType( 'application/json; charset=utf-8' );
+			$response->setResponseCode( WikiaResponse::RESPONSE_CODE_BAD_REQUEST );
+			return $response;
+		}
+
 		if ( $request->getVal( 'username' ) ) {
 			$user_id = User::idFromName( $request->getVal( 'username' ) );
 		}
