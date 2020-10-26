@@ -19,12 +19,15 @@ $wgAutoloadClasses['Wikia\FeedsAndPosts\ArticleTags'] = $dir . 'ArticleTags.clas
 $wgAutoloadClasses['Wikia\FeedsAndPosts\Discussion\DiscussionGateway'] = $dir . 'Discussion/DiscussionGateway.php';
 $wgAutoloadClasses['Wikia\FeedsAndPosts\Discussion\UserInfoHelper'] = $dir . 'Discussion/UserInfoHelper.php';
 $wgAutoloadClasses['Wikia\FeedsAndPosts\Discussion\PermissionsHelper'] = $dir . 'Discussion/PermissionsHelper.php';
+$wgAutoloadClasses['Wikia\FeedsAndPosts\Discussion\LinkHelper'] = $dir . 'Discussion/LinkHelper.php';
+$wgAutoloadClasses['Wikia\FeedsAndPosts\Discussion\QueryParamsHelper'] = $dir . 'Discussion/QueryParamsHelper.php';
 
 // Controllers
 $wgAutoloadClasses['FeedsAndPostsController'] = $dir . 'FeedsAndPostsController.class.php';
 $wgAutoloadClasses['DiscussionPollController'] = $dir . 'Discussion/DiscussionPollController.php';
 $wgAutoloadClasses['DiscussionVoteController'] = $dir . 'Discussion/DiscussionVoteController.php';
 $wgAutoloadClasses['DiscussionPermalinkController'] = $dir . 'Discussion/DiscussionPermalinkController.php';
+$wgAutoloadClasses['DiscussionForumController'] = $dir . 'Discussion/DiscussionForumController.php';
 
 // Hooks
 $wgHooks['BeforePageDisplay'][] = 'FeedsAndPostsHooks::onBeforePageDisplay';

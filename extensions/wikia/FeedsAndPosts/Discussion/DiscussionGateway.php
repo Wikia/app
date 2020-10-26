@@ -102,12 +102,129 @@ class DiscussionGateway {
 		} );
 	}
 
+	public function getForums( int $userId, array $queryParams ) {
+		return $this->makeCall( function () use ( $userId, $queryParams ) {
+			return $this->httpClient->get(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/forums",
+				[
+					RequestOptions::HEADERS => [
+						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+						Constants::HELIOS_AUTH_HEADER => $userId
+					],
+					RequestOptions::QUERY => $queryParams,
+					RequestOptions::TIMEOUT => self::API_TIMEOUT,
+				] );
+		} );
+	}
+
+	public function getForum( string $forumId, int $userId, array $queryParams ) {
+		return $this->makeCall( function () use ( $forumId, $userId, $queryParams ) {
+			return $this->httpClient->get(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/forums/{$forumId}",
+				[
+					RequestOptions::HEADERS => [
+						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+						Constants::HELIOS_AUTH_HEADER => $userId
+					],
+					RequestOptions::QUERY => $queryParams,
+					RequestOptions::TIMEOUT => self::API_TIMEOUT,
+				] );
+		} );
+	}
+
+	public function createForum( int $userId, array $queryParams, string $payload ) {
+		return $this->makeCall( function () use ( $payload, $userId, $queryParams ) {
+			return $this->httpClient->post(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/forums",
+				[
+					RequestOptions::HEADERS => [
+						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+						Constants::HELIOS_AUTH_HEADER => $userId,
+						'Content-Type' => 'application/json',
+					],
+					RequestOptions::QUERY => $queryParams,
+					RequestOptions::BODY => $payload,
+					RequestOptions::TIMEOUT => self::API_TIMEOUT,
+				] );
+		} );
+	}
+
+	public function moveThreadsIntoForum(
+		string $forumId, int $userId, array $queryParams, string $payload
+	) {
+		return $this->makeCall( function () use ( $payload, $userId, $queryParams, $forumId ) {
+			return $this->httpClient->post(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/forums/{$forumId}/movethreads",
+				[
+					RequestOptions::HEADERS => [
+						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+						Constants::HELIOS_AUTH_HEADER => $userId,
+						'Content-Type' => 'application/json',
+					],
+					RequestOptions::QUERY => $queryParams,
+					RequestOptions::BODY => $payload,
+					RequestOptions::TIMEOUT => self::API_TIMEOUT,
+				] );
+		} );
+	}
+
+	public function deleteForum( string $forumId, int $userId, array $queryParams, string $payload ) {
+		return $this->makeCall( function () use ( $payload, $userId, $queryParams, $forumId ) {
+			return $this->httpClient->delete(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/forums/{$forumId}",
+				[
+					RequestOptions::HEADERS => [
+						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+						Constants::HELIOS_AUTH_HEADER => $userId,
+						'Content-Type' => 'application/json',
+					],
+					RequestOptions::QUERY => $queryParams,
+					RequestOptions::BODY => $payload,
+					RequestOptions::TIMEOUT => self::API_TIMEOUT,
+				] );
+		} );
+	}
+
+	public function updateForum( string $forumId, int $userId, array $queryParams, string $payload ) {
+		return $this->makeCall( function () use ( $payload, $userId, $queryParams, $forumId ) {
+			return $this->httpClient->post(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/forums/{$forumId}",
+				[
+					RequestOptions::HEADERS => [
+						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+						Constants::HELIOS_AUTH_HEADER => $userId,
+						'Content-Type' => 'application/json',
+					],
+					RequestOptions::QUERY => $queryParams,
+					RequestOptions::BODY => $payload,
+					RequestOptions::TIMEOUT => self::API_TIMEOUT,
+				] );
+		} );
+	}
+
+	public function updateForumDisplayOrder( int $userId, array $queryParams, string $payload ) {
+		return $this->makeCall( function () use ( $payload, $userId, $queryParams ) {
+			return $this->httpClient->post(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/forums/displayorder",
+				[
+					RequestOptions::HEADERS => [
+						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+						Constants::HELIOS_AUTH_HEADER => $userId,
+						'Content-Type' => 'application/json',
+					],
+					RequestOptions::QUERY => $queryParams,
+					RequestOptions::BODY => $payload,
+					RequestOptions::TIMEOUT => self::API_TIMEOUT,
+				] );
+		} );
+	}
+
 	private function makeCall( callable $callback ): array {
 		try {
 			$response = $callback();
 
 			return [
-				'statusCode' => $response->getStatusCode(),
+				'statusCode' => $response->getStatusCode() == 204 ? 200 : $response->getStatusCode(),
 				'body' => $this->entity( $response ),
 			];
 		} catch ( BadResponseException $e ) {
