@@ -170,33 +170,8 @@ class Information {
 	 */
 	static public function getDailyTotals() {
 		global $wgCityId;
-
-		$sql =
-			'SELECT generate_series AS n FROM generate_series((NOW()::DATE - INTERVAL \'' . self::LAST_DAYS . ' days\'), ((NOW() - interval  \'1 DAY\')::DATE), \'1 day\')' .
-			'),' .
-			'pages AS (' .
-			'SELECT dt, SUM(views) as views FROM wikianalytics.pageviews_by_wiki_and_date ' .
-			"WHERE wiki_id = :wiki_id " .
-			'group by dt ' .
-			') ' .
-			'SELECT n AS dt, COALESCE(views, 0) AS views ' .
-			'FROM dates ' .
-			'LEFT OUTER JOIN pages ' .
-			'ON n=dt ' .
-			'ORDER BY dt DESC';
-
-		$res = \RDS::query(
-			$sql,
-			[ ':wiki_id' => $wgCityId ]
-		);
-
-		$pageviews = [];
-		foreach ( $res as $row ) {
-			// e.g. 2019-06-28 -> 166107
-			$pageviews[$row->dt] = $row->views;
-		}
 		return [
-			'pageviews' => $pageviews
+			'pageviews' => \RDS::getDailyTotals(self::LAST_DAYS)
 		];
 	}
 
