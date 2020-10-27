@@ -4,7 +4,6 @@ namespace Email\Controller;
 
 use Email\Check;
 use Email\EmailController;
-use Wikia\Logger\WikiaLogger;
 
 abstract class DiscussionController extends EmailController {
 
@@ -29,15 +28,6 @@ abstract class DiscussionController extends EmailController {
 		if ( !$this->wiki ) {
 			throw new Check( "Unable to find wiki information for siteId $siteId" );
 		}
-
-		WikiaLogger::instance()->info(
-			'Wiki instance created',
-			[
-				'issue' => 'IW-3264',
-				'city_id' => $this->wiki->city_id,
-				'city_url' => $this->wiki->city_url
-			]
-		);
 	}
 
 	protected function assertValidParams() {
