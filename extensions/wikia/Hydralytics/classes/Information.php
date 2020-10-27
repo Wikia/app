@@ -29,9 +29,9 @@ class Information {
 	static public function getEditsLoggedInOut($days = self::LAST_DAYS) {
 		global $wgCityId;
 
-		$res = \Redshift::query(
+		$res = \RDS::query(
 			'SELECT dt, COUNT(*) AS total_edits, ' .
-			 'SUM(case when user_id = 0 then 1 else 0 end) as edits_anons ' . '
+			'SUM(case when user_id = 0 then 1 else 0 end) as edits_anons ' . '
 			 FROM wikianalytics.edits ' .
 			'WHERE wiki_id = :wiki_id GROUP BY dt ' .
 			'ORDER BY dt DESC LIMIT :days',
@@ -94,7 +94,7 @@ class Information {
 	static public function getGeolocation($limit = 10) {
 		global $wgCityId;
 
-		$res = \Redshift::query(
+		$res = \RDS::query(
 			'SELECT country, SUM(cnt) as views FROM wikianalytics.sessions ' .
 			'WHERE wiki_id = :wiki_id GROUP BY country ' .
 			'ORDER BY views DESC LIMIT :limit',
@@ -146,22 +146,21 @@ class Information {
 	static public function getTopViewedFiles($limit = 10) {
 		global $wgCityId;
 
-		$res = \Redshift::query(
-			'SELECT url, SUM(cnt) as views FROM wikianalytics.pageviews ' .
-			// TODO: find out why '/', '/index.php', and '/wiki/' are marked as files
-			"WHERE wiki_id = :wiki_id AND is_file=True AND url NOT IN ('/',  '/index.php', '/wiki/') " .
+		$res = \RDS::query(
+			'SELECT url, SUM(cnt) as views FROM wikianalytics.viewedfiles ' .
+			"WHERE wiki_id = :wiki_id " .
 			'GROUP BY url ' .
 			'ORDER BY views DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
 		);
 
 		$pageviews = [];
-		foreach($res as $row) {
+		foreach ( $res as $row ) {
 			// e.g. /wiki/Elmo%27s_World_episodes -> 5765
-			$pageviews[ $row->url ] = $row->views;
+			$pageviews[$row->url] = $row->views;
 		}
 
-		return ['pageviews' => $pageviews];
+		return [ 'pageviews' => $pageviews ];
 	}
 
 	/**
@@ -170,8 +169,34 @@ class Information {
 	 * @return	array	Daily page views.
 	 */
 	static public function getDailyTotals() {
+		global $wgCityId;
+
+		$sql =
+			'SELECT generate_series AS n FROM generate_series((NOW()::DATE - INTERVAL \'' . self::LAST_DAYS . ' days\'), ((NOW() - interval  \'1 DAY\')::DATE), \'1 day\')' .
+			'),' .
+			'pages AS (' .
+			'SELECT dt, SUM(views) as views FROM wikianalytics.pageviews_by_wiki_and_date ' .
+			"WHERE wiki_id = :wiki_id " .
+			'group by dt ' .
+			') ' .
+			'SELECT n AS dt, COALESCE(views, 0) AS views ' .
+			'FROM dates ' .
+			'LEFT OUTER JOIN pages ' .
+			'ON n=dt ' .
+			'ORDER BY dt DESC';
+
+		$res = \RDS::query(
+			$sql,
+			[ ':wiki_id' => $wgCityId ]
+		);
+
+		$pageviews = [];
+		foreach ( $res as $row ) {
+			// e.g. 2019-06-28 -> 166107
+			$pageviews[$row->dt] = $row->views;
+		}
 		return [
-			'pageviews' => \Redshift::getDailyTotals(self::LAST_DAYS)
+			'pageviews' => $pageviews
 		];
 	}
 
@@ -188,7 +213,7 @@ class Information {
 		global $wgCityId;
 
 		// by browser
-		$res = \Redshift::query(
+		$res = \RDS::query(
 			'SELECT browser, SUM(cnt) AS views FROM wikianalytics.sessions ' .
 			'WHERE wiki_id = :wiki_id GROUP BY browser ' .
 			'ORDER BY views DESC LIMIT :limit',
@@ -196,9 +221,9 @@ class Information {
 		);
 
 		$browsers = [];
-		foreach($res as $row) {
+		foreach ( $res as $row ) {
 			// e.g. Chrome -> 434927
-			$browsers[ $row->browser ] = $row->views;
+			$browsers[$row->browser] = $row->views;
 		}
 
 		// by device type (filter out bots)
