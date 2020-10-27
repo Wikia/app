@@ -257,9 +257,9 @@ class AsyncTaskList {
 			if ( $wgWikiaEnvironment == WIKIA_ENV_DEV && preg_match( '/^dev-(.*?)$/', $host ) ) {
 				$executor['runner'] = ["http://tasks.{$wgDevDomain}/proxy.php"];
 			} elseif ($wgWikiaEnvironment == WIKIA_ENV_SANDBOX) {
-				$executor['runner'] = ["http://community.{$host}.wikia.com/extensions/wikia/Tasks/proxy/proxy.php"];
+				$executor['runner'] = ["http://appcommunitycentral.{$host}.fandom.com/extensions/wikia/Tasks/proxy/proxy.php"];
 			} elseif (in_array($wgWikiaEnvironment, [WIKIA_ENV_PREVIEW, WIKIA_ENV_VERIFY])) {
-				$executor['runner'] = ["http://community.{$wgWikiaEnvironment}.wikia.com/extensions/wikia/Tasks/proxy/proxy.php"];
+				$executor['runner'] = ["http://appcommunitycentral.{$wgWikiaEnvironment}.fandom.com/extensions/wikia/Tasks/proxy/proxy.php"];
 			}
 		}
 

@@ -7,10 +7,7 @@ This extension has been ported & adapted from [Gamepedia](https://gitlab.com/hyd
 
 This extension is enabled site-wide, but can be disabled on per-community basis via `$wgEnableHydralyticsExt` WikiFactory variable.
 
-## Feature usage tracking
+## Performance
 
-Google Analytics and internal tracker requests are sent when this special page is visited by an admin:
-
-```
-Wikia.Tracker:  trackingevent wikia_analytics/impression/ [analytics track]
-```
+[Redshift performance](https://metrics.wikia-inc.com/d/Jve53jvWz/redshift?orgId=1)
+[RDS performance](https://console.aws.amazon.com/rds/home?region=us-east-1#database:id=wikianalytics;is-cluster=false;tab=monitoring)
