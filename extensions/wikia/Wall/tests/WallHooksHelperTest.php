@@ -67,7 +67,7 @@ class WallHooksHelperTest extends WikiaBaseTest {
 
 	private function getTitleMock( int $ns ): PHPUnit_Framework_MockObject_MockObject {
 		$titleMock = $this->getMock( Title::class, [ 'getNamespace' ] );
-		$titleMock->expects( $this->once() )
+		$titleMock->expects( $this->any() )
 			->method( 'getNamespace' )
 			->willReturn( $ns );
 
