@@ -9468,3 +9468,8 @@ $wgXhguiProfilerUrl = null;
  * Expiration timestamp for post forum migration message
  */
 $wgPostForumMigrationMessageExpiration = 0;
+
+/**
+ * Whether to relax certain Forum thread restrictions.
+ */
+$wgAllowForumThreadOperations = false;
