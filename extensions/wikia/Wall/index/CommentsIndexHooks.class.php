@@ -58,20 +58,7 @@ class CommentsIndexHooks {
 			$wallMessage = WallMessage::newFromTitle( $title );
 			$wallMessage->load(true);
 
-			// take the old comments_index entry and update deleted column
-			$entry = CommentsIndex::getInstance()->entryFromId( $oldPageId );
-			$entry->setDeleted( false );
-			CommentsIndex::getInstance()->updateEntry( $entry );
-
-			// now update comments_id column to match new page id
-			wfGetDB( DB_MASTER )->update(
-				'comments_index',
-				// SET
-				[ 'comment_id' => $wallMessage->getId() ],
-				// WHERE
-				[ 'comment_id' => $oldPageId ],
-				__METHOD__
-			);
+			CommentsIndex::getInstance()->doRestore( $oldPageId, $wallMessage->getId() );
 
 			// invalidate message and thread cache
 			$wallMessage->invalidateCache();
