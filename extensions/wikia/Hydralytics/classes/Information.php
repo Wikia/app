@@ -29,7 +29,7 @@ class Information {
 	static public function getEditsLoggedInOut($days = self::LAST_DAYS) {
 		global $wgCityId;
 
-		$res = \RDS::query(
+		$res = \Redshift::query(
 			'SELECT dt, COUNT(*) AS total_edits, ' .
 			'SUM(case when user_id = 0 then 1 else 0 end) as edits_anons ' . '
 			 FROM wikianalytics.edits ' .
@@ -94,7 +94,7 @@ class Information {
 	static public function getGeolocation($limit = 10) {
 		global $wgCityId;
 
-		$res = \RDS::query(
+		$res = \Redshift::query(
 			'SELECT country, SUM(cnt) as views FROM wikianalytics.sessions ' .
 			'WHERE wiki_id = :wiki_id GROUP BY country ' .
 			'ORDER BY views DESC LIMIT :limit',
