@@ -1396,7 +1396,12 @@
                 "5519325105",
                 "5520478765",
                 "5519146473",
-                "5520478768"
+                "5520478768",
+                "5521855903",
+                "5514106472",
+                "5516919796",
+                "5514106943",
+                "5521893351"
             ]
         }
     ],
@@ -1632,7 +1637,6 @@
                 "oasis"
             ],
             "regions": [
-                "AU",
                 "US-PA"
             ],
             "value": true
@@ -1933,6 +1937,21 @@
                 "XX"
             ],
             "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v5.1.1/tracking-opt-in.min.js"
+        }
+    ],
+    "icLiveRampATSAnalytics": [
+        {
+            "apps": [
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
+                "oasis"
+            ],
+            "regions": [
+                "US-PA"
+            ],
+            "value": true
         }
     ],
     "icPermutive": [
