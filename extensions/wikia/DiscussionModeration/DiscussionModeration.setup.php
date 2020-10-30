@@ -15,6 +15,7 @@ $wgAutoloadClasses['ReportedPostsHelper'] =  $dir . 'ReportedPostsHelper.class.p
 $wgAutoloadClasses['DiscussionGateway'] =  $dir . 'DiscussionGateway.class.php';
 $wgAutoloadClasses['DiscussionModerationController'] =  $dir . 'DiscussionModerationController.class.php';
 $wgAutoloadClasses['DiscussionLeaderboardController'] =  $dir . 'DiscussionLeaderboardController.class.php';
+$wgAutoloadClasses['DiscussionImagesController'] =  $dir . 'DiscussionImagesController.class.php';
 $wgAutoloadClasses['FeedsReportedPageController'] =  $dir . 'DiscussionModerationController.class.php';
 $wgAutoloadClasses['ReportDetailsHelper'] =  $dir . 'ReportDetailsHelper.class.php';
 $wgAutoloadClasses['LeaderboardHelper'] =  $dir . 'LeaderboardHelper.class.php';
