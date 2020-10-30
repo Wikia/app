@@ -35,7 +35,7 @@ class QuickStatsController extends WikiaController {
 	}
 
 	protected function getDailyPageViews( Array &$stats ) {
-		$pageviews = Redshift::getDailyTotals(7);
+		$pageviews = \RDS::getDailyTotals(7);
 		$stats['totals']['pageviews'] = 0;
 		foreach( $pageviews as $date => $value) {
 			$stats[$date]['pageviews'] = $value;
@@ -48,7 +48,8 @@ class QuickStatsController extends WikiaController {
 		global $wgCityId;
 
 		$week = date( 'Y-m-d', strtotime('-7 day') );
-		$res = \Redshift::query(
+
+		$res = \RDS::query(
 			'SELECT dt, COUNT(*) AS total_edits '.
 			'FROM wikianalytics.edits ' .
 			'WHERE wiki_id = :wiki_id AND dt >= :week GROUP BY dt ' .
