@@ -14,21 +14,13 @@
 		}
 
 		&.wds-is-current {
-			@include wds-box-underline($tab-color);
+			@include wds-box-underline($tab-hover-color);
 		}
 
-		&.wds-is-active,
+		&.wds-is-current,
 		&:hover {
 			.wds-tabs__tab-label {
 				color: $tab-hover-color;
-
-				> a {
-					color: $tab-hover-color;
-				}
-			}
-
-			&.wds-is-current {
-				@include wds-box-underline($tab-hover-color);
 			}
 		}
 	}
