@@ -2314,7 +2314,24 @@ class User implements JsonSerializable {
 		Hooks::run( 'UserSetEmail', array( $this, &$this->mEmail ) );
 	}
 
-	/**
+    /**
+     * Get the user's e-mail address hashes
+     * @return array User's email address hashes
+     */
+	public function getEmailHashes() {
+        $userEmail = $this->getEmail();
+        $emailHashes = [];
+
+        if ( !empty( $userEmail ) ) {
+            array_push( $emailHashes, md5( $userEmail ) );
+            array_push( $emailHashes, hash( 'sha1', $userEmail ) );
+            array_push( $emailHashes, hash( 'sha256', $userEmail ) );
+        }
+
+        return $emailHashes;
+	}
+
+    /**
 	 * Get the user's real name
 	 * @return String User's real name
 	 */
