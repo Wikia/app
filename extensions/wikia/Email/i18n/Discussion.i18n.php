@@ -72,6 +72,8 @@ $messages['de'] = array(
 	'emailext-article-comment-reply-followed' => '$1 hat auf einen Kommentar, den du auf Artikel $2 im $3 verfolgst, geantwortet',
 	'emailext-article-comment-reply-at-mention' => '$1 hat dich in einer Antwort auf Artikel $2 auf $3 erwähnt',
 	'emailext-article-comment-reply' => '$1 hat auf deinen Kommentar zu Artikel $2 auf $3 geantwortet',
+	'emailext-discussion-see-comment' => 'Diesen Kommentar ansehen',
+	'emailext-discussion-view-all-comments' => '[$1 Alle Kommentare ansehen]',
 );
 
 $messages['es'] = array(
@@ -97,6 +99,8 @@ $messages['es'] = array(
 	'emailext-article-comment-reply-followed' => '$1 respondió a un comentario que estás siguiendo en el artículo $2 en $3',
 	'emailext-article-comment-reply-at-mention' => '$1 te mencionó en una respuesta en el artículo $2 en $3',
 	'emailext-article-comment-reply' => '$1 respondió a tu comentario en el artículo $2 en $3',
+	'emailext-discussion-see-comment' => 'Ver este comentario',
+	'emailext-discussion-view-all-comments' => '[$1 Ver todos los comentarios]',
 );
 
 $messages['fr'] = array(
@@ -122,6 +126,8 @@ $messages['fr'] = array(
 	'emailext-article-comment-reply-followed' => "$1 a répondu à un commentaire que vous suivez sur l'article $2 de $3",
 	'emailext-article-comment-reply-at-mention' => "$1 vous a mentionné dans une réponse sur l'article $2 de $3",
 	'emailext-article-comment-reply' => "$1 a répondu à votre commentaire sur l'article $2 de $3",
+	'emailext-discussion-see-comment' => 'Voir ce commentaire',
+	'emailext-discussion-view-all-comments' => '[$1 Voir tous les commentaires]',
 );
 
 $messages['it'] = array(
@@ -147,6 +153,8 @@ $messages['it'] = array(
 	'emailext-article-comment-reply-followed' => "$1 ha risposto ad un commento che stai seguendo sull'articolo $2 su $3",
 	'emailext-article-comment-reply-at-mention' => "$1 ti ha menzionato in una risposta sull'articolo $2 su $3",
 	'emailext-article-comment-reply' => "$1 ha risposto al tuo commento sull'articolo $2 su $3",
+	'emailext-discussion-see-comment' => 'Vedi questo commento',
+	'emailext-discussion-view-all-comments' => '[$1 Vedi tutti i commenti]',
 );
 
 $messages['ja'] = array(
@@ -172,6 +180,8 @@ $messages['ja'] = array(
 	'emailext-article-comment-reply-followed' => '$1さんが$3の記事「$2」であなたがフォローしているコメントに返信しました',
 	'emailext-article-comment-reply-at-mention' => '$1さんが$3の記事「$2」の返信にあなたの名前を書き込みました',
 	'emailext-article-comment-reply' => '$1さんが$3の記事「$2」のあなたのコメントに返信しました',
+	'emailext-discussion-see-comment' => 'コメントを見る',
+	'emailext-discussion-view-all-comments' => '[$1 すべてのコメントを表示]',
 );
 
 $messages['ko'] = array(
@@ -219,6 +229,8 @@ $messages['pl'] = array(
 	'emailext-article-comment-reply-followed' => '$1 odpowiedział(a) na obserwowany komentarz w artykule $2 na $3',
 	'emailext-article-comment-reply-at-mention' => '$1 wspomniał(a) Ciebie w odpowiedzi w artykule $2 na $3 ',
 	'emailext-article-comment-reply' => '$1 odpowiedział(a) na Twój komentarz w artykule $2 na $3 ',
+	'emailext-discussion-see-comment' => 'Zobacz ten komentarz',
+	'emailext-discussion-view-all-comments' => '[$1 Zobacz komentarze]',
 );
 
 $messages['pt'] = array(
@@ -244,6 +256,8 @@ $messages['pt'] = array(
 	'emailext-article-comment-reply-followed' => '$1 respondeu ao comentário que você está seguindo no artigo $2 em $3',
 	'emailext-article-comment-reply-at-mention' => 'Você foi mencionado por $1 em uma resposta no artigo $2 em $3',
 	'emailext-article-comment-reply' => '$1 respondeu ao seu comentário no artigo $2 em $3',
+	'emailext-discussion-see-comment' => 'Veja este comentário',
+	'emailext-discussion-view-all-comments' => '[$1 Ver todos os comentários]',
 );
 
 $messages['ru'] = array(
@@ -269,6 +283,8 @@ $messages['ru'] = array(
 	'emailext-article-comment-reply-followed' => '$1 ответил(а) на комментарий, который вы отслеживаете, к статье «$2» на $3',
 	'emailext-article-comment-reply-at-mention' => ' $1 упомянул(а) вас в ответе к статье «$2» на $3',
 	'emailext-article-comment-reply' => '$1 ответил(а) на ваш комментарий к статье «$2» в $3',
+	'emailext-discussion-see-comment' => 'Просмотреть комментарий',
+	'emailext-discussion-view-all-comments' => '[$1 Просмотреть все комментарии]',
 );
 
 $messages['zh-hans'] = array(
@@ -290,6 +306,12 @@ $messages['zh-hans'] = array(
 	'emailext-discussion-100-upvote-summary' => '您在[$1 $2]上的帖子已经被赞了100次！',
 	'emailext-discussion-thread-at-mention' => '$1在$3上的帖子$2提到了您。',
 	'emailext-discussion-post-at-mention' => '$1在$3上的$2帖子回复中提到了您。',
+	'emailext-article-comment-at-mention' => '$1在$3的页面$2中的评论中提到了您',
+	'emailext-article-comment-reply-followed' => '$1在$3的页面$2中回复了您关注的评论',
+	'emailext-discussion-see-comment' => '查看评论',
+	'emailext-discussion-view-all-comments' => '[$1 查看所有评论]',
+	'emailext-article-comment-reply-at-mention' => '$1在$3的页面$2中的回复中提到了您',
+	'emailext-article-comment-reply' => '$1在$3的页面$2中回复了您的评论',
 );
 
 $messages['zh-hant'] = array(
@@ -311,5 +333,11 @@ $messages['zh-hant'] = array(
 	'emailext-discussion-100-upvote-summary' => '您在[$1 $2] 上的文章已經被按讚了100次！',
 	'emailext-discussion-thread-at-mention' => '$1在$3上的文章$2提到了您。',
 	'emailext-discussion-post-at-mention' => '$1在$3上的$2文章答覆中提到了您。',
+	'emailext-article-comment-at-mention' => '$1在$3的頁面$2中的評論中提到了您',
+	'emailext-article-comment-reply-followed' => '$1在$3的頁面$2中回覆了您關注的評論',
+	'emailext-discussion-see-comment' => '查看評論',
+	'emailext-discussion-view-all-comments' => '[$1 查看所有評論]',
+	'emailext-article-comment-reply-at-mention' => '$1在$3的頁面$2中的回覆中提到了您',
+	'emailext-article-comment-reply' => '$1在$3的頁面$2中回覆了您的評論',
 );
 
