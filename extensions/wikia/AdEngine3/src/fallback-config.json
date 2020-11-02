@@ -1395,7 +1395,15 @@
                 "5519325240",
                 "5519325105",
                 "5520478765",
-                "5520478768"
+                "5519146473",
+                "5520478768",
+                "5521855903",
+                "5514106472",
+                "5516919796",
+                "5514106943",
+                "5521893351",
+                "4511434999",
+                "5514603963"
             ]
         }
     ],
@@ -1631,8 +1639,6 @@
                 "oasis"
             ],
             "regions": [
-                "AU",
-                "CA",
                 "US-PA"
             ],
             "value": true
@@ -1650,9 +1656,11 @@
             "regions": [
                 "AU",
                 "CA",
+                "PL",
+                "US-CA",
                 "US-PA"
             ],
-            "value": "//static.wikia.nocookie.net/fandom-ae-assets/prebid.js/v3.27.1/20201020.min.js"
+            "value": "//static.wikia.nocookie.net/fandom-ae-assets/prebid.js/v3.27.1/20201022.min.js"
         },
         {
             "apps": [
@@ -1931,6 +1939,21 @@
                 "XX"
             ],
             "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v5.1.1/tracking-opt-in.min.js"
+        }
+    ],
+    "icLiveRampATSAnalytics": [
+        {
+            "apps": [
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
+                "oasis"
+            ],
+            "regions": [
+                "US-PA"
+            ],
+            "value": true
         }
     ],
     "icPermutive": [

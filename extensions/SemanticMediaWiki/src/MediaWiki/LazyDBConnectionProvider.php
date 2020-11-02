@@ -52,13 +52,13 @@ class LazyDBConnectionProvider implements DBConnectionProvider {
 
 		// Wikia change - begin
 		// moved here from wfGetDB()
-		global $smwgUseExternalDB, $wgDBname;
+		global $smwgUseExternalDB, $wgDBname, $smwgExternalDBName;
 
 		if ( $groups === self::SMW_GROUP && $smwgUseExternalDB === true ) {
 			if ( $wiki === false ) {
 				$wiki = $wgDBname;
 			}
-			$this->wiki = "smw+" . $wiki;
+			$this->wiki = !empty( $smwgExternalDBName ) ? $smwgExternalDBName : "smw+" . $wiki;
 			$this->groups = 'smw';
 			wfDebug( __METHOD__ . ": smw+ cluster is active, requesting $wiki\n" );
 		}
