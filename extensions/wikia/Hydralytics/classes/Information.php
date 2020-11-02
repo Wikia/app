@@ -94,8 +94,8 @@ class Information {
 	static public function getGeolocation($limit = 10) {
 		global $wgCityId;
 
-		$res = \Redshift::query(
-			'SELECT country, SUM(cnt) as views FROM wikianalytics.sessions ' .
+		$res = \RDS::query(
+			'SELECT country, SUM(cnt) as views FROM wikianalytics.geolocation ' .
 			'WHERE wiki_id = :wiki_id GROUP BY country ' .
 			'ORDER BY views DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
