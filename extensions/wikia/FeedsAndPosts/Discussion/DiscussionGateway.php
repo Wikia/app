@@ -219,6 +219,138 @@ class DiscussionGateway {
 		} );
 	}
 
+	public function lockThread( int $userId, string $threadId, string $canViewHidden, array $userTraceHeaders ) {
+		return $this->makeCall( function () use ( $userId, $threadId, $canViewHidden, $userTraceHeaders ) {
+			return $this->httpClient->put(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/threads/{$threadId}/lock",
+				[
+					RequestOptions::HEADERS => [
+					   	WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+					   	Constants::HELIOS_AUTH_HEADER => $userId,
+				   	] + $userTraceHeaders,
+					RequestOptions::QUERY => [
+						'canViewHidden' => $canViewHidden,
+					],
+					RequestOptions::TIMEOUT => self::API_TIMEOUT,
+				] );
+		} );
+	}
+
+	public function unlockThread( int $userId, string $threadId, string $canViewHidden, array $userTraceHeaders ) {
+		return $this->makeCall( function () use ( $userId, $threadId, $canViewHidden, $userTraceHeaders ) {
+			return $this->httpClient->delete(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/threads/{$threadId}/lock",
+				[
+					RequestOptions::HEADERS => [
+					   	WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+					   	Constants::HELIOS_AUTH_HEADER => $userId,
+				   	] + $userTraceHeaders,
+					RequestOptions::QUERY => [
+						'canViewHidden' => $canViewHidden,
+					],
+					RequestOptions::TIMEOUT => self::API_TIMEOUT,
+				] );
+		} );
+	}
+
+	public function updateThread( int $userId, $threadId, string $payload, array $queryParams, array $traceHeaders ) {
+		return $this->makeCall( function () use ( $userId, $threadId, $payload, $queryParams, $traceHeaders ) {
+			return $this->httpClient->post(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/threads/{$threadId}",
+				[
+					RequestOptions::HEADERS => [
+					   	WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+					   	Constants::HELIOS_AUTH_HEADER => $userId,
+					   	'Content-Type' => 'application/json'
+				    ] + $traceHeaders,
+					RequestOptions::QUERY => $queryParams,
+					RequestOptions::BODY => $payload,
+					RequestOptions::TIMEOUT => self::API_TIMEOUT,
+				] );
+		} );
+	}
+
+	public function deleteThread( int $userId, $threadId, array $queryParams, array $traceHeaders ) {
+		return $this->makeCall( function () use ( $userId, $threadId, $queryParams, $traceHeaders ) {
+			return $this->httpClient->put(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/threads/{$threadId}/delete",
+				[
+					RequestOptions::HEADERS => [
+					   	WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+					   	Constants::HELIOS_AUTH_HEADER => $userId,
+					   	'Content-Type' => 'application/json'
+				    ] + $traceHeaders,
+					RequestOptions::QUERY => $queryParams,
+					RequestOptions::TIMEOUT => self::API_TIMEOUT,
+				] );
+		} );
+	}
+
+	public function undeleteThread( int $userId, $threadId, array $queryParams, array $traceHeaders ) {
+		return $this->makeCall( function () use ( $userId, $threadId, $queryParams, $traceHeaders ) {
+			return $this->httpClient->put(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/threads/{$threadId}/undelete",
+				[
+					RequestOptions::HEADERS => [
+					   	WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+					   	Constants::HELIOS_AUTH_HEADER => $userId,
+					   	'Content-Type' => 'application/json'
+				   	] + $traceHeaders,
+					RequestOptions::QUERY => $queryParams,
+					RequestOptions::TIMEOUT => self::API_TIMEOUT,
+				] );
+		} );
+	}
+
+	public function createThread( int $userId, $forumId, string $payload, array $queryParams, array $traceHeaders ) {
+		return $this->makeCall( function () use ( $userId, $forumId, $payload, $queryParams, $traceHeaders ) {
+			return $this->httpClient->post(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/forums/{$forumId}/threads",
+				[
+					RequestOptions::HEADERS => [
+						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+						Constants::HELIOS_AUTH_HEADER => $userId,
+						'Content-Type' => 'application/json'
+					] + $traceHeaders,
+					RequestOptions::QUERY => $queryParams,
+					RequestOptions::BODY => $payload,
+					RequestOptions::TIMEOUT => self::API_TIMEOUT,
+				] );
+		} );
+	}
+
+	public function getThread( int $userId, string $threadId, array $queryParams ) {
+		return $this->makeCall( function () use ( $userId, $threadId, $queryParams ) {
+			return $this->httpClient->get(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/threads/{$threadId}",
+				[
+					RequestOptions::HEADERS => [
+					   	WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+					   	Constants::HELIOS_AUTH_HEADER => $userId,
+					   	'Content-Type' => 'application/json'
+				   	],
+					RequestOptions::QUERY => $queryParams,
+					RequestOptions::TIMEOUT => self::API_TIMEOUT,
+				] );
+		} );
+	}
+
+	public function getThreads( int $userId, array $queryParams ) {
+		return $this->makeCall( function () use ( $userId, $queryParams ) {
+			return $this->httpClient->get(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/threads",
+				[
+					RequestOptions::HEADERS => [
+						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+						Constants::HELIOS_AUTH_HEADER => $userId,
+						'Content-Type' => 'application/json'
+					],
+					RequestOptions::QUERY => $queryParams,
+					RequestOptions::TIMEOUT => self::API_TIMEOUT,
+				] );
+		} );
+	}
+
 	private function makeCall( callable $callback ): array {
 		try {
 			$response = $callback();

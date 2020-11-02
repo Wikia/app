@@ -141,7 +141,7 @@ class DiscussionModerationController extends WikiaController {
 			return;
 		}
 
-		$userTraceHeaders = $this->getUserTraceHeaders( $this->getContext()->getRequest() );
+		$userTraceHeaders = TraceHeadersHelper::getUserTraceHeaders( $this->getContext()->getRequest() );
 
 		[ 'statusCode' => $statusCode, 'body' => $body ] =
 			$this->gateway->createPostReport( $postId, $user->getId(), $userTraceHeaders );
@@ -204,17 +204,6 @@ class DiscussionModerationController extends WikiaController {
 		}
 
 		return false;
-	}
-
-	private function getUserTraceHeaders( \WebRequest $request ): array {
-		return [
-			'X-Original-User-Agent' => $request->getHeader( 'user-agent' ) ?? '',
-			'Fastly-Client-IP' => $request->getHeader( 'Fastly-Client-IP' ) ?? '',
-			'X-GeoIP-City' => $request->getHeader( 'X-GeoIP-City' ) ?? '',
-			'X-GeoIP-Region' => $request->getHeader( 'X-GeoIP-Region' ) ?? '',
-			'X-GeoIP-Country-Name' => $request->getHeader( 'X-GeoIP-Country-Name' ) ?? '',
-			'X-Wikia-WikiaAppsID' => $request->getHeader( 'X-Wikia-WikiaAppsID' ) ?? '',
-		];
 	}
 }
 

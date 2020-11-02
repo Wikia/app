@@ -21,6 +21,7 @@ $wgAutoloadClasses['Wikia\FeedsAndPosts\Discussion\UserInfoHelper'] = $dir . 'Di
 $wgAutoloadClasses['Wikia\FeedsAndPosts\Discussion\PermissionsHelper'] = $dir . 'Discussion/PermissionsHelper.php';
 $wgAutoloadClasses['Wikia\FeedsAndPosts\Discussion\LinkHelper'] = $dir . 'Discussion/LinkHelper.php';
 $wgAutoloadClasses['Wikia\FeedsAndPosts\Discussion\QueryParamsHelper'] = $dir . 'Discussion/QueryParamsHelper.php';
+$wgAutoloadClasses['Wikia\FeedsAndPosts\Discussion\TraceHeadersHelper'] = $dir . 'Discussion/TraceHeadersHelper.php';
 
 // Controllers
 $wgAutoloadClasses['FeedsAndPostsController'] = $dir . 'FeedsAndPostsController.class.php';
@@ -28,6 +29,7 @@ $wgAutoloadClasses['DiscussionPollController'] = $dir . 'Discussion/DiscussionPo
 $wgAutoloadClasses['DiscussionVoteController'] = $dir . 'Discussion/DiscussionVoteController.php';
 $wgAutoloadClasses['DiscussionPermalinkController'] = $dir . 'Discussion/DiscussionPermalinkController.php';
 $wgAutoloadClasses['DiscussionForumController'] = $dir . 'Discussion/DiscussionForumController.php';
+$wgAutoloadClasses['DiscussionThreadController'] = $dir . 'Discussion/DiscussionThreadController.php';
 
 // Hooks
 $wgHooks['BeforePageDisplay'][] = 'FeedsAndPostsHooks::onBeforePageDisplay';

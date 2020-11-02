@@ -46,6 +46,28 @@ class LinkHelper {
 		return $this->buildLink( $uri, $controllerQueryParams );
 	}
 
+	public function buildThreadLink( Uri $uri, IContextSource $requestContext ): string {
+		$urlParts = explode( "/", $uri->getPath() );
+		$threadId = end( $urlParts );
+
+		$controllerQueryParams = [
+			'controller' => 'DiscussionThread',
+			'method' => 'getThread',
+			'threadId' => $threadId,
+		];
+
+		return $this->buildLink( $uri, $controllerQueryParams );
+	}
+
+	public function buildThreadsLink( Uri $uri, IContextSource $requestContext ): string {
+		$controllerQueryParams = [
+			'controller' => 'DiscussionThread',
+			'method' => 'getThreads',
+		];
+
+		return $this->buildLink( $uri, $controllerQueryParams );
+	}
+
 	private function buildLink( Uri $uri, array $controllerQueryParams ) {
 		foreach ( parse_query( $uri->getQuery() ) as $paramName => $value ) {
 			$controllerQueryParams[$paramName] = $value;

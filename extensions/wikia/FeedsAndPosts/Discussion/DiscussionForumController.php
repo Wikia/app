@@ -80,6 +80,7 @@ class DiscussionForumController extends WikiaController {
 			$body = $this->addBadgesAndPermissions( $body, $user );
 			$body = $this->mapForumLinks( $body, $this->getContext() );
 			$body = $this->mapPermalinks( $body, $this->getContext() );
+			$body = $this->mapThreadLinks( $body, $this->getContext() );
 		}
 
 		$this->response->setCode( $statusCode );
@@ -336,6 +337,21 @@ class DiscussionForumController extends WikiaController {
 		foreach ( $body['_links'] as &$link ) {
 			$uri = new Uri( $link[0]['href'] );
 			$link[0]['href'] = $this->linkHelper->buildForumlink( $uri, $requestContext );
+		}
+
+		return $body;
+	}
+
+	private function mapThreadLinks( array $body, IContextSource $requestContext ): array {
+		if ( !isset( $body['_embedded']['doc:threads'] ) ) {
+			return $body;
+		}
+
+		foreach ( $body['_embedded']['doc:threads'] as &$thread ) {
+			foreach ( $thread['_links'] as &$link ) {
+				$uri = new Uri( $link[0]['href'] );
+				$link[0]['href'] = $this->linkHelper->buildThreadLink( $uri, $requestContext );
+			}
 		}
 
 		return $body;

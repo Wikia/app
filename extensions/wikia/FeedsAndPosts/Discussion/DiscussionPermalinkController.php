@@ -174,6 +174,13 @@ class DiscussionPermalinkController extends WikiaController {
 				$this->linkHelper->buildPermalink( $uri, $requestContext );
 		}
 
+		if ( isset( $body['_links'] ) ) {
+			foreach ( $body['_links'] as &$link ) {
+				$uri = new Uri( $link[0]['href'] );
+				$link[0]['href'] = $this->linkHelper->buildThreadLink( $uri, $requestContext );
+			}
+		}
+
 		return $body;
 	}
 }
