@@ -173,17 +173,17 @@ class AdEngine3
 		return !file_exists( $mainFile );
 	}
 
-    private static function getUserEmailHashes(User $user ) {
-        $userEmail = $user->getEmail();
-        $emailHashes = [];
+	private static function getUserEmailHashes(User $user ) {
+		$userEmail = $user->getEmail();
+		$emailHashes = [];
 
-        if ( !empty( $userEmail ) ) {
-            array_push( $emailHashes, md5( $userEmail ) );
-            array_push( $emailHashes, hash( 'sha1', $userEmail ) );
-            array_push( $emailHashes, hash( 'sha256', $userEmail ) );
-        }
+		if ( !empty( $userEmail ) ) {
+			array_push( $emailHashes, md5( $userEmail ) );
+			array_push( $emailHashes, hash( 'sha1', $userEmail ) );
+			array_push( $emailHashes, hash( 'sha256', $userEmail ) );
+		}
 
-        return $emailHashes;
-    }
+		return $emailHashes;
+	}
 
 }
