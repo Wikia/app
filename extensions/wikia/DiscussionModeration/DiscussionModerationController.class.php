@@ -75,6 +75,8 @@ class DiscussionModerationController extends WikiaController {
 
 		$this->reportedPostsHelper->mapLinks( $body );
 		$this->reportedPostsHelper->addPermissions( $user, $body );
+		$this->reportedPostsHelper->applyBadges( $body );
+
 		$this->response->setData( $body );
 	}
 
