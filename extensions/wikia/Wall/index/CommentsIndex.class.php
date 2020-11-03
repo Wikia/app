@@ -74,6 +74,23 @@ class CommentsIndex {
 		return $updateSuccess;
 	}
 
+	public function doRestore( int $oldPageId, int $newPageId ): void {
+		$entry = $this->entryFromId( $oldPageId );
+		$entry->setCommentId( $newPageId );
+		$entry->setDeleted( false );
+
+		$dbw = wfGetDB( DB_MASTER );
+
+		$dbw->update(
+			'comments_index',
+			$entry->getDatabaseRepresentation(),
+			[ 'comment_id' => $oldPageId ],
+			__METHOD__
+		);
+
+		$this->objectCache[$newPageId] = $entry;
+	}
+
 	/**
 	 * Check if current update action has any changes which require updating child comment data for parent thread.
 	 * If message visibility has changed (removal/deletion), we need to update parent thread to exclude it

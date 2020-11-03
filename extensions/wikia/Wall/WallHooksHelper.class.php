@@ -1965,12 +1965,22 @@ class WallHooksHelper {
 	 * @return bool true if action is not handled or allowed, false if action should be prevented
 	 */
 	public static function onGetUserPermissionsErrors( Title $title, User $user, string $action, &$result ): bool {
+		global $wgAllowForumThreadOperations;
+
 		$ns = $title->getNamespace();
 		if ( $ns === NS_USER_WALL_MESSAGE_GREETING ) {
 			return static::checkWallGreeting( $title, $user, $action, $result );
 		}
 
 		if ( !WallHelper::isWallNamespace( $ns ) ) {
+			return true;
+		}
+
+		// IW-4687: Relax Forum thread restrictions if needed
+		$isForumThread = defined( 'NS_WIKIA_FORUM_BOARD_THREAD' ) && $title->inNamespace( NS_WIKIA_FORUM_BOARD_THREAD );
+		$isValidForumThreadAction = in_array( $action, [ 'edit', 'move', 'delete' ] );
+
+		if ( $wgAllowForumThreadOperations && $isForumThread && $isValidForumThreadAction ) {
 			return true;
 		}
 
