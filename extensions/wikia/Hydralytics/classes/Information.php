@@ -95,8 +95,8 @@ class Information {
 		global $wgCityId;
 
 		$res = \RDS::query(
-			'SELECT country, SUM(cnt) as views FROM wikianalytics.geolocation ' .
-			'WHERE wiki_id = :wiki_id GROUP BY country ' .
+			'SELECT country, cnt as views FROM wikianalytics.geolocation ' .
+			'WHERE wiki_id = :wiki_id ' .
 			'ORDER BY views DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
 		);
