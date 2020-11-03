@@ -179,6 +179,31 @@ class DiscussionGateway {
 		} );
 	}
 
+	public function uploadImage( int $userId, string $context, \WebRequestUpload $upload ) {
+		return $this->makeCall( function () use ( $userId, $context, $upload ) {
+			return $this->httpClient->post(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/images",
+				[
+					RequestOptions::HEADERS => [
+						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+						Constants::HELIOS_AUTH_HEADER => $userId,
+					],
+					RequestOptions::MULTIPART => [
+						[
+							'name' => 'data',
+							'contents' => fopen( $upload->getTempName(), 'r' ),
+							'filename' => $upload->getName(),
+						],
+						[
+							'name' => 'context',
+							'contents' => $context,
+						]
+					],
+					RequestOptions::TIMEOUT => 10.0,
+				] );
+		} );
+	}
+
 	private function makeCall( callable $callback ): array {
 		try {
 			$response = $callback();
