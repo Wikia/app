@@ -16,6 +16,10 @@ class ReportedPostsHelper {
 	}
 
 	public function addPermissions( User $user, array &$reportedPosts ) {
+		if ( !isset( $reportedPosts['_embedded']['doc:posts'] ) ) {
+			return;
+		}
+
 		foreach ( $reportedPosts['_embedded']['doc:posts'] as &$postData ) {
 			$post = ( new PostBuilder() )
 				->position( $postData['position'] )
@@ -46,10 +50,12 @@ class ReportedPostsHelper {
 			}
 		}
 
-		foreach ( $reportedPosts['_embedded']['doc:posts'] as &$post ) {
-			if ( isset( $post['_links']['permalink'][0]['href'] ) ) {
-				$uri = new Uri( $post['_links']['permalink'][0]['href'] );
-				$post['_links']['permalink'][0]['href'] = $this->buildPermalink( $uri );
+		if ( isset( $reportedPosts['_embedded']['doc:posts'] ) ) {
+			foreach ( $reportedPosts['_embedded']['doc:posts'] as &$post ) {
+				if ( isset( $post['_links']['permalink'][0]['href'] ) ) {
+					$uri = new Uri( $post['_links']['permalink'][0]['href'] );
+					$post['_links']['permalink'][0]['href'] = $this->buildPermalink( $uri );
+				}
 			}
 		}
 	}
