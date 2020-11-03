@@ -4,7 +4,6 @@ namespace Email\Controller;
 
 use Email\Check;
 use Email\EmailController;
-use Wikia\Logger\WikiaLogger;
 
 abstract class DiscussionController extends EmailController {
 
@@ -372,13 +371,6 @@ class DiscussionArticleCommentController extends DiscussionController {
 		$this->articleTitle = $this->request->getVal( 'threadTitle' );
 		$this->articleUrl = $this->request->getVal( 'threadUrl' );
 		$this->contentType = $this->request->getVal( 'contentType' );
-
-		WikiaLogger::instance()->info( 'initEmail', [
-			'issue' => 'IW-3264',
-			'articleTitle' => $this->articleTitle,
-			'articleUrl' => $this->articleUrl,
-			'contentType' => $this->contentType,
-		] );
 
 		parent::initEmail();
 	}
