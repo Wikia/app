@@ -113,6 +113,14 @@ class ReportedPostsHelper {
 			if ( isset( $post['_embedded']['thread'][0]['firstPost']['createdBy']['id'] ) ) {
 				$userIds[] = (int)$post['_embedded']['thread'][0]['firstPost']['createdBy']['id'];
 			}
+
+			if ( isset( $post['_embedded']['thread'][0]['firstPost']['lastEditedBy']['id'] ) ) {
+				$userIds[] = (int)$post['_embedded']['thread'][0]['firstPost']['lastEditedBy']['id'];
+			}
+
+			if ( isset( $post['_embedded']['thread'][0]['firstPost']['lastDeletedBy']['id'] ) ) {
+				$userIds[] = (int)$post['_embedded']['thread'][0]['firstPost']['lastDeletedBy']['id'];
+			}
 		}
 
 		foreach ( $contributors as $contributor ) {
@@ -143,6 +151,16 @@ class ReportedPostsHelper {
 			if ( isset( $post['_embedded']['thread'][0]['firstPost']['createdBy']['id'] ) ) {
 				$badge = $badgesMap[(int)$post['_embedded']['thread'][0]['firstPost']['createdBy']['id']] ?? '';
 				$post['_embedded']['thread'][0]['firstPost']['createdBy']['badgePermission'] = $badge;
+			}
+
+			if ( isset( $post['_embedded']['thread'][0]['firstPost']['lastEditedBy']['id'] ) ) {
+				$badge = $badgesMap[(int)$post['_embedded']['thread'][0]['firstPost']['lastEditedBy']['id']] ?? '';
+				$post['_embedded']['thread'][0]['firstPost']['lastEditedBy']['badgePermission'] = $badge;
+			}
+
+			if ( isset( $post['_embedded']['thread'][0]['firstPost']['lastDeletedBy']['id'] ) ) {
+				$badge = $badgesMap[(int)$post['_embedded']['thread'][0]['firstPost']['lastDeletedBy']['id']] ?? '';
+				$post['_embedded']['thread'][0]['firstPost']['lastDeletedBy']['badgePermission'] = $badge;
 			}
 		}
 
