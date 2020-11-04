@@ -91,7 +91,6 @@ class CloseWikiMaintenance extends Maintenance {
 			"city_flags <> 0",
 			sprintf( "city_flags <> %d", WikiFactory::FLAG_REDIRECT ),
 			"city_last_timestamp < '{$timestamp}'",
-			"city_id" => 1692447,
 		];
 
 		if ( $cluster !== false ) {
@@ -203,92 +202,103 @@ class CloseWikiMaintenance extends Maintenance {
 			}
 			if ( $row->city_flags & WikiFactory::FLAG_DELETE_DB_IMAGES ||
 				 $row->city_flags & WikiFactory::FLAG_FREE_WIKI_URL ) {
+				$where["city_id"] = $cityid;
+				$sth = $dbr->select( [ "city_list" ], [
+					"city_id",
+				], $where, __METHOD__, $opts );
+				if ( $sth->numRows() != 0 ) {
 
-				( new GcsBucketRemover() )->remove( $cityid );
+					( new GcsBucketRemover() )->remove( $cityid );
 
-				/**
-				 * clear wikifactory tables, condition for city_public should
-				 * be always true there but better safe than sorry
-				 */
-				$this->info( "Cleaning the shared database" );
-				if ( !WikiFactory::isInArchive( $row->city_id ) ){
-					WikiFactory::copyToArchive( $row->city_id );
+					/**
+					 * clear wikifactory tables, condition for city_public should
+					 * be always true there but better safe than sorry
+					 */
+					$this->info( "Cleaning the shared database" );
+					if ( !WikiFactory::isInArchive( $row->city_id ) ){
+						WikiFactory::copyToArchive( $row->city_id );
+					} else {
+						$this->error( 'Wiki was already in archive', [
+							'wiki_id' => (int)$row->city_id,
+						] );
+					}
+					$dbw = WikiFactory::db( DB_MASTER );
+					$dbw->delete( "city_list", [
+						"city_public" => [ 0, - 1 ],
+						"city_id" => $row->city_id,
+					], __METHOD__ );
+					// SUS-2374
+					$dbw->delete( "city_variables", [
+						"cv_city_id" => $row->city_id,
+					], __METHOD__ );
+					$this->info( "{$row->city_id} removed from WikiFactory tables" );
+
+					$this->cleanupSharedData( intval( $row->city_id ) );
+
+					/**
+					 * drop database, get db handler for proper cluster
+					 */ global $wgDBadminuser, $wgDBadminpassword;
+					$centralDB = empty( $cluster ) ? "wikicities" : "wikicities_{$cluster}";
+
+					/**
+					 * get connection but actually we only need info about host
+					 */
+					$local = wfGetDB( DB_MASTER, [], $centralDB );
+					$server = $local->getLBInfo( 'host' );
+
+					try {
+						$dbw = new DatabaseMysqli( [
+							'host' => $server,
+							'user' => $wgDBadminuser,
+							'password' => $wgDBadminpassword,
+							'dbname' => $centralDB,
+						] );
+						$dbw->begin( __METHOD__ );
+						$dbw->query( "DROP DATABASE `{$row->city_dbname}`" );
+						$dbw->commit( __METHOD__ );
+						$this->info( "{$row->city_dbname} dropped from cluster {$cluster}" );
+					}
+					catch ( Exception $e ) {
+						$this->error( 'drop database failed', [
+							'cluster' => $cluster,
+							'dbname' => $row->city_dbname,
+							'exception' => $e,
+							'server' => $server,
+						] );
+					}
+
+					/**
+					 * update search index
+					 */
+					$indexer = new Wikia\Search\Indexer();
+					$indexer->deleteWikiDocs( $row->city_id );
+					$this->info( "Wiki documents removed from index" );
+
+					/**
+					 * let other extensions remove entries for closed wiki
+					 */
+					try {
+						Hooks::run( 'WikiFactoryDoCloseWiki', [ $row ] );
+					}
+					catch ( Exception $ex ) {
+						// SUS-4606 | catch exceptions instead of stopping the script
+						$this->error( 'WikiFactoryDoCloseWiki hook processing returned an error', [
+							'exception' => $ex,
+							'wiki_id' => (int)$row->city_id,
+						] );
+					}
+
+					/**
+					 * there is nothing to set because row in city_list doesn't
+					 * exists
+					 */
+					$newFlags = false;
+
 				} else {
-					$this->error( 'Wiki was already in archive', [
+					$this->error( 'Wiki shouldn\'t be deleted', [
 						'wiki_id' => (int)$row->city_id,
 					] );
 				}
-				$dbw = WikiFactory::db( DB_MASTER );
-				$dbw->delete( "city_list", [
-					"city_public" => [ 0, - 1 ],
-					"city_id" => $row->city_id,
-				], __METHOD__ );
-				// SUS-2374
-				$dbw->delete( "city_variables", [
-					"cv_city_id" => $row->city_id,
-				], __METHOD__ );
-				$this->info( "{$row->city_id} removed from WikiFactory tables" );
-
-				$this->cleanupSharedData( intval( $row->city_id ) );
-
-				/**
-				 * drop database, get db handler for proper cluster
-				 */ global $wgDBadminuser, $wgDBadminpassword;
-				$centralDB = empty( $cluster ) ? "wikicities" : "wikicities_{$cluster}";
-
-				/**
-				 * get connection but actually we only need info about host
-				 */
-				$local = wfGetDB( DB_MASTER, [], $centralDB );
-				$server = $local->getLBInfo( 'host' );
-
-				try {
-					$dbw = new DatabaseMysqli( [
-						'host' => $server,
-						'user' => $wgDBadminuser,
-						'password' => $wgDBadminpassword,
-						'dbname' => $centralDB,
-					] );
-					$dbw->begin( __METHOD__ );
-					$dbw->query( "DROP DATABASE `{$row->city_dbname}`" );
-					$dbw->commit( __METHOD__ );
-					$this->info( "{$row->city_dbname} dropped from cluster {$cluster}" );
-				}
-				catch ( Exception $e ) {
-					$this->error( 'drop database failed', [
-						'cluster' => $cluster,
-						'dbname' => $row->city_dbname,
-						'exception' => $e,
-						'server' => $server,
-					] );
-				}
-
-				/**
-				 * update search index
-				 */
-				$indexer = new Wikia\Search\Indexer();
-				$indexer->deleteWikiDocs( $row->city_id );
-				$this->info( "Wiki documents removed from index" );
-
-				/**
-				 * let other extensions remove entries for closed wiki
-				 */
-				try {
-					Hooks::run( 'WikiFactoryDoCloseWiki', [ $row ] );
-				}
-				catch ( Exception $ex ) {
-					// SUS-4606 | catch exceptions instead of stopping the script
-					$this->error( 'WikiFactoryDoCloseWiki hook processing returned an error', [
-						'exception' => $ex,
-						'wiki_id' => (int)$row->city_id,
-					] );
-				}
-
-				/**
-				 * there is nothing to set because row in city_list doesn't
-				 * exists
-				 */
-				$newFlags = false;
 			}
 			/**
 			 * reset flags, if database was dropped and data were removed from
