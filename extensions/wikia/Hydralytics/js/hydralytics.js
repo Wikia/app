@@ -187,9 +187,9 @@ $(function() {
 		for (var name in data) {
 			if (browsersMain.indexOf(name) !== -1) {
 				labels.push(name);
-				series.push(convertNumber(data[name]));
+				series.push(Number(data[name]));
 			} else {
-				otherTotal += convertNumber(data[name]);
+				otherTotal += Number(data[name]);
 			}
 		}
 
