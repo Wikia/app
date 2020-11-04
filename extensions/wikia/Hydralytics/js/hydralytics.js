@@ -446,7 +446,7 @@ $(function() {
 								  return previousValue + currentValue;
 								});
 								var currentValue = dataset.data[tooltipItem.index];
-								var precentage = Math.floor(((currentValue/total) * 100)+0.5);
+								var precentage = Math.floor(((Number(currentValue)/total) * 100)+0.5);
 
 								label += " (" + precentage + "%)";
 
