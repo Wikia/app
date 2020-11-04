@@ -5,7 +5,7 @@ use Wikia\Factory\ServiceFactory;
 use Wikia\FeedsAndPosts\Discussion\DiscussionGateway;
 use Wikia\FeedsAndPosts\Discussion\UserInfoHelper;
 
-class DiscussionPollController extends \WikiaController {
+class DiscussionPollController extends WikiaController {
 
 	/*** @var DiscussionGateway */
 	private $gateway;

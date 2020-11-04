@@ -19,6 +19,10 @@ $wgAutoloadClasses['DiscussionImagesController'] =  $dir . 'DiscussionImagesCont
 $wgAutoloadClasses['FeedsReportedPageController'] =  $dir . 'DiscussionModerationController.class.php';
 $wgAutoloadClasses['ReportDetailsHelper'] =  $dir . 'ReportDetailsHelper.class.php';
 $wgAutoloadClasses['LeaderboardHelper'] =  $dir . 'LeaderboardHelper.class.php';
+$wgAutoloadClasses['DiscussionCommonHooks'] =  $dir . 'DiscussionCommonHooks.class.php';
+$wgAutoloadClasses['TraceHeadersHelper'] =  $dir . 'TraceHeadersHelper.class.php';
+
+$wgHooks['GetUserTraceHeaders'][] = 'DiscussionCommonHooks::onGetUserTraceHeaders';
 
 $wgGroupPermissions['*']['discussionslog:view'] = false;
 $wgGroupPermissions['helper']['discussionslog:view'] = true;
