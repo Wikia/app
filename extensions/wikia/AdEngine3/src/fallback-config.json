@@ -1403,7 +1403,9 @@
                 "5514106943",
                 "5521893351",
                 "4511434999",
-                "5514603963"
+                "5514603963",
+                "5510530289",
+                "5510530292"
             ]
         }
     ],
@@ -1654,26 +1656,9 @@
                 "oasis"
             ],
             "regions": [
-                "AU",
-                "CA",
-                "PL",
-                "US-CA",
-                "US-PA"
-            ],
-            "value": "//static.wikia.nocookie.net/fandom-ae-assets/prebid.js/v3.27.1/20201022.min.js"
-        },
-        {
-            "apps": [
-                "futhead",
-                "gamepedia",
-                "mobile-wiki",
-                "muthead",
-                "oasis"
-            ],
-            "regions": [
                 "XX"
             ],
-            "value": "//static.wikia.nocookie.net/fandom-ae-assets/prebid.js/v3.23.0/20200630.min.js"
+            "value": "//static.wikia.nocookie.net/fandom-ae-assets/prebid.js/v3.27.1/20201022.min.js"
         }
     ],
     "icDurationMediaLibraryUrl": [
