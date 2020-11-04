@@ -73,6 +73,7 @@ class AdEngine3
 
 	public static function getContext( Title $title = null ) {
 		$wg = F::app()->wg;
+		$user = $wg->User;
 
 		if ($title === null) {
 			$title = $wg->Title;
@@ -82,7 +83,13 @@ class AdEngine3
 			'wgTitle' => $title,
 		] );
 
-		return $wrapper->wrap( function () use ( $title, $wg ) {
+		$userEmailHashes = [];
+
+		if ($user != null ) {
+			$userEmailHashes = self::getUserEmailHashes( $user );
+		}
+
+		return $wrapper->wrap( function () use ( $title, $wg, $userEmailHashes) {
 			$articleId = $title->getArticleId();
 
 			$adsDeciderService = new AdEngine3DeciderService();
@@ -123,6 +130,7 @@ class AdEngine3
 					'pageType' => $adPageTypeService->getPageType(),
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'noAdsReason' => $adsDeciderService->getNoAdsReason(),
+                    'userEmailHashes' => $userEmailHashes,
 				]),
 				'targeting' => array_filter([
 					'directedAtChildren' => AdTargeting::isDirectedAtChildren(),
@@ -164,4 +172,18 @@ class AdEngine3
 
 		return !file_exists( $mainFile );
 	}
+
+	private static function getUserEmailHashes(User $user ) {
+		$userEmail = $user->getEmail();
+		$emailHashes = [];
+
+		if ( !empty( $userEmail ) ) {
+			array_push( $emailHashes, md5( $userEmail ) );
+			array_push( $emailHashes, hash( 'sha1', $userEmail ) );
+			array_push( $emailHashes, hash( 'sha256', $userEmail ) );
+		}
+
+		return $emailHashes;
+	}
+
 }
