@@ -114,17 +114,16 @@ class Information {
 	 * Return the top view pages for this wiki.
 	 *
 	 * @access	public
-	 * @param int $limit
 	 * @return	array	Top Viewed Pages
 	 */
-	static public function getTopViewedPages($limit = 10) {
+	static public function getTopViewedPages() {
 		global $wgCityId;
 
-		$res = \Redshift::query(
-			'SELECT url, SUM(cnt) as views FROM wikianalytics.pageviews ' .
-			'WHERE wiki_id = :wiki_id AND url <> \'/\' AND url LIKE \'%/wiki/%\'  GROUP BY url ' .
-			'ORDER BY views DESC LIMIT :limit',
-			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
+		$res = \RDS::query(
+			'SELECT url, cnt as views FROM wikianalytics.viewedpages ' .
+			'WHERE wiki_id = :wiki_id  ' .
+			'ORDER BY views DESC',
+			[ ':wiki_id' => $wgCityId ]
 		);
 
 		$pageviews = [];
