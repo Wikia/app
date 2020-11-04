@@ -5,14 +5,9 @@ require_once( __DIR__ . '/../../../../lib/composer/autoload.php' );
 require_once( __DIR__ . '/../../../../maintenance/Maintenance.php' );
 require_once __DIR__ . '/gcs_bucket_remover.php';
 
-class RemoveWithEmptyDB extends Maintenance {
+class VerifyWithEmptyDB extends Maintenance {
 
 	use Wikia\Logger\Loggable;
-
-	// delete wikis after X days when we marked them to be deleted
-	const CLOSE_WIKI_DELAY = 30;
-
-	const IMAGE_ARCHIVE_SIZE_LIMIT_BYTES = 50 * 1024 * 1024 * 1024;
 
 	public function __construct() {
 		parent::__construct();
@@ -55,7 +50,6 @@ class RemoveWithEmptyDB extends Maintenance {
 		];
 
 		$where = [
-			"city_public" => [ WikiFactory::CLOSE_ACTION, WikiFactory::HIDE_ACTION ],
 			"city_flags <> 0",
 			sprintf( "city_flags <> %d", WikiFactory::FLAG_REDIRECT ),
 		];
@@ -92,14 +86,12 @@ class RemoveWithEmptyDB extends Maintenance {
 
 			$this->debug( "city_id={$row->city_id} city_cluster={$cluster} city_url={$row->city_url} city_dbname={$dbname} city_flags={$row->city_flags} city_public={$row->city_public} city_last_timestamp={$row->city_last_timestamp}" );
 
-			if ( $row->city_flags & WikiFactory::FLAG_DELETE_DB_IMAGES ||
-				 $row->city_flags & WikiFactory::FLAG_FREE_WIKI_URL ) {
-				$db = WikiFactory::IDtoDB($cityid);
-				try {
-					$dbr = wfGetDB(DB_REPLICA, [], $db);
-				} catch ( Exception $e ) {
-					fputcsv($fp, [$db, $cityid, WikiFactory::isInArchive($cityid)]);
-				}
+			$db = WikiFactory::IDtoDB($cityid);
+			try {
+				$dbr = wfGetDB(DB_REPLICA, [], $db);
+				$dbr->close();
+			} catch ( Exception $e ) {
+				fputcsv($fp, [$db, $cityid, WikiFactory::isInArchive($cityid)]);
 			}
 			/**
 			 * just one?
@@ -115,5 +107,5 @@ class RemoveWithEmptyDB extends Maintenance {
 	}
 }
 
-$maintClass = RemoveWithEmptyDB::class;
+$maintClass = VerifyWithEmptyDB::class;
 require_once( RUN_MAINTENANCE_IF_MAIN );
