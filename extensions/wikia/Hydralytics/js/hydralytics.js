@@ -189,7 +189,7 @@ $(function() {
 				labels.push(name);
 				series.push(data[name]);
 			} else {
-				otherTotal += convertNumber(data[name]);
+				otherTotal += Number(data[name]);
 			}
 		}
 
