@@ -187,7 +187,7 @@ $(function() {
 		for (var name in data) {
 			if (browsersMain.indexOf(name) !== -1) {
 				labels.push(name);
-				series.push(data[name]);
+				series.push(Number(data[name]));
 			} else {
 				otherTotal += Number(data[name]);
 			}
@@ -446,7 +446,7 @@ $(function() {
 								  return previousValue + currentValue;
 								});
 								var currentValue = dataset.data[tooltipItem.index];
-								var precentage = Math.floor(((Number(currentValue)/total) * 100)+0.5);
+								var precentage = Math.floor(((currentValue/total) * 100)+0.5);
 
 								label += " (" + precentage + "%)";
 
