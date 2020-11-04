@@ -18,7 +18,10 @@ class DiscussionsThreadModel {
 
 	// TODO: Consider changing this request to use Swagger when unblocked. See JPN-631
 	private function apiRequest( $url ) {
-		return json_decode( Http::get( $url, 'default', [ 'noProxy' => true ] ), true );
+		return json_decode( Http::get( $url, 'default', [
+			'noProxy' => true,
+			'headers' => [ WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1' ],
+		] ), true );
 	}
 
 	private function getDiscussionsApiUrl(): string {
@@ -27,7 +30,7 @@ class DiscussionsThreadModel {
 
 	private function getCategoryRequestUrl() {
 		return $this->getDiscussionsApiUrl() .
-			"/$this->cityId/forums?responseGroup=small&viewableOnly=true";
+			"/internal/$this->cityId/forums?responseGroup=small&viewableOnly=true";
 	}
 
 	/**

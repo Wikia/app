@@ -295,7 +295,16 @@ class WikiDetailsService extends WikiService {
 	 */
 	private function getDiscussionStats( int $id ): int {
 		$discussionsServiceUrl = ServiceFactory::instance()->providerFactory()->urlProvider()->getUrl( 'discussion' );
-		$response = Http::get( "http://$discussionsServiceUrl/$id/forums", 'default', [ 'noProxy' => true ] );
+		$response = Http::get(
+			"http://$discussionsServiceUrl/internal/$id/forums",
+			'default',
+			[
+				'noProxy' => true,
+				'headers' => [
+					WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1'
+				]
+			]
+		);
 
 		if ( $response === false ) {
 			return 0;
