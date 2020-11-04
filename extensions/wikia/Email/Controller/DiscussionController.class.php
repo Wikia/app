@@ -62,7 +62,7 @@ abstract class DiscussionController extends EmailController {
 		return $this->postContent;
 	}
 
-	private function getButtonText() {
+	protected function getButtonText() {
 		return $this->getMessage( 'emailext-discussion-button-text' )->text();
 	}
 
@@ -76,7 +76,7 @@ abstract class DiscussionController extends EmailController {
 		];
 	}
 
-	private function getDiscussionsLink() {
+	protected function getDiscussionsLink() {
 		return $this->wiki->city_url . 'f';
 	}
 
@@ -355,4 +355,73 @@ class DiscussionAtMentionController extends DiscussionController {
 
         return array_merge_recursive( parent::getEmailSpecificFormFields(), $formFields );
     }
+}
+
+class DiscussionArticleCommentController extends DiscussionController {
+	private $contentType;
+	private $articleTitle;
+	private $articleUrl;
+
+	const ARTICLE_COMMENT_REPLY = 'article-comment-reply';
+	const ARTICLE_COMMENT_AT_MENTION = 'article-comment-at-mention';
+	const ARTICLE_COMMENT_REPLY_AT_MENTION = 'article-comment-reply-at-mention';
+
+    public function initEmail() {
+    	// For AC related notifications, threadTitle means article title (comments don't have titles)
+		$this->articleTitle = $this->request->getVal( 'threadTitle' );
+		$this->articleUrl = $this->request->getVal( 'threadUrl' );
+		$this->contentType = $this->request->getVal( 'contentType' );
+
+		parent::initEmail();
+	}
+
+	protected function getSummary() {
+		return $this->getMessage(
+			$this->getTranslationKey(),
+			$this->getCurrentUserName(),
+			$this->getArticleTitleLink(),
+			$this->getWikiNameLink()
+		);
+	}
+
+	protected function getSubject() {
+		return $this->getMessage(
+			$this->getTranslationKey(),
+			$this->getCurrentUserName(),
+			$this->articleTitle,
+			$this->wiki->city_title
+		)->text();
+	}
+
+	protected function getContentFooterMessages() {
+    	return [
+    		$this->getMessage( 'emailext-discussion-view-all-comments', $this->articleUrl )
+		];
+	}
+
+	protected function getButtonText() {
+		return $this->getMessage( 'emailext-discussion-see-comment' )->text();
+	}
+
+	private function getArticleTitleLink() {
+    	return sprintf( '[%s %s]', $this->articleUrl, $this->articleTitle );
+	}
+
+	private function getWikiNameLink() {
+    	return sprintf( '[%s %s]', $this->wiki->city_url, $this->wiki->city_title );
+	}
+
+	private function getTranslationKey() {
+    	// TODO: Follower email - update following (or discussion) pandora service to send out notifications for followers
+    	switch ( $this->contentType ) {
+			case self::ARTICLE_COMMENT_AT_MENTION:
+				return 'emailext-article-comment-at-mention';
+			case self::ARTICLE_COMMENT_REPLY_AT_MENTION:
+				return 'emailext-article-comment-reply-at-mention';
+			case self::ARTICLE_COMMENT_REPLY:
+				return 'emailext-article-comment-reply';
+			default:
+				throw new Check( 'Incorrect contentType "' . $this->contentType . '"' );
+		}
+	}
 }
