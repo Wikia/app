@@ -1,5 +1,5 @@
 # Wikia MediaWiki app [![Build Status](https://travis-ci.org/Wikia/app.svg?branch=dev)](https://travis-ci.org/Wikia/app)
-## About this repository
+## About this repository 
 This is the source code of [FANDOM's](http://fandom.wikia.com/explore) custom MediaWiki 1.19 installation, including extensions.
 As it is not designed to be portable, it is not considered to be suitable for external use, and we cannot offer support for such use cases. If you are looking to install MediaWiki for yourself, you can grab the latest version from [their official website](https://www.mediawiki.org), and extend it with [third-party extensions](https://www.mediawiki.org/wiki/Manual:Extensions).
 
