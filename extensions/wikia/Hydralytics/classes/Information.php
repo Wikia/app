@@ -188,7 +188,7 @@ class Information {
 		global $wgCityId;
 
 		// by browser
-		$res = \RDS::query(
+		$res = \Redshift::query(
 			'SELECT browser, SUM(cnt) AS views FROM wikianalytics.sessions ' .
 			'WHERE wiki_id = :wiki_id GROUP BY browser ' .
 			'ORDER BY views DESC LIMIT :limit',
