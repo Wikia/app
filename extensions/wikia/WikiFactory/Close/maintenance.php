@@ -91,6 +91,7 @@ class CloseWikiMaintenance extends Maintenance {
 			"city_flags <> 0",
 			sprintf( "city_flags <> %d", WikiFactory::FLAG_REDIRECT ),
 			"city_last_timestamp < '{$timestamp}'",
+			"city_id" => 1692447,
 		];
 
 		if ( $cluster !== false ) {
@@ -210,8 +211,13 @@ class CloseWikiMaintenance extends Maintenance {
 				 * be always true there but better safe than sorry
 				 */
 				$this->info( "Cleaning the shared database" );
-
-				WikiFactory::copyToArchive( $row->city_id );
+				if ( !WikiFactory::isInArchive( $row->city_id ) ){
+					WikiFactory::copyToArchive( $row->city_id );
+				} else {
+					$this->error( 'Wiki was already in archive', [
+						'wiki_id' => (int)$row->city_id,
+					] );
+				}
 				$dbw = WikiFactory::db( DB_MASTER );
 				$dbw->delete( "city_list", [
 					"city_public" => [ 0, - 1 ],

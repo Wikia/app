@@ -2611,8 +2611,7 @@ class WikiFactory {
 					"city_flags"			 => $wiki->city_flags,
 					"city_cluster"			 => $wiki->city_cluster
 				],
-				__METHOD__,
-				[ "IGNORE" ]
+				__METHOD__
 			);
 
 			/**
