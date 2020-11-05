@@ -29,11 +29,11 @@ class Information {
 	static public function getEditsLoggedInOut($days = self::LAST_DAYS) {
 		global $wgCityId;
 
-		$res = \Redshift::query(
+		$res = \RDS::query(
 			'SELECT dt, COUNT(*) AS total_edits, ' .
 			'SUM(case when user_id = 0 then 1 else 0 end) as edits_anons ' . '
 			 FROM wikianalytics.edits ' .
-			'WHERE wiki_id = :wiki_id GROUP BY dt ' .
+			"WHERE wiki_id = :wiki_id GROUP BY dt " .
 			'ORDER BY dt DESC LIMIT :days',
 			[ ':wiki_id' => $wgCityId, ':days' => $days ]
 		);
@@ -42,13 +42,13 @@ class Information {
 		$edits_anons = self::initResultsArray();
 		$edits_total = self::initResultsArray();
 
-		foreach($res as $row) {
+		foreach ( $res as $row ) {
 			$index = strtotime( $row->dt );
 
 			// e.g. 2019-06-03 -> 128, 2
-			$edits_logged_in[ $index ] = $row->total_edits -  $row->edits_anons;
-			$edits_anons[ $index ]     = $row->edits_anons;
-			$edits_total[ $index ]     = $row->total_edits;
+			$edits_logged_in[ $index ] = $row->total_edits - $row->edits_anons;
+			$edits_anons[ $index ] = $row->edits_anons;
+			$edits_total[ $index ] = $row->total_edits;
 		}
 
 		return [
