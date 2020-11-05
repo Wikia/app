@@ -29,7 +29,7 @@ In order to run service locally you need to configure hosts. Add below line to `
 127.0.0.1	wikia-local.com dev.wikia-local.com muppet.dev.wikia-local.com
 ```
 
-## Deploy Pipeline
+## Deploy Pipeline (deprecated)
 
 This section describe how to deploy mediawiki to various environments, how they work and how to introduce changes to it.
 
@@ -37,7 +37,7 @@ There are 2 main parts of all deployments:
 1. Jenkins job that is defined in jenkins-jobs repository that accepts needed parameters to deploy to a given environment
 2. a jenkins file that is in this repo that is being executed by Jenkins as a pipeline job
 
-### How to deploy to sandbox
+### How to deploy to sandbox (deprecated)
 
 1. Open [mediawiki-deploy-sandbox](http://jenkins.wikia-prod:8080/blue/organizations/jenkins/mediawiki-deploy-sandbox/activity)
 2. Press run button, fill in the form and submit the form
