@@ -68,6 +68,15 @@ class LinkHelper {
 		return $this->buildLink( $uri, $controllerQueryParams );
 	}
 
+	public function buildPostsLink( Uri $uri, IContextSource $requestContext ): string {
+		$controllerQueryParams = [
+			'controller' => 'DiscussionPost',
+			'method' => 'getPosts',
+		];
+
+		return $this->buildLink( $uri, $controllerQueryParams );
+	}
+
 	private function buildLink( Uri $uri, array $controllerQueryParams ) {
 		foreach ( parse_query( $uri->getQuery() ) as $paramName => $value ) {
 			$controllerQueryParams[$paramName] = $value;

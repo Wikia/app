@@ -351,6 +351,104 @@ class DiscussionGateway {
 		} );
 	}
 
+	public function updatePost( int $userId, $postId, string $payload, array $queryParams, array $traceHeaders ) {
+		return $this->makeCall( function () use ( $userId, $postId, $payload, $queryParams, $traceHeaders ) {
+			return $this->httpClient->post(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/posts/{$postId}",
+				[
+					RequestOptions::HEADERS => [
+					   	WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+					   	Constants::HELIOS_AUTH_HEADER => $userId,
+					   	'Content-Type' => 'application/json'
+				   	] + $traceHeaders,
+					RequestOptions::QUERY => $queryParams,
+					RequestOptions::BODY => $payload,
+					RequestOptions::TIMEOUT => self::API_TIMEOUT,
+				] );
+		} );
+	}
+
+	public function createPost( int $userId, string $payload, array $queryParams, array $traceHeaders ) {
+		return $this->makeCall( function () use ( $userId, $payload, $queryParams, $traceHeaders ) {
+			return $this->httpClient->post(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/posts",
+				[
+					RequestOptions::HEADERS => [
+					   	WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+					   	Constants::HELIOS_AUTH_HEADER => $userId,
+					   	'Content-Type' => 'application/json'
+				   	] + $traceHeaders,
+					RequestOptions::QUERY => $queryParams,
+					RequestOptions::BODY => $payload,
+					RequestOptions::TIMEOUT => self::API_TIMEOUT,
+				] );
+		} );
+	}
+
+	public function deletePost( int $userId, $postId, array $queryParams, array $traceHeaders ) {
+		return $this->makeCall( function () use ( $userId, $postId, $queryParams, $traceHeaders ) {
+			return $this->httpClient->put(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/posts/{$postId}/delete",
+				[
+					RequestOptions::HEADERS => [
+					   	WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+					   	Constants::HELIOS_AUTH_HEADER => $userId,
+					   	'Content-Type' => 'application/json'
+				   	] + $traceHeaders,
+					RequestOptions::QUERY => $queryParams,
+					RequestOptions::TIMEOUT => self::API_TIMEOUT,
+				] );
+		} );
+	}
+
+	public function undeletePost( int $userId, $postId, array $queryParams, array $traceHeaders ) {
+		return $this->makeCall( function () use ( $userId, $postId, $queryParams, $traceHeaders ) {
+			return $this->httpClient->put(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/posts/{$postId}/undelete",
+				[
+					RequestOptions::HEADERS => [
+					   	WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+					   	Constants::HELIOS_AUTH_HEADER => $userId,
+					   	'Content-Type' => 'application/json'
+				   	] + $traceHeaders,
+					RequestOptions::QUERY => $queryParams,
+					RequestOptions::TIMEOUT => self::API_TIMEOUT,
+				] );
+		} );
+	}
+
+	public function getPost( int $userId, string $postId, array $queryParams ) {
+		return $this->makeCall( function () use ( $userId, $postId, $queryParams ) {
+			return $this->httpClient->get(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/posts/{$postId}",
+				[
+					RequestOptions::HEADERS => [
+				   		WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+				   		Constants::HELIOS_AUTH_HEADER => $userId,
+				   		'Content-Type' => 'application/json'
+			   		],
+					RequestOptions::QUERY => $queryParams,
+					RequestOptions::TIMEOUT => self::API_TIMEOUT,
+				] );
+		} );
+	}
+
+	public function getPosts( int $userId, array $queryParams ) {
+		return $this->makeCall( function () use ( $userId, $queryParams ) {
+			return $this->httpClient->get(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/posts",
+				[
+					RequestOptions::HEADERS => [
+					   	WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+					   	Constants::HELIOS_AUTH_HEADER => $userId,
+					   	'Content-Type' => 'application/json'
+				   	],
+					RequestOptions::QUERY => $queryParams,
+					RequestOptions::TIMEOUT => self::API_TIMEOUT,
+				] );
+		} );
+	}
+
 	private function makeCall( callable $callback ): array {
 		try {
 			$response = $callback();
