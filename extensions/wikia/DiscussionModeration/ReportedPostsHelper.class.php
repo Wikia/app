@@ -56,6 +56,14 @@ class ReportedPostsHelper {
 					$uri = new Uri( $post['_links']['permalink'][0]['href'] );
 					$post['_links']['permalink'][0]['href'] = $this->buildPermalink( $uri );
 				}
+				if ( isset( $post['_links']['up'][0]['href'] ) ) {
+					$uri = new Uri( $post['_links']['up'][0]['href'] );
+					$post['_links']['up'][0]['href'] = $this->buildThreadLink( $uri );
+				}
+				if ( isset( $post['_links']['self']['href'] ) ) {
+					$uri = new Uri( $post['_links']['self']['href'] );
+					$post['_links']['self']['href'] = $this->buildPostLink( $uri );
+				}
 			}
 		}
 	}
@@ -81,6 +89,40 @@ class ReportedPostsHelper {
 		$controllerQueryParams = [
 			'controller' => 'DiscussionPermalink',
 			'method' => 'getThreadByPostId',
+			'postId' => $postId
+		];
+
+		foreach ( parse_query( $uri->getQuery() ) as $paramName => $value ) {
+			$controllerQueryParams[$paramName] = $value;
+		}
+
+		return $this->baseDomain . $this->scriptPath . '/wikia.php?' . build_query( $controllerQueryParams );
+	}
+
+	private function buildThreadLink( Uri $uri ) {
+		$urlParts = explode( "/", $uri->getPath() );
+		$threadId = end( $urlParts );
+
+		$controllerQueryParams = [
+			'controller' => 'DiscussionThread',
+			'method' => 'getThread',
+			'threadId' => $threadId
+		];
+
+		foreach ( parse_query( $uri->getQuery() ) as $paramName => $value ) {
+			$controllerQueryParams[$paramName] = $value;
+		}
+
+		return $this->baseDomain . $this->scriptPath . '/wikia.php?' . build_query( $controllerQueryParams );
+	}
+
+	private function buildPostLink( Uri $uri ) {
+		$urlParts = explode( "/", $uri->getPath() );
+		$postId = end( $urlParts );
+
+		$controllerQueryParams = [
+			'controller' => 'DiscussionPost',
+			'method' => 'getPost',
 			'postId' => $postId
 		];
 
