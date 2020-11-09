@@ -98,7 +98,9 @@ class ReportedPostsHelper {
 			$controllerQueryParams[$paramName] = $value;
 		}
 
-		return $this->baseDomain . $this->scriptPath . '/wikia.php?' . build_query( $controllerQueryParams );
+		return $this->toHttps(
+			$this->baseDomain . $this->scriptPath . '/wikia.php?' . build_query( $controllerQueryParams )
+		);
 	}
 
 	private function buildThreadLink( Uri $uri ) {
