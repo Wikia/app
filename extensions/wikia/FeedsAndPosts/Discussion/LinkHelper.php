@@ -73,6 +73,12 @@ class LinkHelper {
 			$controllerQueryParams[$paramName] = $value;
 		}
 
-		return $this->baseDomain . $this->scriptPath . '/wikia.php?' . build_query( $controllerQueryParams );
+		return $this->toHttps(
+			$this->baseDomain . $this->scriptPath . '/wikia.php?' . build_query( $controllerQueryParams )
+		);
+	}
+
+	private function toHttps( $url ) {
+		return preg_replace( "/^http:/i", "https:", $url );
 	}
 }
