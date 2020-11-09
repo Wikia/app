@@ -20,14 +20,11 @@ class VerifyWithEmptyDB extends Maintenance {
 	}
 
 	/**
-	 * 1. go through all wikis which are marked for closing and check which one
-	 *    want to have images packed.
+	 * 1. go through all wikis
 	 *
-	 * 2. pack images, send them via rsync to  target server,
+	 * 2. find wikis without db
 	 *
-	 * 3. mark in city_list.city_flags that images are sent,
-	 *
-	 * 4. remove images
+	 * 3. save to CSV file in tmp dir
 	 *
 	 * @access public
 	 * @throws DBUnexpectedError

@@ -202,6 +202,7 @@ class CloseWikiMaintenance extends Maintenance {
 			}
 			if ( $row->city_flags & WikiFactory::FLAG_DELETE_DB_IMAGES ||
 				 $row->city_flags & WikiFactory::FLAG_FREE_WIKI_URL ) {
+				//We need to check if wiki is still marked for close PLATFORM-5181
 				$where["city_id"] = $cityid;
 				$sth = $dbr->select( [ "city_list" ], [
 					"city_id",
