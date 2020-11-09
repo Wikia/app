@@ -99,8 +99,8 @@ resources/Ace/*     @Wikia/core-team
 #
 # The Data Engineering team (aka DataEng) 
 #
-includes/wikia/api/CrossWikiArticlesApiController.class.php		@Wikia/data-engineering
-includes/wikia/api/DWDimensionApiController.class.php    @Wikia/data-engineering
-includes/wikia/api/DWDimensionApiControllerSQL.class.php    @Wikia/data-engineering
-extensions/wikia/DataWarehouse/*    @Wikia/data-engineering
-extensions/wikia/Hydralytics/*    @Wikia/data-engineering
+includes/wikia/api/CrossWikiArticlesApiController.class.php		@Wikia/dataeng
+includes/wikia/api/DWDimensionApiController.class.php    @Wikia/dataeng
+includes/wikia/api/DWDimensionApiControllerSQL.class.php    @Wikia/dataeng
+extensions/wikia/DataWarehouse/*    @Wikia/dataeng
+extensions/wikia/Hydralytics/*    @Wikia/dataeng
