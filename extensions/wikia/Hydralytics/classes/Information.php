@@ -31,9 +31,9 @@ class Information {
 
 		$res = \RDS::query(
 			'SELECT dt, COUNT(*) AS total_edits, ' .
-			'SUM(case when user_id = 0 then 1 else 0 end) as edits_anons ' . '
-			 FROM wikianalytics.edits ' .
-			"WHERE wiki_id = :wiki_id GROUP BY dt " .
+			'SUM(case when user_id = 0 then 1 else 0 end) as edits_anons ' .
+			'FROM wikianalytics.edits ' .
+			'WHERE wiki_id = :wiki_id GROUP BY dt ' .
 			'ORDER BY dt DESC LIMIT :days',
 			[ ':wiki_id' => $wgCityId, ':days' => $days ]
 		);
