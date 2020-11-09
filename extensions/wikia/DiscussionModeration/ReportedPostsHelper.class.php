@@ -115,7 +115,9 @@ class ReportedPostsHelper {
 			$controllerQueryParams[$paramName] = $value;
 		}
 
-		return $this->baseDomain . $this->scriptPath . '/wikia.php?' . build_query( $controllerQueryParams );
+		return $this->toHttps(
+			$this->baseDomain . $this->scriptPath . '/wikia.php?' . build_query( $controllerQueryParams )
+		);
 	}
 
 	private function buildPostLink( Uri $uri ) {
@@ -126,25 +128,6 @@ class ReportedPostsHelper {
 			'controller' => 'DiscussionPost',
 			'method' => 'getPost',
 			'postId' => $postId
-		];
-
-		foreach ( parse_query( $uri->getQuery() ) as $paramName => $value ) {
-			$controllerQueryParams[$paramName] = $value;
-		}
-
-		return $this->toHttps(
-			$this->baseDomain . $this->scriptPath . '/wikia.php?' . build_query( $controllerQueryParams )
-		);
-	}
-
-	private function buildThreadLink( Uri $uri ) {
-		$urlParts = explode( "/", $uri->getPath() );
-		$threadId = end( $urlParts );
-
-		$controllerQueryParams = [
-			'controller' => 'DiscussionThread',
-			'method' => 'getThread',
-			'threadId' => $threadId
 		];
 
 		foreach ( parse_query( $uri->getQuery() ) as $paramName => $value ) {
