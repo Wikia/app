@@ -101,7 +101,7 @@ class DiscussionPostController extends WikiaController {
 		[ 'statusCode' => $statusCode, 'body' => $body ] =
 			$this->gateway->createPost( $user->getId(), $payload, $queryParams, $traceHeaders );
 
-		if ( $statusCode === 200 ) {
+		if ( $statusCode === 201 ) {
 			$body = $this->addBadgesAndPermissions( $body, $user );
 			$body = $this->mapPermalinks( $body, $this->getContext() );
 		}
@@ -342,7 +342,7 @@ class DiscussionPostController extends WikiaController {
 	}
 
 	private function mapPermalinks( array $body, IContextSource $requestContext ): array {
-		if ( isset( $body['_links']['permalink'] ) ) {
+		if ( isset( $body['_links']['permalink'][0] ) ) {
 			$uri = new Uri( $body['_links']['permalink'][0]['href'] );
 			$body['_links']['permalink'][0]['href'] =
 				$this->linkHelper->buildPermalink( $uri, $requestContext );

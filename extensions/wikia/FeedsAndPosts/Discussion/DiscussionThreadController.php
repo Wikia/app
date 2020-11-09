@@ -204,7 +204,7 @@ class DiscussionThreadController extends WikiaController {
 		[ 'statusCode' => $statusCode, 'body' => $body ] =
 			$this->gateway->createThread( $user->getId(), $forumId, $payload, $queryParams, $traceHeaders );
 
-		if ( $statusCode === 200 ) {
+		if ( $statusCode === 201 ) {
 			$body = $this->addBadgesAndPermissions( $body, $user );
 			$body = $this->mapThreadLinks( $body, $this->getContext() );
 			$body = $this->mapPermalinks( $body, $this->getContext() );
