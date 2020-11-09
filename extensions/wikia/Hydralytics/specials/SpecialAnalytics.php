@@ -145,7 +145,6 @@ class SpecialAnalytics extends \SpecialPage {
 					$geolocation = Information::getGeolocation();
 					$sections['geolocation'] = TemplateAnalytics::wrapSectionData('geolocation', $geolocation);
 					$countries = \CountryNames::getNames($wgLang->getCode());
-					//arsort($geolocation['sessions']);
 					if (isset($geolocation['pageviews'])) {
 						$sections['geolocation'] = "
 					<table class=\"analytics_table\">
@@ -157,11 +156,11 @@ class SpecialAnalytics extends \SpecialPage {
 						</thead>
 						<tbody>
 						";
-						foreach ($geolocation['pageviews'] as $location => $sessions) {
+						foreach ($geolocation['pageviews'] as $location => $pageviews) {
 							$sections['geolocation'] .= "
 							<tr>
 								<td>" . $countries[$location] . "</td>
-								<td>" . $this->getLanguage()->formatNum($sessions) . "</td>
+								<td>" . $this->getLanguage()->formatNum($pageviews) . "</td>
 							</tr>";
 						}
 						$sections['geolocation'] .= "

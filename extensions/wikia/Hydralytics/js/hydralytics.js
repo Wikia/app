@@ -2,9 +2,9 @@ $(function() {
 
 	// Line Charts
 	var chartColor = {
-		background: '#00D6D6', 
+		background: '#00D6D6',
 		border: '#00D6D6',// '#212121',
-		background2: '#002A32', 
+		background2: '#002A32',
 		border2: '#002A32'
 	};
 	// Pie Charts
@@ -87,7 +87,7 @@ $(function() {
 			}
 		});
 
-		var ctx = chartSelector(selector); 
+		var ctx = chartSelector(selector);
 		var chart = new Chart(ctx, config);
 
 	}
@@ -125,7 +125,7 @@ $(function() {
 				}
 			}
 		};
-		var ctx = chartSelector(selector); 
+		var ctx = chartSelector(selector);
 		var chart = new Chart(ctx, chartConfigHelper('pie', config));
 	}
 
@@ -156,7 +156,7 @@ $(function() {
 				}]
 			}
 		};
-		var ctx = chartSelector(selector); 
+		var ctx = chartSelector(selector);
 		var chart = new Chart(ctx, chartConfigHelper('pie', config));
 	}
 
@@ -187,9 +187,9 @@ $(function() {
 		for (var name in data) {
 			if (browsersMain.indexOf(name) !== -1) {
 				labels.push(name);
-				series.push(data[name]);
+				series.push(Number(data[name]));
 			} else {
-				otherTotal += data[name];
+				otherTotal += Number(data[name]);
 			}
 		}
 
@@ -205,7 +205,7 @@ $(function() {
 				}]
 			}
 		};
-		var ctx = chartSelector(selector); 
+		var ctx = chartSelector(selector);
 		var chart = new Chart(ctx, chartConfigHelper('pie', config));
 	}
 
@@ -248,7 +248,7 @@ $(function() {
 			}
 		});
 
-		var ctx = chartSelector(selector); 
+		var ctx = chartSelector(selector);
 		var chart = new Chart(ctx, config);
 
 	}
@@ -305,7 +305,7 @@ $(function() {
 			}
 		});
 
-		var ctx = chartSelector(selector); 
+		var ctx = chartSelector(selector);
 		var chart = new Chart(ctx, config);
 	}
 
@@ -364,7 +364,7 @@ $(function() {
 				}
 			}
 		};
-		var ctx = chartSelector(selector); 
+		var ctx = chartSelector(selector);
 		var chart = new Chart(ctx, chartConfigHelper('pie', config));
 	}
 
@@ -436,7 +436,7 @@ $(function() {
 								}
 								if (label) {
 									label += ': ';
-								}  
+								}
 
 								var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
 								label += convertNumber(value);
@@ -453,7 +453,7 @@ $(function() {
 								return label;
 							  }
 							}
-						  } 
+						  }
 					}
 				}
 			/************************************/
@@ -477,7 +477,7 @@ $(function() {
 									}
 									if (label) {
 										label += ': ';
-									   }  
+									   }
 									var value = data.datasets[tooltipItem.datasetIndex].data[tooltipItem.index];
 									label += convertNumber(value);
 									return label;
@@ -505,7 +505,7 @@ $(function() {
 									callback: function(value, index, values) {
 										/* Locaization of yAxis ticks on line charts */
 										return convertNumber(value);
-								   }                            
+								   }
 								}
 							}]
 						}
