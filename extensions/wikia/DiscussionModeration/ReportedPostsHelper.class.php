@@ -60,6 +60,10 @@ class ReportedPostsHelper {
 					$uri = new Uri( $post['_links']['up'][0]['href'] );
 					$post['_links']['up'][0]['href'] = $this->buildThreadLink( $uri );
 				}
+				if ( isset( $post['_links']['self']['href'] ) ) {
+					$uri = new Uri( $post['_links']['self']['href'] );
+					$post['_links']['self']['href'] = $this->buildPostLink( $uri );
+				}
 			}
 		}
 	}
@@ -107,6 +111,25 @@ class ReportedPostsHelper {
 			'controller' => 'DiscussionThread',
 			'method' => 'getThread',
 			'threadId' => $threadId
+		];
+
+		foreach ( parse_query( $uri->getQuery() ) as $paramName => $value ) {
+			$controllerQueryParams[$paramName] = $value;
+		}
+
+		return $this->toHttps(
+			$this->baseDomain . $this->scriptPath . '/wikia.php?' . build_query( $controllerQueryParams )
+		);
+	}
+
+	private function buildPostLink( Uri $uri ) {
+		$urlParts = explode( "/", $uri->getPath() );
+		$postId = end( $urlParts );
+
+		$controllerQueryParams = [
+			'controller' => 'DiscussionPost',
+			'method' => 'getPost',
+			'postId' => $postId
 		];
 
 		foreach ( parse_query( $uri->getQuery() ) as $paramName => $value ) {
