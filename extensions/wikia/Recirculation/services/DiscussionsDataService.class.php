@@ -59,10 +59,13 @@ class DiscussionsDataService {
 		$options = [
 			'sortKey' => $sortKey,
 		];
-		$endpoint = $this->cityId . '/threads';
+		$endpoint = 'internal/' . $this->cityId . '/threads';
 
 		$url = $this->buildUrl( $endpoint, $options );
-		$data = Http::get( $url, 'default', [ 'noProxy' => true ] );
+		$data = Http::get( $url, 'default', [
+			'noProxy' => true,
+			'headers' => [ WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1' ],
+		] );
 
 		return json_decode( $data, true );
 	}
