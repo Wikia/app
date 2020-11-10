@@ -59,7 +59,7 @@ class DiscussionsDataService {
 		$options = [
 			'sortKey' => $sortKey,
 		];
-		$endpoint = '/internal/' . $this->cityId . '/threads';
+		$endpoint = 'internal/' . $this->cityId . '/threads';
 
 		$url = $this->buildUrl( $endpoint, $options );
 		$data = Http::get( $url, 'default', [
