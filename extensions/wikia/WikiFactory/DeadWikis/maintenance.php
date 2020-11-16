@@ -391,11 +391,14 @@ class AutomatedDeadWikisDeletionMaintenance {
 	private function getMostRecentPostForSite($siteId) {
 		$apiClient = $this->getSitesApi()->getApiClient();
 
-		$resourcePathTemplate = "/{siteId}/posts";
+		$resourcePathTemplate = "/internal/{siteId}/posts";
 		$httpBody = '';
 
 		// header params
-		$headerParams = ['Content-Type' => $apiClient->selectHeaderContentType(array('application/json'))];
+		$headerParams = [
+			'Content-Type' => $apiClient->selectHeaderContentType(array('application/json')),
+			WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1'
+		];
 
 		$headerAccept = $apiClient->selectHeaderAccept(array('application/hal+json'));
 		if (!is_null($headerAccept)) {

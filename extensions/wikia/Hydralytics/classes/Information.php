@@ -29,10 +29,10 @@ class Information {
 	static public function getEditsLoggedInOut($days = self::LAST_DAYS) {
 		global $wgCityId;
 
-		$res = \Redshift::query(
+		$res = \RDS::query(
 			'SELECT dt, COUNT(*) AS total_edits, ' .
-			'SUM(case when user_id = 0 then 1 else 0 end) as edits_anons ' . '
-			 FROM wikianalytics.edits ' .
+			'SUM(case when user_id = 0 then 1 else 0 end) as edits_anons ' .
+			'FROM wikianalytics.edits ' .
 			'WHERE wiki_id = :wiki_id GROUP BY dt ' .
 			'ORDER BY dt DESC LIMIT :days',
 			[ ':wiki_id' => $wgCityId, ':days' => $days ]
@@ -42,13 +42,13 @@ class Information {
 		$edits_anons = self::initResultsArray();
 		$edits_total = self::initResultsArray();
 
-		foreach($res as $row) {
+		foreach ( $res as $row ) {
 			$index = strtotime( $row->dt );
 
 			// e.g. 2019-06-03 -> 128, 2
-			$edits_logged_in[ $index ] = $row->total_edits -  $row->edits_anons;
-			$edits_anons[ $index ]     = $row->edits_anons;
-			$edits_total[ $index ]     = $row->total_edits;
+			$edits_logged_in[ $index ] = $row->total_edits - $row->edits_anons;
+			$edits_anons[ $index ] = $row->edits_anons;
+			$edits_total[ $index ] = $row->total_edits;
 		}
 
 		return [
@@ -94,9 +94,9 @@ class Information {
 	static public function getGeolocation($limit = 10) {
 		global $wgCityId;
 
-		$res = \Redshift::query(
-			'SELECT country, SUM(cnt) as views FROM wikianalytics.sessions ' .
-			'WHERE wiki_id = :wiki_id GROUP BY country ' .
+		$res = \RDS::query(
+			'SELECT country, cnt as views FROM wikianalytics.geolocation ' .
+			'WHERE wiki_id = :wiki_id ' .
 			'ORDER BY views DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
 		);
@@ -114,17 +114,16 @@ class Information {
 	 * Return the top view pages for this wiki.
 	 *
 	 * @access	public
-	 * @param int $limit
 	 * @return	array	Top Viewed Pages
 	 */
-	static public function getTopViewedPages($limit = 10) {
+	static public function getTopViewedPages() {
 		global $wgCityId;
 
-		$res = \Redshift::query(
-			'SELECT url, SUM(cnt) as views FROM wikianalytics.pageviews ' .
-			'WHERE wiki_id = :wiki_id AND url <> \'/\' AND url LIKE \'%/wiki/%\'  GROUP BY url ' .
-			'ORDER BY views DESC LIMIT :limit',
-			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
+		$res = \RDS::query(
+			'SELECT url, cnt as views FROM wikianalytics.viewedpages ' .
+			'WHERE wiki_id = :wiki_id  ' .
+			'ORDER BY views DESC',
+			[ ':wiki_id' => $wgCityId ]
 		);
 
 		$pageviews = [];

@@ -70,7 +70,7 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 			};
 
 			this.onScroll = function (event) {
-				if (this._hasAlmostScrolledToTheBottom($(event.target))) {
+				if (this._hasAlmostScrolledToTheBottom($(event.currentTarget))) {
 					this.onLoadMore.notify();
 				}
 			};
@@ -78,6 +78,7 @@ define('ext.wikia.design-system.on-site-notifications.view', [
 			this.onMouseWheel = function (event) {
 				var delta = -event.originalEvent.wheelDelta || event.originalEvent.detail,
 					scrollTop = this.scrollTop;
+
 				if ((delta < 0 && scrollTop === 0)
 					|| (delta > 0 && this.scrollHeight - this.clientHeight - scrollTop === 0)) {
 					event.preventDefault();

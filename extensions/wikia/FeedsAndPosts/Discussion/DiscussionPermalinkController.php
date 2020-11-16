@@ -3,9 +3,9 @@
 use GuzzleHttp\Client;
 use GuzzleHttp\Psr7\Uri;
 use Wikia\Factory\ServiceFactory;
-use Wikia\FeedsAndPosts\Discussion\PermissionsHelper;
-use Wikia\FeedsAndPosts\Discussion\LinkHelper;
 use Wikia\FeedsAndPosts\Discussion\DiscussionGateway;
+use Wikia\FeedsAndPosts\Discussion\LinkHelper;
+use Wikia\FeedsAndPosts\Discussion\PermissionsHelper;
 use Wikia\FeedsAndPosts\Discussion\QueryParamsHelper;
 
 class DiscussionPermalinkController extends WikiaController {
@@ -146,8 +146,10 @@ class DiscussionPermalinkController extends WikiaController {
 	private function addPermissions( array &$body, User $user ) {
 		$body = PermissionsHelper::applyPermissionsForPost( $body, $body, $user );
 
-		foreach ( $body['_embedded']['doc:posts'] as &$postData ) {
-			$postData = PermissionsHelper::applyPermissionsForPost( $postData, $body, $user );
+		if ( isset( $body['_embedded']['doc:posts'] ) ) {
+			foreach ( $body['_embedded']['doc:posts'] as &$postData ) {
+				$postData = PermissionsHelper::applyPermissionsForPost( $postData, $body, $user );
+			}
 		}
 
 		$body['_embedded']['firstPost'][0] = PermissionsHelper::applyPermissionsForPost(
@@ -160,11 +162,13 @@ class DiscussionPermalinkController extends WikiaController {
 	}
 
 	private function mapLinks( array &$body, IContextSource $requestContext ) {
-		foreach ( $body['_embedded']['doc:posts'] as &$post ) {
-			if ( isset( $post['_links']['permalink'][0]['href'] ) ) {
-				$uri = new Uri( $post['_links']['permalink'][0]['href'] );
-				$post['_links']['permalink'][0]['href'] =
-					$this->linkHelper->buildPermalink( $uri, $requestContext );
+		if ( isset( $body['_embedded']['doc:posts'] ) ) {
+			foreach ( $body['_embedded']['doc:posts'] as &$post ) {
+				if ( isset( $post['_links']['permalink'][0]['href'] ) ) {
+					$uri = new Uri( $post['_links']['permalink'][0]['href'] );
+					$post['_links']['permalink'][0]['href'] =
+						$this->linkHelper->buildPermalink( $uri, $requestContext );
+				}
 			}
 		}
 
@@ -172,6 +176,13 @@ class DiscussionPermalinkController extends WikiaController {
 			$uri = new Uri( $body['_embedded']['firstPost'][0]['_links']['permalink'][0]['href'] );
 			$body['_embedded']['firstPost'][0]['_links']['permalink'][0]['href'] =
 				$this->linkHelper->buildPermalink( $uri, $requestContext );
+		}
+
+		if ( isset( $body['_links'] ) ) {
+			foreach ( $body['_links'] as &$link ) {
+				$uri = new Uri( $link[0]['href'] );
+				$link[0]['href'] = $this->linkHelper->buildThreadLink( $uri, $requestContext );
+			}
 		}
 
 		return $body;

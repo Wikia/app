@@ -44,6 +44,7 @@ use \Swagger\Client\Configuration;
 use \Swagger\Client\ApiClient;
 use \Swagger\Client\ApiException;
 use \Swagger\Client\ObjectSerializer;
+use WebRequest;
 
 /**
  * ContributionApi Class Doc Comment
@@ -248,7 +249,7 @@ class ContributionApi
             throw new \InvalidArgumentException('Missing the required parameter $user_id when calling getPosts');
         }
         // parse inputs
-        $resourcePath = "/{siteId}/users/{userId}/posts";
+        $resourcePath = "/internal/{siteId}/users/{userId}/posts";
         $httpBody = '';
         $queryParams = array();
         $headerParams = array();
@@ -258,6 +259,7 @@ class ContributionApi
             $headerParams['Accept'] = $_header_accept;
         }
         $headerParams['Content-Type'] = $this->apiClient->selectHeaderContentType(array('application/json'));
+        $headerParams[WebRequest::WIKIA_INTERNAL_REQUEST_HEADER] = 1;
 
         // path params
         if ($site_id !== null) {

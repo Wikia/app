@@ -86,7 +86,7 @@ $messages['de'] = array(
 	'wampage-header' => 'WAM',
 	'wampage-header-wam' => 'WAM-Rang',
 	'wampage-header-faq' => 'Häufig gestellte Fragen',
-	'wampage-content' => 'Der WAM-Rang wird täglich für die 5.000 Top-Wikis berechnet und beinhaltet eine Platzierung innerhalb aller Top-Wikis, innerhalb der zugehörigen Kategorie und eine Punktzahl von 0 bis 100. Die WAM-Punktezahl reagiert auf aktuelle Themen, ändert sich oft und bildet die neuesten Trends auf FANDOM-Wikis ab.',
+	'wampage-content' => 'Der WAM-Rang wird täglich für die 5.000 Top-Wikis berechnet und beinhaltet eine Platzierung innerhalb aller Top-Wikis, innerhalb der zugehörigen Kategorie und eine Punktzahl von 0 bis 100. Die WAM-Punktezahl reagiert auf aktuelle Themen, ändert sich oft und bildet die neuesten Trends auf Fandom-Wikis ab.',
 	'wampage-faq' => '__NOTOC____NOEDITSECTION__
 ===Wie wird der WAM-Rang ermittelt?===
 
@@ -110,11 +110,7 @@ Du kannst die WAM-Punktzahl auf dieser Seite finden, im [[w:c:de:Videospiele|Vid
 
 ===Darf ich die WAM-Punktzahl meines Wikis veröffentlichen?===
 
-Du darfst den WAM-Rang deines Wikis gerne dort anzeigen, bitten dich aber, dabei auf die WAM-Seite zu verlinken. 
-
-===Wem kann ich Fragen über WAM stellen?===
-
-Dem Community-Team unter [mailto:support@fancom.com support@fancom.com].',
+Du darfst den WAM-Rang deines Wikis gerne dort anzeigen, bitten dich aber, dabei auf die WAM-Seite zu verlinken.',
 	'wam-index-header-rank' => 'Rang',
 	'wam-index-header-score' => 'WAM-Rang',
 	'wam-index-header-wiki-name' => 'URL',
@@ -123,7 +119,7 @@ Dem Community-Team unter [mailto:support@fancom.com support@fancom.com].',
 	'wam-index-header-admins' => 'Admins',
 	'wampage-breadcrumb-back-to-wam' => 'Zurück zum WAM-Rang',
 	'wam-index-header-peak-rank' => 'Höchster Rang',
-	'wam-index-no-results' => 'Das von dir gesuchte Wiki ist für das von dir ausgewählte Datum nicht unter den Top 5000. Der WAM-Wert wird täglich aktualisiert - also schau bald wieder vorbei! Bei Fragen wende dich bitte an den [mailto:support@fandom.com FANDOM-Support].',
+	'wam-index-no-results' => 'Das von dir gesuchte Wiki ist für das von dir ausgewählte Datum nicht unter den Top 5000. Der WAM-Wert wird täglich aktualisiert - also schau bald wieder vorbei! Bei Fragen wende dich bitte an den [[Spezial:Kontakt|Support]].',
 	'wam-index-filter-search-placeholder' => 'Suche',
 	'wam-index-filter-sort-label' => 'Hub',
 	'wam-index-filter-date-label' => 'Datum',
@@ -619,7 +615,7 @@ As informações WAM começaram em 1º de janeiro de 2012.
 ===Onde o WAM é mostrado?===
 Você pode encontrar o WAM nessa página.
 
-===Eu posso mostrar a pontuação WAM na minha wiki?=	==
+===Eu posso mostrar a pontuação WAM na minha wiki?===
 Nós o incentivamos a mostrar a sua pontuação WAM na sua wiki, mas nós pedimos que você inclua o link para a página WAM. 
 
 ===Com que eu posso falar se eu tiver dúvidas sobre o WAM?===

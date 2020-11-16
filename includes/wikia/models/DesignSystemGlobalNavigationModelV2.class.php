@@ -242,6 +242,7 @@ class DesignSystemGlobalNavigationModelV2 extends WikiaModel {
 		}
 
 		$logOutLink = [
+			'id' => strval( $user->getId() ),
 			'type' => 'link-logout',
 			'href' => $this->getHref( 'user-logout', false, true ),
 			'title' => [

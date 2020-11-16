@@ -87,6 +87,32 @@ function dispatchJWPlayerSetupAction(showAds = true) {
 	});
 }
 
+function trackLiveRampEvents() {
+	communicationService.action$.pipe(
+		ofType('[AdEngine] LiveRamp Prebid ids loaded')
+	).subscribe((props) => {
+		pageTracker.trackProp('live_ramp_prebid_ids', props.userId);
+	});
+
+	communicationService.action$.pipe(
+		ofType('[AdEngine] ATS.js loaded')
+	).subscribe((props) => {
+		pageTracker.trackProp('live_ramp_ats_loaded', props.loadTime);
+	});
+
+	communicationService.action$.pipe(
+		ofType('[AdEngine] ATS ids loaded')
+	).subscribe((props) => {
+		pageTracker.trackProp('live_ramp_ats_ids', props.envelope);
+	});
+
+	communicationService.action$.pipe(
+		ofType('[AdEngine] ATS.js not loaded for logged in user')
+	).subscribe((props) => {
+		pageTracker.trackProp('live_ramp_ats_not_loaded', props.reason);
+	});
+}
+
 function startAdEngine(inhibitors) {
 	if (context.get('state.showAds')) {
 		utils.scriptLoader.loadScript(GPT_LIBRARY_URL);
@@ -110,11 +136,7 @@ function startAdEngine(inhibitors) {
 			pageTracker.trackProp('audigent', 'loaded');
 		});
 
-		communicationService.action$.pipe(
-			ofType('[AdEngine] LiveRamp Prebid ids loaded')
-		).subscribe((props) => {
-			pageTracker.trackProp('live_ramp_prebid_ids', props.userId);
-		});
+		trackLiveRampEvents();
 	}
 }
 

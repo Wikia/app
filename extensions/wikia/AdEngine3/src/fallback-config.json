@@ -34,11 +34,14 @@
                 "oasis"
             ],
             "regions": [
+                "FI",
                 "GB",
                 "ID",
                 "MY",
+                "NO",
                 "PH",
                 "PL",
+                "SE",
                 "SG",
                 "UK",
                 "US"
@@ -311,11 +314,15 @@
                 "oasis"
             ],
             "regions": [
+                "DK",
+                "FI",
                 "GB",
                 "ID",
                 "MY",
+                "NO",
                 "PH",
                 "PL",
+                "SE",
                 "SG",
                 "UK",
                 "US"
@@ -602,6 +609,10 @@
                 "XX"
             ],
             "value": [
+                "5536176877",
+                "5536176874",
+                "5536931893",
+                "5536931890",
                 "4366940064",
                 "4916913597",
                 "5457489354",
@@ -1403,7 +1414,13 @@
                 "5514106943",
                 "5521893351",
                 "4511434999",
-                "5514603963"
+                "5514603963",
+                "5510530289",
+                "5510530292",
+                "5524515751",
+                "5497063863",
+                "5498257394",
+                "5536176874"
             ]
         }
     ],
@@ -1654,26 +1671,9 @@
                 "oasis"
             ],
             "regions": [
-                "AU",
-                "CA",
-                "PL",
-                "US-CA",
-                "US-PA"
-            ],
-            "value": "//static.wikia.nocookie.net/fandom-ae-assets/prebid.js/v3.27.1/20201022.min.js"
-        },
-        {
-            "apps": [
-                "futhead",
-                "gamepedia",
-                "mobile-wiki",
-                "muthead",
-                "oasis"
-            ],
-            "regions": [
                 "XX"
             ],
-            "value": "//static.wikia.nocookie.net/fandom-ae-assets/prebid.js/v3.23.0/20200630.min.js"
+            "value": "//static.wikia.nocookie.net/fandom-ae-assets/prebid.js/v3.27.1/20201022.min.js"
         }
     ],
     "icDurationMediaLibraryUrl": [
@@ -1825,6 +1825,20 @@
             "value": true
         }
     ],
+    "icLiveRampATS": [
+        {
+            "apps": [
+                "gamepedia",
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "US-PA"
+            ],
+            "sampling": 100.0,
+            "value": true
+        }
+    ],
     "icPrebid": [
         {
             "apps": [
@@ -1892,7 +1906,19 @@
                 "UK",
                 "US"
             ],
-            "sampling": 13.0,
+            "sampling": 2.0,
+            "value": true
+        }
+    ],
+    "icWatchingThat": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "regions": [
+                "GB",
+                "UK"
+            ],
             "value": true
         }
     ],
