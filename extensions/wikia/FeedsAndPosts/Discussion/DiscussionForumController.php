@@ -279,8 +279,7 @@ class DiscussionForumController extends WikiaController {
 			$userIds[] = (int)$contributor['id'];
 		}
 
-		$usersMap = PermissionsHelper::getUsersMap( $userIds );
-		$badgesMap = PermissionsHelper::getBadgesMap( $usersMap );
+		$badgesMap = PermissionsHelper::getBadgesMap( $userIds );
 
 		$body['recentContributors'] = array_map( function ( $rc ) use ( $badgesMap ) {
 			$rc['badgePermission'] = $badgesMap[(int)$rc['id']];

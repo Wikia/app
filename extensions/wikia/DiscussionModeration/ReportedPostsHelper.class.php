@@ -181,8 +181,7 @@ class ReportedPostsHelper {
 			$userIds[] = (int)$contributor['id'];
 		}
 
-		$usersMap = $this->getUsersMap( $userIds );
-		$badgesMap = $this->getBadgesMap( $usersMap );
+		$badgesMap = $this->getBadgesMap( $userIds );
 
 		foreach ( $posts as &$post ) {
 			if ( isset( $post['createdBy']['id'] ) ) {
@@ -234,36 +233,12 @@ class ReportedPostsHelper {
 	/**
 	 * @param array $userIds
 	 * @return array
-	 */
-	private function getUsersMap( array $userIds ): array {
-		$usersMap = [];
-		if ( !empty( $userIds ) ) {
-			foreach ( UserArray::newFromIDs( $userIds ) as $user ) {
-				$usersMap[$user->getId()] = $user;
-			}
-		}
-
-		if ( in_array( 0, $userIds ) && !array_key_exists( 0, $usersMap ) ) {
-			$usersMap[0] = User::newFromId( 0 );
-		}
-
-		return $usersMap;
-	}
-
-	/**
-	 * @param array $usersMap
-	 * @return array
 	 * @throws FatalError
 	 * @throws MWException
 	 */
-	private function getBadgesMap( array $usersMap ): array {
+	private function getBadgesMap( array $userIds ): array {
 		$badges = [];
-		foreach ( $usersMap as $user ) {
-			$badge = '';
-			\Hooks::run( 'BadgePermissionsRequired', [ $user, &$badge ] );
-			$badges[$user->getId()] = $badge;
-		}
-
+		\Hooks::run( 'BadgePermissionsRequired', [ $userIds, &$badges ] );
 		return $badges;
 	}
 }

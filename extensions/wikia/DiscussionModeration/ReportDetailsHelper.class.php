@@ -35,15 +35,8 @@ class ReportDetailsHelper {
 	}
 
 	private static function getBadges( array $userIds ): array {
-		$userArray = \UserArray::newFromIDs( $userIds );
-
 		$badges = [];
-		foreach ( $userArray as $user ) {
-			$userBadge = '';
-			Hooks::run( 'BadgePermissionsRequired', [ $user, &$userBadge ] );
-			$badges[$user->getId()] = $userBadge;
-		}
-
+		Hooks::run( 'BadgePermissionsRequired', [ $userIds, &$badges ] );
 		return $badges;
 	}
 }

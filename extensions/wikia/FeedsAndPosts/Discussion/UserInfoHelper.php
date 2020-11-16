@@ -4,8 +4,6 @@ namespace Wikia\FeedsAndPosts\Discussion;
 
 use FatalError;
 use MWException;
-use User;
-use UserArray;
 
 class UserInfoHelper {
 	/**
@@ -24,23 +22,8 @@ class UserInfoHelper {
 			$userIds[] = (int)$entry['id'];
 		}
 
-		$usersMap = [];
-		if ( !empty( $userIds ) ) {
-			foreach ( UserArray::newFromIDs( $userIds ) as $user ) {
-				$usersMap[$user->getId()] = $user;
-			}
-		}
-
-		if ( in_array( 0, $userIds ) && !array_key_exists( 0, $usersMap ) ) {
-			$usersMap[0] = User::newFromId( 0 );
-		}
-
 		$badges = [];
-		foreach ( $usersMap as $user ) {
-			$badge = '';
-			\Hooks::run( 'BadgePermissionsRequired', [ $user, &$badge ] );
-			$badges[$user->getId()] = $badge;
-		}
+		\Hooks::run( 'BadgePermissionsRequired', [ $userIds, &$badges ] );
 
 		$userInfoList = array_map( function ( array $entry ) use ( $badges ) {
 			$entry['badgePermission'] = $badges[(int)$entry['id']] ?? '';
@@ -62,8 +45,7 @@ class UserInfoHelper {
 			}
 		}
 
-		$usersMap = PermissionsHelper::getUsersMap( $userIds );
-		$badges = PermissionsHelper::getBadgesMap( $usersMap );
+		$badges = PermissionsHelper::getBadgesMap( $userIds );
 
 		foreach ( $objectsWithUserInfo as &$obj ) {
 			foreach ( $obj[$key] as &$userInfo ) {

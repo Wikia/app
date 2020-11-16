@@ -7,9 +7,12 @@ class DiscussionPermissionsHooks {
 		$permissions = $calculatedPermissions;
 	}
 
-	public static function onBadgePermissionsRequired( User $user, string &$badge ): void {
-		$calculatedBadges = DiscussionPermissionsManager::getPermissionBadge( $user );
-		$badge = $calculatedBadges;
+	public static function onBadgePermissionsRequired( array $userIds, array &$badges ): void {
+		$calculatedBadges = DiscussionBadgesManager::getBadges( $userIds );
+		$badges = $calculatedBadges;
 	}
 
+	public static function onUserRights( User $user, $validGroupsToAdd, $validGroupsToRemove ): void {
+		DiscussionBadgesManager::purgeBadgeCache( $user->getId() );
+	}
 }
