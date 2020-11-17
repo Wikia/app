@@ -2,72 +2,155 @@
 
 class DiscussionBadgesManager {
 
-	const BADGE_SYSOP = "badge:sysop";
-	const BADGE_VSTF = "badge:vstf";
-	const BADGE_STAFF = "badge:staff";
-	const BADGE_THREADMODERATOR = "badge:threadmoderator";
-	const BADGE_HELPER = "badge:helper";
-	const BADGE_GLOBAL_DISCUSSIONS_MOD = "badge:global-discussions-moderator";
+	const GROUP_SYSOP = "sysop";
+	const GROUP_VSTF = "vstf";
+	const GROUP_STAFF = "staff";
+	const GROUP_THREADMODERATOR = "threadmoderator";
+	const GROUP_HELPER = "helper";
+	const GROUP_GLOBAL_DISCUSSIONS_MOD = "global-discussions-moderator";
+
+	const LOCAL_GROUPS = [
+		self::GROUP_SYSOP,
+		self::GROUP_THREADMODERATOR,
+	];
+
+	const GLOBAL_GROUPS = [
+		self::GROUP_VSTF,
+		self::GROUP_STAFF,
+		self::GROUP_HELPER,
+		self::GROUP_GLOBAL_DISCUSSIONS_MOD,
+	];
+
 	const BADGE_PRIORITY = [
-		self::BADGE_SYSOP,
-		self::BADGE_THREADMODERATOR,
-		self::BADGE_STAFF,
-		self::BADGE_HELPER,
-		self::BADGE_GLOBAL_DISCUSSIONS_MOD,
-		self::BADGE_VSTF,
+		'badge:' . self::GROUP_SYSOP,
+		'badge:' . self::GROUP_THREADMODERATOR,
+		'badge:' . self::GROUP_STAFF,
+		'badge:' . self::GROUP_HELPER,
+		'badge:' . self::GROUP_GLOBAL_DISCUSSIONS_MOD,
+		'badge:' . self::GROUP_VSTF,
 	];
 
 	public static function getBadges( array $userIds ) {
-		$badges = [];
-		$users = self::getUsersMap( $userIds );
-		foreach ( $users as $user ) {
-			$badge = self::getPermissionBadge( $user );
-			$badges[$user->getId()] = $badge;
+		$badges = self::getCachedBadges( $userIds );
+
+		$noBadgeUsers = array_diff( $userIds, array_keys( $badges ) );
+
+		if ( !$noBadgeUsers ) {
+			return $badges;
+		}
+
+		foreach ( $noBadgeUsers as $user ) {
+			$badges[$user] = '';
 		}
 
 		return $badges;
 	}
 
-	private static function getUsersMap( array $userIds ): array {
-		$usersMap = [];
-		if ( !empty( $userIds ) ) {
-			foreach ( UserArray::newFromIDs( $userIds ) as $user ) {
-				$usersMap[$user->getId()] = $user;
+	private static function getCachedBadges( array $userIds ) {
+		$localGroups = self::localGroupsCache();
+		$globalGroups = self::globalGroupsCache();
+
+		$badges = [];
+
+		foreach ( $userIds as $userId ) {
+			$group = $globalGroups[$userId] ?? $localGroups[$userId] ?? false;
+			if ( $group ) {
+				$badges[$userId] = self::matchBadge( $group );
 			}
 		}
 
-		if ( in_array( 0, $userIds ) && !array_key_exists( 0, $usersMap ) ) {
-			$usersMap[0] = User::newFromId( 0 );
-		}
-
-		return $usersMap;
+		return $badges;
 	}
 
-	private static function getPermissionBadge( User $user ): string {
-		$memcache = F::app()->wg->Memc;
-		$key = self::badgeCacheKey( $user->getId() );
-		$badge = $memcache->get( $key );
+	public static function purgeLocalGroupCache() {
+		$cache = F::app()->wg->Memc;
+		$key = wfMemcKey( __CLASS__, 'groups' );
+		return $cache->delete( $key );
+	}
 
-		if ( $badge === false ) {
-			$badge = '';
-			$userGroups = $user->getEffectiveGroups();
-			foreach ( self::BADGE_PRIORITY as $badgeOption ) {
-				if ( in_array( explode( ':', $badgeOption )[1], $userGroups ) ) {
-					$badge = $badgeOption;
-					break;
-				}
+	public static function purgeGlobalGroupCache() {
+		$cache = F::app()->wg->Memc;
+		$key = wfForeignMemcKey( 'global', '', __CLASS__, 'groups' );
+		return $cache->delete( $key );
+	}
+
+	private static function localGroupsCache() {
+		$method = __METHOD__;
+		$key = wfMemcKey( __CLASS__, 'groups' );
+
+		$cache = F::app()->wg->Memc;
+		$localGroups = $cache->get( $key );
+
+		if ( $localGroups === false ) {
+			$dbr = wfGetDB( DB_REPLICA );
+
+			$result = $dbr->select(
+				[
+					'user_groups'
+				],
+				[
+					'ug_user',
+					'ug_group'
+				],
+				[
+					'ug_group' => self::LOCAL_GROUPS
+				],
+				$method
+			);
+
+			$localGroups = [];
+			foreach ( $result as $row ) {
+				$localGroups[$row->ug_user][] = $row->ug_group;
 			}
-			$memcache->set( $key, $badge, 86400 ); // 1 day
+
+			$cache->set( $key, $localGroups, 604800 ); // 1 week
 		}
 
-		return $badge;
+		return $localGroups;
 	}
 
-	private static function badgeCacheKey( $userId ) {
-		return wfMemcKey( __CLASS__, 'badgePermission', $userId );
+	private static function globalGroupsCache() {
+		global $wgExternalSharedDB;
+		$method = __METHOD__;
+		$globalKey = wfForeignMemcKey( 'global', '', __CLASS__, 'groups' );
+
+		$cache = F::app()->wg->Memc;
+		$globalGroups = $cache->get( $globalKey );
+
+		if ( $globalGroups === false ) {
+			$dbr = wfGetDB( DB_REPLICA, [], $wgExternalSharedDB );
+
+			$result = $dbr->select(
+				[
+					'user_groups'
+				],
+				[
+					'ug_user',
+					'ug_group'
+				],
+				[
+					'ug_group' => self::GLOBAL_GROUPS
+				],
+				$method
+			);
+
+			$globalGroups = [];
+			foreach ( $result as $row ) {
+				$globalGroups[$row->ug_user][] = $row->ug_group;
+			}
+
+			$cache->set( $globalKey, $globalGroups, 604800 ); // 1 week
+		}
+
+		return $globalGroups;
 	}
 
-	public static function purgeBadgeCache( $userId ) {
-		return F::app()->wg->Memc->delete( self::badgeCacheKey( $userId ) );
+	private static function matchBadge( $group ) {
+		foreach ( self::BADGE_PRIORITY as $badge ) {
+			if ( in_array( explode( ':', $badge )[1], $group ) ) {
+				return $badge;
+			}
+		}
+		return '';
 	}
 }

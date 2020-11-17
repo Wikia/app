@@ -12,7 +12,15 @@ class DiscussionPermissionsHooks {
 		$badges = $calculatedBadges;
 	}
 
-	public static function onUserRights( User $user, $validGroupsToAdd, $validGroupsToRemove ): void {
-		DiscussionBadgesManager::purgeBadgeCache( $user->getId() );
+	public static function onUserRights( User $user, array $validGroupsToAdd, array $validGroupsToRemove ): void {
+		if ( array_intersect( DiscussionBadgesManager::LOCAL_GROUPS, $validGroupsToAdd ) ||
+			 array_intersect( DiscussionBadgesManager::LOCAL_GROUPS, $validGroupsToRemove ) ) {
+			DiscussionBadgesManager::purgeLocalGroupCache();
+		}
+
+		if ( array_intersect( DiscussionBadgesManager::GLOBAL_GROUPS, $validGroupsToAdd ) ||
+			 array_intersect( DiscussionBadgesManager::GLOBAL_GROUPS, $validGroupsToRemove ) ) {
+			DiscussionBadgesManager::purgeGlobalGroupCache();
+		}
 	}
 }
