@@ -53,9 +53,15 @@ class DiscussionBadgesManager {
 		$badges = [];
 
 		foreach ( $userIds as $userId ) {
-			$group = $globalGroups[$userId] ?? $localGroups[$userId] ?? false;
-			if ( $group ) {
-				$badges[$userId] = self::matchBadge( $group );
+			$groups = [];
+			if ( isset( $globalGroups[$userId] ) ) {
+				$groups = array_merge( $groups, $globalGroups[$userId] );
+			}
+			if ( isset( $localGroups[$userId] ) ) {
+				$groups = array_merge( $groups, $localGroups[$userId] );
+			}
+			if ( !empty( $groups ) ) {
+				$badges[$userId] = self::matchBadge( $groups );
 			}
 		}
 
