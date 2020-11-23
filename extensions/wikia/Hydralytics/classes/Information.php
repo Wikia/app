@@ -68,9 +68,9 @@ class Information {
 	static public function getTopSearchTerms($limit = 10) {
 		global $wgCityId;
 
-		$res = \Redshift::query(
-			'SELECT search_phrase, COUNT(*) as search_count FROM wikianalytics.searches ' .
-			'WHERE wiki_id = :wiki_id  AND search_phrase <> \'\' GROUP BY search_phrase  ' .
+		$res = \RDS::query(
+			'SELECT search_phrase, search_count FROM wikianalytics.searches_rollup ' .
+			'WHERE wiki_id = :wiki_id  AND search_phrase <> \'\' ' .
 			'ORDER BY search_count DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
 		);
