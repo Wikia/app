@@ -257,8 +257,7 @@ class DiscussionThreadController extends WikiaController {
 	private function addBadgesAndPermissions( array $body, User $user, array $badgesMap = [] ): array {
 		if ( empty( $badgesMap ) ) {
 			$userIds = $this->collectUserIds( $body );
-			$usersMap = PermissionsHelper::getUsersMap( $userIds );
-			$badgesMap = PermissionsHelper::getBadgesMap( $usersMap );
+			$badgesMap = PermissionsHelper::getBadgesMap( $userIds );
 		}
 
 		$body['createdBy']['badgePermission'] = $badgesMap[(int)$body['createdBy']['id']];
@@ -319,8 +318,7 @@ class DiscussionThreadController extends WikiaController {
 
 	private function addBadgesAndPermissionsForThreads( array $body, User $user ): array {
 		$userIds = $this->collectUserIds( $body );
-		$usersMap = PermissionsHelper::getUsersMap( $userIds );
-		$badgesMap = PermissionsHelper::getBadgesMap( $usersMap );
+		$badgesMap = PermissionsHelper::getBadgesMap( $userIds );
 
 		if ( isset( $body['_embedded']['threads'] ) ) {
 			$body['_embedded']['threads'] = array_map( function ( $thread ) use ( $body, $badgesMap, $user ) {

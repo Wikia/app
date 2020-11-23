@@ -52,8 +52,7 @@ class DiscussionPermalinkController extends WikiaController {
 
 		if ( $statusCode == 200 ) {
 			$userIds = $this->collectUserIds( $body );
-			$usersMap = PermissionsHelper::getUsersMap( $userIds );
-			$badgesMap = PermissionsHelper::getBadgesMap( $usersMap );
+			$badgesMap = PermissionsHelper::getBadgesMap( $userIds );
 			$body = $this->applyBadges( $body, $badgesMap );
 			$body = $this->addPermissions( $body, $user );
 			$body = $this->mapLinks( $body, $this->getContext() );

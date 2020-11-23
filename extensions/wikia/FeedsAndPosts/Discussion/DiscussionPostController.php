@@ -223,8 +223,7 @@ class DiscussionPostController extends WikiaController {
 	private function addBadgesAndPermissions( array $body, User $user, array $badgesMap = [] ): array {
 		if ( empty( $badgesMap ) ) {
 			$userIds = $this->collectUserIds( $body );
-			$usersMap = PermissionsHelper::getUsersMap( $userIds );
-			$badgesMap = PermissionsHelper::getBadgesMap( $usersMap );
+			$badgesMap = PermissionsHelper::getBadgesMap( $userIds );
 		}
 
 		if ( isset( $body['createdBy'] ) ) {
@@ -259,8 +258,7 @@ class DiscussionPostController extends WikiaController {
 
 	private function addBadgesAndPermissionsForPosts( array $body, User $user ): array {
 		$userIds = $this->collectUserIds( $body );
-		$usersMap = PermissionsHelper::getUsersMap( $userIds );
-		$badgesMap = PermissionsHelper::getBadgesMap( $usersMap );
+		$badgesMap = PermissionsHelper::getBadgesMap( $userIds );
 
 		if ( isset( $body['_embedded']['doc:posts'] ) ) {
 			$body['_embedded']['doc:posts'] = array_map( function ( $post ) use ( $body, $badgesMap, $user ) {
