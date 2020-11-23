@@ -14,7 +14,9 @@ $dir = dirname(__FILE__) . '/';
 $wgAutoloadClasses['Post'] =  $dir . 'Post.class.php';
 $wgAutoloadClasses['PostBuilder'] =  $dir . 'PostBuilder.class.php';
 $wgAutoloadClasses['DiscussionPermissionsManager'] =  $dir . 'DiscussionPermissionsManager.class.php';
+$wgAutoloadClasses['DiscussionBadgesManager'] =  $dir . 'DiscussionBadgesManager.class.php';
 $wgAutoloadClasses['DiscussionPermissionsHooks'] =  $dir . 'DiscussionPermissionsHooks.class.php';
 
 $wgHooks['UserPermissionsRequired'][] = 'DiscussionPermissionsHooks::onUserPermissionsRequired';
 $wgHooks['BadgePermissionsRequired'][] = 'DiscussionPermissionsHooks::onBadgePermissionsRequired';
+$wgHooks['UserRights'][] = 'DiscussionPermissionsHooks::onUserRights';
