@@ -21,6 +21,8 @@ $wgResourceModules['ext.fandomComMigration'] = [
 	'messages' => [
 		'fandom-com-migration-after',
 		'fandom-com-migration-before',
-		'fandom-ucp-migration-before'
+		'fandom-ucp-migration-before',
+		'ucp-migration-banner-fandom-message-scheduled-fandom-wikis',
+		'ucp-migration-banner-fandom-message-complete'
 	]
 ];
