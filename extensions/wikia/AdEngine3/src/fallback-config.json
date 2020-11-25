@@ -50,34 +50,6 @@
             "value": true
         }
     ],
-    "icServicesSpecialSearchTestDefaultScopeInGlobalNav": [
-        {
-            "apps": [
-                "oasis"
-            ],
-            "devices": [
-                "desktop"
-            ],
-            "regions": [
-                "XX"
-            ],
-            "sampling": 0.0,
-            "value": "this-wiki"
-        },
-        {
-            "apps": [
-                "oasis"
-            ],
-            "devices": [
-                "desktop"
-            ],
-            "regions": [
-                "XX"
-            ],
-            "sampling": 0.0,
-            "value": "this-wiki"
-        }
-    ],
     "icPrebidRubicon": [
         {
             "apps": [
@@ -192,36 +164,6 @@
             "value": true
         }
     ],
-    "icServicesSpecialSearchScopeDropdownInGlobalNav": [
-        {
-            "apps": [
-                "oasis"
-            ],
-            "devices": [
-                "desktop"
-            ],
-            "regions": [
-                "XX"
-            ],
-            "sampling": 0.0,
-            "samplingCache": true,
-            "value": "internal"
-        },
-        {
-            "apps": [
-                "oasis"
-            ],
-            "devices": [
-                "desktop"
-            ],
-            "regions": [
-                "XX"
-            ],
-            "sampling": 0.0,
-            "samplingCache": true,
-            "value": "cross-wiki"
-        }
-    ],
     "icPrebidSizePriceFloorRule": [
         {
             "apps": [
@@ -236,22 +178,6 @@
             "value": {
                 "300x600": 0.3
             }
-        }
-    ],
-    "icServicesSpecialSearch": [
-        {
-            "apps": [
-                "oasis"
-            ],
-            "devices": [
-                "desktop"
-            ],
-            "regions": [
-                "XX"
-            ],
-            "sampling": 0.0,
-            "samplingCache": true,
-            "value": true
         }
     ],
     "icBidsTracking": [
@@ -427,6 +353,7 @@
             ],
             "value": {
                 "271491732": 30000,
+                "321546972": 25000,
                 "5490565677": 30000,
                 "5491442134": 30000
             }
@@ -624,8 +551,18 @@
                 "XX"
             ],
             "value": [
+                "5545953836",
+                "5544542286",
+                "5545953971",
+                "5544542097",
+                "5545742047",
+                "5545953815",
+                "5545741909",
+                "5544542112",
+                "5545742041",
                 "5541160940",
                 "5541160943",
+                "5545229998",
                 "5541005887",
                 "5540993179",
                 "5541005440",
@@ -1643,22 +1580,6 @@
             "regions": [
                 "XX"
             ],
-            "value": true
-        }
-    ],
-    "icServicesSpecialSearchTooltipForScopeChange": [
-        {
-            "apps": [
-                "oasis"
-            ],
-            "devices": [
-                "desktop"
-            ],
-            "regions": [
-                "XX"
-            ],
-            "sampling": 0.0,
-            "samplingCache": true,
             "value": true
         }
     ],
