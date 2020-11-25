@@ -28,11 +28,11 @@ require([
 	var localStorageTTL = 60 * 60 * 24 * 365;
 
 	function shouldShowAfterMigrationNotification() {
-		return wgFandomComMigrationDone && cache.get(afterMigrationClosedStorageKey) !== storageTrueValue;
+		return wgFandomComMigrationDone && !wgDomainMigrationScheduled && !wgDomainMigrationDone && cache.get(afterMigrationClosedStorageKey) !== storageTrueValue;
 	}
 
 	function shouldShowBeforeMigrationNotification() {
-		return wgFandomComMigrationScheduled && cache.get(beforeMigrationClosedStorageKey) !== storageTrueValue;
+		return wgFandomComMigrationScheduled && !wgDomainMigrationScheduled && !wgDomainMigrationDone && cache.get(beforeMigrationClosedStorageKey) !== storageTrueValue;
 	}
 
 	function shouldShowDomainMigrationScheduledBannerNotification() {
