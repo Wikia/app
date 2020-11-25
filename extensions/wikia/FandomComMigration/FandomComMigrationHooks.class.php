@@ -12,10 +12,28 @@ class FandomComMigrationHooks {
 
 	public static function onMercuryWikiVariables( array &$wikiVariables ): bool {
 		global $wgFandomComMigrationDone, $wgFandomComMigrationCustomMessageBefore,
-			   $wgFandomComMigrationCustomMessageAfter;
+			   $wgFandomComMigrationCustomMessageAfter, $wgDomainMigrationScheduled, $wgDomainMigrationDone;
+
+		if ( $wgDomainMigrationScheduled || $wgDomainMigrationDone ) {
+			$domainMigrationMessageKey = null;
+			if ( $wgDomainMigrationScheduled ) {
+				$domainMigrationMessageKey = 'ucp-migration-banner-fandom-message-scheduled-fandom-wikis';
+			}
+			if ( $wgDomainMigrationDone ) {
+				$domainMigrationMessageKey = 'ucp-migration-banner-fandom-message-complete';
+			}
+
+			if ( !is_null( $domainMigrationMessageKey ) ) {
+				$wikiVariables['domainMigrationBannerMessage'] =
+					wfMessage( $domainMigrationMessageKey )->parse();
+				$wikiVariables['domainMigrationScheduled'] = $wgDomainMigrationScheduled;
+				$wikiVariables['domainMigrationDone'] = $wgDomainMigrationDone;
+			}
+		}
 
 		if ( static::isEnabled() ) {
 			$parser = ParserPool::get();
+
 			// Send HTML instead of message key to avoid the issue of non-compatible i18n libs
 			if ( $wgFandomComMigrationDone ) {
 				if ( !empty( $wgFandomComMigrationCustomMessageAfter ) ) {  // customized message
@@ -41,7 +59,8 @@ class FandomComMigrationHooks {
 	}
 
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
-		if ( static::isEnabled() ) {
+		global $wgDomainMigrationScheduled, $wgDomainMigrationDone;
+		if ( static::isEnabled() || $wgDomainMigrationScheduled || $wgDomainMigrationDone ) {
 			$jsAssets[] = 'fandom_com_migration_js';
 		}
 
@@ -49,7 +68,8 @@ class FandomComMigrationHooks {
 	}
 
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
-		if ( static::isEnabled() ) {
+		global $wgDomainMigrationScheduled, $wgDomainMigrationDone;
+		if ( static::isEnabled() || $wgDomainMigrationScheduled || $wgDomainMigrationDone ) {
 			$parser = ParserPool::get();
 			global $wgFandomComMigrationDone, $wgFandomComMigrationCustomMessageBefore,
 				   $wgFandomComMigrationCustomMessageAfter;
@@ -60,6 +80,8 @@ class FandomComMigrationHooks {
 				$wgFandomComMigrationCustomMessageBefore, new Title(), new ParserOptions() )->getText();
 			$vars['wgFandomComMigrationCustomMessageAfter'] = $parser->parse(
 				$wgFandomComMigrationCustomMessageAfter, new Title(), new ParserOptions() )->getText();
+			$vars['wgDomainMigrationScheduled'] = $wgDomainMigrationScheduled;
+			$vars['wgDomainMigrationDone'] = $wgDomainMigrationDone;
 		}
 
 		return true;
