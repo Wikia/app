@@ -59,7 +59,8 @@ class FandomComMigrationHooks {
 	}
 
 	public static function onOasisSkinAssetGroups( &$jsAssets ) {
-		if ( static::isEnabled() ) {
+		global $wgDomainMigrationScheduled, $wgDomainMigrationDone;
+		if ( static::isEnabled() || $wgDomainMigrationScheduled || $wgDomainMigrationDone ) {
 			$jsAssets[] = 'fandom_com_migration_js';
 		}
 
