@@ -12,10 +12,28 @@ class FandomComMigrationHooks {
 
 	public static function onMercuryWikiVariables( array &$wikiVariables ): bool {
 		global $wgFandomComMigrationDone, $wgFandomComMigrationCustomMessageBefore,
-			   $wgFandomComMigrationCustomMessageAfter;
+			   $wgFandomComMigrationCustomMessageAfter, $wgDomainMigrationScheduled, $wgDomainMigrationDone;
 
 		if ( static::isEnabled() ) {
 			$parser = ParserPool::get();
+
+			if ( $wgDomainMigrationScheduled || $wgDomainMigrationDone ) {
+				$domainMigrationMessageKey = null;
+				if ( $wgDomainMigrationScheduled ) {
+					$domainMigrationMessageKey = 'ucp-migration-banner-fandom-message-scheduled-fandom-wikis';
+				}
+				if ( $wgDomainMigrationDone ) {
+					$domainMigrationMessageKey = 'ucp-migration-banner-fandom-message-complete';
+				}
+
+				if ( !is_null( $domainMigrationMessageKey ) ) {
+					$wikiVariables['domainMigrationBannerMessage'] =
+						wfMessage( $domainMigrationMessageKey )->parse();
+					$wikiVariables['domainMigrationScheduled'] = $wgDomainMigrationScheduled;
+					$wikiVariables['domainMigrationDone'] = $wgDomainMigrationDone;
+				}
+			}
+
 			// Send HTML instead of message key to avoid the issue of non-compatible i18n libs
 			if ( $wgFandomComMigrationDone ) {
 				if ( !empty( $wgFandomComMigrationCustomMessageAfter ) ) {  // customized message
@@ -52,7 +70,7 @@ class FandomComMigrationHooks {
 		if ( static::isEnabled() ) {
 			$parser = ParserPool::get();
 			global $wgFandomComMigrationDone, $wgFandomComMigrationCustomMessageBefore,
-				   $wgFandomComMigrationCustomMessageAfter;
+				   $wgFandomComMigrationCustomMessageAfter, $wgDomainMigrationScheduled, $wgDomainMigrationDone;
 
 			$vars['wgFandomComMigrationScheduled'] = static::isMigrationScheduled();
 			$vars['wgFandomComMigrationDone'] = $wgFandomComMigrationDone;
@@ -60,6 +78,8 @@ class FandomComMigrationHooks {
 				$wgFandomComMigrationCustomMessageBefore, new Title(), new ParserOptions() )->getText();
 			$vars['wgFandomComMigrationCustomMessageAfter'] = $parser->parse(
 				$wgFandomComMigrationCustomMessageAfter, new Title(), new ParserOptions() )->getText();
+			$vars['wgDomainMigrationScheduled'] = $wgDomainMigrationScheduled;
+			$vars['wgDomainMigrationDone'] = $wgDomainMigrationDone;
 		}
 
 		return true;
