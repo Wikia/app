@@ -14,25 +14,25 @@ class FandomComMigrationHooks {
 		global $wgFandomComMigrationDone, $wgFandomComMigrationCustomMessageBefore,
 			   $wgFandomComMigrationCustomMessageAfter, $wgDomainMigrationScheduled, $wgDomainMigrationDone;
 
+		if ( $wgDomainMigrationScheduled || $wgDomainMigrationDone ) {
+			$domainMigrationMessageKey = null;
+			if ( $wgDomainMigrationScheduled ) {
+				$domainMigrationMessageKey = 'ucp-migration-banner-fandom-message-scheduled-fandom-wikis';
+			}
+			if ( $wgDomainMigrationDone ) {
+				$domainMigrationMessageKey = 'ucp-migration-banner-fandom-message-complete';
+			}
+
+			if ( !is_null( $domainMigrationMessageKey ) ) {
+				$wikiVariables['domainMigrationBannerMessage'] =
+					wfMessage( $domainMigrationMessageKey )->parse();
+				$wikiVariables['domainMigrationScheduled'] = $wgDomainMigrationScheduled;
+				$wikiVariables['domainMigrationDone'] = $wgDomainMigrationDone;
+			}
+		}
+
 		if ( static::isEnabled() ) {
 			$parser = ParserPool::get();
-
-			if ( $wgDomainMigrationScheduled || $wgDomainMigrationDone ) {
-				$domainMigrationMessageKey = null;
-				if ( $wgDomainMigrationScheduled ) {
-					$domainMigrationMessageKey = 'ucp-migration-banner-fandom-message-scheduled-fandom-wikis';
-				}
-				if ( $wgDomainMigrationDone ) {
-					$domainMigrationMessageKey = 'ucp-migration-banner-fandom-message-complete';
-				}
-
-				if ( !is_null( $domainMigrationMessageKey ) ) {
-					$wikiVariables['domainMigrationBannerMessage'] =
-						wfMessage( $domainMigrationMessageKey )->parse();
-					$wikiVariables['domainMigrationScheduled'] = $wgDomainMigrationScheduled;
-					$wikiVariables['domainMigrationDone'] = $wgDomainMigrationDone;
-				}
-			}
 
 			// Send HTML instead of message key to avoid the issue of non-compatible i18n libs
 			if ( $wgFandomComMigrationDone ) {
@@ -67,10 +67,11 @@ class FandomComMigrationHooks {
 	}
 
 	public static function onWikiaSkinTopScripts( &$vars, &$scripts ) {
-		if ( static::isEnabled() ) {
+		global $wgDomainMigrationScheduled, $wgDomainMigrationDone;
+		if ( static::isEnabled() || $wgDomainMigrationScheduled || $wgDomainMigrationDone ) {
 			$parser = ParserPool::get();
 			global $wgFandomComMigrationDone, $wgFandomComMigrationCustomMessageBefore,
-				   $wgFandomComMigrationCustomMessageAfter, $wgDomainMigrationScheduled, $wgDomainMigrationDone;
+				   $wgFandomComMigrationCustomMessageAfter;
 
 			$vars['wgFandomComMigrationScheduled'] = static::isMigrationScheduled();
 			$vars['wgFandomComMigrationDone'] = $wgFandomComMigrationDone;
