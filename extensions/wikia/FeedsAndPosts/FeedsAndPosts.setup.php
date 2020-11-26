@@ -31,6 +31,7 @@ $wgAutoloadClasses['DiscussionPermalinkController'] = $dir . 'Discussion/Discuss
 $wgAutoloadClasses['DiscussionForumController'] = $dir . 'Discussion/DiscussionForumController.php';
 $wgAutoloadClasses['DiscussionThreadController'] = $dir . 'Discussion/DiscussionThreadController.php';
 $wgAutoloadClasses['DiscussionPostController'] = $dir . 'Discussion/DiscussionPostController.php';
+$wgAutoloadClasses['DiscussionContributionController'] = $dir . 'Discussion/DiscussionContributionController.php';
 
 // Hooks
 $wgHooks['BeforePageDisplay'][] = 'FeedsAndPostsHooks::onBeforePageDisplay';

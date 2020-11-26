@@ -449,6 +449,37 @@ class DiscussionGateway {
 		} );
 	}
 
+	public function getContributions( int $userId, $contributorId, array $queryParams ) {
+		return $this->makeCall( function () use ( $userId, $contributorId, $queryParams ) {
+			return $this->httpClient->get(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/users/{$contributorId}/posts",
+				[
+					RequestOptions::HEADERS => [
+						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+						Constants::HELIOS_AUTH_HEADER => $userId,
+						'Content-Type' => 'application/json'
+					],
+					RequestOptions::QUERY => $queryParams,
+					RequestOptions::TIMEOUT => self::API_TIMEOUT,
+				] );
+		} );
+	}
+
+	public function deleteAllContributions( int $userId, $contributorId, array $traceHeaders ) {
+		return $this->makeCall( function () use ( $userId, $contributorId, $traceHeaders ) {
+			return $this->httpClient->put(
+				"{$this->serviceUrl}/internal/{$this->wikiId}/users/{$contributorId}/posts/delete",
+				[
+					RequestOptions::HEADERS => [
+						WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
+						Constants::HELIOS_AUTH_HEADER => $userId,
+						'Content-Type' => 'application/json'
+					] + $traceHeaders,
+					RequestOptions::TIMEOUT => self::API_TIMEOUT,
+				] );
+		} );
+	}
+
 	private function makeCall( callable $callback ): array {
 		try {
 			$response = $callback();
