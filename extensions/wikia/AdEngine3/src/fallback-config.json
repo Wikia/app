@@ -180,6 +180,18 @@
             }
         }
     ],
+    "icPrebidRubiconAdditionalKeyvals": [
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "value": true
+        }
+    ],
     "icBidsTracking": [
         {
             "apps": [
@@ -1583,6 +1595,17 @@
             "value": true
         }
     ],
+    "icPrebidAppNexusAdditionalKeyvals": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "regions": [
+                "PL"
+            ],
+            "value": true
+        }
+    ],
     "icSafeFanTakeoverLineItemIds": [
         {
             "apps": [
@@ -1675,6 +1698,19 @@
         }
     ],
     "icPrebidVersion": [
+        {
+            "apps": [
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
+                "oasis"
+            ],
+            "regions": [
+                "PL"
+            ],
+            "value": "//static.wikia.nocookie.net/fandom-ae-assets/prebid.js/v4.17.0/20201124.min.js"
+        },
         {
             "apps": [
                 "futhead",
