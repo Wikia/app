@@ -77,6 +77,19 @@ class LinkHelper {
 		return $this->buildLink( $uri, $controllerQueryParams );
 	}
 
+	public function buildContributionLink( Uri $uri, IContextSource $requestContext ) {
+		$urlParts = explode( "/", $uri->getPath() );
+		$userId = $urlParts[count( $urlParts ) - 2];
+
+		$controllerQueryParams = [
+			'controller' => 'DiscussionContribution',
+			'method' => 'getPosts',
+			'userId' => $userId
+		];
+
+		return $this->buildLink( $uri, $controllerQueryParams );
+	}
+
 	private function buildLink( Uri $uri, array $controllerQueryParams ) {
 		foreach ( parse_query( $uri->getQuery() ) as $paramName => $value ) {
 			$controllerQueryParams[$paramName] = $value;
