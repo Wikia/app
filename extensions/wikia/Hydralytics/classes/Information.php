@@ -114,7 +114,7 @@ class Information {
 	 * Return the top view pages for this wiki.
 	 * Does not include Discussions, Feeds...
 	 * @access	public
-	 * @return	array	Top Viewed Pages
+	 * @return	array	Top Viewed MediaWiki Pages
 	 */
 	static public function getTopViewedMediaWikiPages() {
 		global $wgCityId;
