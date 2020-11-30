@@ -35,7 +35,7 @@ $fandom-link-hover-color: #005252;
 		grid-template-areas:
 		"number_of_pageviews"
 		"geolocation"
-		"top_viewed_pages"
+		"top_viewed_mediawiki_pages"
 		"most_visited_files"
 		"desktop_vs_mobile"
 		"browser_breakdown"
@@ -54,7 +54,7 @@ $fandom-link-hover-color: #005252;
 		grid-template-areas:
 		"number_of_pageviews number_of_pageviews"
 		"top_search_terms  geolocation"
-		"top_viewed_pages	 most_visited_files"
+		"top_viewed_mediawiki_pages	 most_visited_files"
 		"desktop_vs_mobile	 browser_breakdown	"
 		"edits_per_day		 logged_in_out"
 		"top_editors 		 active_editors";

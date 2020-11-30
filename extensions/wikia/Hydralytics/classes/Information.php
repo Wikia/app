@@ -112,11 +112,11 @@ class Information {
 
 	/**
 	 * Return the top view pages for this wiki.
-	 *
+	 * Does not include Discussions, Feeds...
 	 * @access	public
 	 * @return	array	Top Viewed Pages
 	 */
-	static public function getTopViewedPages() {
+	static public function getTopViewedMediaWikiPages() {
 		global $wgCityId;
 
 		$res = \RDS::query(

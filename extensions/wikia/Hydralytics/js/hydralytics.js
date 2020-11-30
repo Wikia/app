@@ -318,7 +318,7 @@ $(function() {
 			'logged_in_out',
 			'edits_per_day',
 			'top_search_terms',
-			'top_viewed_pages',
+			'top_viewed_mediawiki_pages',
 			'most_visited_files',
 			'desktop_vs_mobile',
 			'browser_breakdown',

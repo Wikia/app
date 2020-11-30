@@ -79,7 +79,7 @@ class SpecialAnalytics extends \SpecialPage {
 				try {
 					global $wgLang;
 					$sections = [
-						'top_viewed_pages' => '',
+						'top_viewed_mediawiki_pages' => '',
 						'number_of_pageviews' => '',
 						'top_editors' => '',
 						'geolocation' => '',
@@ -169,11 +169,11 @@ class SpecialAnalytics extends \SpecialPage {
 					}
 
 					/**
-					 *  Top Viewed Pages
+					 *  Top Viewed MediaWiki Pages
 					 */
-					$topPages = Information::getTopViewedPages();
-					if (isset($topPages['pageviews'])) {
-						$sections['top_viewed_pages'] = "
+					$topViewedMediaWikiPages = Information::getTopViewedMediaWikiPages();
+					if (isset($topViewedMediaWikiPages['pageviews'])) {
+						$sections['top_viewed_mediawiki_pages'] = "
 					<table class=\"analytics_table\">
 						<thead>
 							<tr>
@@ -183,21 +183,21 @@ class SpecialAnalytics extends \SpecialPage {
 						</thead>
 						<tbody>
 						";
-						foreach ($topPages['pageviews'] as $uri => $views) {
+						foreach ($topViewedMediaWikiPages['pageviews'] as $uri => $views) {
 							$newUri = $this->normalizeUri($uri);
 
 							// remove language url part and "/wiki/" and underscores from page names
 							$title = preg_replace('|^(/\w+)?/wiki/|', '', $newUri);
 							$title = str_replace('_', ' ', $title);
 
-							$sections['top_viewed_pages'] .= "
+							$sections['top_viewed_mediawiki_pages'] .= "
 							<tr>
 
 								<td><a href='" . \Sanitizer::encodeAttribute(wfExpandUrl($newUri)) . "'>" . htmlspecialchars($title) . "</a></td>
 								<td>" . $this->getLanguage()->formatNum($views) . "</td>
 							</tr>";
 						}
-						$sections['top_viewed_pages'] .= "
+						$sections['top_viewed_mediawiki_pages'] .= "
 						</tbody>
 					</table>";
 					}
