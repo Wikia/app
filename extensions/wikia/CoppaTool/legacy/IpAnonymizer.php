@@ -7,6 +7,7 @@ class IpAnonymizer {
 		$dbw = wfGetDB( DB_MASTER );
 		$this->updateTable( $dbw, 'revision', 'rev_user_text', $ip );
 		$this->updateTable( $dbw, 'recentchanges', 'rc_user_text', $ip );
+		$this->updateTable( $dbw, 'recentchanges', 'rc_ip_bin', $ip );
 		$this->updateTable( $dbw, 'logging', 'log_user_text', $ip );
 		$this->updateTable( $dbw, 'archive', 'ar_user_text', $ip );
 		$this->updateTable( $dbw, 'filearchive', 'fa_user_text', $ip );
