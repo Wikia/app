@@ -30,12 +30,8 @@ class IpAnonymizer {
 		}
 	}
 
-	private function updateTable( DatabaseMysqli $dbw,
-								  string $table,
-								  string $column,
-								  string $ip,
-								  array $conds = [],
-								  bool $binaryColumn = false ): void {
+	private function updateTable( DatabaseMysqli $dbw, string $table, string $column, string $ip,
+								  array $conds = [], bool $binaryColumn = false ): void {
 		$ipForCheck = $ip;
 		$replacement = self::NON_ROUTABLE_IPV6;
 
