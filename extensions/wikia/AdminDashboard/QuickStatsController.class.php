@@ -51,7 +51,7 @@ class QuickStatsController extends WikiaController {
 
 		$res = \RDS::query(
 			'SELECT dt, COUNT(*) AS total_edits '.
-			'FROM wikianalytics.edits ' .
+			'FROM local.edits ' .
 			'WHERE wiki_id = :wiki_id AND dt >= :week GROUP BY dt ' .
 			'ORDER BY dt DESC LIMIT :days',
 			[ ':wiki_id' => $wgCityId, ':days' => 7, ':week' => $week ]

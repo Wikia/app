@@ -118,11 +118,11 @@ class Redshift {
 
 		$sql = 'WITH dates AS (' . # generates a sequence of dates between the current date and :days before
 			'SELECT (GETDATE()::date - row_number() OVER (ORDER BY true))::date AS n ' .
-			'FROM wikianalytics.pageviews ' .
+			'FROM local.pageviews ' .
 			'LIMIT :days ' .
 			'),' .
 			'data AS (' .
-			'SELECT dt, SUM(cnt) AS views FROM wikianalytics.pageviews ' .
+			'SELECT dt, SUM(cnt) AS views FROM local.pageviews ' .
 			'WHERE wiki_id = :wiki_id ' .
 			'GROUP BY dt ' .
 			') ' .

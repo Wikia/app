@@ -114,7 +114,7 @@ class RDS {
 			'SELECT DATE(generate_series) AS n FROM generate_series((NOW()::DATE - INTERVAL \'' . $days . ' days\'), ((NOW() - interval  \'1 DAY\')::DATE), \'1 day\')' .
 			'),' .
 			'pages AS (' .
-			'SELECT dt, SUM(views) as views FROM wikianalytics.pageviews_by_wiki_and_date ' .
+			'SELECT dt, SUM(views) as views FROM local.pageviews_by_wiki_and_date ' .
 			"WHERE wiki_id = :wiki_id " .
 			'group by dt ' .
 			') ' .

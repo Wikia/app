@@ -32,7 +32,7 @@ class Information {
 		$res = \RDS::query(
 			'SELECT dt, COUNT(*) AS total_edits, ' .
 			'SUM(case when user_id = 0 then 1 else 0 end) as edits_anons ' .
-			'FROM wikianalytics.edits ' .
+			'FROM local.edits ' .
 			'WHERE wiki_id = :wiki_id GROUP BY dt ' .
 			'ORDER BY dt DESC LIMIT :days',
 			[ ':wiki_id' => $wgCityId, ':days' => $days ]
@@ -69,7 +69,7 @@ class Information {
 		global $wgCityId;
 
 		$res = \RDS::query(
-			'SELECT search_phrase, search_count FROM wikianalytics.searches_rollup ' .
+			'SELECT search_phrase, search_count FROM local.searches_rollup ' .
 			'WHERE wiki_id = :wiki_id  AND search_phrase <> \'\' ' .
 			'ORDER BY search_count DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
@@ -95,7 +95,7 @@ class Information {
 		global $wgCityId;
 
 		$res = \RDS::query(
-			'SELECT country, cnt as views FROM wikianalytics.geolocation ' .
+			'SELECT country, cnt as views FROM local.geolocation ' .
 			'WHERE wiki_id = :wiki_id ' .
 			'ORDER BY views DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
@@ -120,7 +120,7 @@ class Information {
 		global $wgCityId;
 
 		$res = \RDS::query(
-			'SELECT url, cnt as views FROM wikianalytics.viewedpages ' .
+			'SELECT url, cnt as views FROM local.viewedpages ' .
 			'WHERE wiki_id = :wiki_id  ' .
 			'ORDER BY views DESC',
 			[ ':wiki_id' => $wgCityId ]
@@ -146,7 +146,7 @@ class Information {
 		global $wgCityId;
 
 		$res = \RDS::query(
-			'SELECT url, SUM(cnt) as views FROM wikianalytics.viewedfiles ' .
+			'SELECT url, SUM(cnt) as views FROM local.viewedfiles ' .
 			"WHERE wiki_id = :wiki_id " .
 			'GROUP BY url ' .
 			'ORDER BY views DESC LIMIT :limit',
@@ -188,7 +188,7 @@ class Information {
 
 		// by browser
 		$res = \RDS::query(
-			'SELECT browser, SUM(cnt) AS views FROM wikianalytics.sessions ' .
+			'SELECT browser, SUM(cnt) AS views FROM local.sessions ' .
 			'WHERE wiki_id = :wiki_id GROUP BY browser ' .
 			'ORDER BY views DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
@@ -202,7 +202,7 @@ class Information {
 
 		// by device type (filter out bots)
 		$res = \Redshift::query(
-			'SELECT device_type, SUM(cnt) AS views FROM wikianalytics.sessions ' .
+			'SELECT device_type, SUM(cnt) AS views FROM local.sessions ' .
 			'WHERE wiki_id = :wiki_id AND device_type <> \'bot\' GROUP BY device_type ' .
 			'ORDER BY views DESC LIMIT :limit',
 			[ ':wiki_id' => $wgCityId, ':limit' => $limit ]
