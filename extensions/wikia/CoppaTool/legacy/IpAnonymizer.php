@@ -7,7 +7,7 @@ class IpAnonymizer {
 		$dbw = wfGetDB( DB_MASTER );
 		$this->updateTable( $dbw, 'revision', 'rev_user_text', $ip );
 		$this->updateTable( $dbw, 'recentchanges', 'rc_user_text', $ip );
-		$this->updateTable( $dbw, 'recentchanges', 'rc_ip_bin', inet_pton( $ip ) );
+		$this->updateTable( $dbw, 'recentchanges', 'rc_ip_bin', $ip, [], true );
 		$this->updateTable( $dbw, 'logging', 'log_user_text', $ip );
 		$this->updateTable( $dbw, 'archive', 'ar_user_text', $ip );
 		$this->updateTable( $dbw, 'filearchive', 'fa_user_text', $ip );
@@ -30,12 +30,25 @@ class IpAnonymizer {
 		}
 	}
 
-	private function updateTable( DatabaseMysqli $dbw, string $table, string $column, string $ip, array $conds = [] ): void {
+	private function updateTable( DatabaseMysqli $dbw,
+								  string $table,
+								  string $column,
+								  string $ip,
+								  array $conds = [],
+								  bool $binaryColumn = false ): void {
+		$ipForCheck = $ip;
+		$replacement = self::NON_ROUTABLE_IPV6;
+
+		if ( $binaryColumn ) {
+			$ipForCheck = inet_pton( $ip );
+			$replacement = inet_pton( self::NON_ROUTABLE_IPV6 );
+		}
+
 		if ( $dbw->tableExists( $table ) && $dbw->fieldExists( $table, $column ) ) {
-			$conds[$column] = $ip;
+			$conds[$column] = $ipForCheck;
 			$dbw->update(
 				$table,
-				[$column => self::NON_ROUTABLE_IPV6],
+				[$column => $replacement],
 				$conds
 			);
 		}
