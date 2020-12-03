@@ -186,10 +186,7 @@
                 "mobile-wiki",
                 "oasis"
             ],
-            "regions": [
-                "XX"
-            ],
-            "value": true
+            "value": false
         }
     ],
     "icBidsTracking": [
@@ -368,6 +365,7 @@
                 "5490565677": 30000,
                 "5491442134": 30000,
                 "5519145993": 30000,
+                "5519145999": 30000,
                 "5524038134": 30000
             }
         }
@@ -1605,10 +1603,7 @@
             "apps": [
                 "oasis"
             ],
-            "regions": [
-                "PL"
-            ],
-            "value": true
+            "value": false
         }
     ],
     "icSafeFanTakeoverLineItemIds": [
@@ -2016,6 +2011,7 @@
     "icWatchingThat": [
         {
             "apps": [
+                "mobile-wiki",
                 "oasis"
             ],
             "regions": [
