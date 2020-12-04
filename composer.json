@@ -55,7 +55,7 @@
     "tijsverkoyen/css-to-inline-styles": "1.5.2",
     "sensiolabs/consul-php-sdk": "^3.0",
     "wikia/phpflickr": "^3.1",
-    "pear/Mail_Mime": "^1.10",
+    "pear/mail_mime": "^1.10",
     "pear/archive_tar": "^1.4",
     "wikia/mail2": "^0.1.1",
     "wikia/net_socket2": "^0.1.1",

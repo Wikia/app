@@ -5,7 +5,10 @@
  * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
  * @author Michał ‘Mix’ Roszka <mix@wikia-inc.com>
  */
-$wgHooks[ "CustomSpecialStatistics" ][] = "DumpsOnDemand::customSpecialStatistics";
+
+use Wikia\Logger\WikiaLogger;
+
+$wgHooks["CustomSpecialStatistics" ][] = "DumpsOnDemand::customSpecialStatistics";
 $wgExtensionMessagesFiles[ "DumpsOnDemand" ] =  __DIR__ . '/DumpsOnDemand.i18n.php';
 
 class DumpsOnDemand {
@@ -18,6 +21,8 @@ class DumpsOnDemand {
 	 * All earlier dumps are gone and all data referring to them should be considered invalid.
 	 */
 	const S3_MIGRATION = '20131002154415';
+
+	const S3_COMMAND = '/usr/bin/s3cmd -c /etc/s3cmd/amazon_prod.cfg';
 
 	/**
 	 * @param SpecialStatistics $page
@@ -165,39 +170,39 @@ class DumpsOnDemand {
 	 *
 	 * @param string $sPath
 	 * @param bool $bPublic
-	 * @param string $sMimeType
+	 * @param string|null $sMimeType
+	 * if $sMimeType is set then the specified mime tipe is set, otherwise
+	 *      let AmazonS3 decide on mime type.
+	 * @return mixed
+	 * @throws Exception
 	 */
-	static public function putToAmazonS3( string $sPath, bool $bPublic, string $sMimeType )  {
-		global $wgAWSAccessKey, $wgAWSSecretKey;
-
+	static public function putToAmazonS3( $sPath, $bPublic = true, $sMimeType = null ) {
 		$time = wfTime();
-		$size = filesize( $sPath );
-
-		// SUS-4538 | use PHP S3 client instead of s3cmd
-		$s3 = new S3( $wgAWSAccessKey, $wgAWSSecretKey );
-		S3::setExceptions( true );
-
-		$resource = S3::inputResource( fopen( $sPath, 'rb' ), $size );
-		$remotePath = DumpsOnDemand::getPath( basename( $sPath ) );
-
-		// this will throw S3Exception on errors, callers should handle it accordingly
-		$s3->putObject(
-			$resource,
-			'wikia_xml_dumps',
-			$remotePath,
-			$bPublic ? S3::ACL_PUBLIC_READ : S3::ACL_PRIVATE,
-			[],
-			[
-				'Content-Disposition' => 'attachment',
-				'Content-Type' => $sMimeType
-			]
+		$sDestination = wfEscapeShellArg(
+			's3://wikia_xml_dumps/'
+			. DumpsOnDemand::getPath( basename( $sPath ) )
 		);
 
-		\Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
-			'remote_path' => $remotePath,
+		$size = filesize( $sPath );
+		$sPath = wfEscapeShellArg( $sPath );
+
+		$sCmd = self::S3_COMMAND . ' --add-header=Content-Disposition:attachment';
+		if ( !is_null( $sMimeType ) ) {
+			$sMimeType = wfEscapeShellArg( $sMimeType );
+			$sCmd .= " --mime-type={$sMimeType}";
+		}
+		$sCmd .= ($bPublic)? ' --acl-public' : '';
+		$sCmd .= " put {$sPath} {$sDestination}";
+
+		wfShellExec( $sCmd, $iStatus );
+
+		WikiaLogger::instance()->info( __METHOD__, [
+			'remote_path' => $sDestination,
 			'size' => $size,
 			'time_sec' => wfTime() - $time,
 		] );
+
+		return $iStatus;
 	}
 
 	/**
