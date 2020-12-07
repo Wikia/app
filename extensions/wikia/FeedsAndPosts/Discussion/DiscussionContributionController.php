@@ -65,6 +65,11 @@ class DiscussionContributionController extends WikiaController {
 	}
 
 	public function deleteAll() {
+		if ( !$this->request->wasPosted() ) {
+			$this->response->setCode( WikiaResponse::RESPONSE_CODE_METHOD_NOT_ALLOWED );
+			return;
+		}
+
 		$request = $this->getRequest();
 		$user = $this->context->getUser();
 		$contributorId = $request->getVal( 'userId' );
