@@ -7,6 +7,8 @@
  */
 
 use Wikia\Logger\WikiaLogger;
+use Wikia\S3\S3Exception;
+use Wikia\S3\S3Put;
 
 $wgHooks["CustomSpecialStatistics" ][] = "DumpsOnDemand::customSpecialStatistics";
 $wgExtensionMessagesFiles[ "DumpsOnDemand" ] =  __DIR__ . '/DumpsOnDemand.i18n.php';
@@ -21,8 +23,6 @@ class DumpsOnDemand {
 	 * All earlier dumps are gone and all data referring to them should be considered invalid.
 	 */
 	const S3_MIGRATION = '20131002154415';
-
-	const S3_COMMAND = '/usr/bin/s3cmd -c /etc/s3cmd/amazon_prod.cfg';
 
 	/**
 	 * @param SpecialStatistics $page
@@ -173,28 +173,36 @@ class DumpsOnDemand {
 	 * @param string|null $sMimeType
 	 * if $sMimeType is set then the specified mime tipe is set, otherwise
 	 *      let AmazonS3 decide on mime type.
-	 * @return mixed
+	 * @return bool
 	 * @throws Exception
 	 */
 	static public function putToAmazonS3( $sPath, $bPublic = true, $sMimeType = null ) {
 		$time = wfTime();
-		$sDestination = wfEscapeShellArg(
-			's3://wikia_xml_dumps/'
-			. DumpsOnDemand::getPath( basename( $sPath ) )
-		);
-
 		$size = filesize( $sPath );
-		$sPath = wfEscapeShellArg( $sPath );
 
-		$sCmd = self::S3_COMMAND . ' --add-header=Content-Disposition:attachment';
-		if ( !is_null( $sMimeType ) ) {
-			$sMimeType = wfEscapeShellArg( $sMimeType );
-			$sCmd .= " --mime-type={$sMimeType}";
+		$s3 = new S3Put();
+		if ( $bPublic ) {
+			$s3->setPublic();
 		}
-		$sCmd .= ($bPublic)? ' --acl-public' : '';
-		$sCmd .= " put {$sPath} {$sDestination}";
+		$s3->setContentDisposition( 'attachment' );
 
-		wfShellExec( $sCmd, $iStatus );
+		if ( !is_null( $sMimeType ) ) {
+			$s3->setContentType( $sMimeType );
+		}
+
+		$sDestination = DumpsOnDemand::getPath( basename( $sPath ) );
+		try {
+			$s3->execute( $sPath, 'wikia_xml_dumps', $sDestination );
+		} catch ( S3Exception $e ) {
+			WikiaLogger::instance()->error( __METHOD__, [
+				'exception' => $e,
+				'remote_path' => $sDestination,
+				'size' => $size,
+				'time_sec' => wfTime() - $time,
+			] );
+
+			return false;
+		}
 
 		WikiaLogger::instance()->info( __METHOD__, [
 			'remote_path' => $sDestination,
@@ -202,7 +210,7 @@ class DumpsOnDemand {
 			'time_sec' => wfTime() - $time,
 		] );
 
-		return $iStatus;
+		return true;
 	}
 
 	/**
