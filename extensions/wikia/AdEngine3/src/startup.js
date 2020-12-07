@@ -166,11 +166,12 @@ function callExternals() {
 	const targeting = context.get('targeting');
 	const inhibitors = [];
 
+	permutive.call();
+
 	inhibitors.push(bidders.requestBids());
 	inhibitors.push(wadRunner.call());
 
 	facebookPixel.call();
-	permutive.call();
 	iasPublisherOptimization.call();
 	audigent.call();
 	confiant.call();
