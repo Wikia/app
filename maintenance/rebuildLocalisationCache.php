@@ -42,6 +42,8 @@ class RebuildLocalisationCache extends Maintenance {
 		$this->addOption( 'cache-dir', 'Override the value of $wgCacheDirectory', false, true );
 		$this->addOption( 'primary', 'Only rebuild the Wikia supported languages', false, false, '-p' );
 		$this->addOption( 'force-wiki-id', 'Force specific wiki ID' );
+		$this->addOption( 'lang', 'Only rebuild these languages, comma separated.',
+			false, true );
 		// Wikia change end
 	}
 
@@ -98,8 +100,19 @@ class RebuildLocalisationCache extends Maintenance {
 		}
 		$lc = new LocalisationCache_BulkLoad( $conf );
 
+		$allCodes = array_keys( Language::getLanguageNames( true ) );
 		// Don't get all the language codes if --primary was given
-		$codes = $primaryOnly ? [] : array_keys( Language::getLanguageNames( true ) );
+		if ( !$primaryOnly && $this->hasOption( 'lang' ) ) {
+			# Validate requested languages
+			$codes = array_intersect( $allCodes,
+				explode( ',', $this->getOption( 'lang' ) ) );
+			# Bailed out if nothing is left
+			if ( count( $codes ) == 0 ) {
+				$this->fatalError( 'None of the languages specified exists.' );
+			}
+		} else {
+			$codes = $primaryOnly ? [] : $allCodes;
+		}
 
 		// Define the list of Wikia supported language codes we should rebuild first
 		$firstCodes = [ 'en', 'pl', 'de', 'es', 'fr', 'it', 'ja', 'nl', 'pt', 'ru', 'zh-hans', 'zh-tw' ];
