@@ -186,7 +186,10 @@
                 "mobile-wiki",
                 "oasis"
             ],
-            "value": false
+            "regions": [
+                "PL"
+            ],
+            "value": true
         }
     ],
     "icBidsTracking": [
@@ -1609,9 +1612,13 @@
     "icPrebidAppNexusAdditionalKeyvals": [
         {
             "apps": [
+                "mobile-wiki",
                 "oasis"
             ],
-            "value": false
+            "regions": [
+                "PL"
+            ],
+            "value": true
         }
     ],
     "icSafeFanTakeoverLineItemIds": [
@@ -2012,7 +2019,7 @@
                 "UK",
                 "US"
             ],
-            "sampling": 5.0,
+            "sampling": 15.0,
             "value": true
         }
     ],
