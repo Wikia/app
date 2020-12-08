@@ -108,7 +108,7 @@ class RebuildLocalisationCache extends Maintenance {
 				explode( ',', $this->getOption( 'lang' ) ) );
 			# Bailed out if nothing is left
 			if ( count( $codes ) == 0 ) {
-				$this->error( 'None of the languages specified exists.' );
+				$this->error( 'None of the languages specified exists.', 1 );
 			}
 		} else {
 			$codes = $primaryOnly ? [] : $allCodes;
