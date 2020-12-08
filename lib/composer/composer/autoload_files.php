@@ -18,11 +18,10 @@ return array(
     '6b06ce8ccf69c43a60a1e48495a034c9' => $vendorDir . '/react/promise-timer/src/functions.php',
     '32dcc8afd4335739640db7d200c1971d' => $vendorDir . '/symfony/polyfill-apcu/bootstrap.php',
     '5a494680c593293bd6035e42e2a6825c' => $vendorDir . '/data-values/geo/Geo.php',
-    '0e6d7bf4a5811bfa5cf40c5ccd6fae6a' => $vendorDir . '/symfony/polyfill-mbstring/bootstrap.php',
     '94e265ce14c952a920a4ea5f7e8e9baa' => $vendorDir . '/mediawiki/parser-hooks/ParserHooks.php',
     'ebf8799635f67b5d7248946fe2154f4a' => $vendorDir . '/ringcentral/psr7/src/functions_include.php',
     'f4c767faab43077fd89ff7cf99ffb4b8' => $vendorDir . '/serialization/serialization/Serialization.php',
     'c3ae67574219cc56cab6c30ef8877b85' => $baseDir . '/extensions/Validator/Validator.php',
-    '6124b4c8570aa390c21fafd04a26c69f' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
     '9ebf2cbcc0b7687b276c44d77096b002' => $baseDir . '/extensions/Maps/Maps.php',
+    '6124b4c8570aa390c21fafd04a26c69f' => $vendorDir . '/myclabs/deep-copy/src/DeepCopy/deep_copy.php',
 );
