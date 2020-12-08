@@ -112,20 +112,21 @@ class RebuildLocalisationCache extends Maintenance {
 			}
 		} else {
 			$codes = $primaryOnly ? [] : $allCodes;
+
+			// Define the list of Wikia supported language codes we should rebuild first
+			$firstCodes = [ 'en', 'pl', 'de', 'es', 'fr', 'it', 'ja', 'nl', 'pt', 'ru', 'zh-hans', 'zh-tw' ];
+
+			// Filter these out of the full language code list
+			$codes = array_filter( $codes,
+				function ( $item ) use ( $firstCodes ) {
+					return !in_array($item, $firstCodes);
+				} );
+
+			sort( $codes );
+
+			// Add the priority codes to the front of the list
+			$codes = array_merge($firstCodes, $codes);
 		}
-
-		// Define the list of Wikia supported language codes we should rebuild first
-		$firstCodes = [ 'en', 'pl', 'de', 'es', 'fr', 'it', 'ja', 'nl', 'pt', 'ru', 'zh-hans', 'zh-tw' ];
-
-		// Filter these out of the full language code list
-		$codes = array_filter( $codes,
-							   function ( $item ) use ( $firstCodes ) {
-									return !in_array($item, $firstCodes);
-							   } );
-		sort( $codes );
-
-		// Add the priority codes to the front of the list
-		$codes = array_merge($firstCodes, $codes);
 
 		// Initialise and split into chunks
 		$numRebuilt = 0;
