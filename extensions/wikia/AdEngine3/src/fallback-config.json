@@ -187,7 +187,13 @@
                 "oasis"
             ],
             "regions": [
-                "PL"
+                "XX",
+                "non-CA",
+                "non-DE",
+                "non-GB",
+                "non-RU",
+                "non-UK",
+                "non-US"
             ],
             "value": true
         }
@@ -1722,6 +1728,7 @@
                 "oasis"
             ],
             "regions": [
+                "CA",
                 "PL"
             ],
             "value": "//static.wikia.nocookie.net/fandom-ae-assets/prebid.js/v4.17.0/20201124.min.js"
