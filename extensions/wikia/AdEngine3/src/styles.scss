@@ -2,6 +2,11 @@
 
 @include logo-replacement(55px);
 
+.custom-logo-anchor {
+	display: flex;
+	align-items: center;
+}
+
 .has-bfaa {
   &.body {
     padding-top: 25.7732%;
