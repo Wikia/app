@@ -5,7 +5,12 @@
  * @author Krzysztof Krzyżaniak <eloy@wikia-inc.com>
  * @author Michał ‘Mix’ Roszka <mix@wikia-inc.com>
  */
-$wgHooks[ "CustomSpecialStatistics" ][] = "DumpsOnDemand::customSpecialStatistics";
+
+use Wikia\Logger\WikiaLogger;
+use Wikia\S3\S3Exception;
+use Wikia\S3\S3Put;
+
+$wgHooks["CustomSpecialStatistics" ][] = "DumpsOnDemand::customSpecialStatistics";
 $wgExtensionMessagesFiles[ "DumpsOnDemand" ] =  __DIR__ . '/DumpsOnDemand.i18n.php';
 
 class DumpsOnDemand {
@@ -165,39 +170,47 @@ class DumpsOnDemand {
 	 *
 	 * @param string $sPath
 	 * @param bool $bPublic
-	 * @param string $sMimeType
+	 * @param string|null $sMimeType
+	 * if $sMimeType is set then the specified mime tipe is set, otherwise
+	 *      let AmazonS3 decide on mime type.
+	 * @return bool
+	 * @throws Exception
 	 */
-	static public function putToAmazonS3( string $sPath, bool $bPublic, string $sMimeType )  {
-		global $wgAWSAccessKey, $wgAWSSecretKey;
-
+	static public function putToAmazonS3( $sPath, $bPublic = true, $sMimeType = null ) {
 		$time = wfTime();
 		$size = filesize( $sPath );
 
-		// SUS-4538 | use PHP S3 client instead of s3cmd
-		$s3 = new S3( $wgAWSAccessKey, $wgAWSSecretKey );
-		S3::setExceptions( true );
+		$s3 = new S3Put();
+		if ( $bPublic ) {
+			$s3->setPublic();
+		}
+		$s3->setContentDisposition( 'attachment' );
 
-		$resource = S3::inputResource( fopen( $sPath, 'rb' ), $size );
-		$remotePath = DumpsOnDemand::getPath( basename( $sPath ) );
+		if ( !is_null( $sMimeType ) ) {
+			$s3->setContentType( $sMimeType );
+		}
 
-		// this will throw S3Exception on errors, callers should handle it accordingly
-		$s3->putObject(
-			$resource,
-			'wikia_xml_dumps',
-			$remotePath,
-			$bPublic ? S3::ACL_PUBLIC_READ : S3::ACL_PRIVATE,
-			[],
-			[
-				'Content-Disposition' => 'attachment',
-				'Content-Type' => $sMimeType
-			]
-		);
+		$sDestination = DumpsOnDemand::getPath( basename( $sPath ) );
+		try {
+			$s3->execute( $sPath, 'wikia_xml_dumps', $sDestination );
+		} catch ( S3Exception $e ) {
+			WikiaLogger::instance()->error( __METHOD__, [
+				'exception' => $e,
+				'remote_path' => $sDestination,
+				'size' => $size,
+				'time_sec' => wfTime() - $time,
+			] );
 
-		\Wikia\Logger\WikiaLogger::instance()->info( __METHOD__, [
-			'remote_path' => $remotePath,
+			return false;
+		}
+
+		WikiaLogger::instance()->info( __METHOD__, [
+			'remote_path' => $sDestination,
 			'size' => $size,
 			'time_sec' => wfTime() - $time,
 		] );
+
+		return true;
 	}
 
 	/**
