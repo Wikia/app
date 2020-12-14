@@ -161,16 +161,10 @@ class CloseWikiMaintenance extends Maintenance {
 					try {
 						foreach( $this->tarFiles( $dbname, $cityid ) as $source ) {
 							if ( is_string( $source ) ) {
-								try {
-									DumpsOnDemand::putToAmazonS3( $source, !$hide,
-										MimeMagic::singleton()->guessMimeType( $source ) );
-								}
-								catch ( S3Exception $ex ) {
+								$res = DumpsOnDemand::putToAmazonS3( $source, !$hide, MimeMagic::singleton()->guessMimeType( $source ) );
+								if ( !$res ) {
 									$this->error( "putToAmazonS3 command failed - Can't copy images to remote host. Please, fix that and rerun",
-										[
-											'exception' => $ex->getMessage(),
-											'dump_size_bytes' => filesize( $source ),
-										] );
+										[ 'dump_size_bytes' => filesize( $source ), ] );
 									unlink( $source );
 
 									// SUS-6077 | move to a next wiki instead of failing the entire process
@@ -204,10 +198,10 @@ class CloseWikiMaintenance extends Maintenance {
 				 $row->city_flags & WikiFactory::FLAG_FREE_WIKI_URL ) {
 				//We need to check if wiki is still marked for close PLATFORM-5181
 				$where["city_id"] = $cityid;
-				$sth = $dbr->select( [ "city_list" ], [
+				$statement = $dbr->select( [ "city_list" ], [
 					"city_id",
 				], $where, __METHOD__, $opts );
-				if ( $sth->numRows() != 0 ) {
+				if ( $statement->numRows() != 0 ) {
 
 					( new GcsBucketRemover() )->remove( $cityid );
 
