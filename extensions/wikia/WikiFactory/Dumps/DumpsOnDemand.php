@@ -185,6 +185,7 @@ class DumpsOnDemand {
 			$s3->setPublic();
 		}
 		$s3->setContentDisposition( 'attachment' );
+		$s3->setForce();
 
 		if ( !is_null( $sMimeType ) ) {
 			$s3->setContentType( $sMimeType );
