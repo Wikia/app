@@ -26,7 +26,7 @@ class CloseWikiMaintenance extends Maintenance {
 	// delete wikis after X days when we marked them to be deleted
 	const CLOSE_WIKI_DELAY = 30;
 
-	const IMAGE_ARCHIVE_SIZE_LIMIT_BYTES = 50 * 1024 * 1024 * 1024;
+	const IMAGE_ARCHIVE_SIZE_LIMIT_BYTES = 5 * 1024 * 1024 * 1024;
 
 	public function __construct() {
 		parent::__construct();
