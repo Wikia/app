@@ -200,7 +200,7 @@ class CloseWikiMaintenance extends Maintenance {
 				$where["city_id"] = $cityid;
 				$statement = $dbr->select( [ "city_list" ], [
 					"city_id",
-				], $where, __METHOD__, $opts );
+				], $where );
 				if ( $statement->numRows() != 0 ) {
 
 					( new GcsBucketRemover() )->remove( $cityid );
