@@ -10,6 +10,7 @@ use Psr\Http\Message\ResponseInterface;
 use WebRequest;
 use Wikia\Logger\Loggable;
 use Wikia\Service\Constants;
+use function GuzzleHttp\Psr7\build_query;
 
 class DiscussionGateway {
 	use Loggable;
@@ -345,7 +346,7 @@ class DiscussionGateway {
 						Constants::HELIOS_AUTH_HEADER => $userId,
 						'Content-Type' => 'application/json'
 					],
-					RequestOptions::QUERY => $queryParams,
+					RequestOptions::QUERY => build_query( $queryParams, PHP_QUERY_RFC1738 ),
 					RequestOptions::TIMEOUT => self::API_TIMEOUT,
 				] );
 		} );
