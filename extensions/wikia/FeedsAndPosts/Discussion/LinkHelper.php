@@ -92,7 +92,11 @@ class LinkHelper {
 
 	private function buildLink( Uri $uri, array $controllerQueryParams ) {
 		foreach ( parse_query( $uri->getQuery() ) as $paramName => $value ) {
-			$controllerQueryParams[$paramName] = $value;
+			if ( is_array( $value ) ) {
+				$controllerQueryParams[$paramName . '[]'] = $value;
+			} else {
+				$controllerQueryParams[$paramName] = $value;
+			}
 		}
 
 		return $this->toHttps(

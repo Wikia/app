@@ -28,21 +28,30 @@ export class LogoReplacement {
 		const fandomLogo = document.querySelector('.wds-global-navigation__logo');
 
 		if (parentElement && fandomLogo) {
-			const newLogoAnchorElement = document.createElement('a');
-			newLogoAnchorElement.href = this.config.clickThroughUrl || 'https://www.fandom.com/';
+			const customLogoAnchorElement = document.createElement('a');
+			customLogoAnchorElement.href = this.config.clickThroughUrl || 'https://www.fandom.com/';
+			customLogoAnchorElement.classList.add('custom-logo-anchor');
 
-			const newLogo = document.createElement('img');
-			newLogo.src = this.config.logoImage;
-			newLogo.classList.add('new-logo');
+			const customLogo = document.createElement('img');
+			customLogo.src = this.config.logoImage;
+			customLogo.classList.add('custom-logo');
 
 			const trackingPixel = document.createElement('img');
 			trackingPixel.src = this.config.pixelUrl;
 			trackingPixel.classList.add('tracking-pixel');
 
-			parentElement.insertBefore(newLogoAnchorElement, fandomLogo);
+			parentElement.insertBefore(customLogoAnchorElement, fandomLogo);
 			parentElement.removeChild(fandomLogo);
 			parentElement.appendChild(trackingPixel);
-			newLogoAnchorElement.appendChild(newLogo);
+
+			if (this.config.smallSizedLogoImage) {
+				const smallCustomLogo = document.createElement('img');
+				smallCustomLogo.src = this.config.smallSizedLogoImage;
+				smallCustomLogo.classList.add('small-custom-logo');
+				customLogoAnchorElement.appendChild(smallCustomLogo);
+			}
+
+			customLogoAnchorElement.appendChild(customLogo);
 
 			this.adSlot.emitEvent(events.LOGO_REPLACED);
 		}
