@@ -2,8 +2,8 @@
 $messages = array();
 
 $messages['en'] = array(
-	'user-activity-desc' => "Displays the current user's activity across all of Wikia",
-	'user-activity-page-description' => "This page lists all of Wikia's communities where your account has contributed! By default, the wikias are sorted by most recent contribution date.",
+	'user-activity-desc' => "Displays the current user's activity across all of Fandom",
+	'user-activity-page-description' => "This page lists all of Fandom's communities where your account has contributed! By default, the wikias are sorted by most recent contribution date.",
 	'user-activity-table-title' => 'Title',
 	'user-activity-table-edits' => '# of edits',
 	'user-activity-table-lastedit' => 'Last edited',
@@ -35,7 +35,7 @@ $messages['de'] = array(
 );
 
 $messages['es'] = array(
-	'user-activity-desc' => 'Muestra la actividad actual del usuario a través de todo Wikia',
+	'user-activity-desc' => 'Muestra la actividad actual del usuario a través de todo Fandom',
 	'user-activity-page-description' => '¡Esta página muestra todas las comunidades de FANDOM donde ha contribuido tu cuenta! Por defecto, las wikias están ordenadas por fecha más reciente de contribución.',
 	'user-activity-table-title' => 'Título',
 	'user-activity-table-edits' => '# de ediciones',
@@ -46,8 +46,8 @@ $messages['es'] = array(
 );
 
 $messages['fr'] = array(
-	'user-activity-desc' => "Affiche l'activité de l'utilisateur actuel sur l'ensemble de Wikia.",
-	'user-activity-page-description' => 'Cette page indique toutes les communautés de Wikia auxquelles vous avez contribué. Par défaut, les wikias sont triés par date de contribution à commencer par la plus récente.',
+	'user-activity-desc' => "Affiche l'activité de l'utilisateur actuel sur l'ensemble de Fandom.",
+	'user-activity-page-description' => 'Cette page indique toutes les communautés de Fandom auxquelles vous avez contribué. Par défaut, les wikias sont triés par date de contribution à commencer par la plus récente.',
 	'user-activity-table-title' => 'Titre',
 	'user-activity-table-edits' => 'Nb de modifications',
 	'user-activity-table-lastedit' => 'Dernière modification',
@@ -57,8 +57,8 @@ $messages['fr'] = array(
 );
 
 $messages['it'] = array(
-	'user-activity-desc' => "Mostra l'attività attuale dell'utente in tutte le di Wikia",
-	'user-activity-page-description' => 'Questa pagina elenca tutte le comunità di Wikia a cui il tuo account ha contribuito. Per impostazione predefinita, le wiki sono ordinate in base alla data del contributo più recente.',
+	'user-activity-desc' => "Mostra l'attività attuale dell'utente in tutte le di Fandom",
+	'user-activity-page-description' => 'Questa pagina elenca tutte le comunità di Fandom a cui il tuo account ha contribuito. Per impostazione predefinita, le wiki sono ordinate in base alla data del contributo più recente.',
 	'user-activity-table-title' => 'Titolo',
 	'user-activity-table-edits' => 'N. di modifiche',
 	'user-activity-table-lastedit' => 'Ultima modifica',
@@ -79,8 +79,8 @@ $messages['ja'] = array(
 );
 
 $messages['nl'] = array(
-	'user-activity-desc' => "Displays the current user's activity across all of Wikia",
-	'user-activity-page-description' => "This page lists all of Wikia's communities where your account has contributed! By default, the wikias are sorted by most recent contribution date.",
+	'user-activity-desc' => "Displays the current user's activity across all of Fandom",
+	'user-activity-page-description' => "This page lists all of Fandom's communities where your account has contributed! By default, the wikias are sorted by most recent contribution date.",
 	'user-activity-table-title' => 'Title',
 	'user-activity-table-edits' => '# of edits',
 	'user-activity-table-lastedit' => 'Last edited',
@@ -90,7 +90,7 @@ $messages['nl'] = array(
 );
 
 $messages['pl'] = array(
-	'user-activity-desc' => 'Wyświetla bieżącą aktywność użytkownika na całej Wikii',
+	'user-activity-desc' => 'Wyświetla bieżącą aktywność użytkownika na całej Fandom',
 	'user-activity-page-description' => 'Ta strona zawiera listę wszystkich społeczności FANDOM, na których Twoje konto dokonało edycji! Domyślnie, wikie są posortowane według daty edycji.',
 	'user-activity-table-title' => 'Tytuł',
 	'user-activity-table-edits' => '# zmian',
@@ -101,8 +101,8 @@ $messages['pl'] = array(
 );
 
 $messages['pt'] = array(
-	'user-activity-desc' => 'Exibe a atividade atual do usuário em toda a Wikia',
-	'user-activity-page-description' => 'Esta página lista todas as comunidades Wikia que receberam contribuições de sua conta! Por padrão, as wikias são classificadas pela data da contribuição mais recente.',
+	'user-activity-desc' => 'Exibe a atividade atual do usuário em toda a Fandom',
+	'user-activity-page-description' => 'Esta página lista todas as comunidades Fandom que receberam contribuições de sua conta! Por padrão, as wikias são classificadas pela data da contribuição mais recente.',
 	'user-activity-table-title' => 'Título',
 	'user-activity-table-edits' => '# de edições',
 	'user-activity-table-lastedit' => 'Última edição',
@@ -123,8 +123,8 @@ $messages['ru'] = array(
 );
 
 $messages['zh-hans'] = array(
-	'user-activity-desc' => '显示此用户在所有Wikia社区上的活动',
-	'user-activity-page-description' => '此页面列出了所有您贡献过的Wikia社区！这些Wikia社区按照您的最新贡献日期进行默认排序。',
+	'user-activity-desc' => '显示此用户在所有Fandom社区上的活动',
+	'user-activity-page-description' => '此页面列出了所有您贡献过的Fandom社区！这些Fandom社区按照您的最新贡献日期进行默认排序。',
 	'user-activity-table-title' => '标题',
 	'user-activity-table-edits' => '编辑次数',
 	'user-activity-table-lastedit' => '上次编辑',
@@ -134,8 +134,8 @@ $messages['zh-hans'] = array(
 );
 
 $messages['zh-hant'] = array(
-	'user-activity-desc' => '顯示此使用者在所有Wikia社區上的活動',
-	'user-activity-page-description' => '此頁面列出了所有您貢獻過的Wikia社區！ 這些Wikia社區按照您的最新貢獻日期進行預設排序。',
+	'user-activity-desc' => '顯示此使用者在所有Fandom社區上的活動',
+	'user-activity-page-description' => '此頁面列出了所有您貢獻過的Fandom社區！ 這些Fandom社區按照您的最新貢獻日期進行預設排序。',
 	'user-activity-table-title' => '標題',
 	'user-activity-table-edits' => '編輯次數',
 	'user-activity-table-lastedit' => '上次編輯',
