@@ -475,6 +475,14 @@
             "value": true
         }
     ],
+    "icRealVu": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "value": true
+        }
+    ],
     "icNielsen": [
         {
             "apps": [
@@ -589,6 +597,14 @@
                 "XX"
             ],
             "value": [
+                "5570487543",
+                "5570492862",
+                "5571791669",
+                "5571791681",
+                "5571791666",
+                "5571791678",
+                "5570710699",
+                "5570709487",
                 "5569119045",
                 "5569119354",
                 "5535740121",
@@ -1748,19 +1764,6 @@
                 "XX"
             ],
             "value": "//static.wikia.nocookie.net/fandom-ae-assets/prebid.js/v4.17.0/20201124.min.js"
-        },
-        {
-            "apps": [
-                "futhead",
-                "gamepedia",
-                "mobile-wiki",
-                "muthead",
-                "oasis"
-            ],
-            "regions": [
-                "XX"
-            ],
-            "value": "//static.wikia.nocookie.net/fandom-ae-assets/prebid.js/v3.27.1/20201022.min.js"
         }
     ],
     "icDurationMediaLibraryUrl": [
