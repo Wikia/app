@@ -478,6 +478,7 @@
     "icRealVu": [
         {
             "apps": [
+                "mobile-wiki",
                 "oasis"
             ],
             "value": true
