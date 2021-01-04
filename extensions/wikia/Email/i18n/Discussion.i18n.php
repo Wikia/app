@@ -185,6 +185,24 @@ $messages['ja'] = array(
 );
 
 $messages['ko'] = array(
+	'emailext-discussion-reply-with-title-subject' => '[$3 $4]의 [$1 $2] 글에 새 댓글이 달렸습니다',
+	'emailext-discussion-25-upvote-summary-with-title' => '[$3 $4]의 [$1 $2] 글이 추천 수 25개에 도달했습니다!',
+	'emailext-discussion-100-upvote-subject' => '$1에서 귀하의 글이 추천 수 100개에 도달했습니다!',
+	'emailext-discussion-5-upvote-summary-with-title' => '[$3 $4]의 [$1 $2] 글이 추천 수 5개에 도달했습니다!',
+	'emailext-discussion-reply-subject' => '[$1 $2]에서 귀하가 주시 중인 글에 새 댓글이 달렸습니다',
+	'emailext-discussion-5-upvote-subject-with-title' => '$2의 $1 글이 추천 수 5개에 도달했습니다!',
+	'emailext-discussion-100-upvote-subject-with-title' => '$2의 $1 글이 추천 수 100개에 도달했습니다!',
+	'emailext-discussion-25-upvote-subject-with-title' => '$2의 $1 글이 추천 수 25개에 도달했습니다!',
+	'emailext-discussion-25-upvote-subject' => '$1에서 귀하의 글이 추천 수 25개에 도달했습니다!',
+	'emailext-discussion-5-upvote-subject' => '$1에서 귀하의 글이 추천 수 5개에 도달했습니다!',
+	'emailext-discussion-button-text' => '토론 내역 보기',
+	'emailext-discussion-25-upvote-summary' => '[$1 $2]에서 귀하의 글이 추천 수 25개에 도달했습니다!',
+	'emailext-discussion-5-upvote-summary' => '[$1 $2]에서 귀하의 글이 추천 수 5개에 도달했습니다!',
+	'emailext-discussion-100-upvote-summary-with-title' => '[$3 $4]의 [$1 $2] 글이 추천 수 100개에 도달했습니다!',
+	'emailext-discussion-100-upvote-summary' => '[$1 $2]에서 귀하의 글이 추천 수 100개에 도달했습니다!',
+	'emailext-discussion-all-discussions' => '[$1 $2의 모든 토론 보기]',
+	'emailext-discussion-thread-at-mention' => '$3의 $2 글에서 $1 님이 귀하를 언급했습니다',
+	'emailext-discussion-post-at-mention' => '$3의 $2 글에 대한 댓글에서 $1 님이 귀하를 언급했습니다',
 );
 
 $messages['nl'] = array(
