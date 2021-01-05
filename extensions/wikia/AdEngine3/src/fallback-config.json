@@ -1559,7 +1559,7 @@
             "regions": [
                 "XX"
             ],
-            "value": 1
+            "value": 3
         }
     ],
     "wgAdDriverBillTheLizardConfig": {
@@ -2049,7 +2049,7 @@
                 "UK",
                 "US"
             ],
-            "sampling": 20.0,
+            "sampling": 30.0,
             "value": true
         }
     ],
