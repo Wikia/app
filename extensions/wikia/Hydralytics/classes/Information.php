@@ -201,7 +201,7 @@ class Information {
 		}
 
 		// by device type (filter out bots)
-		$res = \Redshift::query(
+		$res = \RDS::query(
 			'SELECT device_type, SUM(cnt) AS views FROM wikianalytics.sessions ' .
 			'WHERE wiki_id = :wiki_id AND device_type <> \'bot\' GROUP BY device_type ' .
 			'ORDER BY views DESC LIMIT :limit',
