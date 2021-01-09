@@ -508,6 +508,15 @@
             "value": true
         }
     ],
+    "icDeHeartbeatTracking": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "sampling": 100.0,
+            "value": true
+        }
+    ],
     "icPrebidBeachfront": [
         {
             "apps": [
@@ -1698,69 +1707,6 @@
             ]
         }
     ],
-    "icLiveRampId": [
-        {
-            "apps": [
-                "futhead",
-                "gamepedia",
-                "mobile-wiki",
-                "muthead",
-                "oasis"
-            ],
-            "regions": [
-                "US-AK",
-                "US-AL",
-                "US-AR",
-                "US-AZ",
-                "US-CO",
-                "US-CT",
-                "US-DE",
-                "US-FL",
-                "US-GA",
-                "US-HI",
-                "US-IA",
-                "US-ID",
-                "US-IL",
-                "US-IN",
-                "US-KS",
-                "US-KY",
-                "US-LA",
-                "US-MA",
-                "US-MD",
-                "US-ME",
-                "US-MI",
-                "US-MN",
-                "US-MO",
-                "US-MS",
-                "US-MT",
-                "US-NC",
-                "US-ND",
-                "US-NE",
-                "US-NH",
-                "US-NJ",
-                "US-NM",
-                "US-NV",
-                "US-NY",
-                "US-OH",
-                "US-OK",
-                "US-OR",
-                "US-PA",
-                "US-RI",
-                "US-SC",
-                "US-SD",
-                "US-TN",
-                "US-TX",
-                "US-UT",
-                "US-VA",
-                "US-VT",
-                "US-WA",
-                "US-WI",
-                "US-WV",
-                "US-WY"
-            ],
-            "value": true
-        }
-    ],
     "icPrebidVersion": [
         {
             "apps": [
@@ -1926,68 +1872,6 @@
             "value": true
         }
     ],
-    "icLiveRampATS": [
-        {
-            "apps": [
-                "gamepedia",
-                "mobile-wiki",
-                "oasis"
-            ],
-            "regions": [
-                "UC-NC",
-                "US-AK",
-                "US-AL",
-                "US-AR",
-                "US-AZ",
-                "US-CO",
-                "US-CT",
-                "US-DE",
-                "US-FL",
-                "US-GA",
-                "US-HI",
-                "US-IA",
-                "US-ID",
-                "US-IL",
-                "US-IN",
-                "US-KS",
-                "US-KY",
-                "US-LA",
-                "US-MA",
-                "US-MD",
-                "US-ME",
-                "US-MI",
-                "US-MN",
-                "US-MO",
-                "US-MS",
-                "US-MT",
-                "US-ND",
-                "US-NE",
-                "US-NH",
-                "US-NJ",
-                "US-NM",
-                "US-NV",
-                "US-NY",
-                "US-OH",
-                "US-OK",
-                "US-OR",
-                "US-PA",
-                "US-RI",
-                "US-SC",
-                "US-SD",
-                "US-TN",
-                "US-TX",
-                "US-UT",
-                "US-VA",
-                "US-VT",
-                "US-WA",
-                "US-WI",
-                "US-WV",
-                "US-WY"
-            ],
-            "sampling": 100.0,
-            "value": true
-        }
-    ],
     "icPrebid": [
         {
             "apps": [
@@ -2055,7 +1939,7 @@
                 "UK",
                 "US"
             ],
-            "sampling": 40.0,
+            "sampling": 45.0,
             "value": true
         }
     ],
@@ -2115,69 +1999,6 @@
                 "XX"
             ],
             "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v5.2.0/tracking-opt-in.min.js"
-        }
-    ],
-    "icLiveRampATSAnalytics": [
-        {
-            "apps": [
-                "futhead",
-                "gamepedia",
-                "mobile-wiki",
-                "muthead",
-                "oasis"
-            ],
-            "regions": [
-                "US-AK",
-                "US-AL",
-                "US-AR",
-                "US-AZ",
-                "US-CO",
-                "US-CT",
-                "US-DE",
-                "US-FL",
-                "US-GA",
-                "US-Hi",
-                "US-IA",
-                "US-ID",
-                "US-IL",
-                "US-IN",
-                "US-KS",
-                "US-KY",
-                "US-LA",
-                "US-MA",
-                "US-MD",
-                "US-ME",
-                "US-MI",
-                "US-MN",
-                "US-MO",
-                "US-MS",
-                "US-MT",
-                "US-NC",
-                "US-ND",
-                "US-NE",
-                "US-NH",
-                "US-NJ",
-                "US-NM",
-                "US-NV",
-                "US-NY",
-                "US-OH",
-                "US-OK",
-                "US-OR",
-                "US-PA",
-                "US-RI",
-                "US-SC",
-                "US-SD",
-                "US-TN",
-                "US-TX",
-                "US-UT",
-                "US-VA",
-                "US-VT",
-                "US-WA",
-                "US-WI",
-                "US-WV",
-                "US-WY"
-            ],
-            "value": true
         }
     ],
     "icPermutive": [
