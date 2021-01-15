@@ -130,6 +130,7 @@ class AdEngine3
 					'pageType' => $adPageTypeService->getPageType(),
 					'showAds' => $adPageTypeService->areAdsShowableOnPage(),
 					'noAdsReason' => $adsDeciderService->getNoAdsReason(),
+					'noAdsReasons' => $adsDeciderService->getNoAdsReasons(),
                     'userEmailHashes' => $userEmailHashes,
 				]),
 				'targeting' => array_filter([
