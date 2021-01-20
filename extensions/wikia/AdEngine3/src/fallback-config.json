@@ -152,6 +152,14 @@
             "value": true
         }
     ],
+    "icDePersonalizedRecoExperimentTest": [
+        {
+            "apps": [
+                "oasis"
+            ],
+            "value": "{\n  trackingParams: {},\n  frontendConfig: {\n    slots: 'random',\n    numberOfSlots: 4\n  },\n  config: {},\n}"
+        }
+    ],
     "icComscoreJwpTracking": [
         {
             "apps": [
