@@ -157,7 +157,19 @@
             "apps": [
                 "oasis"
             ],
-            "value": "{\n  trackingParams: {},\n  frontendConfig: {\n    slots: 'random',\n    numberOfSlots: 4\n  },\n  config: {},\n}"
+            "sampling": 100.0,
+            "value": {
+                "config": {
+                    
+                },
+                "frontendConfig": {
+                    "slots": "random",
+                    "numberOfSlots": 4
+                },
+                "trackingParams": {
+                    
+                }
+            }
         }
     ],
     "icComscoreJwpTracking": [
@@ -191,30 +203,11 @@
     "icPrebidRubiconAdditionalKeyvals": [
         {
             "apps": [
-                "futhead",
-                "gamepedia",
-                "mobile-wiki",
-                "muthead",
-                "oasis"
-            ],
-            "regions": [
-                "PL"
-            ],
-            "value": true
-        },
-        {
-            "apps": [
                 "mobile-wiki",
                 "oasis"
             ],
             "regions": [
-                "XX",
-                "non-CA",
-                "non-DE",
-                "non-GB",
-                "non-RU",
-                "non-UK",
-                "non-US"
+                "XX"
             ],
             "value": true
         }
@@ -618,6 +611,9 @@
                 "XX"
             ],
             "value": [
+                "5593227726",
+                "5593227726",
+                "5593730141",
                 "5536990747",
                 "5587334857",
                 "5586275496",
@@ -1696,7 +1692,7 @@
                 "oasis"
             ],
             "regions": [
-                "PL"
+                "XX"
             ],
             "value": true
         }
@@ -1947,22 +1943,16 @@
                 "oasis"
             ],
             "regions": [
-                "AT",
                 "AU",
-                "BR",
                 "CA",
                 "DE",
-                "ES",
                 "FR",
                 "GB",
-                "IT",
-                "PH",
-                "SG",
-                "TW",
+                "NZ",
                 "UK",
                 "US"
             ],
-            "sampling": 50.0,
+            "sampling": 65.0,
             "value": true
         }
     ],
