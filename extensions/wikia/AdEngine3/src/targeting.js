@@ -277,6 +277,7 @@ export default {
 			bidder_25: transformBidderPrice('nobid'),
 			bidder_26: transformBidderPrice('telaria'),
 			bidder_27: transformBidderPrice('mediagrid'),
+			bidder_28: transformBidderPrice('verizon'),
 		};
 	},
 };
