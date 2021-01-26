@@ -170,6 +170,7 @@ async function setupAdContext(wikiContext, consents) {
 		'options.jwplayerA9LoggerErrorCodes',
 		instantConfig.get('icA9LoggerErrorCodes'),
 	);
+	context.set('options.video.pauseJWPlayerAd', instantConfig.get('icPauseJWPlayerAd'));
 
 	setupPageLevelTargeting(context.get('wiki'));
 
