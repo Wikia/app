@@ -23,7 +23,7 @@ use Wikia\Tasks\Queues\CategoryCountsQueue;
 
 class AsyncTaskList {
 	/** @const int default wiki city to run tasks in (community) */
-	const DEFAULT_WIKI_ID = 177;
+	const DEFAULT_WIKI_ID = 2393201;
 
 	/** which config to grab when figuring out the executor (on the job queue side) */
 	const EXECUTOR_APP_NAME = 'mediawiki';

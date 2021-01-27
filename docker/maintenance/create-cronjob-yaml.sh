@@ -31,7 +31,7 @@ ARGS=`echo "$JOB_JSON" | jq .args[] | sed -e 's/^/            - /g'`
 SERVER_ID=`echo "$JOB_JSON" | jq .server_id`
 
 if [ "$SERVER_ID" = 'null' ]; then
-	SERVER_ID="177"
+	SERVER_ID="2393201"
 fi
 
 if [ "$SCHEDULE" = 'null' ]; then
