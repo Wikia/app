@@ -157,7 +157,9 @@
             "apps": [
                 "oasis"
             ],
-            "sampling": 100.0,
+            "regions": [
+                "XX"
+            ],
             "value": {
                 "config": {
                     
@@ -370,6 +372,16 @@
                 "oasis"
             ],
             "regions": [
+                "FR"
+            ],
+            "value": false
+        },
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
                 "XX"
             ],
             "value": true
@@ -518,6 +530,9 @@
             "apps": [
                 "oasis"
             ],
+            "regions": [
+                "XX"
+            ],
             "sampling": 100.0,
             "value": true
         }
@@ -588,6 +603,18 @@
             "value": true
         }
     ],
+    "icPrebidVerizon": [
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "FR"
+            ],
+            "value": true
+        }
+    ],
     "icA9HiviLeaderboard": [
         {
             "apps": [
@@ -600,6 +627,16 @@
         }
     ],
     "icPrebidAol": [
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "FR"
+            ],
+            "value": false
+        },
         {
             "apps": [
                 "mobile-wiki",
@@ -1973,7 +2010,7 @@
                 "UK",
                 "US"
             ],
-            "sampling": 65.0,
+            "sampling": 75.0,
             "value": true
         }
     ],
