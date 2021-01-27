@@ -22,7 +22,7 @@
 
 // Eliminate the need to set this on the command line
 if ( !getenv( 'SERVER_ID' ) ) {
-	putenv( "SERVER_ID=177" );
+	putenv( "SERVER_ID=2393201" );
 }
 
 ini_set( 'display_errors', 'stderr' );
