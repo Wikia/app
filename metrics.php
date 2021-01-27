@@ -8,7 +8,7 @@
 
 // Prometheus does not set a "Host" header,
 // tell WikiFactoryLoader class which wiki to use when serving this request
-$_ENV['SERVER_ID'] = 177;
+$_ENV['SERVER_ID'] = 2393201;
 
 require __DIR__ . '/includes/WebStart.php'; // we want to load config to have $wgRedisHost
 
