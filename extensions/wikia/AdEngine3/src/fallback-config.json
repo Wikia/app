@@ -155,22 +155,46 @@
     "icDePersonalizedRecoExperimentTest": [
         {
             "apps": [
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
                 "oasis"
             ],
             "regions": [
                 "XX"
             ],
             "value": {
-                "config": {
-                    
-                },
-                "frontendConfig": {
-                    "slots": "random",
-                    "numberOfSlots": 4
-                },
-                "trackingParams": {
-                    
-                }
+                "groups": [
+                    {
+                        "name": "six",
+                        "sampling": 34,
+                        "frontendConfig": {
+                            "slots": "random",
+                            "numberOfSlots": 6
+                        }
+                    },
+                    {
+                        "name": "three",
+                        "sampling": 33,
+                        "frontendConfig": {
+                            "slots": "random",
+                            "numberOfSlots": 3
+                        }
+                    },
+                    {
+                        "name": "four",
+                        "sampling": 33,
+                        "frontendConfig": {
+                            "slots": [
+                                "footer-card-11",
+                                "footer-card-9",
+                                "footer-card-19",
+                                "footer-card-13"
+                            ]
+                        }
+                    }
+                ]
             }
         }
     ],
@@ -661,6 +685,11 @@
                 "XX"
             ],
             "value": [
+                "5597409087",
+                "5597409078",
+                "5587334857",
+                "5597409078",
+                "5597409087",
                 "5585170956",
                 "5585170962",
                 "5593227726",
@@ -1561,7 +1590,8 @@
                 "5595114927",
                 "5598401242",
                 "5598651761",
-                "5598401488"
+                "5598401488",
+                "5589348855"
             ]
         }
     ],
@@ -2067,6 +2097,7 @@
                 "oasis"
             ],
             "regions": [
+                "DE",
                 "PL"
             ],
             "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v5.3.0/tracking-opt-in.min.js"
