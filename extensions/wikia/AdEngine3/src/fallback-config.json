@@ -165,27 +165,31 @@
                 "XX"
             ],
             "value": {
+                "name": "Experiment name",
                 "groups": [
                     {
-                        "name": "six",
+                        "name": "one",
                         "sampling": 34,
-                        "frontendConfig": {
-                            "slots": "random",
-                            "numberOfSlots": 6
+                        "ucpConfig": {
+                            "slots": [
+                                "footer-card-11"
+                            ]
                         }
                     },
                     {
-                        "name": "three",
+                        "name": "two",
                         "sampling": 33,
-                        "frontendConfig": {
-                            "slots": "random",
-                            "numberOfSlots": 3
+                        "ucpConfig": {
+                            "slots": [
+                                "footer-card-19",
+                                "footer-card-13"
+                            ]
                         }
                     },
                     {
                         "name": "four",
                         "sampling": 33,
-                        "frontendConfig": {
+                        "ucpConfig": {
                             "slots": [
                                 "footer-card-11",
                                 "footer-card-9",
@@ -576,6 +580,7 @@
     "icPauseJWPlayerAd": [
         {
             "apps": [
+                "f2",
                 "mobile-wiki",
                 "oasis"
             ],
@@ -685,6 +690,8 @@
                 "XX"
             ],
             "value": [
+                "5595347256",
+                "5595347262",
                 "5597409087",
                 "5597409078",
                 "5587334857",
@@ -1591,7 +1598,17 @@
                 "5598401242",
                 "5598651761",
                 "5598401488",
-                "5589348855"
+                "5589348855",
+                "5584196347",
+                "5584196350",
+                "5584196353",
+                "5584196356",
+                "5584419293",
+                "5583057048",
+                "5583057051",
+                "5583057054",
+                "5583057057",
+                "5583057060"
             ]
         }
     ],
@@ -2097,25 +2114,9 @@
                 "oasis"
             ],
             "regions": [
-                "DE",
-                "PL"
-            ],
-            "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v5.3.0/tracking-opt-in.min.js"
-        },
-        {
-            "apps": [
-                "bingebot",
-                "f2",
-                "futhead",
-                "gamepedia",
-                "mobile-wiki",
-                "muthead",
-                "oasis"
-            ],
-            "regions": [
                 "XX"
             ],
-            "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v5.2.0/tracking-opt-in.min.js"
+            "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v5.3.0/tracking-opt-in.min.js"
         }
     ],
     "icPermutive": [
