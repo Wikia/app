@@ -31,6 +31,8 @@ spec:
                 value: sjc
               - name: WIKIA_ENVIRONMENT
                 value: prod
+              - name: S4CMD_NUM_THREADS
+                value: 2
             resources:
               limits:
                 cpu: "6"
