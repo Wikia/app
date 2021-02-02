@@ -151,7 +151,7 @@ function doDumpBackup( $row, $path, array $args = [] ) {
 			$res = DumpsOnDemand::putToAmazonS3( $path, !isset( $options[ "hide" ] ),  MimeMagic::singleton()->guessMimeType( $path ) );
 			unlink( $path );
 
-			if ( $res !== 0 ) {
+			if ( !$res ) {
 				$logger->error( __METHOD__ . '::putToAmazonS3', [
 					'exception' => new Exception( 'putToAmazonS3 failed', $res ),
 					'row' => (array) $row,
