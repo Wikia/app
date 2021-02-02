@@ -155,21 +155,14 @@
     "icDePersonalizedRecoExperimentTest": [
         {
             "apps": [
-                "futhead",
-                "gamepedia",
-                "mobile-wiki",
-                "muthead",
                 "oasis"
             ],
-            "regions": [
-                "XX"
-            ],
             "value": {
-                "name": "Experiment name",
+                "name": "ucp_qa_2",
                 "groups": [
                     {
-                        "name": "one",
-                        "sampling": 34,
+                        "name": "small",
+                        "sampling": 30,
                         "ucpConfig": {
                             "slots": [
                                 "footer-card-11"
@@ -177,24 +170,11 @@
                         }
                     },
                     {
-                        "name": "two",
-                        "sampling": 33,
+                        "name": "big",
+                        "sampling": 70,
                         "ucpConfig": {
                             "slots": [
-                                "footer-card-19",
-                                "footer-card-13"
-                            ]
-                        }
-                    },
-                    {
-                        "name": "four",
-                        "sampling": 33,
-                        "ucpConfig": {
-                            "slots": [
-                                "footer-card-11",
-                                "footer-card-9",
-                                "footer-card-19",
-                                "footer-card-13"
+                                "footer-card-3"
                             ]
                         }
                     }
@@ -400,6 +380,7 @@
                 "oasis"
             ],
             "regions": [
+                "CA",
                 "FR"
             ],
             "value": false
@@ -585,7 +566,10 @@
                 "oasis"
             ],
             "regions": [
-                "CA"
+                "AU",
+                "CA",
+                "GB",
+                "UK"
             ],
             "value": true
         }
@@ -639,6 +623,7 @@
                 "oasis"
             ],
             "regions": [
+                "CA",
                 "FR"
             ],
             "value": true
@@ -662,6 +647,7 @@
                 "oasis"
             ],
             "regions": [
+                "CA",
                 "FR"
             ],
             "value": false
