@@ -23,6 +23,8 @@ class S3Put {
 	private $contentDisposition = null;
 	/** @var bool */
 	private $force = false;
+	/** @var ?integer  */
+	private $maxThreads = null;
 
 	/**
 	 * Makes the upcoming upload public
@@ -31,6 +33,18 @@ class S3Put {
 	 */
 	public function setPublic() {
 		$this->public = true;
+		return $this;
+	}
+
+	/**
+	 * Set the maximum number of threads to be utilized by the upload tool.
+	 * Useful when working in resource restricted environments.
+	 *
+	 * @param int $newMaxThreads
+	 * @return $this
+	 */
+	public function setMaxThreads( int $newMaxThreads ) {
+		$this->maxThreads = $newMaxThreads;
 		return $this;
 	}
 
@@ -92,10 +106,14 @@ class S3Put {
 		);
 
 		try {
-			$out = wfShellExec( $cmd, $result, [
+			$env = [
 				'S3_ACCESS_KEY' => $wgAWSAccessKey,
 				'S3_SECRET_KEY' => $wgAWSSecretKey
-			] );
+			];
+			if ( $this->maxThreads ) {
+				$env['S4CMD_NUM_THREADS'] = $this->maxThreads;
+			}
+			$out = wfShellExec( $cmd, $result, $env );
 		} catch ( \Exception $e ) {
 			throw new S3Exception( 'Error while executing s4cmd:' . $e->getMessage() );
 		}

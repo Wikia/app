@@ -161,7 +161,8 @@ class CloseWikiMaintenance extends Maintenance {
 					try {
 						foreach( $this->tarFiles( $dbname, $cityid ) as $source ) {
 							if ( is_string( $source ) ) {
-								$res = DumpsOnDemand::putToAmazonS3( $source, !$hide, MimeMagic::singleton()->guessMimeType( $source ) );
+								$res = DumpsOnDemand::putToAmazonS3( $source, !$hide, MimeMagic::singleton()
+									->guessMimeType( $source ), 2 );
 								if ( !$res ) {
 									$this->error( "putToAmazonS3 command failed - Can't copy images to remote host. Please, fix that and rerun",
 										[ 'dump_size_bytes' => filesize( $source ), ] );
