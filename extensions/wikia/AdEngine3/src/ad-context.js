@@ -184,6 +184,14 @@ export default {
 				enabled: false,
 				slots: {}
 			},
+			mediagrid: {
+				enabled: false,
+				slots: {
+					featured: {
+						uid: 46143,
+					},
+				},
+			},
 			nobid: {
 				enabled: false,
 				slots: {
