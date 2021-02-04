@@ -157,18 +157,28 @@
             "apps": [
                 "oasis"
             ],
-            "sampling": 100.0,
             "value": {
-                "config": {
-                    
-                },
-                "frontendConfig": {
-                    "slots": "random",
-                    "numberOfSlots": 4
-                },
-                "trackingParams": {
-                    
-                }
+                "name": "ucp_qa_2",
+                "groups": [
+                    {
+                        "name": "small",
+                        "sampling": 30,
+                        "ucpConfig": {
+                            "slots": [
+                                "footer-card-11"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "big",
+                        "sampling": 70,
+                        "ucpConfig": {
+                            "slots": [
+                                "footer-card-3"
+                            ]
+                        }
+                    }
+                ]
             }
         }
     ],
@@ -372,6 +382,16 @@
             "regions": [
                 "XX"
             ],
+            "value": false
+        },
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "XX"
+            ],
             "value": true
         }
     ],
@@ -518,6 +538,9 @@
             "apps": [
                 "oasis"
             ],
+            "regions": [
+                "XX"
+            ],
             "sampling": 100.0,
             "value": true
         }
@@ -537,11 +560,15 @@
     "icPauseJWPlayerAd": [
         {
             "apps": [
+                "f2",
                 "mobile-wiki",
                 "oasis"
             ],
             "regions": [
-                "CA"
+                "AU",
+                "CA",
+                "GB",
+                "UK"
             ],
             "value": true
         }
@@ -588,6 +615,18 @@
             "value": true
         }
     ],
+    "icPrebidVerizon": [
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "value": true
+        }
+    ],
     "icA9HiviLeaderboard": [
         {
             "apps": [
@@ -600,6 +639,16 @@
         }
     ],
     "icPrebidAol": [
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "XX"
+            ],
+            "value": false
+        },
         {
             "apps": [
                 "mobile-wiki",
@@ -624,6 +673,14 @@
                 "XX"
             ],
             "value": [
+                "5595347256",
+                "5595347256",
+                "5595347262",
+                "5597409087",
+                "5597409078",
+                "5587334857",
+                "5597409078",
+                "5597409087",
                 "5585170956",
                 "5585170962",
                 "5593227726",
@@ -1524,7 +1581,22 @@
                 "5595114927",
                 "5598401242",
                 "5598651761",
-                "5598401488"
+                "5598401488",
+                "5589348855",
+                "5584196347",
+                "5584196350",
+                "5584196353",
+                "5584196356",
+                "5584419293",
+                "5583057048",
+                "5583057051",
+                "5583057054",
+                "5583057057",
+                "5583057060",
+                "5601703894",
+                "5601576390",
+                "5319374800",
+                "5320947728"
             ]
         }
     ],
@@ -1973,7 +2045,7 @@
                 "UK",
                 "US"
             ],
-            "sampling": 65.0,
+            "sampling": 75.0,
             "value": true
         }
     ],
@@ -2030,24 +2102,9 @@
                 "oasis"
             ],
             "regions": [
-                "PL"
-            ],
-            "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v5.3.0/tracking-opt-in.min.js"
-        },
-        {
-            "apps": [
-                "bingebot",
-                "f2",
-                "futhead",
-                "gamepedia",
-                "mobile-wiki",
-                "muthead",
-                "oasis"
-            ],
-            "regions": [
                 "XX"
             ],
-            "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v5.2.0/tracking-opt-in.min.js"
+            "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v5.3.0/tracking-opt-in.min.js"
         }
     ],
     "icPermutive": [

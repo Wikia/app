@@ -101,4 +101,16 @@ class AdEngine3DeciderService {
 
 		return null;
 	}
+
+    public function getNoAdsReasons() {
+        $reasons = array_filter($this->possibleReasons, function ($status) {
+            return $status;
+        });
+        $reasons = array_keys($reasons);
+
+        if ( !empty($reasons) ) {
+            return $reasons;
+        }
+        return null;
+    }
 }

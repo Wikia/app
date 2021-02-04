@@ -25,7 +25,7 @@ if ( !$primaryOnly ) {
 }
 
 for ($i = 0; $i < $max_tries; ++$i) {
-	$cmd = 'SERVER_ID=177 php maintenance/rebuildLocalisationCache.php --force --primary --cache-dir=/tmp/messagecache-new' . $i;
+	$cmd = 'SERVER_ID=2393201 php maintenance/rebuildLocalisationCache.php --force --primary --cache-dir=/tmp/messagecache-new' . $i;
 	shell_exec( $cmd );
 	print 'cache ' . $i . ' done' . PHP_EOL;
 }
