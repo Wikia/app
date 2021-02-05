@@ -1596,7 +1596,10 @@
                 "5601703894",
                 "5601576390",
                 "5319374800",
-                "5320947728"
+                "5320947728",
+                "5598650594",
+                "5598650591",
+                "5598651329"
             ]
         }
     ],
@@ -1830,7 +1833,7 @@
             "regions": [
                 "XX"
             ],
-            "value": "//static.wikia.nocookie.net/fandom-ae-assets/prebid.js/v4.17.0/20201124.min.js"
+            "value": "//static.wikia.nocookie.net/fandom-ae-assets/prebid.js/v4.17.0/20201229.min.js"
         }
     ],
     "icDurationMediaLibraryUrl": [
