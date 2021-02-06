@@ -2065,6 +2065,18 @@
             "value": true
         }
     ],
+    "icPrebidMediaGrid": [
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "CA"
+            ],
+            "value": true
+        }
+    ],
     "icFloorAdhesionDelay": [
         {
             "apps": [
