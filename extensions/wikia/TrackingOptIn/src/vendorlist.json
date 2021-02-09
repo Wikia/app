@@ -1363,23 +1363,6 @@
 			"featureIds": []
 		},
 		{
-			"id": 97,
-			"name": "LiveRamp, Inc.",
-			"policyUrl": "www.liveramp.com/service-privacy-policy/",
-			"purposeIds": [
-				1,
-				2,
-				3,
-				4,
-				5
-			],
-			"legIntPurposeIds": [],
-			"featureIds": [
-				1,
-				2
-			]
-		},
-		{
 			"id": 74,
 			"name": "Admotion SRL",
 			"policyUrl": "http://www.admotion.com/policy/",
