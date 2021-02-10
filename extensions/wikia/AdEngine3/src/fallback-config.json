@@ -373,28 +373,6 @@
             "value": true
         }
     ],
-    "icPrebidOneMobile": [
-        {
-            "apps": [
-                "mobile-wiki",
-                "oasis"
-            ],
-            "regions": [
-                "XX"
-            ],
-            "value": false
-        },
-        {
-            "apps": [
-                "mobile-wiki",
-                "oasis"
-            ],
-            "regions": [
-                "XX"
-            ],
-            "value": true
-        }
-    ],
     "icRotatorDelay": [
         {
             "apps": [
@@ -538,9 +516,6 @@
             "apps": [
                 "oasis"
             ],
-            "regions": [
-                "XX"
-            ],
             "sampling": 100.0,
             "value": [
                 5,
@@ -642,30 +617,6 @@
             ],
             "regions": [
                 "XX"
-            ],
-            "value": true
-        }
-    ],
-    "icPrebidAol": [
-        {
-            "apps": [
-                "mobile-wiki",
-                "oasis"
-            ],
-            "regions": [
-                "XX"
-            ],
-            "value": false
-        },
-        {
-            "apps": [
-                "mobile-wiki",
-                "oasis"
-            ],
-            "regions": [
-                "AU",
-                "CA",
-                "US"
             ],
             "value": true
         }
@@ -1609,7 +1560,8 @@
                 "5320947728",
                 "5598650594",
                 "5598650591",
-                "5598651329"
+                "5598651329",
+                "5615271306"
             ]
         }
     ],
