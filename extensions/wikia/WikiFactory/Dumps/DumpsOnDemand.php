@@ -170,13 +170,13 @@ class DumpsOnDemand {
 	 *
 	 * @param string $sPath
 	 * @param bool $bPublic
-	 * @param string|null $sMimeType
-	 * if $sMimeType is set then the specified mime tipe is set, otherwise
+	 * @param null $sMimeType
+	 * if $sMimeType is set then the specified mime type is set, otherwise
 	 *      let AmazonS3 decide on mime type.
+	 * @param int $iMaxThreads set the maximum number of threads used by the s3 upload tool
 	 * @return bool
-	 * @throws Exception
 	 */
-	static public function putToAmazonS3( $sPath, $bPublic = true, $sMimeType = null ) {
+	static public function putToAmazonS3( $sPath, $bPublic = true, $sMimeType = null, $iMaxThreads = 0 ) {
 		$time = wfTime();
 		$size = filesize( $sPath );
 
@@ -186,6 +186,7 @@ class DumpsOnDemand {
 		}
 		$s3->setContentDisposition( 'attachment' );
 		$s3->setForce();
+		$s3->setMaxThreads( $iMaxThreads );
 
 		if ( !is_null( $sMimeType ) ) {
 			$s3->setContentType( $sMimeType );
