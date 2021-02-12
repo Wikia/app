@@ -1701,7 +1701,7 @@ $messages['ru'] = array(
 	'createpage_cant_edit' => 'Не удалось выполнить правку',
 	'createpage-dialog-title' => 'Создать новую статью',
 	'createpage-dialog-message2' => 'Напишите название вашей страницы здесь:',
-	'createpage-dialog-message3' => 'В настоящее время на {{SITENAME}} есть $1 {{PLURAL:$1|статья|статьи|статей}}. Нам нужно проверить, доступно ли такое название страницы.',
+	'createpage-dialog-message3' => 'Сейчас на {{SITENAME}} — $1 {{PLURAL:$1|статья|статьи|статей}}. Нажав «Далее», вы запустите проверку, есть ли статья с таким названием на вики.',
 	'createpage-dialog-choose' => 'Выберите макет страницы:',
 	'createpage-dialog-format' => 'Стандартный макет',
 	'createpage-dialog-blank' => 'Пустая страница',
@@ -1727,7 +1727,7 @@ $messages['ru'] = array(
 	'createpage-ve-body' => 'Статья <b>$1</b> ещё не существует на этой вики. Вы можете помочь, добавив несколько предложений.',
 	'createpage-button-proceed' => 'Далее',
 	'createpage-button-cancel' => 'Отмена',
-	'createpage-dialog-redlinks-list-header' => 'Или нажмите на одно из названий ниже, чтобы начать редактировать.',
+	'createpage-dialog-redlinks-list-header' => 'Нажав на одну из ссылок ниже, вы сможете создать одну из требуемых статей.',
 );
 
 $messages['sah'] = array(
