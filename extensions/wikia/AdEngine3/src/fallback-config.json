@@ -448,18 +448,6 @@
             "value": true
         }
     ],
-    "icA9BidRefreshing": [
-        {
-            "apps": [
-                "mobile-wiki",
-                "oasis"
-            ],
-            "regions": [
-                "XX"
-            ],
-            "value": true
-        }
-    ],
     "icA9Deals": [
         {
             "apps": [
@@ -1567,7 +1555,9 @@
                 "5614492491",
                 "5614492512",
                 "5614492515",
-                "5618830549"
+                "5618830549",
+                "5613147481",
+                "5613143479"
             ]
         }
     ],
@@ -1839,20 +1829,6 @@
                 "XX"
             ],
             "value": true
-        }
-    ],
-    "icA9BidRefreshingSlots": [
-        {
-            "apps": [
-                "mobile-wiki",
-                "oasis"
-            ],
-            "regions": [
-                "XX"
-            ],
-            "value": [
-                "featured"
-            ]
         }
     ],
     "icPorvataDirect": [
