@@ -375,7 +375,7 @@ abstract class Maintenance {
 	 * @param $err String: the error to display
 	 * @param $die Int: if > 0, go ahead and die out using this int as the code
 	 */
-	protected function error( $err, $die = 0 ) {
+	protected function error2( $err, $die = 0 ) {
 		$this->outputChanneled( false );
 		if ( php_sapi_name() == 'cli' ) {
 			fwrite( STDERR, $err . "\n" );

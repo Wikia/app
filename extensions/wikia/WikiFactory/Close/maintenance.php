@@ -36,6 +36,7 @@ class CloseWikiMaintenance extends Maintenance {
 		$this->addOption( 'limit', 'Limit how many wikis will be processed', false, true );
 		$this->addOption( 'sleep', 'How long to wait before processing the next wiki', false, true );
 		$this->addOption( 'cluster', 'Run for a given cluster only', false, true );
+		$this->addOption( 'wikiId', 'Run for a given wiki only' );
 	}
 
 	/**
@@ -60,6 +61,7 @@ class CloseWikiMaintenance extends Maintenance {
 		$limit = $this->getOption( 'limit', false );
 		$from = $this->getOption( 'from', 0 );
 		$cluster = $this->getOption( 'cluster', false ); // eg. c6
+		$wikiId = $this->getOption( 'wikiId', false ); // eg. c6
 
 		$this->info( 'start', [
 			'cluster' => $cluster,
@@ -95,6 +97,10 @@ class CloseWikiMaintenance extends Maintenance {
 
 		if ( $cluster !== false ) {
 			$where["city_cluster"] = $cluster;
+		}
+
+		if ( !empty( $wikiId ) ) {
+			$where['city_id'] = $wikiId;
 		}
 
 		$dbr = WikiFactory::db( DB_SLAVE );
@@ -248,6 +254,8 @@ class CloseWikiMaintenance extends Maintenance {
 							'user' => $wgDBadminuser,
 							'password' => $wgDBadminpassword,
 							'dbname' => $centralDB,
+							'flags' => 0,
+							'tablePrefix' => 'get from global',
 						] );
 						$dbw->begin( __METHOD__ );
 						$dbw->query( "DROP DATABASE `{$row->city_dbname}`" );
@@ -266,9 +274,9 @@ class CloseWikiMaintenance extends Maintenance {
 					/**
 					 * update search index
 					 */
-					$indexer = new Wikia\Search\Indexer();
-					$indexer->deleteWikiDocs( $row->city_id );
-					$this->info( "Wiki documents removed from index" );
+//					$indexer = new Wikia\Search\Indexer();
+//					$indexer->deleteWikiDocs( $row->city_id );
+//					$this->info( "Wiki documents removed from index" );
 
 					/**
 					 * let other extensions remove entries for closed wiki
