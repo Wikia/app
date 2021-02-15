@@ -94,6 +94,7 @@ class DiscussionGateway {
 		return $this->makeCall( function () use ( $postId, $userId, $userTraceHeaders ) {
 			return $this->httpClient->put( "{$this->serviceUrl}/internal/{$this->wikiId}/posts/{$postId}/report",
 				[
+					RequestOptions::QUERY => [ 'container_type' => 'forum' ],
 					RequestOptions::HEADERS => [
 												   WebRequest::WIKIA_INTERNAL_REQUEST_HEADER => '1',
 												   Constants::HELIOS_AUTH_HEADER => $userId,
