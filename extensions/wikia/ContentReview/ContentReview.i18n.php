@@ -385,7 +385,7 @@ $messages['ja'] = array(
 	'content-review-module-status-approved' => '承認されました',
 	'content-review-module-status-rejected' => '拒否されました',
 	'content-review-rejection-reason-link' => '理由',
-	'content-review-module-help' => '[[ヘルプ:CSSとJavaScriptのカスタマイゼーション|ヘルプ]]',
+	'content-review-module-help' => '[[w:c:ja.community:ヘルプ:CSSとJavaScriptのカスタマイゼーション|ヘルプ]]',
 	'content-review-module-help-article' => 'ヘルプ:CSSとJavaScriptのカスタマイゼーション',
 	'content-review-module-help-text' => 'ヘルプ',
 	'content-review-module-submit' => '申請する',
@@ -405,18 +405,18 @@ $messages['ja'] = array(
 	'content-review-status-live' => '公開中',
 	'content-review-status-autoapproved' => '自動承認済み',
 	'content-review-rejection-explanation' => '==$1==
-最近申請されたJavaScriptページへの変更（版[$2 $3]）は、FANDOMの審査プロセスにおいて却下されました。[[ヘルプ:JavaScriptの審査プロセス|カスタムJavaScriptのガイドライン]]を満たしていることをご確認ください。--~~~~',
+最近申請されたJavaScriptページへの変更（版[$2 $3]）は、Fandomの審査プロセスにおいて却下されました。[[w:c:ja.community:ヘルプ:JavaScriptの審査プロセス|カスタムJavaScriptのガイドライン]]を満たしていることをご確認ください。--~~~~',
 	'content-review-rejection-explanation-title' => '申請したスクリプトの変更「$1」が拒否されました',
 	'content-review-special-js-pages-title' => 'JavaScriptページ',
 	'content-review-module-header-pagename' => 'ページ名',
 	'content-review-module-header-actions' => '対処',
 	'content-review-module-jspages' => 'すべてのJSページ',
-	'content-review-special-js-description' => 'このページには、このコミュニティのMediaWiki名前空間スクリプトの現在の[[w:c:ja:ヘルプ:JavaScriptの審査プロセス|審査状況]]が一覧表示されています。',
+	'content-review-special-js-description' => 'このページには、このコミュニティのMediaWiki名前空間スクリプトの現在の[[w:c:ja.community:ヘルプ:JavaScriptの審査プロセス|審査状況]]が一覧表示されています。',
 	'content-review-special-js-importjs-description' => '注：ローカルとdev.wikia.comのスクリプトのインポートは、[[MediaWiki:ImportJS]]から審査プロセスを経ずに追加、削除できます。',
 	'content-review-importjs-description' => 'ここでは、スクリプトを簡単にインポートすることができます：
 * ローカルコミュニティからは記事名（例：MyScript.js）
 * dev.wikia.comからは記事名の先頭に「dev:」を付ける（例：dev:Code.js）
-MediaWikiの名前空間プレフィックスは名前に含めないでください。スクリプトごとに新しい行に記述します。詳しくは、[[ヘルプ:追加のJavaScriptとCSSをインクルードする]]をご覧ください。
+MediaWikiの名前空間プレフィックスは名前に含めないでください。スクリプトごとに新しい行に記述します。詳しくは、[[w:c:ja.community:ヘルプ:追加のJavaScriptとCSSをインクルードする|ヘルプ:追加のJavaScriptとCSSをインクルードする]]をご覧ください。
 ----
 ',
 	'right-content-review' => 'コンテンツ審査ツールへのアクセスを許可する',
