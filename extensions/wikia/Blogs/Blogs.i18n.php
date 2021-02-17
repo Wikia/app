@@ -2359,11 +2359,11 @@ $messages['ja'] = array(
 	'blog-nbrcomments' => '$1{{PLURAL:$1|件}}のコメント',
 	'blog-nopostfound' => '投稿が見つかりませんでした。',
 	'blog-writeone' => '記事を投稿する',
-	'blog-empty-user-blog' => "<br/> <big>'''最近のブログ記事の投稿はありません。[[Special: CreateBlogPage |早速ブログを書いてみましょう!]] '''</big>
+	'blog-empty-user-blog' => "<br/> <big>'''最近のブログ記事の投稿はありません。[[Special:CreateBlogPage |早速ブログを書いてみましょう!]] '''</big>
 
-ブログをアップすると、コミュニティ内の [[{{MediaWiki:blogs-recent-url}} |最近の投稿]]で自動的に表示されます。
+Fandomコミュニティのブログに記事を投稿すると、Wikiの[[{{MediaWiki:blogs-recent-url}}|コミュニティ・ブログ]]に自動的に表示されます。
 
-ブログはニュースやお知らせ、レビュー、推奨事項、それぞれのコミュニティでの質問や提案など投げかけたりして使われています。詳細については [[ヘルプ: ブログ|こちらより]] ご参照ください。",
+ブログはニュースやお知らせ、レビュー、推奨事項、各コミュニティの質問などに使われています。詳細については[[w:c:ja.community:ヘルプ:ブログ❘こちらのヘルプページ]]をご覧ください。",
 	'blog-added' => '追加',
 	'blog-edited' => '編集',
 	'blog-page' => 'ブログ',
