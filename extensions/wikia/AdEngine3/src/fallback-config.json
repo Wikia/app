@@ -505,7 +505,7 @@
                 "oasis"
             ],
             "regions": [
-                "PL"
+                "XX"
             ],
             "sampling": 100.0,
             "value": [
@@ -2121,33 +2121,50 @@
     "icDeRecoExperiment": [
         {
             "apps": [
+                "mobile-wiki",
                 "oasis"
             ],
+            "regions": [
+                "XX"
+            ],
+            "sampling": 1.0,
+            "samplingCache": true,
             "value": {
-                "name": "reco_wiki_algos_arl_vs_cf",
+                "name": "reco_personalized_AA",
                 "groups": [
                     {
-                        "name": "w_arl",
-                        "config": {
-                            "wikiStrategy": "ARL",
-                            "number_articles": 4
-                        },
-                        "sampling": 25
-                    },
-                    {
-                        "name": "w_cf",
-                        "config": {
-                            "wikiStrategy": "CF",
-                            "number_articles": 4
-                        },
-                        "sampling": 25
-                    },
-                    {
-                        "name": "control",
+                        "name": "A",
                         "config": {
                             
                         },
-                        "sampling": 50
+                        "mobile": {
+                            "recommendedSlots": [
+                                
+                            ]
+                        },
+                        "sampling": 50,
+                        "ucpConfig": {
+                            "slots": [
+                                
+                            ]
+                        }
+                    },
+                    {
+                        "name": "B",
+                        "config": {
+                            
+                        },
+                        "mobile": {
+                            "recommendedSlots": [
+                                
+                            ]
+                        },
+                        "sampling": 50,
+                        "ucpConfig": {
+                            "slots": [
+                                
+                            ]
+                        }
                     }
                 ]
             }
