@@ -1,6 +1,0 @@
-schedule: "44 16 * * *"
-server_id: 80433  # www.wikia.com (where CreateWiki is enabled)
-args:
-- php
-- /usr/wikia/slot1/current/src/extensions/wikia/CreateNewWiki/maintenance/dumpStarters.php
-
