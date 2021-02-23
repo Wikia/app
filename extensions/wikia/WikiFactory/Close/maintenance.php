@@ -89,6 +89,8 @@ class CloseWikiMaintenance extends Maintenance {
 
 		$timestamp = wfTimestamp( TS_DB, strtotime( sprintf( "-%d days", self::CLOSE_WIKI_DELAY ) ) );
 		$where = [
+			// Run only for App wikis
+			'city_path' => 'slot1',
 			"city_public" => [ WikiFactory::CLOSE_ACTION, WikiFactory::HIDE_ACTION ],
 			"city_flags <> 0",
 			sprintf( "city_flags <> %d", WikiFactory::FLAG_REDIRECT ),
@@ -160,6 +162,7 @@ class CloseWikiMaintenance extends Maintenance {
 				 * reset flag
 				 */
 				$newFlags = $newFlags | WikiFactory::FLAG_CREATE_DB_DUMP | WikiFactory::FLAG_HIDE_DB_IMAGES;
+				WikiFactory::resetFlags( $row->city_id, WikiFactory::FLAG_CREATE_DB_DUMP );
 			}
 			if ( $row->city_flags & WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE ) {
 				if ( $dbname && $folder ) {
@@ -183,8 +186,8 @@ class CloseWikiMaintenance extends Maintenance {
 							}
 						}
 
-						$newFlags =
-							$newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE | WikiFactory::FLAG_HIDE_DB_IMAGES;
+						$newFlags = $newFlags | WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE | WikiFactory::FLAG_HIDE_DB_IMAGES;
+						WikiFactory::resetFlags( $row->city_id, WikiFactory::FLAG_CREATE_IMAGE_ARCHIVE );
 					} catch ( ConfigException $e ) {
 						$this->info( 'Skipping image archive creation', [
 							'exception' => $e->getMessage(),
