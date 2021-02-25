@@ -93,6 +93,9 @@
                 "mobile-wiki",
                 "oasis"
             ],
+            "regions": [
+                "PL"
+            ],
             "sampling": 100.0,
             "value": {
                 "name": "de5320_qa",
@@ -107,7 +110,7 @@
                                 "footer-slot-1"
                             ]
                         },
-                        "sampling": 50,
+                        "sampling": 100,
                         "ucpConfig": {
                             "slots": [
                                 "footer-card-3"
@@ -626,6 +629,9 @@
                 "XX"
             ],
             "value": [
+                "5585170956",
+                "5585170959",
+                "5585170962",
                 "5625526730",
                 "5625528371",
                 "5625526727",
@@ -1598,7 +1604,14 @@
                 "5617625967",
                 "5622045977",
                 "4737728378",
-                "5627328607"
+                "5627328607",
+                "5623495864",
+                "5623961408",
+                "5628046064",
+                "5626593060",
+                "5598401704",
+                "5626398639",
+                "5598651800"
             ]
         }
     ],
@@ -2030,8 +2043,7 @@
                 "FR",
                 "GB",
                 "NZ",
-                "UK",
-                "US"
+                "UK"
             ],
             "sampling": 100.0,
             "value": true
@@ -2160,10 +2172,9 @@
             "regions": [
                 "XX"
             ],
-            "sampling": 1.0,
-            "samplingCache": true,
+            "sampling": 3.0,
             "value": {
-                "name": "reco_personalized_AA",
+                "name": "reco_personalized_AA_no_cache",
                 "groups": [
                     {
                         "name": "A",
