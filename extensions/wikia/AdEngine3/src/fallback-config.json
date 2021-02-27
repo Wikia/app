@@ -307,6 +307,19 @@
             "value": true
         }
     ],
+    "icPrebidAppNexusGroupM": [
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "GB",
+                "UK"
+            ],
+            "value": false
+        }
+    ],
     "icBTRec": [
         {
             "apps": [
@@ -632,6 +645,8 @@
                 "5585170956",
                 "5585170959",
                 "5585170962",
+                "5629664089",
+                "5628410358",
                 "5625526730",
                 "5625528371",
                 "5625526727",
@@ -2043,7 +2058,8 @@
                 "FR",
                 "GB",
                 "NZ",
-                "UK"
+                "UK",
+                "US"
             ],
             "sampling": 100.0,
             "value": true
@@ -2067,9 +2083,6 @@
             "apps": [
                 "mobile-wiki",
                 "oasis"
-            ],
-            "regions": [
-                "CA"
             ],
             "value": true
         }
