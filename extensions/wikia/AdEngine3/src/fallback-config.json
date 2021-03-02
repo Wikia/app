@@ -524,7 +524,11 @@
     "icDeHeartbeatTracking": [
         {
             "apps": [
+                "gamepedia",
                 "oasis"
+            ],
+            "regions": [
+                "XX"
             ],
             "sampling": 100.0,
             "value": [
@@ -642,6 +646,8 @@
                 "XX"
             ],
             "value": [
+                "5631668329",
+                "2826685371",
                 "5628778263",
                 "5629857064",
                 "5585170956",
@@ -1628,7 +1634,8 @@
                 "5626593060",
                 "5598401704",
                 "5626398639",
-                "5598651800"
+                "5598651800",
+                "5629615601"
             ]
         }
     ],
@@ -1851,6 +1858,19 @@
         }
     ],
     "icPrebidVersion": [
+        {
+            "apps": [
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
+                "oasis"
+            ],
+            "regions": [
+                "CA"
+            ],
+            "value": "//static.wikia.nocookie.net/fandom-ae-assets/prebid.js/v4.17.0/20210301.min.js"
+        },
         {
             "apps": [
                 "futhead",
@@ -2086,6 +2106,9 @@
                 "mobile-wiki",
                 "oasis"
             ],
+            "regions": [
+                "CA"
+            ],
             "value": true
         }
     ],
@@ -2187,9 +2210,9 @@
             "regions": [
                 "XX"
             ],
-            "sampling": 3.0,
+            "sampling": 100.0,
             "value": {
-                "name": "reco_personalized_AA_no_cache",
+                "name": "reco_personalized_AA_group_sampling",
                 "groups": [
                     {
                         "name": "A",
@@ -2201,7 +2224,7 @@
                                 
                             ]
                         },
-                        "sampling": 50,
+                        "sampling": 2,
                         "ucpConfig": {
                             "slots": [
                                 
@@ -2218,7 +2241,7 @@
                                 
                             ]
                         },
-                        "sampling": 50,
+                        "sampling": 2,
                         "ucpConfig": {
                             "slots": [
                                 
