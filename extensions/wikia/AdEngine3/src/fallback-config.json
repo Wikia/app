@@ -1867,22 +1867,9 @@
                 "oasis"
             ],
             "regions": [
-                "CA"
-            ],
-            "value": "//static.wikia.nocookie.net/fandom-ae-assets/prebid.js/v4.17.0/20210301.min.js"
-        },
-        {
-            "apps": [
-                "futhead",
-                "gamepedia",
-                "mobile-wiki",
-                "muthead",
-                "oasis"
-            ],
-            "regions": [
                 "XX"
             ],
-            "value": "//static.wikia.nocookie.net/fandom-ae-assets/prebid.js/v4.17.0/20201229.min.js"
+            "value": "//static.wikia.nocookie.net/fandom-ae-assets/prebid.js/v4.17.0/20210301.min.js"
         }
     ],
     "icDurationMediaLibraryUrl": [
@@ -2077,7 +2064,6 @@
                 "AU",
                 "CA",
                 "DE",
-                "FR",
                 "GB",
                 "NZ",
                 "UK",
