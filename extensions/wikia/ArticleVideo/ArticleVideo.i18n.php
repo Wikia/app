@@ -103,8 +103,8 @@ $messages['ru'] = array(
 
 $messages['zh-hans'] = array(
 	'articlevideo-watch' => '观看',
-	'articlevideo-feedback-question' => '你喜欢这个视频吗？',
-	'articlevideo-attribution-from' => '来源',
+	'articlevideo-feedback-question' => '您喜欢这个视频吗？',
+	'articlevideo-attribution-from' => '来源：',
 	'right-showfeaturedvideo' => '始终显示精选视频',
 	'articlevideo-preference-label' => '精选视频',
 	'articlevideo-preference-option-show-featured-video' => '显示所有视频',
@@ -113,7 +113,7 @@ $messages['zh-hans'] = array(
 
 $messages['zh-hant'] = array(
 	'articlevideo-watch' => '觀看',
-	'articlevideo-feedback-question' => '你喜歡這個影片嗎？',
+	'articlevideo-feedback-question' => '您喜歡這個影片嗎？',
 	'articlevideo-attribution-from' => '來源：',
 	'right-showfeaturedvideo' => '始終顯示精選影片',
 	'articlevideo-preference-label' => '精選影片',
