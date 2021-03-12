@@ -161,36 +161,6 @@
             "value": true
         }
     ],
-    "icDePersonalizedRecoExperimentTest": [
-        {
-            "apps": [
-                "oasis"
-            ],
-            "value": {
-                "name": "ucp_qa_2",
-                "groups": [
-                    {
-                        "name": "small",
-                        "sampling": 30,
-                        "ucpConfig": {
-                            "slots": [
-                                "footer-card-11"
-                            ]
-                        }
-                    },
-                    {
-                        "name": "big",
-                        "sampling": 70,
-                        "ucpConfig": {
-                            "slots": [
-                                "footer-card-3"
-                            ]
-                        }
-                    }
-                ]
-            }
-        }
-    ],
     "icComscoreJwpTracking": [
         {
             "apps": [
@@ -2104,6 +2074,17 @@
         }
     ],
     "icFloorAdhesionDelay": [
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "CA",
+                "PL"
+            ],
+            "value": -1
+        },
         {
             "apps": [
                 "mobile-wiki",
