@@ -13,7 +13,7 @@ class DataWarehouseEventProducer {
 		CREATEPAGE_CATEGORY = 'create',
 		UNDELETE_CATEGORY   = 'undelete',
 		DELETE_CATEGORY     = 'delete',
-		KINESIS_STREAM_NAME = 'mw_edit_json';
+		KINESIS_STREAM_NAME = 'mw_edit_json_dev';
 
 	function __construct( $key, $archive = 0 ) {
 		$this->app = F::app();
@@ -369,7 +369,7 @@ class DataWarehouseEventProducer {
 		wfProfileIn( __METHOD__ );
 
 		$data = json_encode( $this->mParams );
-		if ( ! Wikia::isDevEnv() ) {
+		if ( Wikia::isDevEnv() ) {
 			$this->mParams['action'] = $this->mKey;
 			$task = AsyncKinesisProducerTask::newLocalTask();
 			$task->call( 'putRecord', self::KINESIS_STREAM_NAME, json_encode( $this->mParams ) );
