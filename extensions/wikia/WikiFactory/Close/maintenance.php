@@ -91,6 +91,7 @@ class CloseWikiMaintenance extends Maintenance {
 			"city_flags <> 0",
 			sprintf( "city_flags <> %d", WikiFactory::FLAG_REDIRECT ),
 			"city_last_timestamp < '{$timestamp}'",
+			'city_path' => 'slot1'
 		];
 
 		if ( $cluster !== false ) {
