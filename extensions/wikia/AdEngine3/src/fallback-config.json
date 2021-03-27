@@ -496,7 +496,11 @@
         {
             "apps": [
                 "gamepedia",
+                "mobile-wiki",
                 "oasis"
+            ],
+            "regions": [
+                "XX"
             ],
             "sampling": 100.0,
             "value": [
