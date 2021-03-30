@@ -203,6 +203,12 @@ $messages['ko'] = array(
 	'emailext-discussion-all-discussions' => '[$1 $2의 모든 토론 보기]',
 	'emailext-discussion-thread-at-mention' => '$3의 $2 글에서 $1 님이 귀하를 언급했습니다',
 	'emailext-discussion-post-at-mention' => '$3의 $2 글에 대한 댓글에서 $1 님이 귀하를 언급했습니다',
+	'emailext-article-comment-at-mention' => '$3의 $2 문서 댓글에서 $1 님이 귀하를 언급했습니다',
+	'emailext-article-comment-reply-followed' => '$3에서 귀하가 주시 중인 $2 문서 댓글에 $1 님이 댓글을 남겼습니다',
+	'emailext-discussion-see-comment' => '댓글 보기',
+	'emailext-discussion-view-all-comments' => '[$1 모든 댓글 보기]',
+	'emailext-article-comment-reply-at-mention' => '$3의 $2 문서 댓글에서 $1 님이 귀하를 언급했습니다',
+	'emailext-article-comment-reply' => '$3의 $2 문서 댓글에 $1 님이 댓글을 남겼습니다',
 );
 
 $messages['nl'] = array(
