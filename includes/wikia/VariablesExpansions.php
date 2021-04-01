@@ -308,6 +308,10 @@ $wgLBFactoryConf = [
             'geo-db-i-master.query.consul.' => 0,
             'geo-db-i-slave.query.consul.' => 1000,
         ],
+        'c10' => [
+            'geo-db-j-master.query.consul.' => 0,
+            'geo-db-j-slave.query.consul.' => 1000,
+        ],
 
         'ext1' => $wgDBArchiveCluster,
         'specials' => [
