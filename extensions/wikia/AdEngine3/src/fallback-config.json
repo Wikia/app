@@ -1665,7 +1665,9 @@
                 "5646263901",
                 "5651124712",
                 "5651124715",
-                "5651547270"
+                "5651547270",
+                "5653396781",
+                "5657389886"
             ]
         }
     ],
@@ -1687,7 +1689,9 @@
                 "icFloatingMedrecRecirculationDisabled_A_90:fmr_50_50_a",
                 "icFloatingMedrecRecirculationDisabled_B_10:fmr_50_50_b",
                 "icIxIdentityLibrary_A_90:ix_library_a",
-                "icIxIdentityLibrary_B_10:ix_library_b"
+                "icIxIdentityLibrary_B_10:ix_library_b",
+                "icFloorAdhesionDelay_A_50:fd_50_50_a",
+                "icFloorAdhesionDelay_B_50:fd_50_50_b"
             ]
         }
     ],
@@ -2164,6 +2168,28 @@
                 "PL"
             ],
             "value": -1
+        },
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "US"
+            ],
+            "sampling": 50.0,
+            "value": -1
+        },
+        {
+            "apps": [
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "US"
+            ],
+            "sampling": 100.0,
+            "value": 30000
         },
         {
             "apps": [
