@@ -1667,7 +1667,8 @@
                 "5651124715",
                 "5651547270",
                 "5653396781",
-                "5657389886"
+                "5657389886",
+                "5659376765"
             ]
         }
     ],
@@ -2230,9 +2231,24 @@
                 "oasis"
             ],
             "regions": [
+                "PL"
+            ],
+            "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v6.1.1/tracking-opt-in.min.js"
+        },
+        {
+            "apps": [
+                "bingebot",
+                "f2",
+                "futhead",
+                "gamepedia",
+                "mobile-wiki",
+                "muthead",
+                "oasis"
+            ],
+            "regions": [
                 "XX"
             ],
-            "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v6.0.7/tracking-opt-in.min.js"
+            "value": "//static.wikia.nocookie.net/fandom-ae-assets/tracking-opt-in/v6.0.8/tracking-opt-in.min.js"
         }
     ],
     "icPermutive": [
