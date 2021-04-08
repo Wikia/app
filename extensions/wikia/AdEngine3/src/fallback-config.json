@@ -2165,6 +2165,19 @@
             "value": true
         }
     ],
+    "icDeByebyeTracking": [
+        {
+            "apps": [
+                "gamepedia",
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "PL"
+            ],
+            "value": true
+        }
+    ],
     "icFloorAdhesionDelay": [
         {
             "apps": [
