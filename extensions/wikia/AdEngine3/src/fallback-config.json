@@ -396,6 +396,19 @@
             }
         }
     ],
+    "icDeHeartbeatActivityTracking": [
+        {
+            "apps": [
+                "gamepedia",
+                "mobile-wiki",
+                "oasis"
+            ],
+            "regions": [
+                "PL"
+            ],
+            "value": true
+        }
+    ],
     "icViewabilityTracking": [
         {
             "apps": [
@@ -2163,19 +2176,6 @@
             ],
             "regions": [
                 "XX"
-            ],
-            "value": true
-        }
-    ],
-    "icDeByebyeTracking": [
-        {
-            "apps": [
-                "gamepedia",
-                "mobile-wiki",
-                "oasis"
-            ],
-            "regions": [
-                "PL"
             ],
             "value": true
         }
