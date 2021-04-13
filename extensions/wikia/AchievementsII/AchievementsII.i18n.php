@@ -10349,7 +10349,7 @@ $5",
 	'achievements-badge-to-get-love-details' => '如果你错过了一天计数器将重置，所以记得每天都要回来社区看一下哟！',
 	'achievements-badge-to-get-welcome-details' => '单击顶部右侧的"{{int:oasis-signup}}"按钮加入社区。
 你就可以开始赢取徽章啦!',
-	'achievements-badge-to-get-sayhi-details' => '你可以通过点击对话页中的"{{int:addsection}}"给其他用户留言。
+	'achievements-badge-to-get-sayhi-details' => '你可以通过点击讨论页中的"{{int:addsection}}"给其他用户留言。
 寻求帮助，感谢他们的贡献，或者向他们问好!',
 	'achievements-badge-to-get-creator-details' => '这枚徽章是奖给维基社区创始人的。
 单击顶部"{{int:createwiki}}"按钮，开始创建你喜爱的社区网站!',
@@ -10390,8 +10390,8 @@ $messages['zh-hant'] = array(
 	'achievements-community-platinum-save' => '儲存',
 	'achievements-community-platinum-cancel' => '取消',
 	'achievements-community-platinum-sponsored-badge-click-tooltip' => '點擊查看更多資訊',
-	'achievements-badge-to-get-welcome' => '加入這個Wiki',
-	'achievementsii-desc' => '一項為Wiki使用者提供成就徽章的系統',
+	'achievements-badge-to-get-welcome' => '加入這個wiki',
+	'achievementsii-desc' => '一項為wiki使用者提供成就徽章的系統',
 	'achievements-upload-error' => '抱歉！
 這張圖片無法使用。
 請確保它是一個.jpg或.png檔案。
@@ -10412,30 +10412,30 @@ $messages['zh-hant'] = array(
 	'achievements-track-name-category' => '分類軌道',
 	'achievements-track-name-blogpost' => '網誌發佈軌道',
 	'achievements-track-name-blogcomment' => '網誌評論軌道',
-	'achievements-track-name-love' => 'Wiki鍾愛軌道',
+	'achievements-track-name-love' => 'wiki鍾愛軌道',
 	'achievements-track-name-sharing' => '分享軌道',
 	'achievements-notification-title' => '$1，繼續努力！',
 	'achievements-notification-subtitle' => '你剛剛獲取了"$1"徽章$2',
 	'achievements-notification-link' => '<strong><big>[[Special:MyPage|看看你還可以獲得哪些徽章]]!</big></strong>',
 	'achievements-points' => '$1{{PLURAL:$1|點|點}}',
 	'achievements-points-with-break' => '$1<br />{{PLURAL:$1|點|點}}',
-	'achievements-earned' => '這枚徽章有 {{PLURAL:$1|1個用戶|$1個用戶}}獲得。',
+	'achievements-earned' => '這枚徽章有 {{PLURAL:$1|1個使用者|$1個使用者}}獲得。',
 	'achievements-profile-title' => '$1獲取了$2枚{{PLURAL:$2|徽章|徽章}}',
 	'achievements-profile-title-no' => '$1的徽章',
 	'achievements-profile-title-challenges' => '你可以獲得更多的徽章!',
 	'achievements-profile-customize' => '自訂徽章',
-	'achievements-ranked' => '在這個Wiki上排名第$1',
-	'achievements-no-badges' => '看看在這個Wiki上你可以獲取的徽章清單!',
+	'achievements-ranked' => '在這個wiki上排名第$1',
+	'achievements-no-badges' => '看看在這個wiki上你可以獲取的徽章清單!',
 	'achievements-viewall' => '查看全部',
 	'achievements-viewless' => '關閉',
 	'achievements-profile-title-oasis' => '成就<br / >分數',
-	'achievements-ranked-oasis' => '$1在此Wiki上[[Special:Leaderboard|排名第$2]]',
+	'achievements-ranked-oasis' => '$1在此wiki上[[Special:Leaderboard|排名第$2]]',
 	'achievements-next-oasis' => '下一頁',
 	'achievements-prev-oasis' => '上一頁',
 	'achievements-toggle-hide' => '在我的個人資料頁上隱藏我的成就',
 	'leaderboard-intro-open' => '打開',
 	'leaderboard-intro-headline' => '成就是什麼?',
-	'leaderboard-intro' => "你可以經由編輯頁面、上傳圖片和留言等方式在這個Wiki上獲得徽章。每個徽章都能讓你獲得點數－點數越高，排名越高！你會在你的[[$1|用戶頁面]]看到已經獲得的徽章。
+	'leaderboard-intro' => "你可以經由編輯頁面、上傳圖片和留言等方式在這個wiki上獲得徽章。每個徽章都能讓你獲得點數－點數越高，排名越高！你會在你的[[$1|使用者頁面面]]看到已經獲得的徽章。
 
  '''各種徽章的價值有多少?'''",
 	'leaderboard' => '成就排行榜',
@@ -10456,7 +10456,7 @@ $messages['zh-hant'] = array(
 	'achievements-special' => '特別成就',
 	'achievements-secret' => '秘密成就',
 	'achievementscustomize' => '自訂徽章',
-	'achievements-about-content' => '管理員可以自訂此Wiki上的成就徽章名稱和圖片。
+	'achievements-about-content' => '管理員可以自訂此wiki上的成就徽章名稱和圖片。
 
 您可以上載任何.jpg或.png的圖片，圖片將自動調整尺寸。
 正方形的圖片最佳，圖片設置在中間將得到最佳顯示。
@@ -10466,13 +10466,13 @@ $messages['zh-hant'] = array(
 如果您沒有繪圖工具，您可以嘗試使用不同的圖片直到滿意為止。
 如果您不喜歡選擇的圖片，請點擊「{{int:achievements-revert}}」恢復為原本的圖片。
 
-您也可以重新命名徽章以便更適合您的Wiki社區主題。
+您也可以重新命名徽章以便更適合您的wiki社區主題。
 在您更改徽章名稱之後，請點擊「{{int:achievements-save}}」保存您的更改。
 還等什麼，趕快去嘗試一下吧！',
 	'achievements-edit-plus-category-track-name' => '$1編輯軌道',
 	'achievements-create-edit-plus-category-title' => '創建一個新的編輯軌道',
-	'achievements-create-edit-plus-category-content' => '您可以創建一系列的徽章，用來獎勵、突顯用戶對社區某一個特別領域做出的貢獻
-您可以設置許多不同分類的軌道，用來展示用戶不同的特長！也可以製造兩種不同的徽章主題陣營，比如吸血鬼和狼人，或者魔法師和惡魔，或者汽車人和霸天虎！
+	'achievements-create-edit-plus-category-content' => '您可以創建一系列的徽章，用來獎勵、突顯使用者對社區某一個特別領域做出的貢獻
+您可以設置許多不同分類的軌道，用來展示使用者不同的特長！也可以製造兩種不同的徽章主題陣營，比如吸血鬼和狼人，或者魔法師和惡魔，或者汽車人和霸天虎！
 
 要創建一個新的「編輯分類」軌道，在下面輸入分類名稱。
 普通的編輯軌道依然會存在；
@@ -10482,9 +10482,9 @@ $messages['zh-hant'] = array(
 為新的軌道中自訂名稱和圖片，讓人能看出它們的差別！
 
 一旦完成自訂內容，點擊「{{int:achievements-enable-track}}」來開啟新的軌道，然後點擊「{{int:achievements-save}}」。
-用戶將會看到新的軌道出現在他們的用戶頁上，當他們在該分類開始編輯的時候就會獲得這些徽章。
+使用者將會看到新的軌道出現在他們的使用者頁面上，當他們在該分類開始編輯的時候就會獲得這些徽章。
 如果您不再希望突出這些分類時，您也可以隨時關閉軌道。
-雖然如此，已經獲得徽章的用戶將可以繼續保留這些徽章，不會因為軌道的消逝而失去這些徽章。
+雖然如此，已經獲得徽章的使用者將可以繼續保留這些徽章，不會因為軌道的消逝而失去這些徽章。
 
 這將幫助您更有效地使用成就功能。
 趕快去試一下吧！',
@@ -10522,11 +10522,11 @@ $5",
 	'achievements-badge-name-edit-0' => '進行改變',
 	'achievements-badge-name-edit-1' => '僅僅是個開始',
 	'achievements-badge-name-edit-2' => '留下你的印記',
-	'achievements-badge-name-edit-3' => 'Wiki的朋友',
+	'achievements-badge-name-edit-3' => 'wiki的朋友',
 	'achievements-badge-name-edit-4' => '合作者',
-	'achievements-badge-name-edit-5' => 'Wiki構建者',
-	'achievements-badge-name-edit-6' => 'Wiki領導者',
-	'achievements-badge-name-edit-7' => 'Wiki專家',
+	'achievements-badge-name-edit-5' => 'wiki構建者',
+	'achievements-badge-name-edit-6' => 'wiki領導者',
+	'achievements-badge-name-edit-7' => 'wiki專家',
 	'achievements-badge-name-picture-0' => '快照',
 	'achievements-badge-name-picture-1' => '狗仔隊',
 	'achievements-badge-name-picture-2' => '插畫家',
@@ -10541,7 +10541,7 @@ $5",
 	'achievements-badge-name-category-3' => '導遊',
 	'achievements-badge-name-category-4' => '導航者',
 	'achievements-badge-name-category-5' => '造橋者',
-	'achievements-badge-name-category-6' => 'Wiki規劃師',
+	'achievements-badge-name-category-6' => 'wiki規劃師',
 	'achievements-badge-name-blogpost-0' => '有話要說',
 	'achievements-badge-name-blogpost-1' => '五件事要說',
 	'achievements-badge-name-blogpost-2' => '脫口秀',
@@ -10549,19 +10549,19 @@ $5",
 	'achievements-badge-name-blogpost-4' => '公眾演說家',
 	'achievements-badge-name-blogcomment-0' => '意見領袖',
 	'achievements-badge-name-blogcomment-1' => '還有一件事',
-	'achievements-badge-name-love-0' => 'Wiki的關鍵！',
-	'achievements-badge-name-love-1' => '在這個Wiki上兩個星期',
+	'achievements-badge-name-love-0' => 'wiki的關鍵！',
+	'achievements-badge-name-love-1' => '在這個wiki上兩個星期',
 	'achievements-badge-name-love-2' => '熱心的',
 	'achievements-badge-name-love-3' => '樂於奉獻',
 	'achievements-badge-name-love-4' => '上癮',
-	'achievements-badge-name-love-5' => 'Wiki生活',
-	'achievements-badge-name-love-6' => 'Wiki英雄！',
+	'achievements-badge-name-love-5' => 'wiki生活',
+	'achievements-badge-name-love-6' => 'wiki英雄！',
 	'achievements-badge-name-sharing-0' => '分享者',
 	'achievements-badge-name-sharing-1' => '把它帶回來',
 	'achievements-badge-name-sharing-2' => '演講者',
 	'achievements-badge-name-sharing-3' => '播音員',
 	'achievements-badge-name-sharing-4' => '福音傳教士',
-	'achievements-badge-name-welcome' => '歡迎來到這個Wiki',
+	'achievements-badge-name-welcome' => '歡迎來到這個wiki',
 	'achievements-badge-name-introduction' => '介紹',
 	'achievements-badge-name-sayhi' => '停下來打聲招呼',
 	'achievements-badge-name-creator' => '創建者',
@@ -10575,10 +10575,10 @@ $5",
 	'achievements-badge-to-get-category' => '為$1{{PLURAL:$1|篇文章|篇文章}}添加{{PLURAL:$1|分類|分類}}',
 	'achievements-badge-to-get-blogpost' => '撰寫$1{{PLURAL:$1|篇網誌|篇網誌}}',
 	'achievements-badge-to-get-blogcomment' => '在{{PLURAL:$1|一篇網誌|$1篇不同的網誌}}上撰寫評論',
-	'achievements-badge-to-get-love' => '連續{{PLURAL:$1|一天|$1天}}不斷在這個Wiki貢獻',
-	'achievements-badge-to-get-introduction' => '添加到您自己的用戶頁',
-	'achievements-badge-to-get-sayhi' => '在其他人的討論頁上留言',
-	'achievements-badge-to-get-creator' => '成為這個Wiki的創始人',
+	'achievements-badge-to-get-love' => '連續{{PLURAL:$1|一天|$1天}}不斷在這個wiki貢獻',
+	'achievements-badge-to-get-introduction' => '添加到您自己的使用者頁面',
+	'achievements-badge-to-get-sayhi' => '在使用者討論頁留言',
+	'achievements-badge-to-get-creator' => '成為這個wiki的創始人',
 	'achievements-badge-to-get-pounce' => '要快',
 	'achievements-badge-to-get-caffeinated' => '在一天中對文章做了{{PLURAL:$1|1次編輯|$1次編輯}}',
 	'achievements-badge-to-get-luckyedit' => '很幸運',
@@ -10591,7 +10591,7 @@ $5",
 在那個分類中的頁面點擊「{{int:edit}}」按鈕來幫助我們。
 在$1頁面上展示您的才華！',
 	'achievements-badge-to-get-picture-details' => '點擊"{{int:edit}}"按鈕之後再點擊"{{int:rte-ck-image-add}}"按鈕。
-您可以從電腦上傳圖片，或者從其他Wiki頁面選取圖片添加。',
+您可以從電腦上傳圖片，或者從其他wiki頁面選取圖片添加。',
 	'achievements-badge-to-get-category-details' => '分類是一種用來協助使用者查找相關頁面的標籤。
 按一下頁面底部的"{{int:categoryselect-addcategory-button}}" 按鈕將此頁面放入相應的分類下。',
 	'achievements-badge-to-get-blogpost-details' => '寫下你的意見和問題！
@@ -10601,18 +10601,18 @@ $5",
 	'achievements-badge-to-get-love-details' => '如果你錯過了一天計數器將會重置，所以記得每天都要回來社區看一下喔！',
 	'achievements-badge-to-get-welcome-details' => '按一下頂部右側的"{{int:oasis-signup}}"按鈕加入社區。
 你就可以開始獲取徽章啦！',
-	'achievements-badge-to-get-introduction-details' => '您的用戶頁空空如也？
-按一下螢幕頂部的用戶名稱進行查看。
+	'achievements-badge-to-get-introduction-details' => '您的使用者頁面空空如也？
+按一下螢幕頂部的使用者名稱進行查看。
 按一下"{{int:edit}}"添加一些關於您個人的資訊吧！',
-	'achievements-badge-to-get-sayhi-details' => '您可以通過點擊對話頁中的"{{int:addsection}}"給其他使用者留言。
+	'achievements-badge-to-get-sayhi-details' => '您可以透過點擊討論頁中的"{{int:addsection}}"給其他使用者留言。
 尋求協助、感謝他們的貢獻，或者向他們問好！',
-	'achievements-badge-to-get-creator-details' => '這枚徽章是頒給這個Wiki社區創始人的。
+	'achievements-badge-to-get-creator-details' => '這枚徽章是頒給這個wiki社區創始人的。
 按一下頂部的"{{int:createwiki}}"按鈕，開始創建你喜愛的社區網站！',
 	'achievements-badge-to-get-pounce-details' => '要獲得這個徽章你得趕快啦。
 點擊「{{int:activityfeed}}」來查看使用者們正在創建的新頁面！',
 	'achievements-badge-to-get-caffeinated-details' => '要努力編輯一天才能獲得這枚徽章！
 繼續編輯吧！',
-	'achievements-badge-to-get-luckyedit-details' => '幸運編輯徽章是給予在Wiki作出第1000次編輯以及之後每1000次編輯的人，要獲得這個徽章你必須要在Wiki上貢獻夠多且足夠幸運。',
+	'achievements-badge-to-get-luckyedit-details' => '幸運編輯徽章是給予在wiki作出第1000次編輯以及之後每1000次編輯的人，要獲得這個徽章你必須要在wiki上貢獻夠多且足夠幸運。',
 	'achievements-badge-to-get-community-platinum-details' => '獲得這枚特殊白金徽章的時間可是有限的喔！',
 	'achievements-badge-hover-desc-sharing' => '{{#ifeq:$1|0|由於分享了一個連結|由於{{PLURAL:$1|一個人|$1個人}}點擊了這個連結}}',
 	'achievements-badge-hover-desc-edit' => '對{{PLURAL:$1|文章|文章}}進行$1{{PLURAL:$1|次修改|次修改}}！',
@@ -10624,14 +10624,14 @@ $5",
 添加了{{PLURAL:$1|分類|分類}}而獲得獎勵！',
 	'achievements-badge-hover-desc-blogpost' => '撰寫$1{{PLURAL:$1|篇網誌|篇網誌}}！',
 	'achievements-badge-hover-desc-blogcomment' => '在$1篇{{PLURAL:$1|網誌文章|網誌文章}}上發表評論！',
-	'achievements-badge-hover-desc-love' => '連續為本Wiki貢獻{{PLURAL:$1|一天|$1天}}！',
-	'achievements-badge-hover-desc-welcome' => '加入本Wiki的獎勵！',
+	'achievements-badge-hover-desc-love' => '連續為本wiki貢獻{{PLURAL:$1|一天|$1天}}！',
+	'achievements-badge-hover-desc-welcome' => '加入本wiki的獎勵！',
 	'achievements-badge-hover-desc-introduction' => '添加內容到您的使用者頁面！',
 	'achievements-badge-hover-desc-sayhi' => '在其他使用者的討論頁上留言！',
-	'achievements-badge-hover-desc-creator' => '創建Wiki的獎勵！',
+	'achievements-badge-hover-desc-creator' => '創建wiki的獎勵！',
 	'achievements-badge-hover-desc-pounce' => '在100 篇文章創建的一個小時內進行編輯！',
 	'achievements-badge-hover-desc-caffeinated' => '在一天之內對文章頁做出100個編輯！',
-	'achievements-badge-hover-desc-luckyedit' => '在這個Wiki上進行第$1次幸運編輯！',
+	'achievements-badge-hover-desc-luckyedit' => '在這個wiki上進行第$1次幸運編輯！',
 	'achievements-badge-hover-desc-community-platinum' => '獲得這枚特殊白金徽章的時間可是有限的喔！',
 	'achievements-badge-your-desc-sharing' => '{{#ifeq:$1|0|由於分享了一個連結|由於{{PLURAL:$1|一個人|$1個人}}點擊了這個連結}}而獲得獎勵。',
 	'achievements-badge-your-desc-edit' => '在{{PLURAL:$1|條目|條目}}上進行{{PLURAL:$1|你的首次編輯|$1次編輯}}！',
@@ -10640,14 +10640,14 @@ $5",
 	'achievements-badge-your-desc-category' => '把{{PLURAL:$1|1篇文章|$1篇文章}}加入{{PLURAL:$1|分類|分類}}中！',
 	'achievements-badge-your-desc-blogpost' => '撰寫{{PLURAL:$1|您的第1篇網誌|$1篇網誌}}！',
 	'achievements-badge-your-desc-blogcomment' => '為{{PLURAL:$1|1篇網誌文章|$1篇網誌文章}}撰寫評論！',
-	'achievements-badge-your-desc-love' => '連續為本Wiki貢獻{{PLURAL:$1|1天|$1天}}！',
-	'achievements-badge-your-desc-welcome' => '加入這個Wiki的獎勵！',
-	'achievements-badge-your-desc-introduction' => '添加個人用戶頁的獎勵！',
+	'achievements-badge-your-desc-love' => '連續為本wiki貢獻{{PLURAL:$1|1天|$1天}}！',
+	'achievements-badge-your-desc-welcome' => '加入這個wiki的獎勵！',
+	'achievements-badge-your-desc-introduction' => '添加個人使用者頁面的獎勵！',
 	'achievements-badge-your-desc-sayhi' => '在其他使用者的討論頁上留言的獎勵！',
-	'achievements-badge-your-desc-creator' => '創建這個Wiki的獎勵！',
+	'achievements-badge-your-desc-creator' => '創建這個wiki的獎勵！',
 	'achievements-badge-your-desc-pounce' => '在100 篇文章創建的一個小時內進行編輯！',
 	'achievements-badge-your-desc-caffeinated' => '一天之內在頁面上進行100次編輯！',
-	'achievements-badge-your-desc-luckyedit' => '在這個Wiki上進行第$1次幸運編輯！',
+	'achievements-badge-your-desc-luckyedit' => '在這個wiki上進行第$1次幸運編輯！',
 	'achievements-badge-desc-sharing' => '{{#ifeq:$1|0|由於分享了一個連結|由於{{PLURAL:$1|一個人|$1個人}}點擊了這個連結}}而獲得獎勵。',
 	'achievements-badge-desc-edit' => '對{{PLURAL:$1|文章|文章}}進行$1{{PLURAL:$1|次修改|次修改}}！',
 	'achievements-badge-desc-edit-plus-category' => '對{{PLURAL:$1|$2文章|$2文章}}進行$1{{PLURAL:$1|次修改|次修改}}！',
@@ -10655,22 +10655,22 @@ $5",
 	'achievements-badge-desc-category' => '為$1{{PLURAL:$1|篇文章|篇文章}}添加{{PLURAL:$1|分類|分類}}！',
 	'achievements-badge-desc-blogpost' => '撰寫$1{{PLURAL:$1|篇網誌|篇網誌}}！',
 	'achievements-badge-desc-blogcomment' => '為{{PLURAL:$1|1篇網誌文章|$1篇網誌文章}}撰寫評論！',
-	'achievements-badge-desc-love' => '連續為本Wiki貢獻{{PLURAL:$1|一天|$1天}}！',
-	'achievements-badge-desc-welcome' => '加入本Wiki的獎勵！',
-	'achievements-badge-desc-introduction' => '在個人用戶頁增加內容！',
+	'achievements-badge-desc-love' => '連續為本wiki貢獻{{PLURAL:$1|一天|$1天}}！',
+	'achievements-badge-desc-welcome' => '加入本wiki的獎勵！',
+	'achievements-badge-desc-introduction' => '在個人使用者頁面增加內容！',
 	'achievements-badge-desc-sayhi' => '在其他使用者的討論頁上留言！',
-	'achievements-badge-desc-creator' => '創建這個Wiki的獎勵！',
+	'achievements-badge-desc-creator' => '創建這個wiki的獎勵！',
 	'achievements-badge-desc-pounce' => '在100 篇文章頁面創建的一個小時內進行編輯！',
 	'achievements-badge-desc-caffeinated' => '一天之內在頁面上進行100次編輯！',
-	'achievements-badge-desc-luckyedit' => '在這個Wiki上進行第$1次幸運編輯！',
+	'achievements-badge-desc-luckyedit' => '在這個wiki上進行第$1次幸運編輯！',
 	'achievements-userprofile-title-no' => '$1獲得的徽章',
 	'achievements-userprofile-title' => '$1獲得的{{PLURAL:$2|徽章|徽章}} ($2)',
-	'achievements-userprofile-no-badges-owner' => '查看在這個Wiki上你可以獲取的徽章清單!',
-	'achievements-userprofile-no-badges-visitor' => '此用戶尚未獲得任何徽章。',
+	'achievements-userprofile-no-badges-owner' => '查看在這個wiki上你可以獲取的徽章清單!',
+	'achievements-userprofile-no-badges-visitor' => '此使用者尚未獲得任何徽章。',
 	'achievements-userprofile-profile-score' => '<em>$1</em>成就<br />點數',
-	'achievements-userprofile-ranked' => '在這個Wiki上<br />
+	'achievements-userprofile-ranked' => '在這個wiki上<br />
 [[Special:Leaderboard|排名第$1]]',
 	'right-achievements-exempt' => '不能獲得成就積分',
-	'right-achievements-explicit' => '可獲得成就積分（會覆蓋其他無法獲得積分的用戶組的設定）',
+	'right-achievements-explicit' => '可獲得成就積分（會覆蓋其他無法獲得積分的使用者組的設定）',
 );
 
