@@ -4513,7 +4513,7 @@ $messages['vi'] = array(
 );
 
 $messages['zh-hans'] = array(
-	'oasis-home' => '主页',
+	'oasis-home' => '首页',
 	'oasis-more' => '查看更多 >',
 	'oasis-mytools' => '我的工具',
 	'oasis-like' => '赞',
