@@ -1,4 +1,6 @@
-This extensions runs ad stack using [@Wikia/ad-engine](https://github.com/Wikia/ad-engine) codebase
+This extensions runs ad stack using [@Wikia/ad-engine](https://github.com/Wikia/ad-engine) codebase.
+
+**It is no longer supported!** AdEngine updates and code changes won't trigger assets build job, which should prepare a production package.
 
 ## How does it work?
 
