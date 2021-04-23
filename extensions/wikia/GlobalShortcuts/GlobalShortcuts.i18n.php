@@ -153,6 +153,9 @@ Cette extension fournit des raccourcis clavier ainsi qu'un explorateur d'actions
 	'global-shortcuts-welcome-hint' => 'Ouvrir la nouvelle page des raccourcis clavier',
 );
 
+$messages['id'] = array(
+);
+
 $messages['it'] = array(
 	'global-shortcuts-caption-action-list' => 'Esploratore di azioni',
 	'global-shortcuts-caption-keyboard-shortcuts-help' => 'Aiuto con le scorciatoie da tastiera',
