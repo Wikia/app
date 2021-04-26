@@ -209,13 +209,11 @@ FANDOMでショートカットキーを使うと、閲覧や編集がしやす�
 );
 
 $messages['ko'] = array(
-	'global-shortcuts-description' => '
-Improve your browsing and editing experience using shortcut keys on Wikia.
+	'global-shortcuts-description' => '단축키를 활용해 이용 환경을 개선합니다.
 
-This extension provides some key shortcuts and an actions explorer to help users navigate to important pages or perform certain actions.
-',
+여러 단축키를 제공하며 작업 탐색기 기능을 추가합니다. 작업 탐색기를 통해 주요 문서 및 작업에 쉽게 접근할 수 있습니다.',
 	'global-shortcuts-caption-action-list' => '작업 탐색기',
-	'global-shortcuts-caption-keyboard-shortcuts-help' => '단축키 도움말',
+	'global-shortcuts-caption-keyboard-shortcuts-help' => '키보드 단축키 도움말',
 	'global-shortcuts-caption-open-discussions' => '토론방',
 	'global-shortcuts-caption-search-for-a-page' => '문서 검색',
 	'global-shortcuts-caption-start-a-new-wikia' => '새 위키 만들기',
@@ -223,14 +221,14 @@ This extension provides some key shortcuts and an actions explorer to help users
 	'global-shortcuts-category-current-wikia' => '현재 커뮤니티',
 	'global-shortcuts-category-global' => '팬덤 전역',
 	'global-shortcuts-category-help' => '도움말',
-	'global-shortcuts-category-other' => 'Other',
+	'global-shortcuts-category-other' => '기타',
 	'global-shortcuts-key-or' => '또는',
 	'global-shortcuts-key-then' => '다음에',
-	'global-shortcuts-name' => '바로 가기',
+	'global-shortcuts-name' => '단축키',
 	'global-shortcuts-search-placeholder' => '작업 검색',
 	'global-shortcuts-title-help-entry-point' => '단축키 도움말 보기 (?)',
-	'global-shortcuts-title-keyboard-shortcuts' => '바로 가기 모음',
-	'global-shortcuts-welcome-hint' => 'Introducing our new-and-improved Keyboard Shortcuts.',
+	'global-shortcuts-title-keyboard-shortcuts' => '키보드 단축키',
+	'global-shortcuts-welcome-hint' => '키보드 단축키 기능을 소개합니다.',
 	'global-shortcuts-press-to-explore-shortcuts' => '수행 가능한 모든 작업 목록을 보시려면 $1 키를 눌러 주세요.',
 );
 
