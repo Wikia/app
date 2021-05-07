@@ -29,6 +29,7 @@
 	$padding: 10px;
 
 	.pi-image {
+		margin: 0; // remove default margins added by the user agent stylesheet
 		text-align: center; // center smaller image inside infobox
 	}
 
