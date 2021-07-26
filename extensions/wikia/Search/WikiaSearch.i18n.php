@@ -45,7 +45,7 @@ $messages['en'] = array(
 );
 
 $messages['qqq'] = array(
-	'wikiasearch2-page-title-with-query' => 'The message is used as the title of the page (appears in the title bar of a browser window). Parameters: $1 - a keyword or a search term searched for; $2 - the name of the wiki.',
+	'wikiasearch2-page-title-with-query' => 'The message is used as the title of the page (appears in the title bar of a browser window). Parameters: $1 - a keyword or a search term searched for',
 	'wikiasearch2-page-title-no-query-intrawiki' => 'The message says "search this wiki" as opposed to "search all Wikia network". Parameters:
 * $1 is the name of the wiki to be searched; {{SITENAME}} - see: http://www.mediawiki.org/wiki/Manual:$wgSitename.',
 	'wikiasearch2-results-count' => 'Parameters: $1 - a number of items in the search results list; $2 - a keyword or a search term searched for; {{SITENAME}} - see: http://www.mediawiki.org/wiki/Manual:$wgSitename.',
@@ -164,7 +164,7 @@ $messages['el'] = array(
 	'wikiasearch2-noresults' => 'Δεν βρέθηκαν αποτελέσματα.',
 	'wikiasearch2-onhub' => ' στον κόμβο $1',
 	'wikiasearch2-page-title-no-query-intrawiki' => 'Ψάξτε $1',
-	'wikiasearch2-page-title-with-query' => "Ψάξτε αποτελέσματα για '$1' - $2",
+	'wikiasearch2-page-title-with-query' => "Ψάξτε αποτελέσματα για '$1'",
 	'wikiasearch2-pages' => '$1 {{PLURAL:$2|σελίδα|σελίδες}}',
 	'wikiasearch2-results-count' => 'Περίπου $1 {{PLURAL:$1|αποτέλεσμα|αποτελέσματα}} για $2 από το {{SITENAME}}',
 	'wikiasearch2-results-for' => 'Αποτελέσματα για $1 από το {{SITENAME}}',
@@ -311,7 +311,7 @@ $messages['gd'] = array(
 );
 
 $messages['gl'] = array(
-	'wikiasearch2-page-title-with-query' => 'Resultados da procura de "$1" - $2',
+	'wikiasearch2-page-title-with-query' => 'Resultados da procura de "$1"',
 	'wikiasearch2-page-title-no-query-interwiki' => 'Procurar en Wikia',
 	'wikiasearch2-page-title-no-query-intrawiki' => 'Procurar "$1"',
 	'wikiasearch2-search-all-wikia' => 'Procurar en toda Wikia',
@@ -470,7 +470,7 @@ $messages['ko'] = array(
 	'wikiasearch2-noresults' => '해당하는 항목이 없습니다.',
 	'wikiasearch2-onhub' => '$1 분야의 위키',
 	'wikiasearch2-page-title-no-query-intrawiki' => '$1에서 찾기',
-	'wikiasearch2-page-title-with-query' => "'$1'에 대한 검색 결과 - $2",
+	'wikiasearch2-page-title-with-query' => "'$1'에 대한 검색 결과",
 	'wikiasearch2-pages' => '$1개의 문서',
 	'wikiasearch2-results-count' => '$2에 대한 $1개의 결과',
 	'wikiasearch2-results-for' => '$1에 대한 검색 결과',
@@ -499,7 +499,7 @@ $messages['map-bms'] = array(
 );
 
 $messages['mk'] = array(
-	'wikiasearch2-page-title-with-query' => 'Резултати од пребарувањето на „$1“ - $2',
+	'wikiasearch2-page-title-with-query' => 'Резултати од пребарувањето на „$1“',
 	'wikiasearch2-page-title-no-query-interwiki' => 'Пребарување по Викија',
 	'wikiasearch2-page-title-no-query-intrawiki' => 'Пребарување на $1',
 	'wikiasearch2-search-all-wikia' => 'Пребарај ја целата Викија',
@@ -518,7 +518,7 @@ $messages['mk'] = array(
 );
 
 $messages['ms'] = array(
-	'wikiasearch2-page-title-with-query' => "Hasil carian untuk '$1' - $2",
+	'wikiasearch2-page-title-with-query' => "Hasil carian untuk '$1'",
 	'wikiasearch2-page-title-no-query-interwiki' => 'Cari dalam Wikia',
 	'wikiasearch2-page-title-no-query-intrawiki' => 'Cari dalam $1',
 	'wikiasearch2-search-all-wikia' => 'Cari di seluruh Wikia',
@@ -537,7 +537,7 @@ $messages['ms'] = array(
 );
 
 $messages['nb'] = array(
-	'wikiasearch2-page-title-with-query' => 'Søkeresultater for «$1» – $2',
+	'wikiasearch2-page-title-with-query' => 'Søkeresultater for «$1»',
 	'wikiasearch2-page-title-no-query-interwiki' => 'Søk i Wikia',
 	'wikiasearch2-page-title-no-query-intrawiki' => 'Søk i $1',
 	'wikiasearch2-search-all-wikia' => 'Søk i hele Wikia',
@@ -556,7 +556,7 @@ $messages['nb'] = array(
 );
 
 $messages['nl'] = array(
-	'wikiasearch2-page-title-with-query' => "Zoekresultaten voor '$1' - $2",
+	'wikiasearch2-page-title-with-query' => "Zoekresultaten voor '$1'",
 	'wikiasearch2-page-title-no-query-interwiki' => 'Wikia doorzoeken',
 	'wikiasearch2-page-title-no-query-intrawiki' => 'In $1 zoeken',
 	'wikiasearch2-search-all-wikia' => 'Heel Wikia dooezoeken',
@@ -756,7 +756,7 @@ $messages['sr-ec'] = array(
 );
 
 $messages['stq'] = array(
-	'wikiasearch2-page-title-with-query' => "Säikresultoate foar '$1' - $2",
+	'wikiasearch2-page-title-with-query' => "Säikresultoate foar '$1'",
 	'wikiasearch2-page-title-no-query-interwiki' => 'Säik truch Wikia',
 	'wikiasearch2-page-title-no-query-intrawiki' => 'Säik $1',
 	'wikiasearch2-search-all-wikia' => 'Säik in aal Wikia-Wikis',
@@ -775,7 +775,7 @@ $messages['stq'] = array(
 );
 
 $messages['sv'] = array(
-	'wikiasearch2-page-title-with-query' => "Sökresultat för '$1'-$2",
+	'wikiasearch2-page-title-with-query' => "Sökresultat för '$1'",
 	'wikiasearch2-page-title-no-query-interwiki' => 'Sök på Wikia',
 	'wikiasearch2-page-title-no-query-intrawiki' => 'Sök på $1',
 	'wikiasearch2-search-all-wikia' => 'Sök på hela Wikia',
