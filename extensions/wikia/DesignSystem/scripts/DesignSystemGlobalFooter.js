@@ -11,7 +11,7 @@ require(['jquery', 'wikia.geo', 'wikia.log'],
 			$.cookie("useskin", null, {path: '/', domain: wgCookieDomain});
 		}
 
-		if (!(geo.getCountryCode() === 'US' && geo.getRegionCode() === 'CA')) {
+		if (geo.getCountryCode() !== 'US') {
 			log('Hiding "Do Not Sell My Info" link outside of US-CA.', log.levels.debug, 'us-privacy');
 
 			var fandomLinks = $('section.wds-global-footer__section.wds-is-community a[data-tracking-label="community.usp-do-not-sell"]');
